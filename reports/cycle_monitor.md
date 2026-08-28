@@ -157,6 +157,61 @@ Every cycle variable is fit as an Ornstein–Uhlenbeck process; the half-life sa
 
 ## 6. FX scorecard
 
+Each currency is scored against the USD as the sum of five engines — **carry + cycle + valuation + momentum − penalty**. The engines are deliberately built on *different* sources of return, so their sum is less about magnitude than about **agreement**: any single engine can be wrong for a year, but a currency where four pull the same way is wrong far less often. The components are scaled to comparable size (each contributes roughly ±0.5 to ±1.5), so a total above ≈ +1 is a serious long candidate and anything below ≈ −0.5 is funding-leg material.
+
+### 6.1 The five engines, one by one
+
+**Carry** — `0.25 × (policy rate − US policy rate), clipped at ±6pp; halved when the inflation gap eats the whole pickup (real pickup < 0)`
+
+*What it measures.* The annualized interest differential you are paid — or pay — just for holding the currency versus USD, before anything moves. It is the only component that accrues to you every day the view is *wrong but not very wrong*.
+
+*Where the edge lies.* Uncovered interest parity says forwards should price away the differential, so carry should net to zero. Empirically it does not — the forward premium puzzle: high-carry currencies depreciate less, on average, than their forwards imply, so rolling forwards harvests a persistent risk premium. That premium is compensation for crash risk: you collect it in calm regimes and give a slice back in risk-off. The model's refinement is that *nominal* carry which merely compensates for higher inflation is not edge at all — it is the currency's expected depreciation in disguise — hence the haircut when the inflation gap swallows the pickup, and the separate penalty beyond that.
+
+*Where it fails:* in global vol spikes: carry is a crowded trade and unwinds violently, all pairs at once, regardless of local merit.
+
+**Cycle** — `phase value (Overheating +0.9, Goldilocks +0.6, Stagflation −0.6, Disinflation −0.9) × cycle amplitude (capped 1.5) × 0.5; when the clock's ETA to the next phase ≤ 9 months, half the weight shifts to the *destination* phase`
+
+*What it measures.* Where the economy sits on the clock, and — more importantly — where it is rotating to. Overheating and Goldilocks attract capital: rate expectations climb, equity and credit inflows follow. Stagflation and Disinflation repel it: cuts are coming, growth is going.
+
+*Where the edge lies.* Markets are good at pricing the central bank's *last* move and bad at pricing the *rotation*. A currency entering Overheating will receive hikes that are not yet in the forwards; one rolling into Disinflation will receive cuts that are not either. The heading blend is deliberate: when rotation is fast you want to own the currency for what the cycle is about to do, not for where it stands. Amplitude scaling keeps direction honest — an economy hovering near the origin of the clock has a direction but no cycle, and direction without amplitude is noise.
+
+*Where it fails:* when a supply shock masquerades as a cycle phase: oil-shock stagflation is bullish for an oil exporter's currency and bearish for an importer's, and the clock cannot tell them apart.
+
+**Valuation** — `−0.45 × REER deviation from its 10y average (z, clipped ±2.5), multiplied by the context-filter gate: ×1.25 on EARLY TURN, ×1.0 on SETUP, ×0.5 on WATCH, ×0.3 on LATE, ×0 on TREND INTACT`
+
+*What it measures.* How rich or cheap the currency is in *real, trade-weighted* terms — the BIS broad REER against its own decade. Real, so inflation differentials are already netted out; effective, so it measures competitiveness against all partners, not just the dollar.
+
+*Where the edge lies.* Real exchange rates mean-revert over multi-year horizons through the competitiveness channel: a persistently rich currency erodes exports and the current account until the currency itself gives way, and vice versa. But the half-lives are long, which is exactly why this component is the one the context filter polices hardest: a cheap currency whose central bank is cutting into a slowdown is cheap *for a reason* and earns nothing (TREND INTACT ×0); the same cheapness with the correction already underway and the cycle turning earns a premium (EARLY TURN ×1.25). Valuation is edge only near turning points — the gate is what turns a slow anchor into a timing-aware signal.
+
+*Where it fails:* when the fair value itself moves: a terms-of-trade regime shift (commodity supercycle, an energy transition) makes the 10-year mean stale, and the model will call 'rich' what is actually a new equilibrium.
+
+**Momentum** — `policy direction: hiking +0.4, on hold 0, cutting −0.4; +0.2 bonus for hiking while inflation momentum is already falling`
+
+*What it measures.* Which way the central bank is actually moving right now — not the level of rates (that is carry) but the direction of travel.
+
+*Where the edge lies.* Policy cycles persist: hikes cluster, cuts cluster, and the first move is rarely the last, while FX over one-to-six-month horizons follows the *change* in rate differentials more than the level. The bonus case is deliberate and is the strongest single configuration in the stack: a bank hiking while inflation already falls is delivering rising *real* rates — the currency gets the differential and the credibility at once.
+
+*Where it fails:* at the end of the cycle: the last hike is historically a sell signal, not a buy — the clock and the danger model are the overlays meant to catch the turn this component misses.
+
+**Penalty** — `−0.6 per pp of inflation gap beyond +2pp above target, capped at −3`
+
+*What it measures.* A credibility discount, not a return forecast. Beyond a couple of points above target, inflation stops being an input to carry and becomes the whole story: pass-through accelerates, expectations de-anchor, and the real value of the carry collapses faster than the nominal rate can compensate.
+
+*Where the edge lies.* The edge here is *avoidance*: the cap at −3 encodes that past a point the right reading is 'uninvestable', not 'great short'. Shorting a 30–40% yielder pays ruinous negative carry, so a broken-credibility currency is excluded from the crosses on *both* sides — you neither hold it for the carry trap nor short it for the bleed. It re-enters the tradable universe only when disinflation is delivered, at which point the (still huge) carry starts counting again.
+
+*Where it fails:* at the moment of a credible stabilization: the penalty lags the regime change, and the first year of a successful disinflation is historically the best carry trade there is.
+
+### 6.2 How to read the sum
+
+- **The edge is in the agreement structure, not the total.** Carry confirmed by cycle and momentum — being paid to hold a currency whose central bank is hiking into an overheating economy — is the strongest configuration in the framework. Carry *against* cycle (a high yielder rolling into Disinflation, where the coming cuts will eat the differential) is the classic carry trap, and the sum catches it automatically because the cycle term goes negative before the carry term does.
+- **A single-engine score is a watchlist item, not a trade.** A total driven by valuation alone is precisely the 'mean reversion alone' mistake the context filter exists to block; a total driven by carry alone deserves a credibility check before anything else.
+- **Why crosses instead of USD legs.** The scores are measured vs USD, but the cleanest expression pairs the strongest long against the weakest *credible* funder: the dollar — with its own cycle, its own politics — nets out, leaving a pure relative-cycle position that is *paid* the carry differential to wait.
+- **The penalty is a filter, not a signal.** A deeply negative penalty (TRY-style) removes the currency from both sides of the book: the carry is uncollectible and the short bleeds. Uninvestable is a verdict too.
+
+**Worked example — INR, this month's top score (+1.86):** carry +0.41 from a +1.6pp policy-rate pickup over USD; cycle +0.22 from sitting in Goldilocks and heading to Overheating in ~1m; valuation +1.23 from a REER -2.2σ vs its decade, credited because the context verdict is EARLY_TURN; momentum +0.00 because RBI is on hold. 3 engines pull the same way and none pulls against — and the dominant engine, valuation, only counts because the context filter licensed it (EARLY TURN), which is what separates this from a naive value trade. The agreement structure, not any single number, is the trade.
+
+### 6.3 The scorecard
+
 ![FX scores](charts/fx.png)
 
 | Ccy | Carry | Cycle | Valuation | Momentum | Penalty | **Total** |

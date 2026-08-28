@@ -47,6 +47,185 @@ def _ctx_line(v) -> str:
             f"**{v.verdict}**: {v.note}.")
 
 
+# ---------------------------------------------------------------------------
+# FX scorecard documentation: what each component measures, the exact formula,
+# where the edge comes from, and when it fails. Rendered in both the markdown
+# report and the HTML page, so the explanation lives next to the numbers.
+FX_DOC = [
+    {
+        "name": "Carry",
+        "formula": "0.25 × (policy rate − US policy rate), clipped at ±6pp; "
+                   "halved when the inflation gap eats the whole pickup "
+                   "(real pickup < 0)",
+        "what": "The annualized interest differential you are paid — or pay — "
+                "just for holding the currency versus USD, before anything "
+                "moves. It is the only component that accrues to you every day "
+                "the view is *wrong but not very wrong*.",
+        "edge": "Uncovered interest parity says forwards should price away the "
+                "differential, so carry should net to zero. Empirically it does "
+                "not — the forward premium puzzle: high-carry currencies "
+                "depreciate less, on average, than their forwards imply, so "
+                "rolling forwards harvests a persistent risk premium. That "
+                "premium is compensation for crash risk: you collect it in calm "
+                "regimes and give a slice back in risk-off. The model's "
+                "refinement is that *nominal* carry which merely compensates for "
+                "higher inflation is not edge at all — it is the currency's "
+                "expected depreciation in disguise — hence the haircut when the "
+                "inflation gap swallows the pickup, and the separate penalty "
+                "beyond that.",
+        "fails": "in global vol spikes: carry is a crowded trade and unwinds "
+                 "violently, all pairs at once, regardless of local merit.",
+    },
+    {
+        "name": "Cycle",
+        "formula": "phase value (Overheating +0.9, Goldilocks +0.6, Stagflation "
+                   "−0.6, Disinflation −0.9) × cycle amplitude (capped 1.5) × "
+                   "0.5; when the clock's ETA to the next phase ≤ 9 months, "
+                   "half the weight shifts to the *destination* phase",
+        "what": "Where the economy sits on the clock, and — more importantly — "
+                "where it is rotating to. Overheating and Goldilocks attract "
+                "capital: rate expectations climb, equity and credit inflows "
+                "follow. Stagflation and Disinflation repel it: cuts are "
+                "coming, growth is going.",
+        "edge": "Markets are good at pricing the central bank's *last* move and "
+                "bad at pricing the *rotation*. A currency entering Overheating "
+                "will receive hikes that are not yet in the forwards; one "
+                "rolling into Disinflation will receive cuts that are not "
+                "either. The heading blend is deliberate: when rotation is "
+                "fast you want to own the currency for what the cycle is about "
+                "to do, not for where it stands. Amplitude scaling keeps "
+                "direction honest — an economy hovering near the origin of the "
+                "clock has a direction but no cycle, and direction without "
+                "amplitude is noise.",
+        "fails": "when a supply shock masquerades as a cycle phase: oil-shock "
+                 "stagflation is bullish for an oil exporter's currency and "
+                 "bearish for an importer's, and the clock cannot tell them "
+                 "apart.",
+    },
+    {
+        "name": "Valuation",
+        "formula": "−0.45 × REER deviation from its 10y average (z, clipped "
+                   "±2.5), multiplied by the context-filter gate: ×1.25 on "
+                   "EARLY TURN, ×1.0 on SETUP, ×0.5 on WATCH, ×0.3 on LATE, "
+                   "×0 on TREND INTACT",
+        "what": "How rich or cheap the currency is in *real, trade-weighted* "
+                "terms — the BIS broad REER against its own decade. Real, so "
+                "inflation differentials are already netted out; effective, so "
+                "it measures competitiveness against all partners, not just "
+                "the dollar.",
+        "edge": "Real exchange rates mean-revert over multi-year horizons "
+                "through the competitiveness channel: a persistently rich "
+                "currency erodes exports and the current account until the "
+                "currency itself gives way, and vice versa. But the half-lives "
+                "are long, which is exactly why this component is the one the "
+                "context filter polices hardest: a cheap currency whose central "
+                "bank is cutting into a slowdown is cheap *for a reason* and "
+                "earns nothing (TREND INTACT ×0); the same cheapness with the "
+                "correction already underway and the cycle turning earns a "
+                "premium (EARLY TURN ×1.25). Valuation is edge only near "
+                "turning points — the gate is what turns a slow anchor into a "
+                "timing-aware signal.",
+        "fails": "when the fair value itself moves: a terms-of-trade regime "
+                 "shift (commodity supercycle, an energy transition) makes the "
+                 "10-year mean stale, and the model will call 'rich' what is "
+                 "actually a new equilibrium.",
+    },
+    {
+        "name": "Momentum",
+        "formula": "policy direction: hiking +0.4, on hold 0, cutting −0.4; "
+                   "+0.2 bonus for hiking while inflation momentum is already "
+                   "falling",
+        "what": "Which way the central bank is actually moving right now — not "
+                "the level of rates (that is carry) but the direction of "
+                "travel.",
+        "edge": "Policy cycles persist: hikes cluster, cuts cluster, and the "
+                "first move is rarely the last, while FX over one-to-six-month "
+                "horizons follows the *change* in rate differentials more than "
+                "the level. The bonus case is deliberate and is the strongest "
+                "single configuration in the stack: a bank hiking while "
+                "inflation already falls is delivering rising *real* rates — "
+                "the currency gets the differential and the credibility at "
+                "once.",
+        "fails": "at the end of the cycle: the last hike is historically a "
+                 "sell signal, not a buy — the clock and the danger model are "
+                 "the overlays meant to catch the turn this component misses.",
+    },
+    {
+        "name": "Penalty",
+        "formula": "−0.6 per pp of inflation gap beyond +2pp above target, "
+                   "capped at −3",
+        "what": "A credibility discount, not a return forecast. Beyond a "
+                "couple of points above target, inflation stops being an input "
+                "to carry and becomes the whole story: pass-through "
+                "accelerates, expectations de-anchor, and the real value of "
+                "the carry collapses faster than the nominal rate can "
+                "compensate.",
+        "edge": "The edge here is *avoidance*: the cap at −3 encodes that past "
+                "a point the right reading is 'uninvestable', not 'great "
+                "short'. Shorting a 30–40% yielder pays ruinous negative "
+                "carry, so a broken-credibility currency is excluded from the "
+                "crosses on *both* sides — you neither hold it for the carry "
+                "trap nor short it for the bleed. It re-enters the tradable "
+                "universe only when disinflation is delivered, at which point "
+                "the (still huge) carry starts counting again.",
+        "fails": "at the moment of a credible stabilization: the penalty "
+                 "lags the regime change, and the first year of a successful "
+                 "disinflation is historically the best carry trade there is.",
+    },
+]
+
+
+def _fx_worked_example(res: Results) -> list[str]:
+    """Walk through the actual top-ranked currency's decomposition."""
+    C = COUNTRIES
+    if not res.fx:
+        return []
+    top = res.fx[0]
+    st = res.stances.get(top.cc)
+    us = res.stances.get("US")
+    clk = res.clocks.get(top.cc)
+    v = res.reer_ctx.get(top.cc) if res.reer_ctx else None
+    parts = []
+    if st and us:
+        parts.append(f"carry {top.carry:+.2f} from a {st.policy - us.policy:+.1f}pp "
+                     f"policy-rate pickup over USD")
+    if clk:
+        parts.append(f"cycle {top.cycle:+.2f} from sitting in {clk.phase}"
+                     + (f" and heading to {clk.heading} in ~{clk.months_to_next:.0f}m"
+                        if clk.months_to_next else ""))
+    if v is not None and v.verdict != "NONE":
+        parts.append(f"valuation {top.valuation:+.2f} from a REER {v.z:+.1f}σ vs its "
+                     f"decade, credited because the context verdict is {v.verdict}")
+    else:
+        parts.append(f"valuation {top.valuation:+.2f}")
+    if st:
+        parts.append(f"momentum {top.momentum:+.2f} because {C[top.cc].cb} is "
+                     f"{st.direction}")
+    if top.penalty < -0.05:
+        parts.append(f"penalty {top.penalty:+.2f}")
+
+    comps = {"carry": top.carry, "cycle": top.cycle, "valuation": top.valuation,
+             "momentum": top.momentum, "penalty": top.penalty}
+    pro = [k for k, x in comps.items() if x > 0.1]
+    con = [k for k, x in comps.items() if x < -0.1]
+    dominant = max(comps, key=lambda k: comps[k])
+    if not con:
+        agreement = (f"{len(pro)} engines pull the same way and none pulls "
+                     f"against")
+    else:
+        agreement = (f"{len(pro)} engines pull for it, {' and '.join(con)} "
+                     f"against")
+    caveat = ""
+    if comps[dominant] > 0.6 * max(0.01, top.total) and dominant == "valuation":
+        caveat = (" — and the dominant engine, valuation, only counts because "
+                  "the context filter licensed it (EARLY TURN), which is what "
+                  "separates this from a naive value trade")
+    return [f"**Worked example — {top.ccy}, this month's top score "
+            f"({top.total:+.2f}):** " + "; ".join(parts)
+            + f". {agreement.capitalize()}{caveat}. The agreement structure, "
+              f"not any single number, is the trade."]
+
+
 def _momentum_ctx(res: Results, cc: str) -> str:
     """Context line for divergence plays: these are momentum trades, so the
     check is the danger model, not a stretch."""
@@ -420,6 +599,56 @@ def build_report(res: Results, charts: dict[str, Path], outdir: Path) -> str:
 
     # --------------------------------------------------------------------- FX
     add("## 6. FX scorecard")
+    add("")
+    add("Each currency is scored against the USD as the sum of five engines — "
+        "**carry + cycle + valuation + momentum − penalty**. The engines are "
+        "deliberately built on *different* sources of return, so their sum is "
+        "less about magnitude than about **agreement**: any single engine can "
+        "be wrong for a year, but a currency where four pull the same way is "
+        "wrong far less often. The components are scaled to comparable size "
+        "(each contributes roughly ±0.5 to ±1.5), so a total above ≈ +1 is a "
+        "serious long candidate and anything below ≈ −0.5 is funding-leg "
+        "material.")
+    add("")
+    add("### 6.1 The five engines, one by one")
+    add("")
+    for c in FX_DOC:
+        add(f"**{c['name']}** — `{c['formula']}`")
+        add("")
+        add(f"*What it measures.* {c['what']}")
+        add("")
+        add(f"*Where the edge lies.* {c['edge']}")
+        add("")
+        add(f"*Where it fails:* {c['fails']}")
+        add("")
+    add("### 6.2 How to read the sum")
+    add("")
+    add("- **The edge is in the agreement structure, not the total.** Carry "
+        "confirmed by cycle and momentum — being paid to hold a currency whose "
+        "central bank is hiking into an overheating economy — is the strongest "
+        "configuration in the framework. Carry *against* cycle (a high yielder "
+        "rolling into Disinflation, where the coming cuts will eat the "
+        "differential) is the classic carry trap, and the sum catches it "
+        "automatically because the cycle term goes negative before the carry "
+        "term does.")
+    add("- **A single-engine score is a watchlist item, not a trade.** A total "
+        "driven by valuation alone is precisely the 'mean reversion alone' "
+        "mistake the context filter exists to block; a total driven by carry "
+        "alone deserves a credibility check before anything else.")
+    add("- **Why crosses instead of USD legs.** The scores are measured vs USD, "
+        "but the cleanest expression pairs the strongest long against the "
+        "weakest *credible* funder: the dollar — with its own cycle, its own "
+        "politics — nets out, leaving a pure relative-cycle position that is "
+        "*paid* the carry differential to wait.")
+    add("- **The penalty is a filter, not a signal.** A deeply negative "
+        "penalty (TRY-style) removes the currency from both sides of the "
+        "book: the carry is uncollectible and the short bleeds. Uninvestable "
+        "is a verdict too.")
+    add("")
+    for line in _fx_worked_example(res):
+        add(line)
+        add("")
+    add("### 6.3 The scorecard")
     add("")
     add(f"![FX scores]({rel['fx']})")
     add("")

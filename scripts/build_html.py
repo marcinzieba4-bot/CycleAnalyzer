@@ -10,7 +10,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from cycle_analyzer.data import load_panel                    # noqa: E402
 from cycle_analyzer.analysis import run, Results              # noqa: E402
-from cycle_analyzer.report import _top_plays, _all_verdicts   # noqa: E402
+from cycle_analyzer.report import (_top_plays, _all_verdicts,   # noqa: E402
+                                   FX_DOC, _fx_worked_example)
 from cycle_analyzer.universe import COUNTRIES                 # noqa: E402
 
 import numpy as np                                       # noqa: E402
@@ -122,6 +123,26 @@ td.name { font-weight: 600; }
 .doctrine .rule.setup b { color: var(--warn); }
 .doctrine .rule.intact b { color: var(--hot); }
 .doctrine .rule.late b { color: var(--muted); }
+.engines { display: grid; gap: 14px; margin: 20px 0; }
+.engine {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 18px 20px; border-left-width: 4px;
+}
+.engine h4 { font: 600 16px/1.3 "IBM Plex Serif", Georgia, serif; margin: 0 0 4px; }
+.engine .formula {
+  font: 400 12px/1.5 "IBM Plex Mono", monospace; color: var(--ink2);
+  margin: 0 0 10px; overflow-wrap: break-word;
+}
+.engine p { margin: 0 0 8px; font-size: 14.5px; }
+.engine p:last-child { margin-bottom: 0; }
+.engine p b { font: 600 11px/1 "IBM Plex Mono", monospace; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--ink2); }
+.readrules { padding-left: 0; list-style: none; margin: 18px 0; display: grid; gap: 10px; }
+.readrules li { background: var(--surface); border: 1px solid var(--line);
+  border-radius: 6px; padding: 12px 16px; font-size: 14.5px; }
+.worked { background: var(--accent-soft); border-radius: 8px; padding: 16px 20px;
+  margin: 18px 0; font-size: 14.5px; }
+h3.subhead { font: 600 18px/1.3 "IBM Plex Serif", Georgia, serif; margin: 34px 0 8px; }
 .play .how, .play .ctx { font-size: 14px; margin: 0 0 10px; padding: 10px 14px; border-radius: 6px; }
 .play .how { background: var(--accent-soft); }
 .play .how b, .play .ctx b { font: 600 11px/1 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
@@ -367,11 +388,55 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
 
     # section 6: FX
     add('<h2><span class="no">06</span>FX scorecard</h2>')
-    add('<p class="sub">Score vs USD = carry (haircut when inflation eats it) + cycle '
-        "phase (weighted toward the heading when rotation is fast) + REER valuation "
-        "(mean-reversion pull) + policy momentum − credibility penalty.</p>")
+    add('<p class="sub">Each currency is scored against the USD as the sum of five '
+        "engines — <b>carry + cycle + valuation + momentum − penalty</b>. The engines "
+        "are deliberately built on <i>different</i> sources of return, so the sum is "
+        "less about magnitude than about <b>agreement</b>: any single engine can be "
+        "wrong for a year, but a currency where four pull the same way is wrong far "
+        "less often. Components are scaled to comparable size (each contributes "
+        "roughly ±0.5 to ±1.5): a total above ≈ +1 is a serious long candidate, "
+        "anything below ≈ −0.5 is funding-leg material.</p>")
+    add('<h3 class="subhead">The five engines, one by one</h3>')
+    # left-border colors match the stacked bars in the chart below
+    engine_col = {"Carry": "#2a78d6", "Cycle": "#eb6834", "Valuation": "#1baf7a",
+                  "Momentum": "#eda100", "Penalty": "#e87ba4"}
+    add('<div class="engines">')
+    for c in FX_DOC:
+        add(f'<div class="engine" style="border-left-color:{engine_col[c["name"]]}">'
+            f'<h4>{c["name"]}</h4>'
+            f'<p class="formula">{c["formula"]}</p>'
+            f'<p><b>What it measures</b><br>{c["what"]}</p>'
+            f'<p><b>Where the edge lies</b><br>{c["edge"]}</p>'
+            f'<p><b>Where it fails</b><br>{c["fails"]}</p></div>')
+    add("</div>")
+    add('<h3 class="subhead">How to read the sum</h3>')
+    add('<ul class="readrules">')
+    add("<li><b>The edge is in the agreement structure, not the total.</b> Carry "
+        "confirmed by cycle and momentum — being paid to hold a currency whose "
+        "central bank is hiking into an overheating economy — is the strongest "
+        "configuration in the framework. Carry <i>against</i> cycle (a high yielder "
+        "rolling into Disinflation, where the coming cuts will eat the differential) "
+        "is the classic carry trap, and the sum catches it automatically: the cycle "
+        "term goes negative before the carry term does.</li>")
+    add("<li><b>A single-engine score is a watchlist item, not a trade.</b> A total "
+        "driven by valuation alone is precisely the 'mean reversion alone' mistake "
+        "the context filter exists to block; a total driven by carry alone deserves "
+        "a credibility check before anything else.</li>")
+    add("<li><b>Why crosses instead of USD legs.</b> The scores are measured vs USD, "
+        "but the cleanest expression pairs the strongest long against the weakest "
+        "<i>credible</i> funder: the dollar — with its own cycle, its own politics — "
+        "nets out, leaving a pure relative-cycle position that is <i>paid</i> the "
+        "carry differential to wait.</li>")
+    add("<li><b>The penalty is a filter, not a signal.</b> A deeply negative penalty "
+        "(TRY-style) removes the currency from both sides of the book: the carry is "
+        "uncollectible and the short bleeds. Uninvestable is a verdict too.</li>")
+    add("</ul>")
+    for line in _fx_worked_example(res):
+        add(f'<div class="worked">{line.replace("**", "")}</div>')
+    add('<h3 class="subhead">The scorecard</h3>')
     add(img(charts_dir / "fx.png", "FX scorecard",
-            "Stacked decomposition; the diamond is the total."))
+            "Stacked decomposition — bar colors match the engine cards above; "
+            "the diamond is the total."))
     if res.crosses:
         add("<p><b>Model crosses</b> — strongest longs against the weakest "
             "<i>credible</i> funders (a broken-credibility high-carry currency is "

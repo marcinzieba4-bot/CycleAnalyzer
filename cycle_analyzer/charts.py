@@ -207,7 +207,51 @@ def fx_chart(res: Results, path: Path):
     _save(fig, path)
 
 
-# ---------------------------------------------- 6. OU projections (multiples)
+# ------------------------------------------------- 6. context filter map
+
+_VERDICT_COL = {"EARLY_TURN": ST_GOOD, "SETUP": ST_WARN,
+                "TREND_INTACT": ST_CRIT, "WATCH": MUTED, "LATE": BASE}
+_VERDICT_LBL = {"EARLY_TURN": "early turn — fade it", "SETUP": "setup — position early",
+                "TREND_INTACT": "trend intact — don't fade", "WATCH": "watch", "LATE": "late"}
+
+
+def context_chart(res, path: Path):
+    fams = [("inflation", res.infl_ctx, "Inflation gap"),
+            ("slope", res.slope_ctx, "Curve slope"),
+            ("reer", res.reer_ctx, "REER")]
+    fig, axes = plt.subplots(1, 3, figsize=(12.6, 4.4), sharey=True)
+    for ax, (fam, d, title) in zip(axes, fams):
+        ax.axhline(0, color=BASE, lw=1)
+        ax.axvspan(0.75, 3.2, ymin=0.5, ymax=1, color="#e2eee0", alpha=0.5, zorder=0)
+        ax.axvspan(0.75, 3.2, ymin=0, ymax=0.5, color="#f4e5dc", alpha=0.5, zorder=0)
+        for v in (d or {}).values():
+            if v.verdict == "NONE":
+                continue
+            col = _VERDICT_COL[v.verdict]
+            ax.scatter([abs(v.z)], [v.context], s=46, color=col, zorder=3,
+                       marker="^" if v.turning else "o",
+                       edgecolors=SURFACE, linewidths=1.1)
+            ax.annotate(v.cc, (abs(v.z), v.context), textcoords="offset points",
+                        xytext=(5, 4), fontsize=7.5, color=INK)
+        ax.set_xlim(0.6, 3.2); ax.set_ylim(-1.05, 1.05)
+        ax.set_title(title, fontsize=10, color=INK)
+        ax.set_xlabel("stretch |z|")
+        ax.tick_params(labelsize=8)
+    axes[0].set_ylabel("context score\n(+ = pushes back to mean)")
+    handles = [plt.Line2D([], [], ls="", marker="o", color=_VERDICT_COL[k],
+                          label=_VERDICT_LBL[k])
+               for k in ("EARLY_TURN", "SETUP", "TREND_INTACT", "WATCH", "LATE")]
+    handles.append(plt.Line2D([], [], ls="", marker="^", color=INK2,
+                              label="▲ = correction already started"))
+    fig.legend(handles=handles, loc="lower center", frameon=False, fontsize=8.5,
+               ncol=6, bbox_to_anchor=(0.5, -0.06))
+    fig.suptitle("The context filter — fade only the extremes the cycle has "
+                 "turned against (upper half); leave confirmed trends alone (lower half)",
+                 fontsize=10.5, color=INK, y=1.03)
+    _save(fig, path)
+
+
+# ---------------------------------------------- 7. OU projections (multiples)
 
 def ou_chart(res: Results, ccs: list[str], path: Path, years: int = 6):
     n = len(ccs)
@@ -243,12 +287,14 @@ def render_all(res: Results, outdir: Path) -> dict[str, Path]:
         "danger": outdir / "danger.png",
         "slope": outdir / "slope.png",
         "fx": outdir / "fx.png",
+        "context": outdir / "context.png",
     }
     clock_chart(res, paths["clock"])
     stance_chart(res, paths["stance"])
     danger_chart(res, paths["danger"])
     slope_chart(res, paths["slope"])
     fx_chart(res, paths["fx"])
+    context_chart(res, paths["context"])
     # OU multiples: the four most "interesting" = largest |z| with fast HL
     ranked = sorted(res.infl_fits.items(),
                     key=lambda kv: -abs(kv[1].z) / max(6.0, kv[1].half_life))

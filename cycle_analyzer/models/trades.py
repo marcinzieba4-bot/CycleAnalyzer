@@ -21,6 +21,7 @@ from dataclasses import dataclass, field
 
 from ..universe import COUNTRIES
 from .cycle_clock import ClockReading
+from .context import ContextVerdict, gate
 from .divergence import Stance
 from .mean_reversion import OUFit
 
@@ -54,7 +55,8 @@ class FXScore:
 
 
 def score_fx(clocks: dict[str, ClockReading], stances: dict[str, Stance],
-             reer_fits: dict[str, OUFit]) -> list[FXScore]:
+             reer_fits: dict[str, OUFit],
+             reer_ctx: dict[str, ContextVerdict] | None = None) -> list[FXScore]:
     us = stances.get("US")
     us_pol = us.policy if us else 0.0
     out: list[FXScore] = []
@@ -75,10 +77,14 @@ def score_fx(clocks: dict[str, ClockReading], stances: dict[str, Stance],
             if clk.months_to_next is not None and clk.months_to_next <= 9:
                 cycle = 0.5 * cycle + 0.5 * _PHASE_FX[clk.heading] * min(1.5, clk.radius) * 0.5
 
+        # Valuation: REER mean-reversion pull, but only to the extent the
+        # context filter allows — a rich currency whose richness is still fed
+        # by the cycle (TREND_INTACT) earns no fade credit at all.
         fit = reer_fits.get(cc)
         valuation = 0.0
         if fit is not None and np.isfinite(fit.z):
             valuation = -0.45 * np.clip(fit.z, -2.5, 2.5)
+            valuation *= gate(reer_ctx.get(cc)) if reer_ctx else 1.0
 
         momentum = {"hiking": +0.4, "on hold": 0.0, "cutting": -0.4}[st.direction]
         if st.direction == "hiking" and st.infl_mom < 0:
@@ -105,18 +111,37 @@ class CurveSignal:
     direction: str        # "steepener" | "flattener" | "neutral"
     conviction: int       # 1..3
     rationale: str
+    expression: str       # the actual legs to put on
+    context_verdict: str  # verdict from the context filter on the slope
+
+
+def curve_expression(cc: str, direction: str) -> str:
+    ccy = COUNTRIES[cc].ccy
+    if direction == "flattener":
+        return (f"2s10s flattener in {ccy}: pay 2y swap (or short 2y govvies / "
+                f"front-end futures), receive 10y — DV01-neutral, so the P&L is "
+                f"the slope, not the level")
+    if direction == "steepener":
+        return (f"2s10s steepener in {ccy}: receive 2y swap (or long 2y govvies), "
+                f"pay 10y — DV01-neutral, so the P&L is the slope, not the level")
+    return "no position — stay flat the curve"
 
 
 def curve_signals(slope_fits: dict[str, OUFit],
-                  clocks: dict[str, ClockReading]) -> list[CurveSignal]:
+                  clocks: dict[str, ClockReading],
+                  slope_ctx: dict[str, ContextVerdict] | None = None,
+                  stances: dict[str, Stance] | None = None) -> list[CurveSignal]:
     out: list[CurveSignal] = []
     for cc, fit in slope_fits.items():
         clk = clocks.get(cc)
         phase = clk.phase if clk else "?"
         phase_push = _PHASE_SLOPE.get(phase, 0.0)
-        # Mean reversion push: fade stretched slopes, weighted by speed.
+        v = slope_ctx.get(cc) if slope_ctx else None
+        # Mean reversion push: fade stretched slopes, weighted by reversion
+        # speed AND gated by the context filter — a stretched slope whose
+        # stretch the cycle still supports contributes nothing.
         speed = 1.0 if fit.half_life < 12 else (0.6 if fit.half_life < 24 else 0.3)
-        mr_push = -np.clip(fit.z, -2.5, 2.5) / 2.5 * speed
+        mr_push = -np.clip(fit.z, -2.5, 2.5) / 2.5 * speed * gate(v)
         signal = 0.6 * phase_push + 0.4 * mr_push
         if signal > 0.15:
             direction = "steepener"
@@ -126,20 +151,33 @@ def curve_signals(slope_fits: dict[str, OUFit],
             direction = "neutral"
         conviction = 1 + (abs(signal) > 0.45) + (abs(signal) > 0.75)
         agree = np.sign(phase_push) == np.sign(mr_push) and abs(mr_push) > 0.2
-        rationale_bits = [f"phase '{phase}' implies {'steeper' if phase_push>0 else 'flatter' if phase_push<0 else 'range'}"]
+        if v is not None and v.verdict == "EARLY_TURN" and agree:
+            conviction = min(3, conviction + 1)
+
+        bits = [f"phase '{phase}' implies "
+                f"{'steeper' if phase_push>0 else 'flatter' if phase_push<0 else 'range'}"]
+        st = stances.get(cc) if stances else None
+        if st is not None and st.direction != "on hold":
+            bits.append(f"{COUNTRIES[cc].cb} is {st.direction} ({st.d6:+.2f}pp/6m), "
+                        f"which works through the front end")
         if abs(fit.z) > 1.0:
-            rationale_bits.append(
-                f"slope is {fit.z:+.1f} sigma vs own history (half-life {fit.half_life:.0f}m)"
+            bits.append(
+                f"slope {fit.z:+.1f}σ vs own history (half-life {fit.half_life:.0f}m)"
                 + (" — mean reversion agrees" if agree else " — mean reversion leans against"))
+        if v is not None and v.verdict != "NONE":
+            bits.append(f"context filter: {v.verdict} — {v.note}")
         out.append(CurveSignal(cc=cc, slope=fit.last, slope_z=fit.z,
                                half_life=fit.half_life, phase=phase,
                                direction=direction, conviction=int(conviction),
-                               rationale="; ".join(rationale_bits)))
+                               rationale="; ".join(bits),
+                               expression=curve_expression(cc, direction),
+                               context_verdict=v.verdict if v else "NONE"))
     out.sort(key=lambda s: (-s.conviction, -abs(s.slope_z)))
     return out
 
 
-def fx_crosses(scores: list[FXScore], n: int = 3) -> list[dict]:
+def fx_crosses(scores: list[FXScore], stances: dict[str, Stance] | None = None,
+               n: int = 3) -> list[dict]:
     """Pair the strongest longs against the weakest *fundable* currencies.
 
     A currency whose score is destroyed by the credibility penalty (TRY-style)
@@ -152,9 +190,17 @@ def fx_crosses(scores: list[FXScore], n: int = 3) -> list[dict]:
     longs, shorts = fundable[:n], fundable[-n:][::-1]
     crosses = []
     for lo, sh in zip(longs, shorts):
+        carry_pp = None
+        if stances and lo.cc in stances and sh.cc in stances:
+            carry_pp = round(stances[lo.cc].policy - stances[sh.cc].policy, 2)
         crosses.append({
             "long": lo.ccy, "short": sh.ccy,
             "edge": round(lo.total - sh.total, 2),
             "carry": round(lo.carry - sh.carry, 2),
+            "carry_pp": carry_pp,
+            "expression": (
+                f"buy {lo.ccy}, sell {sh.ccy} via 3m FX forwards (rolled)"
+                + (f"; indicative positive carry ≈ {carry_pp:+.1f}pp annualized "
+                   f"from the policy-rate differential" if carry_pp is not None else "")),
         })
     return crosses

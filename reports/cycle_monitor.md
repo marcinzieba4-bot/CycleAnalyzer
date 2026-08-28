@@ -2,9 +2,9 @@
 
 *Generated 2026-08-28 by CycleAnalyzer. Data: BIS (policy rates, CPI, REER), OECD (composite leading indicators), FRED (10y yields). All signals are model output, not investment advice.*
 
-**At a glance — the plays (elaborated in §6):**
-1. Mexico curve flattener (pay the belly vs the wings or outright 10y−policy)
-2. Long BRL / short PLN
+**At a glance — the plays (elaborated in §7):**
+1. New Zealand curve flattener
+2. Long INR / short PLN
 3. The fresh signal: India
 4. The quiet carry: long MXN, because its cycle is not endangered
 5. The reckoning trade: New Zealand front end is mispriced
@@ -81,7 +81,42 @@ Every cycle variable is fit as an Ornstein–Uhlenbeck process; the half-life sa
 
 ![OU projections](charts/ou.png)
 
-## 3. What stands out vs the global cycle
+## 3. The context filter: which extremes to fade — and which to leave alone
+
+**Mean reversion alone is a bad idea.** A z-score says a variable is far from equilibrium; it says nothing about whether the forces that created the extreme are done. Every stretched variable is therefore cross-examined against the *prevailing context* — leading growth momentum, the policy direction, real-rate restrictiveness, the clock heading — and against its own turn evidence, and only then classified:
+
+- **EARLY TURN** — the correction has begun but has retraced only a fraction of the extreme, *and* the context says the cycle change is coming anyway. This is the best entry: you are not calling the top, the top is already in, and you are riding the rest of the reversion.
+- **SETUP** — the series itself is still pinned at the extreme, but the leading indicators are deteriorating hard from the top. The counter-movement has not printed yet — position before it does.
+- **TREND INTACT** — stretched, but the context still *feeds* the deviation (an early hiking cycle behind a rich currency, accelerating growth behind a hot inflation gap). **Do not fade.** The extreme can get more extreme; the statistical pull earns zero weight in the trade models until the context breaks.
+- **LATE** — the reversion has mostly happened; the edge is gone.
+
+![Context filter map](charts/context.png)
+
+| Economy | Variable | Stretch | Turning? | Retraced | Context | Verdict |
+|---|---|---|---|---|---|---|
+| India | REER | -2.2σ | yes | 20% | +0.42 | **EARLY TURN** |
+| Poland | REER | +1.3σ | yes | 31% | +0.83 | **EARLY TURN** |
+| New Zealand | REER | -1.0σ | yes | 27% | +1.00 | **EARLY TURN** |
+| New Zealand | curve slope | +0.9σ | yes | 14% | +1.00 | **EARLY TURN** |
+| Indonesia | REER | -1.7σ | no | 0% | +0.58 | **SETUP** |
+| Korea | REER | -1.1σ | no | 21% | +1.00 | **SETUP** |
+| Korea | curve slope | +0.8σ | no | 0% | +1.00 | **SETUP** |
+| Hungary | REER | +0.8σ | no | 19% | +1.00 | **SETUP** |
+| Hungary | curve slope | -0.8σ | no | 0% | +1.00 | **SETUP** |
+| United Kingdom | REER | +1.2σ | no | 5% | -0.50 | **TREND INTACT** |
+| Mexico | curve slope | +1.0σ | no | 0% | -0.22 | **TREND INTACT** |
+| South Africa | REER | +0.9σ | no | 0% | -1.00 | **TREND INTACT** |
+| Norway | curve slope | -0.9σ | no | 28% | -0.52 | **TREND INTACT** |
+| Japan | inflation gap | +0.8σ | no | 40% | -0.45 | **TREND INTACT** |
+| Poland | curve slope | +0.8σ | no | 27% | -0.76 | **TREND INTACT** |
+| Mexico | REER | +1.9σ | no | 10% | +0.08 | **WATCH** |
+| China | inflation gap | -1.4σ | no | 20% | +0.01 | **WATCH** |
+| Japan | REER | -1.2σ | no | 3% | +0.42 | **WATCH** |
+| Colombia | REER | +0.8σ | no | 0% | -0.08 | **WATCH** |
+
+*Context > 0 means the surrounding cycle pushes the variable back toward its mean; < 0 means the context still supports the extreme. Retraced = how much of the last 12 months' peak deviation is already unwound — early turns (< 40%) are entries, late ones are exits.*
+
+## 4. What stands out vs the global cycle
 
 ![Policy stance](charts/stance.png)
 
@@ -96,98 +131,118 @@ Every cycle variable is fit as an Ornstein–Uhlenbeck process; the half-life sa
 - **Euro area** — ECB runs a NEGATIVE real rate (-0.7%) with inflation +0.9pp above target — behind the curve.
 - **United Kingdom** — BoE's real rate is +2.1pp above its own decade norm — most room in the universe to ease without stoking inflation.
 
-## 4. Yield curves
+## 5. Yield curves
 
 ![Curve slopes](charts/slope.png)
 
 | Economy | Slope (pp) | z | HL (m) | Phase | Call | Why |
 |---|---|---|---|---|---|---|
-| Mexico | +2.95 | +1.0 | 7 | Overheating | **flattener** (★★★) | phase 'Overheating' implies flatter; slope is +1.0 sigma vs own history (half-life 7m) — mean reversion agrees |
-| New Zealand | +2.21 | +0.9 | 38 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
-| Korea | +1.68 | +0.8 | 19 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
-| Hungary | -0.99 | -0.8 | 20 | Disinflation | **steepener** (★★) | phase 'Disinflation' implies steeper |
+| Mexico | +2.95 | +1.0 | 7 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter; Banxico is cutting (-0.50pp/6m), which works through the front end; slope +1.0σ vs own history (half-life 7m) — mean reversion leans against; context filter: TREND_INTACT — the extreme is CONFIRMED by the prevailing context — the forces that created it are still in place; do not fade this on statistics alone |
+| New Zealand | +2.21 | +0.9 | 38 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter; RBNZ is hiking (+0.25pp/6m), which works through the front end; context filter: EARLY_TURN — the correction has started but only 14% of the extreme is unwound, and the surrounding cycle context points the same way — the rest of the move is the trade |
+| Korea | +1.68 | +0.8 | 19 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter; BoK is hiking (+0.25pp/6m), which works through the front end; context filter: SETUP — the level itself has not budged, but the leading context is breaking against it hard — position for the counter-movement before it shows in the series |
+| Hungary | -0.99 | -0.8 | 20 | Disinflation | **steepener** (★★) | phase 'Disinflation' implies steeper; MNB is cutting (-0.75pp/6m), which works through the front end; context filter: SETUP — the level itself has not budged, but the leading context is breaking against it hard — position for the counter-movement before it shows in the series |
 | Switzerland | +0.31 | -0.7 | 21 | Disinflation | **steepener** (★★) | phase 'Disinflation' implies steeper |
 | United States | +0.84 | -0.3 | 36 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
-| South Africa | +1.70 | -0.3 | 36 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
+| South Africa | +1.70 | -0.3 | 36 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter; SARB is hiking (+0.25pp/6m), which works through the front end |
 | Canada | +1.17 | +0.2 | 34 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
-| Australia | +0.48 | -0.1 | 16 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
+| Australia | +0.48 | -0.1 | 16 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter; RBA is hiking (+0.75pp/6m), which works through the front end |
 | United Kingdom | +1.05 | +0.0 | 34 | Overheating | **flattener** (★★) | phase 'Overheating' implies flatter |
-| Norway | -0.05 | -0.9 | 21 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper |
-| Poland | +1.76 | +0.8 | 11 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper |
-| Japan | +1.67 | +0.5 | 34 | Goldilocks | **steepener** (★) | phase 'Goldilocks' implies steeper |
+| Norway | -0.05 | -0.9 | 21 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper; Norges Bank is hiking (+0.25pp/6m), which works through the front end; context filter: TREND_INTACT — the extreme is CONFIRMED by the prevailing context — the forces that created it are still in place; do not fade this on statistics alone |
+| Poland | +1.76 | +0.8 | 11 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper; NBP is cutting (-0.25pp/6m), which works through the front end; context filter: TREND_INTACT — the extreme is CONFIRMED by the prevailing context — the forces that created it are still in place; do not fade this on statistics alone |
+| Japan | +1.67 | +0.5 | 34 | Goldilocks | **steepener** (★) | phase 'Goldilocks' implies steeper; BoJ is hiking (+0.25pp/6m), which works through the front end |
 | Chile | +1.02 | +0.3 | 30 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper |
-| Euro area | +1.22 | -0.2 | 29 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper |
+| Euro area | +1.22 | -0.2 | 29 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper; ECB is hiking (+0.25pp/6m), which works through the front end |
 | Sweden | +1.03 | +0.2 | 24 | Goldilocks | **steepener** (★) | phase 'Goldilocks' implies steeper |
-| Czechia | +0.95 | -0.0 | 39 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper |
+| Czechia | +0.95 | -0.0 | 39 | Stagflation | **steepener** (★) | phase 'Stagflation' implies steeper; CNB is hiking (+0.25pp/6m), which works through the front end |
 
-## 5. FX scorecard
+## 6. FX scorecard
 
 ![FX scores](charts/fx.png)
 
 | Ccy | Carry | Cycle | Valuation | Momentum | Penalty | **Total** |
 |---|---|---|---|---|---|---|
+| INR | +0.41 | +0.22 | +1.23 | +0.00 | -0.00 | **+1.86** |
 | BRL | +1.50 | +0.56 | +0.08 | -0.40 | -0.00 | **+1.74** |
 | IDR | +0.53 | +0.02 | +0.74 | +0.40 | -0.00 | **+1.69** |
-| INR | +0.41 | +0.22 | +0.98 | +0.00 | -0.00 | **+1.61** |
 | KRW | -0.11 | +0.68 | +0.50 | +0.40 | -0.00 | **+1.47** |
+| ZAR | +0.84 | +0.14 | -0.00 | +0.40 | -0.00 | **+1.38** |
 | AUD | +0.09 | +0.67 | -0.04 | +0.60 | -0.00 | **+1.32** |
-| NZD | -0.14 | +0.30 | +0.45 | +0.40 | -0.03 | **+0.98** |
-| ZAR | +0.84 | +0.14 | -0.40 | +0.40 | -0.00 | **+0.98** |
+| NZD | -0.14 | +0.30 | +0.56 | +0.40 | -0.03 | **+1.09** |
 | CAD | -0.17 | +0.65 | +0.26 | +0.00 | -0.00 | **+0.74** |
+| COP | +1.50 | -0.38 | -0.18 | +0.40 | -0.62 | **+0.72** |
 | NOK | +0.08 | +0.08 | -0.16 | +0.60 | -0.00 | **+0.60** |
-| JPY | -0.33 | -0.04 | +0.54 | +0.40 | -0.00 | **+0.57** |
-| COP | +1.50 | -0.38 | -0.37 | +0.40 | -0.62 | **+0.53** |
+| MXN | +0.72 | +0.56 | -0.42 | -0.40 | -0.00 | **+0.46** |
 | CZK | +0.03 | -0.12 | -0.13 | +0.60 | -0.00 | **+0.38** |
+| JPY | -0.33 | -0.04 | +0.27 | +0.40 | -0.00 | **+0.30** |
+| GBP | +0.02 | +0.19 | -0.00 | +0.00 | -0.00 | **+0.21** |
 | CLP | +0.22 | -0.14 | +0.11 | +0.00 | -0.00 | **+0.19** |
 | EUR | -0.17 | -0.17 | -0.10 | +0.60 | -0.00 | **+0.16** |
-| MXN | +0.72 | +0.56 | -0.84 | -0.40 | -0.00 | **+0.04** |
 | SEK | -0.23 | +0.22 | -0.09 | +0.00 | -0.00 | **-0.10** |
-| GBP | +0.02 | +0.19 | -0.55 | +0.00 | -0.00 | **-0.34** |
 | CHF | -0.45 | -0.03 | +0.07 | +0.00 | -0.00 | **-0.41** |
 | THB | -0.33 | +0.00 | +0.32 | -0.40 | -0.00 | **-0.41** |
 | CNY | -0.08 | -0.62 | +0.17 | +0.00 | -0.00 | **-0.53** |
 | HUF | +0.53 | -0.30 | -0.36 | -0.40 | -0.00 | **-0.53** |
-| PLN | +0.02 | -0.05 | -0.60 | -0.40 | -0.00 | **-1.03** |
 | TRY | +1.50 | +0.58 | -0.14 | +0.00 | -3.00 | **-1.06** |
+| PLN | +0.02 | -0.05 | -0.75 | -0.40 | -0.00 | **-1.18** |
 
-Model crosses (strongest long vs weakest short):
-- **Long BRL / short PLN** — edge +2.77, carry differential +1.48
-- **Long IDR / short HUF** — edge +2.22, carry differential +0.00
-- **Long INR / short CNY** — edge +2.14, carry differential +0.49
+Model crosses (strongest long vs weakest *credible* funder):
+- **Long INR / short PLN** — edge +3.04. buy INR, sell PLN via 3m FX forwards (rolled); indicative positive carry ≈ +1.5pp annualized from the policy-rate differential
+- **Long BRL / short HUF** — edge +2.27. buy BRL, sell HUF via 3m FX forwards (rolled); indicative positive carry ≈ +8.5pp annualized from the policy-rate differential
+- **Long IDR / short CNY** — edge +2.22. buy IDR, sell CNY via 3m FX forwards (rolled); indicative positive carry ≈ +2.8pp annualized from the policy-rate differential
 
-## 6. What is most interesting to play right now
+## 7. What is most interesting to play right now
 
-### 6.1 Mexico curve flattener (pay the belly vs the wings or outright 10y−policy)
+### 7.1 New Zealand curve flattener
 
-The Mexico 10y−policy slope sits at +2.95pp, +1.0σ vs its own history, and reverts with a 7-month half-life — fast enough to trade. The economy is in **Overheating**, which historically pushes the slope flatter, and here the mean-reversion pull points the same way: cyclical signal and statistical stretch agree, which is the rare double-confirmation this framework looks for. The clock says the phase turns in ~5 months, so the window is now. Policy stance: Banxico is cutting (-0.50pp over 6m at 6.50%).
+The New Zealand 10y−policy slope sits at +2.21pp (+0.9σ vs its own history, half-life 38m). The economy is in **Overheating**, which pushes the slope flatter, and RBNZ is hiking (+0.25pp over 6m at 2.50%) — policy moves hit the front end first, which is exactly the flattening force. Crucially, the move has *already started* but only 14% of the extreme is retraced — you are not calling the turn, the turn is in, and the context says the rest is coming. Why not Mexico, whose slope is more stretched (+1.0σ)? Because its stretch is TREND INTACT — Banxico is still cutting, which keeps feeding the steepness — and a confirmed trend is precisely the extreme this framework refuses to fade on statistics alone.
 
-*Risk:* a growth shock flips the phase to Disinflation and the trade inverts; size for the 7m half-life, not for a month.
+**How to express it:** 2s10s flattener in NZD: pay 2y swap (or short 2y govvies / front-end futures), receive 10y — DV01-neutral, so the P&L is the slope, not the level.
 
-### 6.2 Long BRL / short PLN
+**Context check:** stretch +0.9σ, already turning, 14% retraced; context score +1.00 → **EARLY_TURN**: the correction has started but only 14% of the extreme is unwound, and the surrounding cycle context points the same way — the rest of the move is the trade.
 
-The widest credible gap in the FX scorecard (+2.77). BRL: carry +1.50, cycle +0.56 (Overheating, heading Goldilocks), REER valuation +0.08. PLN: cycle -0.05 (Stagflation), valuation -0.60, momentum -0.40 — a funding currency whose central bank is easing or parked while the long leg's cycle still supports rates. You are paid +1.48 of score in pure carry to hold the view.
+*Risk:* a growth shock flips the phase to Disinflation and the trade inverts; size for the 38m half-life, not for a month.
+
+### 7.2 Long INR / short PLN
+
+The widest credible gap in the FX scorecard (+3.04). INR: carry +0.41, cycle +0.22 (Goldilocks, heading Overheating), REER valuation +1.23. PLN: cycle -0.05 (Stagflation), valuation -0.75, momentum -0.40 — a funding currency whose central bank is easing or parked while the long leg's cycle still supports rates. Why the cross and not two USD legs: pairing them nets out the dollar, so the position is a pure relative-cycle bet with the carry differential on your side.
+
+**How to express it:** buy INR, sell PLN via 3m FX forwards (rolled); indicative positive carry ≈ +1.5pp annualized from the policy-rate differential.
+
+**Context check:** long leg REER: stretch -2.2σ, already turning, 20% retraced; context score +0.42 → **EARLY_TURN**: the correction has started but only 20% of the extreme is unwound, and the surrounding cycle context points the same way — the rest of the move is the trade. Short leg REER: stretch +1.3σ, already turning, 31% retraced; context score +0.83 → **EARLY_TURN**: the correction has started but only 31% of the extreme is unwound, and the surrounding cycle context points the same way — the rest of the move is the trade.
 
 *Risk:* a global risk-off compresses EM carry crosses regardless of local cycles; the short leg rallies on safe-haven flows.
 
-### 6.3 The fresh signal: India
+### 7.3 The fresh signal: India
 
-RBI on hold 6m with inflation +0.4pp above target and rising — the debate shifts toward a hike while others are neutral. Expression: pay the front end (the hike is not priced while the pack eases) and lean long the currency.
+RBI on hold 6m with inflation +0.4pp above target and rising — the debate shifts toward a hike while others are neutral. This is the 'one fresh signal' class of trade: the market prices the pack, not the outlier, so the repricing when the outlier confirms is asymmetric — small loss if it stays parked, large gain if it moves.
+
+**How to express it:** pay 1y–2y INR swaps — the hike is not priced while the pack is neutral — and lean long INR vs USD via 3m forwards as the second leg.
+
+**Context check:** this is a divergence/momentum trade, not a fade: the OU path crosses the fight line in ~6 months, with inflation momentum +1.0pp over 3m — the context is moving *with* the position, which is what the filter requires when there is no extreme to revert.
 
 *Risk:* single-meeting risk — one CPI print or one MPC vote can void the divergence; keep it tactical.
 
-### 6.4 The quiet carry: long MXN, because its cycle is not endangered
+### 7.4 The quiet carry: long MXN, because its cycle is not endangered
 
-Mexico is the model's cleanest 'nothing breaks here' story: the OU projection keeps both the inflation gap and the growth cycle clear of danger thresholds for the whole 36-month horizon (phase: Overheating). When the cycle is far from endangered you are being paid carry (+0.72) without paying cycle risk — this is where 'we are ok with credit' applies: local-currency duration and credit both clip coupon while the clock stands still.
+Mexico is the model's cleanest 'nothing breaks here' story: the OU projection keeps both the inflation gap and the growth cycle clear of danger thresholds for the whole 36-month horizon (phase: Overheating). When the cycle is far from endangered you are being paid carry without paying cycle risk — this is where 'we are ok with credit' applies: local-currency duration and credit both clip coupon while the clock stands still.
+
+**How to express it:** long MXN vs USD via rolled 3m forwards (carry ≈ +2.9pp over USD), and/or unhedged local-currency 2–5y government bonds — the belly, not the long end, so the position is carry, not a duration view.
+
+**Context check:** stretch +1.9σ, still pinned at the extreme; context score +0.08 → **WATCH**: stretched, but turn evidence and context are both mixed.
 
 *Risk:* the safety is model-projected, not guaranteed; a supply-side inflation shock (energy, food, FX pass-through) is exactly what an OU model cannot see coming.
 
-### 6.5 The reckoning trade: New Zealand front end is mispriced
+### 7.5 The reckoning trade: New Zealand front end is mispriced
 
-A central bank holding a negative real rate (-1.8%) with inflation +2.1pp above target and momentum +1.0pp/3m eventually validates the market's fear, not its hope. Pay the front end / short short-dated bonds; the currency is a second-order long *if* the bank moves, a short if it keeps refusing.
+A central bank holding a negative real rate (-1.8%) with inflation +2.1pp above target and momentum +1.0pp/3m eventually validates the market's fear, not its hope. The trade is in the front end, not the currency: NZD is a second-order long *if* the bank moves, a short if it keeps refusing — so let rates carry the view. Note this is the same macro story as the curve trade above: the 2s10s flattener is the DV01-neutral version, paying 2y outright is the directional version — run one or the other, sized once, not both at full size.
+
+**How to express it:** pay 2y NZD swap (or short 2y govvies / front-end futures); keep duration elsewhere until the front end reprices the hikes.
+
+**Context check:** this is a divergence/momentum trade, not a fade: already inside the inflation-fight zone, with inflation momentum +1.0pp over 3m — the context is moving *with* the position, which is what the filter requires when there is no extreme to revert.
 
 *Risk:* the bank may be right — if growth cracks first, inflation dies on its own and paying the front end loses.
 
-## 7. Phase playbook (reference)
+## 8. Phase playbook (reference)
 
 - **Goldilocks** (Japan, Sweden, India): credit-friendly: carry works, curve gently steepens, currency supported
 - **Overheating** (United States, United Kingdom, Canada, Australia, New Zealand, Brazil, Mexico, South Africa, Turkiye, Indonesia, Korea): pre-hike: pay the front end, long the currency, flatteners
@@ -198,6 +253,7 @@ A central bank holding a negative real rate (-1.8%) with inflation +2.1pp above 
 
 - **Clock**: growth z = OECD CLI deviation from 100 scaled by 15y dispersion; inflation z = CPI y/y minus CB target scaled likewise. Phase angle θ = atan2(infl, growth); rotation speed = median monthly Δθ over 9m.
 - **Mean reversion**: AR(1)/OU fit per series; expected path blends OU decay with fading 3m momentum, producing the realistic rise-then-revert hump. Danger = projected path crossing ±1σ.
+- **Context filter**: every |z| ≥ 0.75 stretch is cross-examined: turn evidence (3m drift back toward the mean, share of the 12m peak already retraced) and a context score built from leading-growth momentum, real-rate restrictiveness, policy direction and the clock heading. Verdicts gate the mean-reversion terms in the trade models: TREND INTACT zeroes them, EARLY TURN boosts them.
 - **Standouts**: 6m policy change vs universe median (robust z via MAD), real-rate gap vs own decade, inflation momentum. Labels: early hiker, cutting-into-inflation, deliberating hike, behind the curve, room to cut.
 - **FX score** = carry (haircut when inflation gap eats it) + clock phase (weighted toward the heading when rotation is fast) + REER mean-reversion pull + policy momentum − credibility penalty.
 - **Curve call** = 0.6 × phase implication + 0.4 × OU stretch fade, weighted by reversion speed.

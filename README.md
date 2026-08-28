@@ -41,7 +41,18 @@ Three model layers sit on top:
    −1σ = recession zone) yields either a **months-to-danger** estimate or an
    explicit **"cycle not endangered"** flag — the economies where carry and
    credit can still be clipped without fighting the clock.
-3. **Divergence / standouts** (`models/divergence.py`) — each central bank's
+3. **Context filter** (`models/context.py`) — because *mean reversion alone is
+   a bad idea*: every |z| ≥ 0.75 stretch is cross-examined against its own turn
+   evidence (has the correction begun? how much of the 12-month peak is already
+   retraced?) and a context score built from leading-growth momentum, real-rate
+   restrictiveness, policy direction and the clock heading. Verdicts:
+   **EARLY TURN** (correction begun, only slightly retraced, context confirms →
+   the best entry), **SETUP** (still pinned at the extreme but leading
+   indicators breaking hard from the top → position for the counter-movement),
+   **TREND INTACT** (the context still feeds the extreme → *never* fade),
+   **LATE** (edge gone). The verdicts gate the mean-reversion terms in the
+   trade models — TREND INTACT zeroes them, EARLY TURN boosts them.
+4. **Divergence / standouts** (`models/divergence.py`) — each central bank's
    6-month policy move is compared to the universe median (robust MAD z),
    plus real-rate gaps and inflation momentum → labeled signals: *early
    hiker*, *deliberating a hike while others are neutral/cutting*, *cutting
@@ -50,12 +61,13 @@ Three model layers sit on top:
 Trade generation (`models/trades.py`) maps all of it to markets:
 
 - **FX score** = carry (haircut when inflation eats it) + clock phase
-  (weighted toward the *heading* when rotation is fast) + REER mean-reversion
-  pull + policy momentum − credibility penalty. Crosses pair the strongest
-  longs against the weakest *fundable* (credible) shorts.
-- **Curve call** = 0.6 × phase implication + 0.4 × OU slope-stretch fade →
-  steepener / flattener with 1–3 star conviction; double-confirmation
-  (phase and mean reversion agreeing) is flagged explicitly.
+  (weighted toward the *heading* when rotation is fast) + context-gated REER
+  mean-reversion pull + policy momentum − credibility penalty. Crosses pair
+  the strongest longs against the weakest *fundable* (credible) shorts, with
+  the concrete expression (rolled 3m forwards, indicative carry in pp).
+- **Curve call** = 0.6 × phase implication + 0.4 × context-gated OU
+  slope-stretch fade → steepener / flattener with 1–3 star conviction and the
+  exact legs (2s10s DV01-neutral: pay/receive 2y vs 10y).
 
 ## Universe & data
 

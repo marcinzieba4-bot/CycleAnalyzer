@@ -8,10 +8,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from cycle_analyzer.data import load_panel               # noqa: E402
-from cycle_analyzer.analysis import run, Results         # noqa: E402
-from cycle_analyzer.report import _top_plays             # noqa: E402
-from cycle_analyzer.universe import COUNTRIES            # noqa: E402
+from cycle_analyzer.data import load_panel                    # noqa: E402
+from cycle_analyzer.analysis import run, Results              # noqa: E402
+from cycle_analyzer.report import _top_plays, _all_verdicts   # noqa: E402
+from cycle_analyzer.universe import COUNTRIES                 # noqa: E402
 
 import numpy as np                                       # noqa: E402
 
@@ -109,6 +109,24 @@ td.name { font-weight: 600; }
 .tag.steep    { background: var(--cold-soft); color: var(--cold); }
 .tag.flat     { background: var(--hot-soft); color: var(--hot); }
 .tag.neutral  { background: var(--surface); color: var(--ink2); border: 1px solid var(--line); }
+.tag.early    { background: var(--good-soft); color: var(--good); }
+.tag.setup    { background: var(--warn-soft); color: var(--warn); }
+.tag.intact   { background: var(--hot-soft); color: var(--hot); }
+.doctrine { display: grid; gap: 10px; margin: 20px 0; }
+.doctrine .rule {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  padding: 12px 16px; font-size: 14.5px;
+}
+.doctrine .rule b { font: 700 11.5px/1 "IBM Plex Mono", monospace; letter-spacing: .06em; }
+.doctrine .rule.early b { color: var(--good); }
+.doctrine .rule.setup b { color: var(--warn); }
+.doctrine .rule.intact b { color: var(--hot); }
+.doctrine .rule.late b { color: var(--muted); }
+.play .how, .play .ctx { font-size: 14px; margin: 0 0 10px; padding: 10px 14px; border-radius: 6px; }
+.play .how { background: var(--accent-soft); }
+.play .how b, .play .ctx b { font: 600 11px/1 "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.play .ctx { border: 1px dashed var(--line); color: var(--ink2); }
+.play .ctx b { color: var(--ink2); }
 ul.standouts { padding-left: 0; list-style: none; margin: 18px 0; display: grid; gap: 10px; }
 ul.standouts li {
   background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent);
@@ -268,8 +286,54 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
                 "The four most actionable inflation gaps: stretched and fast-reverting. "
                 "Blue = history, orange dash = OU projection, red dots = the fight line."))
 
-    # section 3: standouts
-    add('<h2><span class="no">03</span>What stands out vs the global cycle</h2>')
+    # section 3: context filter
+    add('<h2><span class="no">03</span>The context filter — which extremes to fade, '
+        'which to leave alone</h2>')
+    add('<p class="sub"><b>Mean reversion alone is a bad idea.</b> A z-score says a '
+        "variable is far from equilibrium; it says nothing about whether the forces "
+        "that created the extreme are done. Every stretch is cross-examined against "
+        "the prevailing context — leading growth momentum, policy direction, real-rate "
+        "restrictiveness, the clock heading — and against its own turn evidence:</p>")
+    add('<div class="doctrine">')
+    add('<div class="rule early"><b>EARLY TURN</b> — the correction has begun but has '
+        "retraced only a fraction of the extreme, and the context says the cycle change "
+        "is coming anyway. The best entry: the top is already in, you ride the rest.</div>")
+    add('<div class="rule setup"><b>SETUP</b> — still pinned at the extreme, but the '
+        "leading indicators are deteriorating hard from the top. The counter-movement "
+        "has not printed yet — position before it does.</div>")
+    add('<div class="rule intact"><b>TREND INTACT</b> — stretched, but the context still '
+        "<i>feeds</i> the deviation (an early hiking cycle behind a rich currency). "
+        "Do not fade: the statistical pull earns zero weight until the context breaks.</div>")
+    add('<div class="rule late"><b>LATE</b> — the reversion has mostly happened; '
+        "the edge is gone.</div>")
+    add("</div>")
+    ctx_png = charts_dir / "context.png"
+    if ctx_png.exists():
+        add(img(ctx_png, "Context filter map",
+                "Stretch magnitude vs context score per family. Upper half = the cycle "
+                "has turned against the extreme (fadeable); lower half = the extreme is "
+                "still being fed (leave it alone). ▲ = correction already started."))
+    verdicts = _all_verdicts(res)
+    if verdicts:
+        vcls = {"EARLY_TURN": "early", "SETUP": "setup", "TREND_INTACT": "intact",
+                "WATCH": "watch", "LATE": "neutral"}
+        fam_label = {"inflation": "inflation gap", "slope": "curve slope", "reer": "REER"}
+        add('<div class="tablewrap"><table><thead><tr>'
+            "<th>Economy</th><th>Variable</th><th>Stretch</th><th>Turning?</th>"
+            "<th>Retraced</th><th>Context</th><th>Verdict</th></tr></thead><tbody>")
+        for v in verdicts:
+            add(f'<tr><td class="name">{C[v.cc].name}</td><td>{fam_label[v.family]}</td>'
+                f'<td class="num">{fmt(v.z)}σ</td><td>{"yes" if v.turning else "no"}</td>'
+                f'<td class="num">{v.retraced:.0%}</td><td class="num">{v.context:+.2f}</td>'
+                f'<td><span class="tag {vcls[v.verdict]}">{v.verdict.replace("_", " ").lower()}</span></td></tr>')
+        add("</tbody></table></div>")
+        add('<p class="sub">Context &gt; 0 = the surrounding cycle pushes the variable '
+            "back toward its mean; &lt; 0 = the context still supports the extreme. "
+            "Retraced = how much of the last 12 months' peak deviation is already "
+            "unwound — early turns (&lt; 40%) are entries, late ones are exits.</p>")
+
+    # section 4: standouts
+    add('<h2><span class="no">04</span>What stands out vs the global cycle</h2>')
     add('<p class="sub">Divergence is the signal: the first hiker in an easing world, the '
         "bank deliberating a hike while the pack is neutral, the one cutting into rising "
         "inflation. Each stance is scored against the universe median.</p>")
@@ -281,8 +345,8 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
         add(f"<li><b>{C[s.cc].name}</b> — {s.headline}.</li>")
     add("</ul>")
 
-    # section 4: curves
-    add('<h2><span class="no">04</span>Yield curves</h2>')
+    # section 5: curves
+    add('<h2><span class="no">05</span>Yield curves</h2>')
     add('<p class="sub">Slope = 10y − policy. The call combines what the phase implies '
         "(overheating flattens, disinflation steepens) with the OU stretch of the slope "
         "against its own history; stars mark conviction, and phase + mean reversion "
@@ -301,8 +365,8 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
             f'<td style="white-space:normal;min-width:260px">{s.rationale}</td></tr>')
     add("</tbody></table></div>")
 
-    # section 5: FX
-    add('<h2><span class="no">05</span>FX scorecard</h2>')
+    # section 6: FX
+    add('<h2><span class="no">06</span>FX scorecard</h2>')
     add('<p class="sub">Score vs USD = carry (haircut when inflation eats it) + cycle '
         "phase (weighted toward the heading when rotation is fast) + REER valuation "
         "(mean-reversion pull) + policy momentum − credibility penalty.</p>")
@@ -313,22 +377,29 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
             "<i>credible</i> funders (a broken-credibility high-carry currency is "
             "excluded from the short leg: shorting 30–40% carry is a bleed, not a hedge):</p><ul>")
         for x in res.crosses:
-            add(f"<li><b>Long {x['long']} / short {x['short']}</b> — edge {x['edge']:+.2f}, "
-                f"carry differential {x['carry']:+.2f}</li>")
+            add(f"<li><b>Long {x['long']} / short {x['short']}</b> — edge {x['edge']:+.2f}. "
+                f"{x['expression']}</li>")
         add("</ul>")
 
-    # section 6: plays
-    add('<h2><span class="no">06</span>What is most interesting to play</h2>')
-    add('<p class="sub">Ranked by how many independent signals agree.</p>')
+    # section 7: plays
+    add('<h2><span class="no">07</span>What is most interesting to play</h2>')
+    add('<p class="sub">Each play states the exact legs to put on and the context '
+        'check that licenses it — a stretch alone never does.</p>')
     add('<div class="plays">')
     for i, play in enumerate(plays, 1):
+        thesis = play["thesis"].replace("**", "")
         add(f'<div class="play"><div class="rank">PLAY {i}</div>'
-            f'<h3>{play["title"]}</h3><p>{play["thesis"]}</p>'
-            f'<p class="risk"><b>Risk</b> — {play["risk"]}</p></div>')
+            f'<h3>{play["title"]}</h3><p>{thesis}</p>')
+        if play.get("expression"):
+            add(f'<p class="how"><b>How to express it</b><br>{play["expression"]}.</p>')
+        if play.get("context"):
+            ctx = play["context"].replace("**", "")
+            add(f'<p class="ctx"><b>Context check</b><br>{ctx}</p>')
+        add(f'<p class="risk"><b>Risk</b> — {play["risk"]}</p></div>')
     add("</div>")
 
     # methodology
-    add('<h2><span class="no">07</span>Methodology</h2>')
+    add('<h2><span class="no">08</span>Methodology</h2>')
     add('<dl class="method">')
     add("<dt>Clock</dt><dd>Growth z = OECD composite leading indicator's deviation from 100, "
         "scaled by 15y dispersion. Inflation z = CPI y/y minus the central-bank target, scaled "
@@ -337,6 +408,11 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
         "with fading 3-month momentum (the realistic rise-then-revert hump). Danger = the "
         "projected path crossing +1σ (inflation) or −1σ (growth); safe requires staying "
         "0.6σ clear for 36 months.</dd>")
+    add("<dt>Context filter</dt><dd>Every |z| ≥ 0.75 stretch is cross-examined: turn "
+        "evidence (3m drift back toward the mean, share of the 12m peak already retraced) "
+        "plus a context score from leading-growth momentum, real-rate restrictiveness, "
+        "policy direction and the clock heading. Verdicts gate the mean-reversion terms "
+        "in the trade models: TREND INTACT zeroes them, EARLY TURN boosts them.</dd>")
     add("<dt>Standouts</dt><dd>6m policy change vs universe median (robust MAD z), real-rate "
         "gap vs own decade, 3m inflation momentum → early hiker, deliberating hike, cutting "
         "into inflation, behind the curve, room to cut.</dd>")

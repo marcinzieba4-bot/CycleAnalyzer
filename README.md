@@ -94,6 +94,12 @@ python scripts/run_analysis.py --refresh   # re-download everything
 
 Output: `reports/cycle_monitor.md` + charts in `reports/charts/`.
 
+`scripts/build_html.py` renders the self-contained HTML version, and
+`scripts/site_publish.py --deploy` publishes it to the veerock site's
+Research > Cycle Analyzer tab (white theme, weekly archive rotation to
+`/research/cycle/archive/`, CloudFront invalidation). A scheduled Routine
+runs the whole chain every Sunday 15:00 Europe/Warsaw (13:00 UTC).
+
 ## Caveats
 
 - Signals are monthly and slow; this is a strategic framework, not an

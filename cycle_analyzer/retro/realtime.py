@@ -52,7 +52,21 @@ EDITIONS_FILE = OUT_ROOT / "oecd_rt_editions.json"
 NO_RT = ["CL", "CO", "TH"]                 # not in the 2008 revisions-database editions
 RT_AREA = {cc: ("EA18" if cc == "XM" else c.iso3) for cc, c in COUNTRIES.items()
            if cc not in NO_RT}
-YOY_INDEX = {"CN"}       # archive stores China's CPI as same month of previous year = 100
+# China's CP is stored as "same month of the previous year = 100" in the
+# editions through the one given; later editions (from 200911, the first to
+# carry China again) hold a fixed-base index: e.g. 2009-07 111.08 against
+# 2008-07 113.11, i.e. -1.8% y/y, the NBS figure, not +11.1%.
+YOY_INDEX = {"CN": "200812"}
+# A fixed-base China index is derived by the OECD from NBS rates, and several
+# vintages' 12-month ratios deviate from the published y/y by up to ~0.9pp
+# (e.g. 2009-10 in the February-June 2010 editions). For such editions the
+# published y/y behind the one-full-month gate competes; the fresher series is
+# used, the vintage on a tie.
+BIS_COMPETES_FIXED_BASE = {"CN"}
+
+
+def stored_as_yoy(cc: str, edition: str) -> bool:
+    return cc in YOY_INDEX and edition <= YOY_INDEX[cc]
 QUARTERLY_CPI = {"AU", "NZ"}
 STALE_MONTHS = 9         # an input whose latest observation is older is not used
 CPI_FALLBACK_EDITIONS = 3  # look back this many editions for a series missing from one
@@ -224,13 +238,15 @@ def _rt_cpi(cc: str, cp: dict, edition: str) -> tuple[pd.Series, str]:
                 f"OECD real-time CPI index {area} (quarterly), {edition_label(edition)} "
                 "edition, y/y within the vintage")
     idx = _monthly(cp.get((area, "M"), []))
-    if cc in YOY_INDEX:
+    if stored_as_yoy(cc, edition):
         return ((idx - 100.0).dropna(),
                 f"OECD real-time CPI {area}, {edition_label(edition)} edition (stored as "
                 "same month of previous year = 100; y/y = value − 100)")
     return (_yoy_monthly(idx),
             ("OECD real-time CPI index, euro-area aggregate as published "
-             f"(database code {area})" if cc == "XM" else f"OECD real-time CPI index {area}")
+             f"(database code {area})" if cc == "XM" else
+             f"OECD real-time CPI index {area} (fixed base)" if cc in YOY_INDEX else
+             f"OECD real-time CPI index {area}")
             + f", {edition_label(edition)} edition, y/y within the vintage")
 
 
@@ -366,6 +382,14 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                               f"BIS WS_LONG_CPI M.{cc}.771, present-day history gated at {lag1}"))
                 missing_note = (cpi_ed, found)
             cands.append(("oecd_rt", s, e_rt, lbl))
+            if (cc in BIS_COMPETES_FIXED_BASE and missing_note is None and not s.empty
+                    and not stored_as_yoy(cc, cpi_ed)):
+                bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
+                                   f"BIS WS_LONG_CPI M.{cc}.771 (CPI y/y)",
+                                   "one-full-month publication-lag gate")
+                cands.append(("bis_gated", _monthly(S.parse_bis_csv(bb)), be,
+                              f"BIS WS_LONG_CPI M.{cc}.771, present-day history gated at {lag1}"))
+                missing_note = ("fixed-base", None)
         if cc in NO_RT:
             bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
                                f"BIS WS_LONG_CPI M.{cc}.771 (CPI y/y)",
@@ -384,7 +408,14 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         if best is None:
             continue
         k, s, e, lbl = best
-        if missing_note:
+        if missing_note and missing_note[0] == "fixed-base":
+            ev.notes.append(
+                f"cpi/{cc}: the {edition_label(cpi_ed)} CPI edition stores a fixed-base index "
+                "(y/y = 12-month ratio inside the vintage); the published y/y behind the "
+                "one-full-month publication gate competes, and the "
+                + ("vintage" if k == "oecd_rt" else f"published y/y (latest {s.index.max()})")
+                + " is used as the fresher series.")
+        elif missing_note:
             me, found = missing_note
             ev.notes.append(
                 f"cpi/{cc}: absent from the {edition_label(me)} CPI edition; "
@@ -403,7 +434,10 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         ev.cpi_choice[cc] = {"chosen": lbl, "ledger": e.id, "last": str(s.index.max()),
                              "last_value": round(float(s.iloc[-1]), 3), "considered": considered,
                              "supplements": [], "mean_abs_diff_vs_bis_60m": None,
-                             "quarterly": cc in QUARTERLY_CPI, "kind": k}
+                             "quarterly": cc in QUARTERLY_CPI, "kind": k,
+                             "reason": ("fixed-base" if missing_note and
+                                        missing_note[0] == "fixed-base" else
+                                        "absent" if missing_note else "")}
         record("cpi", cc, s)
     if used_cpi_rt:
         ev.add(cpi_e)

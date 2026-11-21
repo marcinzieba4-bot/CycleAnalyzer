@@ -94,23 +94,38 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         + ".</p>")
     us = ev.cpi_choice.get("US", {})
     extra_bis = [c for c, v in ev.cpi_choice.items()
-                 if v.get("kind") == "bis_gated" and c not in R.NO_RT]
+                 if v.get("kind") == "bis_gated" and c not in R.NO_RT
+                 and v.get("reason") != "fixed-base"]
+    fixed_bis = [c for c, v in ev.cpi_choice.items()
+                 if v.get("kind") == "bis_gated" and v.get("reason") == "fixed-base"]
+    cn_ed = (ev.cpi_choice.get("CN") or {}).get("chosen", "")
+    if R.stored_as_yoy("CN", cpi["edition"]):
+        cn_txt = ("China’s series is stored as an index of the same month of the previous "
+                  "year = 100, so its y/y is the value less 100. ")
+    else:
+        cn_txt = ("China’s series is stored in this edition as a fixed-base index, so its y/y "
+                  "is the 12-month ratio inside the vintage; because that derived index can "
+                  "deviate from the published y/y, the published y/y behind the one-full-month "
+                  "gate competes and the fresher series is used"
+                  + (" (here the published y/y)" if "BIS" in cn_ed else " (here the vintage)")
+                  + ". ")
     add(f'<p class="sub"><b>Inflation.</b> Headline CPI y/y for 21 economies is computed '
         f"inside a single real-time vintage: the OECD consumer-price index of the "
         f"{_e(cpi['label'])} edition, the newest edition whose month had ended before the "
-        "cutoff (a conservative bound; no earlier publication date is claimed). China’s "
-        "series is stored as an index of the same month of the previous year = 100, so its "
-        "y/y is the value less 100. Australia and New Zealand publish quarterly CPI, repeated "
+        "cutoff (a conservative bound; no earlier publication date is claimed). "
+        + cn_txt + "Australia and New Zealand publish quarterly CPI, repeated "
         "across each quarter’s three months. The United States uses the BLS CPI-U all-items "
         f"NSA index from the ALFRED {ed.alfred_vintage.isoformat()} (Friday) vintage, latest "
         f"{_e(us.get('last', '?'))}. Chile, Colombia and Thailand"
         + ("".join(f", and {_e(C[c].name)} (absent from the eligible real-time edition)"
                    for c in extra_bis))
+        + ("".join(f", and {_e(C[c].name)} (published y/y fresher than the vintage index)"
+                   for c in fixed_bis))
         + " use the present-day BIS CPI "
         f"history requested only through {lag1}: a reference month is admitted once the whole "
         "following month has passed, although these offices publish within about ten days. "
         + ("Headline CPI y/y is rarely revised, but those three histories are not vintages. "
-           if not extra_bis else
+           if not (extra_bis or fixed_bis) else
            "Headline CPI y/y is rarely revised, but those histories are not vintages. ")
         + 
         "Newer national releases that were public before the cutoff but are absent from the "

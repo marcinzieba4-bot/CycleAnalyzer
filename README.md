@@ -212,6 +212,43 @@ without a retrievable press report (Mar, May, Jun 2008 editions) rest on
 Haver's dated archive entries, bracketed by ECB Monthly Bulletin cut-offs; each
 evidence item appears on a page only once it was itself published.
 
+### 2010 editions
+
+Biweekly grid continued: 2010-01-03, 01-17, 01-31, 02-14, 02-28, 03-14,
+03-28, 04-11, 04-25, 05-09, 05-23, 06-06, 06-20, 07-04, 07-18, 08-01, 08-15,
+08-29, 09-12, 09-26, 10-10, 10-24, 11-07, 11-21, 12-05, 12-19
+(`python scripts/retro_build.py --range 2010-01-01 2010-12-31 --every 14`).
+
+- **CLI editions** January–December 2010 are registered from dated public
+  reports, each content-checked against the vintage's OECD-area (January:
+  euro-area) figures. The August 2010 release (June data) has no properly
+  dated report with a point figure, so it is *not* registered: the
+  2010-08-15 and 2010-08-29 editions keep the July edition, and 2010-09-12
+  takes August's only through the edition-month-end rule.
+- **Release reference-month cap.** An edition admitted by a dated press report
+  is only shown public through that release's reference month. The February
+  2010 database edition carries January 2010 rows for 16 economies (the
+  release itself covered December 2009); those rows are dropped in the
+  2010-02-14 and 2010-02-28 editions, disclosed in the data notes, and
+  `retro_audit.py` now checks it.
+- **Türkiye's instrument switch.** On 18 May 2010 the CBRT kept overnight
+  rates unchanged and made the one-week repo rate (7%, 50bp above the
+  overnight borrowing rate) its policy rate; the BIS series switches on
+  20 May (6.50% → 7.00%). That is not a hike: from the switch on, earlier
+  history is spliced onto the new instrument (`INSTRUMENT_SWITCH` in
+  `realtime.py`), so 3/6/12-month changes, holds and the decision list are
+  measured on one instrument; the current level and carry use the actual 7%.
+- **Benchmarks** (`data/retro/benchmarks_2010.json`): Czechia 2% from January
+  2010 (announced 8 Mar 2007), Türkiye 6.5, Colombia 3 (2–4% range), Korea
+  3 ±1, Indonesia 5 ±1 (stated by Bank Indonesia on 3 Sep 2009; formalised
+  by PMK 143/2010 on 24 Aug 2010), Brazil 4.5; China 4 → 3 from the 5 Mar 2010
+  Government Work Report; India's end-of-fiscal-year WPI projection 6.5 →
+  8.5 (29 Jan) → 5.5 (20 Apr) → 6.0 (27 Jul) → 5.5 on the new WPI series
+  (2 Nov). FOMC projections, UK budgets/remit, the BoJ's April review, the
+  RBA's new Statement and South Africa's budget change wording only.
+  Forward-year targets are paraphrased ("the following year's") so that no
+  page names a later date.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

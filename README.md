@@ -177,8 +177,15 @@ Inputs whose latest observation is more than 9 months older than the anchor
 month are not used (Turkey's CLI in the Dec-2007 and Jan-2008 editions).
 Editions built (biweekly grid): 2008-01-06, 01-20, 02-03, 02-17, 03-02,
 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22, 07-06, 07-20,
-08-03, 08-17, 08-31, 09-14, 09-28, 10-12, 10-26, 11-09, 11-23, 12-07, 12-21
-(`python scripts/retro_build.py --range 2008-01-01 2008-12-31 --every 14`).
+08-03, 08-17, 08-31, 09-14, 09-28, 10-12, 10-26, 11-09, 11-23, 12-07, 12-21;
+2009-01-04, 01-18, 02-01, 02-15, 03-01, 03-15, 03-29
+(`python scripts/retro_build.py --range 2008-01-01 2009-03-31 --every 14`).
+2009 editions use `data/retro/benchmarks_2009.json`: the current-year (2009)
+targets as publicly known — Türkiye 7.5, Colombia 5.0, Indonesia 4.5 (set
+during 2008), India 3.0 from the RBI's 27 Jan 2009 review, China 4.0 from the
+5 Mar 2009 Government Work Report. A CPI series missing from the eligible
+real-time edition (China in the Jan/Feb 2009 editions) comes from the newest
+earlier edition carrying it, disclosed in the data notes.
 Q4: the December 2008 CLI edition is the first under the OECD's revised
 method (double Hodrick–Prescott filter replacing PAT; the vintage's whole
 history was re-estimated) and the pages using it say so; the US instrument

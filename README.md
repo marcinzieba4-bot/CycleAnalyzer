@@ -120,7 +120,17 @@ Europe/Warsaw on that date (`cycle_analyzer/retro/`):
 | Business confidence (10) | DBnomics `DSD_STES@DF_BTS` commit; percent balance centred on its own pre-cutoff mean |
 | CPI y/y | freshest matching-definition pre-cutoff archive (BIS / OECD), plus verified original releases (`data/retro/original_releases.json`) |
 | Policy rates | DBnomics BIS `WS_CBPOL` commit; later decisions only if announced *and* effective before the cutoff, each cited (`data/retro/announcement_sources.json`) |
-| Inflation benchmarks | the benchmark publicly known at the cutoff (`cycle_analyzer/retro/benchmarks.py`; e.g. China's 2025 CPI objective of ~2%, announced 5 Mar 2025, applies from the 2025-03-16 edition) |
+| Inflation benchmarks | the benchmark publicly known at the cutoff (`cycle_analyzer/retro/benchmarks.py`; e.g. China's 2025 CPI objective of ~2%, announced 5 Mar 2025, applies from the 2025-03-16 edition; South Africa's 3% point target from 12 Nov 2025) |
+
+**Frozen archives.** DBnomics stopped converting BIS in July 2025 and OECD in
+June 2026. When an archive's newest pre-cutoff commit is more than 30 days
+old, the builder falls back to: the ALFRED Friday vintage of the OECD CLI
+(`<ISO3>LOLITOAASTSAM`); BIS CPI and policy histories as cached in this
+repository's newest pre-cutoff `data/raw` commit (the weekly pipeline's own
+dated fetch); and, for policy decisions after that snapshot's last month,
+the BIS daily decision history with every decision cited. Editions built
+from fresh archives are unaffected (verified byte-for-byte on the model
+output).
 
 The retrospective method also charges negative carry in full, measures policy
 changes from the effective snapshot to exact calendar month-ends, and prints
@@ -135,16 +145,17 @@ python scripts/retro_build.py 2025-01-05 ... --deploy   # archive only; latest.h
 
 Editions built so far (biweekly Sundays): 2025-01-05 … 2025-02-16,
 2025-03-02, 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, and 2025-06-08,
-06-22, 07-06, 07-20, 08-03, 08-17, 08-31, 09-14, 09-28. Pass edition dates
-explicitly (or a `--range` whose start *is* a grid Sunday): `--range` steps
-from the first Sunday on/after its start.
+06-22, 07-06, 07-20, 08-03, 08-17, 08-31, 09-14, 09-28; plus 2026-09-13
+(the gap between the 2026-08-30 and 2026-09-27 archive pages). Pass edition
+dates explicitly (or a `--range` whose start *is* a grid Sunday): `--range`
+steps from the first Sunday on/after its start.
 
 DBnomics' BIS mirror has not updated since 2025-07-10, so from mid-July 2025
 the archived BIS CPI and policy files are frozen. Policy stays current
 through the cited decision history; CPI comes from the OECD archives, and for
 the economies they do not cover (Japan, Canada, Mexico, South Africa, Chile,
 Thailand, India) from verified original national releases. Editions after
-mid-2026 would need a citation for every decision since July 2025.
+mid-2026 need a citation for every decision since July 2025.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

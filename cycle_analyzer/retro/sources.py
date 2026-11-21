@@ -91,7 +91,7 @@ def latest_commit_before(project: int, path: str, cutoff_utc: str) -> dict:
     commits = None
     # Path-filtered history on a large repository is expensive and the API
     # intermittently 500s; bound the window and widen it only if empty.
-    for days in (45, 120, 400):
+    for days in (45, 120, 400, 1500):
         since = (cut - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%SZ")
         url = (f"{GITLAB}/{project}/repository/commits?path={_q(path)}"
                f"&since={since}&until={cutoff_utc}&per_page=50")
@@ -207,3 +207,56 @@ def parse_bis_csv(b: bytes) -> list[tuple[str, float]]:
         if v not in (None, "", "NaN"):
             rows.append((r["TIME_PERIOD"], float(v)))
     return sorted(rows)
+
+
+# ------------------------------------------------- repository data snapshot
+
+REPO_SNAPSHOT_DIR = "data/raw"
+
+
+def repo_snapshot_before(cutoff_utc: str) -> dict | None:
+    """Newest commit of this repository that changed the live pipeline's data
+    cache (``data/raw``) strictly before the cutoff. Such a commit preserves
+    exactly what BIS / OECD / FRED were serving when the weekly job fetched
+    them, i.e. a dated pre-cutoff snapshot. Returns None if there is none."""
+    cut = datetime.fromisoformat(cutoff_utc.replace("Z", "+00:00"))
+    p = subprocess.run(
+        ["git", "-C", str(ROOT), "log", "--format=%H %cI %aI", "--", REPO_SNAPSHOT_DIR],
+        capture_output=True, text=True)
+    for line in p.stdout.splitlines():
+        sha, cdate, adate = line.split()
+        ts = [datetime.fromisoformat(x) for x in (cdate, adate)]
+        if all(t < cut for t in ts):
+            return {"sha": sha, "committed": ts[0].astimezone(timezone.utc)
+                    .strftime("%Y-%m-%dT%H:%M:%SZ")}
+    return None
+
+
+def repo_file(snap: dict, name: str, ledger_id: str, note: str) -> tuple[bytes, LedgerEntry] | None:
+    """Raw bytes of ``data/raw/<name>`` at the snapshot commit."""
+    path = f"{REPO_SNAPSHOT_DIR}/{name}"
+    p = subprocess.run(["git", "-C", str(ROOT), "show", f"{snap['sha']}:{path}"],
+                       capture_output=True)
+    if p.returncode != 0:
+        return None
+    b = p.stdout
+    e = LedgerEntry(
+        id=f"{ledger_id}-{snap['sha'][:12]}", url=f"git:{snap['sha']}:{path}",
+        sha256=hashlib.sha256(b).hexdigest(), nbytes=len(b), retrieved_at=_now(),
+        available_by=snap["committed"], kind="repo-git",
+        note=(f"{note} CycleAnalyzer repository commit {snap['sha'][:12]} (committed "
+              f"{snap['committed']}), before the cutoff: the weekly pipeline's own cache of "
+              "the series as served by the source on that day. The commit time is the "
+              "repository's record and an availability upper bound; later revisions are "
+              "not included."))
+    return b, e
+
+
+def parse_cache_csv(b: bytes) -> list[tuple[str, float]]:
+    """data/raw cache file (date,value) -> [(YYYY-MM, value)]."""
+    rows = []
+    for ln in b.decode("utf-8").strip().splitlines()[1:]:
+        parts = ln.split(",")
+        if len(parts) >= 2 and parts[1] not in ("", "nan", "NaN"):
+            rows.append((parts[0][:7], float(parts[1])))
+    return rows

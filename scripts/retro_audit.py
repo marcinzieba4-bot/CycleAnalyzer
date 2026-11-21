@@ -66,6 +66,20 @@ def audit(d: date) -> list[str]:
                       f"{k}: ALFRED served vintage {served} after {ed.alfred_vintage}")
             else:
                 fails.append(f"{k}: cannot read ALFRED vintage column from header {hdr!r}")
+        elif e["kind"] == "repo-git":
+            t = datetime.fromisoformat(e["available_by"].replace("Z", "+00:00"))
+            check(t < cut, f"{k}: repository commit {t} not before cutoff {cut}")
+            _, sha, path = e["url"].split(":", 2)
+            import hashlib
+            import subprocess
+            raw = subprocess.run(["git", "-C", str(ROOT), "show", f"{sha}:{path}"],
+                                 capture_output=True).stdout
+            check(hashlib.sha256(raw).hexdigest() == e["sha256"],
+                  f"{k}: bytes at {sha[:12]}:{path} do not match the recorded SHA-256")
+            ct = subprocess.run(["git", "-C", str(ROOT), "show", "-s", "--format=%cI", sha],
+                                capture_output=True, text=True).stdout.strip()
+            check(bool(ct) and datetime.fromisoformat(ct) < cut,
+                  f"{k}: git reports commit time {ct!r}, not before cutoff")
         elif e["kind"] == "original-release":
             rd = date.fromisoformat(e["available_by"][:10])
             check(rd <= ed.last_eligible_day, f"{k}: released {rd} not before cutoff")
@@ -131,9 +145,27 @@ def audit(d: date) -> list[str]:
                 continue
             check(p <= pd.Period(ed.date, freq="M"),
                   f"page mentions month {m.group(0)} after edition month")
-    for word in ("2026", "2027"):
-        n = len(re.findall(word, re.sub(r"Reconstructed( on)? 2026-\d{2}-\d{2}", "", txt)))
-        check(n == 0, f"page mentions {word} outside the reconstruction stamp ({n}x)")
+    # no year after the edition year anywhere except the reconstruction stamp
+    stripped = re.sub(r"Reconstructed( on)? \d{4}-\d{2}-\d{2}", "", txt)
+    for yr in range(ed.date.year + 1, ed.date.year + 3):
+        n = len(re.findall(rf"(?<!\d){yr}(?!\d)", stripped))
+        check(n == 0, f"page mentions {yr} outside the reconstruction stamp ({n}x)")
+    # written-out dates ("12 November 2025", "March 2026") must not be later either
+    MON = ["January", "February", "March", "April", "May", "June", "July", "August",
+           "September", "October", "November", "December"]
+    for m in re.finditer(r"(?:(\d{1,2}) )?(" + "|".join(MON) + r") (20\d{2})", stripped):
+        dd, mon, yy = m.group(1), MON.index(m.group(2)) + 1, int(m.group(3))
+        if dd:
+            try:
+                dt = date(yy, mon, int(dd))
+            except ValueError:
+                continue
+            if dt == ed.date:          # the edition date itself ("before 13 September …")
+                continue
+            check(dt <= ed.last_eligible_day, f"page mentions date {m.group(0)!r} after cutoff")
+        else:
+            check(pd.Period(f"{yy}-{mon:02d}", freq="M") <= pd.Period(ed.date, freq="M"),
+                  f"page mentions month {m.group(0)!r} after edition month")
     print(f"{ed.iso}: {ok} checks passed, {len(fails)} failed")
     for f in fails:
         print("   FAIL", f)

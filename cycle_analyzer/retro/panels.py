@@ -56,6 +56,22 @@ DAILY_START = "2023-06-01"    # decision-history window start; the window ends o
 
 REER_ALFRED = {cc: f"RB{cc}BIS" for cc in COUNTRIES}
 
+# An archive whose newest pre-cutoff commit is older than this is "frozen"
+# (DBnomics stopped converting BIS in July 2025 and OECD in June 2026). Only
+# then do the fallbacks below apply, so editions built from fresh archives
+# are unaffected:
+#   growth  - ALFRED vintage of the OECD amplitude-adjusted CLI
+#   CPI     - BIS WS_LONG_CPI as cached by this repository's weekly pipeline
+#             in its newest pre-cutoff commit
+#   policy  - BIS WS_CBPOL monthly from that same commit, then the BIS daily
+#             decision history (each later decision cited)
+STALE_DAYS = 30
+
+
+def _stale(e: S.LedgerEntry, ed: Edition) -> bool:
+    t = datetime.fromisoformat(e.available_by.replace("Z", "+00:00"))
+    return (ed.cutoff_utc - t).days > STALE_DAYS
+
 
 @dataclass
 class PolicySnap:
@@ -180,9 +196,26 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             ev.gaps[f"{family}/{cc}"] = g
 
     # ---- growth -----------------------------------------------------------
+    kei_frozen = _stale(kei_e, ed)
+    if kei_frozen:
+        ev.notes.append(f"growth: the DBnomics OECD KEI archive's newest pre-cutoff commit "
+                        f"({kei_e.available_by[:10]}) is more than {STALE_DAYS} days old; "
+                        "CLI histories use the ALFRED Friday vintage where it is fresher.")
     for cc in CLI_13:
         code = f"{COUNTRIES[cc].iso3}.M.LI.IX._T.AA._Z"
         s = _cap(_monthly(kei.get(code, [])), ed)
+        if kei_frozen:
+            fid = f"{COUNTRIES[cc].iso3}LOLITOAASTSAM"
+            b, e = S.alfred(fid, ed.alfred_vintage.isoformat())
+            sa = _cap(_monthly([(q[:7], v) for q, v in S.parse_alfred_csv(b)]), ed)
+            if len(sa) and (not len(s) or sa.index.max() > s.index.max()):
+                ev.add(e)
+                panels["cli"][cc] = sa
+                ev.growth_def[cc] = (f"OECD composite leading indicator, amplitude adjusted "
+                                     f"({fid}, ALFRED {ed.alfred_vintage.isoformat()} vintage; "
+                                     f"the KEI archive is frozen)")
+                record("cli", cc, sa)
+                continue
         if len(s):
             panels["cli"][cc] = s
             ev.growth_def[cc] = (f"OECD composite leading indicator, amplitude adjusted "
@@ -192,6 +225,14 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         q = cc in BCI_QUARTERLY
         code = f"{i3}.{'Q' if q else 'M'}.BCICP.PB.C.Y._Z._Z.N"
         rows = bts.get(code, [])
+        ea20 = False
+        if cc == "XM":
+            # EA19 is the established proxy; switch to the EA20 aggregate only
+            # once EA19 has stopped (EA20 at least three months fresher)
+            alt = bts.get("EA20.M.BCICP.PB.C.Y._Z._Z.N", [])
+            if alt and (not rows or pd.Period(alt[-1][0], freq="M")
+                        - pd.Period(rows[-1][0], freq="M")).n >= 3:
+                code, rows, ea20 = "EA20.M.BCICP.PB.C.Y._Z._Z.N", alt, True
         if not rows:
             continue
         s = _quarterly_to_monthly(rows) if q else _monthly(rows)
@@ -207,7 +248,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             f"to 100 + deviation from its own pre-cutoff average — a proxy for the "
             f"amplitude-adjusted confidence index, not a CLI"
             + ("; quarterly survey repeated across its three reference months" if q else "")
-            + ("; EA19 aggregate used as euro-area proxy against EA20 inflation"
+            + ("; EA20 aggregate (EA19 has stopped in this archive)" if ea20 else
+               "; EA19 aggregate used as euro-area proxy against EA20 inflation"
                if cc == "XM" else ""))
         record("cli", cc, s)
 
@@ -218,9 +260,25 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     us_idx = us_idx.reindex(us_full)
     us_yoy = (100.0 * (us_idx / us_idx.shift(12) - 1.0)).dropna()
 
+    snap = S.repo_snapshot_before(cut)
+    cpi_frozen = _stale(bcpi_e, ed) and snap is not None
+    if cpi_frozen:
+        ev.notes.append(f"inflation: the DBnomics BIS CPI archive's newest pre-cutoff commit "
+                        f"({bcpi_e.available_by[:10]}) is more than {STALE_DAYS} days old; BIS "
+                        f"WS_LONG_CPI as cached in repository commit {snap['sha'][:12]} "
+                        f"({snap['committed']}) is a candidate.")
     for cc, c in COUNTRIES.items():
         i3 = "EA20" if cc == "XM" else c.iso3
+        repo_cpi = (pd.Series(dtype=float), None, "")
+        if cpi_frozen:
+            got = S.repo_file(snap, f"bis:WS_LONG_CPI__M_{cc}_771.csv", f"repo-bis-cpi-{cc.lower()}",
+                              f"BIS WS_LONG_CPI M.{cc}.771 (model-native CPI y/y).")
+            if got:
+                repo_cpi = (_monthly(S.parse_cache_csv(got[0])), got[1],
+                            f"BIS WS_LONG_CPI M.{cc}.771 (repository snapshot "
+                            f"{snap['sha'][:12]}, {snap['committed'][:10]})")
         cands = {
+            "repo_bis": repo_cpi,
             "bis": (_monthly(bcpi.get(f"M.{cc}.771", [])), bcpi_e,
                     f"BIS WS_LONG_CPI M.{cc}.771"),
             "oecd_n": (_monthly(prices.get(f"{i3}.M.N.CPI.PA._T.N.GY", [])), pr_e,
@@ -237,7 +295,9 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                                 "BLS CPI-U all items NSA (CPIAUCNS), ALFRED vintage, "
                                 "true calendar-month y/y"),
         }
-        order = CPI_CANDIDATES.get(cc, CPI_DEFAULT)
+        order = list(CPI_CANDIDATES.get(cc, CPI_DEFAULT))
+        if cpi_frozen:
+            order.insert(order.index("bis") + 1, "repo_bis")
         best, best_last = None, None
         considered = []
         for k in order:
@@ -288,7 +348,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                 record("y10", cc, s)
 
     # ---- policy -------------------------------------------------------------
-    _build_policy(ed, ev, bpol, bpol_e, panels, record, log)
+    pol_snap = snap if (_stale(bpol_e, ed) and snap is not None) else None
+    _build_policy(ed, ev, bpol, bpol_e, panels, record, log, pol_snap)
 
     out = {}
     for k, d in panels.items():
@@ -345,15 +406,45 @@ def _value_on(s: pd.Series, day: date) -> float | None:
     return float(s.iloc[-1]) if len(s) else None
 
 
-def _build_policy(ed, ev, bpol, bpol_e, panels, record, log):
+def _build_policy(ed, ev, bpol, bpol_e, panels, record, log, snap=None):
+    """``snap`` (repository data snapshot) replaces a frozen DBnomics BIS archive:
+    the monthly history is BIS WS_CBPOL as cached in that pre-cutoff commit, and
+    every decision effective after the snapshot's last completed month comes
+    from the BIS daily decision history and is listed (and cited) as an
+    announcement."""
     last_day = ed.last_eligible_day
+    if snap is not None:
+        ev.notes.append(f"policy: the DBnomics BIS WS_CBPOL archive's newest pre-cutoff commit "
+                        f"({bpol_e.available_by[:10]}) is more than {STALE_DAYS} days old; "
+                        f"monthly histories are BIS WS_CBPOL as cached in repository commit "
+                        f"{snap['sha'][:12]} ({snap['committed']}).")
     for cc in COUNTRIES:
         m = _monthly(bpol.get(f"M.{cc}", []))
         d_arch = _daily(bpol.get(f"D.{cc}", []))
         b, e_cur = S.bis_daily_current(cc, DAILY_START, last_day.isoformat())
         d_cur = _daily(S.parse_bis_csv(b))
         d_cur = d_cur[d_cur.index <= pd.Timestamp(last_day)]
-        if len(d_arch) and len(d_cur):
+        src_id = bpol_e.id
+        if snap is not None:
+            got = S.repo_file(snap, f"bis:WS_CBPOL__M_{cc}.csv", f"repo-bis-cbpol-{cc.lower()}",
+                              f"BIS WS_CBPOL M.{cc} (policy rate, monthly).")
+            if got:
+                src_id = ev.add(got[1])
+                m = _monthly(S.parse_cache_csv(got[0]))
+                m = m[m.index <= ed.anchor]
+                snap_end = m.index.max().end_time.date()
+                # the snapshot's coverage plays the role of the archive: decision
+                # facts up to its last month must agree with its month-ends
+                d_arch = d_cur[d_cur.index <= pd.Timestamp(snap_end)]
+                recent = [q for q in m.index if q >= m.index.max() - 35]
+                bad = [str(q) for q in recent
+                       if (v := _value_on(d_cur, q.end_time.date())) is not None
+                       and abs(v - float(m.loc[q])) > 1e-6]
+                if bad:
+                    ev.notes.append(f"policy/{cc}: snapshot month-end differs from the daily "
+                                    f"decision history in {', '.join(bad)}; snapshot retained "
+                                    "for training rows.")
+        if len(d_arch) and len(d_cur) and snap is None:
             # consistency: decision facts must agree with the archived daily
             j = pd.concat([d_arch, d_cur], axis=1, keys=["a", "c"]).dropna()
             bad = j[(j.a - j.c).abs() > 1e-6]
@@ -410,7 +501,7 @@ def _build_policy(ed, ev, bpol, bpol_e, panels, record, log):
             cc=cc, monthly_last=str(m.index.max()), monthly_value=float(m.iloc[-1]),
             current=cur, effective_since=since_txt,
             archive_daily_end=arch_end.isoformat() if arch_end else "",
-            source=bpol_e.id)
+            source=src_id)
 
 
 def save(ed: Edition, panels: dict[str, pd.DataFrame], ev: Evidence) -> Path:

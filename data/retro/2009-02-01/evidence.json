@@ -36,16 +36,16 @@
    "note": "OECD real-time revisions database, January 2009 edition, consumer price index (CP): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
-  "oecd-rt-cp-200812": {
-   "id": "oecd-rt-cp-200812",
-   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA18+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..CP...200812?format=csvfile",
-   "sha256": "6614f137fa347c27b29007905693a6766a05e49d81e70a3fe321f29bc51985d6",
-   "nbytes": 966498,
-   "retrieved_at": "2026-11-21T18:32:26Z",
-   "available_by": "2008-12-31 (edition month end (conservative rule))",
-   "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, December 2008 edition, consumer price index (CP): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
-   "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
+  "bis-wslongcpi-mcn771-to-2008-12": {
+   "id": "bis-wslongcpi-mcn771-to-2008-12",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CN.771?format=csv&startPeriod=1985-01&endPeriod=2008-12",
+   "sha256": "8a6c4cb105f8fdf6473a3fb99bb32f12c84a153207965f5e5df22ebfea5daee3",
+   "nbytes": 5760,
+   "retrieved_at": "2026-11-21T20:13:56Z",
+   "available_by": "reference months through 2008-12 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CN.771 (CPI y/y): present-day BIS history requested with endPeriod=2008-12, so the retained bytes stop at 2008-12. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
   },
   "bis-wslongcpi-mcl771-to-2008-12": {
    "id": "bis-wslongcpi-mcl771-to-2008-12",
@@ -1133,7 +1133,7 @@
   },
   "CN": {
    "cli": "2008-11",
-   "cpi": "2008-10",
+   "cpi": "2008-12",
    "reer": "2008-12",
    "policy": "2009-01"
   },
@@ -1486,11 +1486,16 @@
    "kind": "oecd_rt"
   },
   "CN": {
-   "chosen": "OECD real-time CPI CHN, December 2008 edition (stored as same month of previous year = 100; y/y = value \u2212 100)",
-   "ledger": "oecd-rt-cp-200812",
-   "last": "2008-10",
-   "last_value": 4.0,
+   "chosen": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2008-12",
+   "ledger": "bis-wslongcpi-mcn771-to-2008-12",
+   "last": "2008-12",
+   "last_value": 1.261,
    "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2008-12",
+     "last": "2008-12",
+     "last_value": 1.261
+    },
     {
      "candidate": "OECD real-time CPI CHN, December 2008 edition (stored as same month of previous year = 100; y/y = value \u2212 100)",
      "last": "2008-10",
@@ -1500,7 +1505,7 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "bis_gated"
   },
   "IN": {
    "chosen": "OECD real-time CPI index IND, January 2009 edition, y/y within the vintage",
@@ -1968,7 +1973,7 @@
  "announcements": [],
  "extensions": [],
  "notes": [
-  "cpi/CN: absent from the January 2009 CPI edition; the newest earlier edition carrying it (December 2008) is used.",
+  "cpi/CN: absent from the January 2009 CPI edition; the present-day BIS history behind the one-full-month publication gate (latest 2008-12) is fresher than the newest earlier edition carrying it (December 2008) and is used.",
   "policy/IN: BIS monthly differs from the daily month-end in 2007-03; monthly rows retained."
  ],
  "era": "realtime",

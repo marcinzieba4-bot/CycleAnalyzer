@@ -313,24 +313,31 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         if cc == "US":
             cands.append(("alfred", us_yoy, ae, "BLS CPI-U all items NSA (CPIAUCNS), ALFRED "
                           f"{ed.alfred_vintage.isoformat()} vintage, calendar-month y/y"))
+        missing_note = None
         if cc in RT_AREA:
             s, lbl = _rt_cpi(cc, cp, cpi_ed)
             e_rt = cpi_e
             if s.empty:
-                # absent from this edition: the newest earlier (equally eligible)
-                # edition that still carries the series
+                # absent from this edition: candidates are the newest earlier
+                # (equally eligible) edition still carrying the series, and the
+                # present-day BIS history behind the one-full-month gate; the
+                # fresher one is used (as for any candidate set)
                 prev = pd.Period(f"{cpi_ed[:4]}-{cpi_ed[4:]}", freq="M")
+                found = None
                 for k in range(1, CPI_FALLBACK_EDITIONS + 1):
                     pe = f"{(prev - k).year}{(prev - k).month:02d}"
                     pb, pe_e = oecd_rt("CP", pe, _month_end(pe).isoformat(),
                                        "edition month end (conservative rule)")
                     s, lbl = _rt_cpi(cc, parse_rt(pb), pe)
                     if not s.empty:
-                        e_rt = pe_e
-                        ev.notes.append(f"cpi/{cc}: absent from the {edition_label(cpi_ed)} CPI "
-                                        f"edition; the newest earlier edition carrying it "
-                                        f"({edition_label(pe)}) is used.")
+                        e_rt, found = pe_e, pe
                         break
+                bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
+                                   f"BIS WS_LONG_CPI M.{cc}.771 (CPI y/y)",
+                                   "one-full-month publication-lag gate")
+                cands.append(("bis_gated", _monthly(S.parse_bis_csv(bb)), be,
+                              f"BIS WS_LONG_CPI M.{cc}.771, present-day history gated at {lag1}"))
+                missing_note = (cpi_ed, found)
             cands.append(("oecd_rt", s, e_rt, lbl))
         if cc in NO_RT:
             bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
@@ -350,6 +357,17 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         if best is None:
             continue
         k, s, e, lbl = best
+        if missing_note:
+            me, found = missing_note
+            ev.notes.append(
+                f"cpi/{cc}: absent from the {edition_label(me)} CPI edition; "
+                + (f"the newest earlier edition carrying it ({edition_label(found)}) is used."
+                   if k == "oecd_rt" else
+                   "the present-day BIS history behind the one-full-month publication gate "
+                   f"(latest {s.index.max()}) is fresher than "
+                   + (f"the newest earlier edition carrying it ({edition_label(found)})"
+                      if found else f"any of the previous {CPI_FALLBACK_EDITIONS} editions")
+                   + " and is used."))
         if not fresh("cpi", cc, s, lbl):
             continue
         ev.add(e)

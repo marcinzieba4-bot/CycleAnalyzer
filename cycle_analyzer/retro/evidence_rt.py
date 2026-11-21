@@ -90,6 +90,8 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         "anchor month is not used (data notes below)"
         + ".</p>")
     us = ev.cpi_choice.get("US", {})
+    extra_bis = [c for c, v in ev.cpi_choice.items()
+                 if v.get("kind") == "bis_gated" and c not in R.NO_RT]
     add(f'<p class="sub"><b>Inflation.</b> Headline CPI y/y for 21 economies is computed '
         f"inside a single real-time vintage: the OECD consumer-price index of the "
         f"{_e(cpi['label'])} edition, the newest edition whose month had ended before the "
@@ -98,10 +100,16 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         "y/y is the value less 100. Australia and New Zealand publish quarterly CPI, repeated "
         "across each quarter’s three months. The United States uses the BLS CPI-U all-items "
         f"NSA index from the ALFRED {ed.alfred_vintage.isoformat()} (Friday) vintage, latest "
-        f"{_e(us.get('last', '?'))}. Chile, Colombia and Thailand use the present-day BIS CPI "
+        f"{_e(us.get('last', '?'))}. Chile, Colombia and Thailand"
+        + ("".join(f", and {_e(C[c].name)} (absent from the eligible real-time edition)"
+                   for c in extra_bis))
+        + " use the present-day BIS CPI "
         f"history requested only through {lag1}: a reference month is admitted once the whole "
         "following month has passed, although these offices publish within about ten days. "
-        "Headline CPI y/y is rarely revised, but those three histories are not vintages. "
+        + ("Headline CPI y/y is rarely revised, but those three histories are not vintages. "
+           if not extra_bis else
+           "Headline CPI y/y is rarely revised, but those histories are not vintages. ")
+        + 
         "Newer national releases that were public before the cutoff but are absent from the "
         "eligible vintage are not inserted, so an older observation date does not mean no "
         "newer release existed.</p>")

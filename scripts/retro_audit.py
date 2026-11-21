@@ -94,8 +94,12 @@ def audit(d: date) -> list[str]:
             edition = re.search(r"\.\.\.(\d{6})\?", e["url"]).group(1)
             measure = "LI_AA" if "..LI_AA..." in e["url"] else "CP"
             want = (RT.cli_edition(ed) if measure == "LI_AA" else RT.cpi_edition(ed))
-            check(edition == want[0] and pub.isoformat() == want[1],
-                  f"{k}: edition {edition}/{pub} != eligible {want[0]}/{want[1]}")
+            if measure == "LI_AA":
+                check(edition == want[0] and pub.isoformat() == want[1],
+                      f"{k}: edition {edition}/{pub} != eligible {want[0]}/{want[1]}")
+            else:   # the eligible CPI edition, or an older one carrying a missing series
+                check(edition <= want[0] and pub.isoformat() == RT._month_end(edition).isoformat(),
+                      f"{k}: CPI edition {edition}/{pub} not eligible (newest {want[0]})")
             raw, _, _ = S.cached_get(e["url"])
             check(hashlib.sha256(raw).hexdigest() == e["sha256"], f"{k}: retained bytes changed")
             eds = {r["EDITION"] for r in csv.DictReader(io.StringIO(raw.decode()))}

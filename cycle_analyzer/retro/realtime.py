@@ -55,6 +55,7 @@ RT_AREA = {cc: ("EA18" if cc == "XM" else c.iso3) for cc, c in COUNTRIES.items()
 YOY_INDEX = {"CN"}       # archive stores China's CPI as same month of previous year = 100
 QUARTERLY_CPI = {"AU", "NZ"}
 STALE_MONTHS = 9         # an input whose latest observation is older is not used
+CPI_FALLBACK_EDITIONS = 3  # look back this many editions for a series missing from one
 DAILY_START = "2006-01-01"
 DECISION_WINDOW_DAYS = 190
 DECISION_MIN_PP = 0.10   # smaller moves are rounding/data noise, not decisions
@@ -202,6 +203,24 @@ def _yoy_quarterly(rows: list[tuple[str, float]]) -> pd.Series:
     return _quarterly_to_monthly([(str(p), float(v)) for p, v in y.items()])
 
 
+def _rt_cpi(cc: str, cp: dict, edition: str) -> tuple[pd.Series, str]:
+    """CPI y/y for one economy from one real-time CP edition (empty if absent)."""
+    area = RT_AREA[cc]
+    if cc in QUARTERLY_CPI:
+        return (_yoy_quarterly(cp.get((area, "Q"), [])),
+                f"OECD real-time CPI index {area} (quarterly), {edition_label(edition)} "
+                "edition, y/y within the vintage")
+    idx = _monthly(cp.get((area, "M"), []))
+    if cc in YOY_INDEX:
+        return ((idx - 100.0).dropna(),
+                f"OECD real-time CPI {area}, {edition_label(edition)} edition (stored as "
+                "same month of previous year = 100; y/y = value − 100)")
+    return (_yoy_monthly(idx),
+            ("OECD real-time CPI index, euro-area aggregate as published "
+             f"(database code {area})" if cc == "XM" else f"OECD real-time CPI index {area}")
+            + f", {edition_label(edition)} edition, y/y within the vintage")
+
+
 def _content_check(ed: str, rows: list[tuple[str, float]]) -> dict | None:
     chk = register().get(ed, {}).get("content_check")
     if not chk:
@@ -295,24 +314,24 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             cands.append(("alfred", us_yoy, ae, "BLS CPI-U all items NSA (CPIAUCNS), ALFRED "
                           f"{ed.alfred_vintage.isoformat()} vintage, calendar-month y/y"))
         if cc in RT_AREA:
-            area = RT_AREA[cc]
-            if cc in QUARTERLY_CPI:
-                s = _yoy_quarterly(cp.get((area, "Q"), []))
-                lbl = (f"OECD real-time CPI index {area} (quarterly), {edition_label(cpi_ed)} "
-                       "edition, y/y within the vintage")
-            else:
-                idx = _monthly(cp.get((area, "M"), []))
-                if cc in YOY_INDEX:
-                    s = (idx - 100.0).dropna()
-                    lbl = (f"OECD real-time CPI {area}, {edition_label(cpi_ed)} edition (stored as "
-                           "same month of previous year = 100; y/y = value − 100)")
-                else:
-                    s = _yoy_monthly(idx)
-                    lbl = (("OECD real-time CPI index, euro-area aggregate as published "
-                            f"(database code {area})" if cc == "XM"
-                            else f"OECD real-time CPI index {area}") + ", "
-                           f"{edition_label(cpi_ed)} edition, y/y within the vintage")
-            cands.append(("oecd_rt", s, cpi_e, lbl))
+            s, lbl = _rt_cpi(cc, cp, cpi_ed)
+            e_rt = cpi_e
+            if s.empty:
+                # absent from this edition: the newest earlier (equally eligible)
+                # edition that still carries the series
+                prev = pd.Period(f"{cpi_ed[:4]}-{cpi_ed[4:]}", freq="M")
+                for k in range(1, CPI_FALLBACK_EDITIONS + 1):
+                    pe = f"{(prev - k).year}{(prev - k).month:02d}"
+                    pb, pe_e = oecd_rt("CP", pe, _month_end(pe).isoformat(),
+                                       "edition month end (conservative rule)")
+                    s, lbl = _rt_cpi(cc, parse_rt(pb), pe)
+                    if not s.empty:
+                        e_rt = pe_e
+                        ev.notes.append(f"cpi/{cc}: absent from the {edition_label(cpi_ed)} CPI "
+                                        f"edition; the newest earlier edition carrying it "
+                                        f"({edition_label(pe)}) is used.")
+                        break
+            cands.append(("oecd_rt", s, e_rt, lbl))
         if cc in NO_RT:
             bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
                                f"BIS WS_LONG_CPI M.{cc}.771 (CPI y/y)",
@@ -334,7 +353,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         if not fresh("cpi", cc, s, lbl):
             continue
         ev.add(e)
-        used_cpi_rt |= k == "oecd_rt"
+        used_cpi_rt |= k == "oecd_rt" and e is cpi_e
         panels["cpi"][cc] = s
         ev.cpi_choice[cc] = {"chosen": lbl, "ledger": e.id, "last": str(s.index.max()),
                              "last_value": round(float(s.iloc[-1]), 3), "considered": considered,

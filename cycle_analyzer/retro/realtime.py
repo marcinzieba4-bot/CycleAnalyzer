@@ -365,7 +365,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         m = _cap(_monthly(S.parse_bis_csv(mb)), ed)
         db, de = S.bis_daily_current(cc, DAILY_START, led.isoformat())
         d = _daily(S.parse_bis_csv(db))
-        d = d[d.index <= pd.Timestamp(led)]
+        d = d[d.index <= pd.Timestamp(led)].round(3)   # 7.2498 -> 7.25 (BIS daily blips)
         if not len(m) and not len(d):
             continue
         ev.add(me)

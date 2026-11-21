@@ -155,6 +155,12 @@ def audit(d: date) -> list[str]:
         for u in r["urls"]:
             check(date.fromisoformat(u["date"]) <= ed.last_eligible_day,
                   f"benchmark source for {cc} dated {u['date']} shown before publication")
+    MONS = ["January", "February", "March", "April", "May", "June", "July", "August",
+            "September", "October", "November", "December"]
+    basis = ev.get("rt", {}).get("cli", {}).get("basis", "")
+    for mm in re.finditer(r"(?:\d{1,2} )?(" + "|".join(MONS) + r") (\d{4})", basis):
+        check(pd.Period(f"{mm.group(2)}-{MONS.index(mm.group(1)) + 1:02d}", freq="M")
+              <= pd.Period(ed.date, freq="M"), f"CLI basis text names {mm.group(0)!r}")
     for x in ev.get("rt", {}).get("cli", {}).get("evidence", []):
         check(date.fromisoformat(x["date"]) <= ed.last_eligible_day,
               f"evidence item dated {x['date']} shown before it was published")

@@ -175,8 +175,15 @@ reaches back to 2008, so editions dated on or before 2016-12-31 are built by
 
 Inputs whose latest observation is more than 9 months older than the anchor
 month are not used (Turkey's CLI in the Dec-2007 and Jan-2008 editions).
-Editions built: 2008-01-06, 01-20, 02-03, 02-17, 03-02, 03-16, 03-30
-(`python scripts/retro_build.py --range 2008-01-01 2008-03-31 --every 14`).
+Editions built (biweekly grid): 2008-01-06, 01-20, 02-03, 02-17, 03-02,
+03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22
+(`python scripts/retro_build.py --range 2008-01-01 2008-06-30 --every 14`).
+Q2 benchmark changes applied from their announcement dates: India 5.0 → 5.5
+(RBI Annual Policy Statement, 29 Apr 2008); Türkiye keeps its end-2008 4%
+target after the 3 Jun 2008 revision of later-year targets. CLI release dates
+without a retrievable press report (Mar, May, Jun 2008 editions) rest on
+Haver's dated archive entries, bracketed by ECB Monthly Bulletin cut-offs; each
+evidence item appears on a page only once it was itself published.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

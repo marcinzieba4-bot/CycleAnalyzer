@@ -176,8 +176,12 @@ reaches back to 2008, so editions dated on or before 2016-12-31 are built by
 Inputs whose latest observation is more than 9 months older than the anchor
 month are not used (Turkey's CLI in the Dec-2007 and Jan-2008 editions).
 Editions built (biweekly grid): 2008-01-06, 01-20, 02-03, 02-17, 03-02,
-03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22
-(`python scripts/retro_build.py --range 2008-01-01 2008-06-30 --every 14`).
+03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22, 07-06, 07-20,
+08-03, 08-17, 08-31, 09-14, 09-28
+(`python scripts/retro_build.py --range 2008-01-01 2008-09-30 --every 14`).
+Q3 benchmark change: India 5.5 → 7.0 (RBI First Quarter Review, 29 Jul 2008:
+"close to 7.0 per cent" by end-March). The Q3 CLI editions are
+content-checked against dated reports (OECD area, or Italy for September).
 Q2 benchmark changes applied from their announcement dates: India 5.0 → 5.5
 (RBI Annual Policy Statement, 29 Apr 2008); Türkiye keeps its end-2008 4%
 target after the 3 Jun 2008 revision of later-year targets. CLI release dates

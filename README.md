@@ -98,7 +98,14 @@ Output: `reports/cycle_monitor.md` + charts in `reports/charts/`.
 `scripts/site_publish.py --deploy` publishes it to the veerock site's
 Research > Cycle Analyzer tab (white theme, weekly archive rotation to
 `/research/cycle/archive/`, CloudFront invalidation). A scheduled Routine
-runs the whole chain every Sunday 15:00 Europe/Warsaw (13:00 UTC).
+fires every Sunday 15:00 Europe/Warsaw (13:00 UTC) but publishes only on
+the **biweekly grid** (every 14 days from 2025-01-05) and skips off-weeks,
+so the site carries one report every two weeks.
+
+`scripts/archive_thin.py` enforces that grid on the published archive: it
+lists off-grid pages (dry run by default) and with `--apply` copies them to
+`veerock-site/backups/cycle-archive-thinned-<stamp>/` (outside the public
+prefix) before removing them and rebuilding the index.
 
 ## Retrospective (point-in-time) editions
 
@@ -126,8 +133,18 @@ python scripts/retro_audit.py 2025-01-05 2025-01-19 2025-02-02 2025-02-16
 python scripts/retro_build.py 2025-01-05 ... --deploy   # archive only; latest.html untouched
 ```
 
-Editions built so far (biweekly Sundays): 2025-01-05 … 2025-02-16 and
-2025-03-02, 03-16, 03-30, 04-13, 04-27, 05-11, 05-25.
+Editions built so far (biweekly Sundays): 2025-01-05 … 2025-02-16,
+2025-03-02, 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, and 2025-06-08,
+06-22, 07-06, 07-20, 08-03, 08-17, 08-31, 09-14, 09-28. Pass edition dates
+explicitly (or a `--range` whose start *is* a grid Sunday): `--range` steps
+from the first Sunday on/after its start.
+
+DBnomics' BIS mirror has not updated since 2025-07-10, so from mid-July 2025
+the archived BIS CPI and policy files are frozen. Policy stays current
+through the cited decision history; CPI comes from the OECD archives, and for
+the economies they do not cover (Japan, Canada, Mexico, South Africa, Chile,
+Thailand, India) from verified original national releases. Editions after
+mid-2026 would need a citation for every decision since July 2025.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

@@ -11,7 +11,7 @@ import numpy as np
 from ..universe import COUNTRIES
 from .panels import Evidence, BCI_QUARTERLY, CLI_13
 from .editions import Edition
-from .benchmarks import china_note, change_in_force, targets_for
+from .benchmarks import china_note, south_africa_note, sources_in_force, targets_for
 
 SOURCES_FILE = Path(__file__).resolve().parents[2] / "data" / "retro" / "announcement_sources.json"
 
@@ -34,7 +34,7 @@ BENCHMARK_NOTE = (
     "target regimes. The US formal 2% objective refers to PCE inflation and Sweden’s to "
     "CPIF, while this model uses headline CPI for both. Switzerland’s 1% is the midpoint of "
     "its 0–2% price-stability range; Australia’s 2.5% the midpoint of 2–3%; Thailand’s 2% "
-    "the midpoint of 1–3%; South Africa’s 4.5% the midpoint of its 3–6% target range. "
+    "the midpoint of 1–3%; {south_africa} "
     "{china} Türkiye’s 5% is the medium-term goal; "
     "Brazil’s 3% is the continuous "
     "target in force from January 2025.")
@@ -63,6 +63,12 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
 
     kei, bts, bcpi, bpol = (lid("dbnomics-oecd-kei"), lid("dbnomics-oecd-bts"),
                             lid("dbnomics-bis-cpi"), lid("dbnomics-bis-cbpol"))
+    snap_pol, snap_cpi = lid("repo-bis-cbpol"), lid("repo-bis-cpi")
+    alfred_cli = [cc for cc in CLI_13 if "ALFRED" in ev.growth_def.get(cc, "")]
+
+    def _commit(e) -> str:
+        return (e.url.split(":")[1][:12] if e.kind == "repo-git"
+                else e.proof_url.rsplit("/", 1)[-1][:12])
 
     add("<h2>Historical inputs and timing</h2>")
     add(f'<p class="sub">Information cutoff: before {ed.date:%-d %B %Y}, 00:00 '
@@ -74,10 +80,17 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         f"ten-year yield histories use explicit ALFRED {ed.alfred_vintage.isoformat()} "
         "(Friday) vintages, including the historical revisions contained in that vintage. "
         "Later releases and the present-day statistical histories are not substituted.</p>")
-    gdesc = (f"Thirteen growth inputs are OECD amplitude-adjusted composite leading indicators "
-             f"from the immutable DBnomics OECD Key Economic Indicators archive "
-             f"(commit {kei.proof_url.rsplit('/', 1)[-1][:12]}, committed {kei.available_by[:16]}Z)"
-             if kei else "")
+    if alfred_cli and len(alfred_cli) == len(CLI_13):
+        gdesc = (f"Thirteen growth inputs are OECD amplitude-adjusted composite leading "
+                 f"indicators from explicit ALFRED {ed.alfred_vintage.isoformat()} (Friday) "
+                 f"vintages; the DBnomics OECD Key Economic Indicators archive's newest "
+                 f"pre-cutoff commit ({_commit(kei)}, committed {kei.available_by[:10]}) is "
+                 "frozen and older" if kei else "")
+    else:
+        gdesc = (f"Thirteen growth inputs are OECD amplitude-adjusted composite leading indicators "
+                 f"from the immutable DBnomics OECD Key Economic Indicators archive "
+                 f"(commit {kei.proof_url.rsplit('/', 1)[-1][:12]}, committed {kei.available_by[:16]}Z)"
+                 if kei else "")
     if bts:
         gdesc += (f"; ten are OECD composite business-confidence percent balances from the "
                   f"business-tendency-survey archive (commit "
@@ -86,14 +99,24 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                   "average. The model scales growth by its own trailing dispersion, so this "
                   "proxy matches the amplitude-adjusted confidence index up to centring; it is "
                   "not a CLI. Norway and New Zealand confidence surveys are quarterly and are "
-                  "repeated across their three reference months; the euro area uses the EA19 "
-                  "aggregate as a proxy against EA20 inflation; Thailand has no growth input")
+                  "repeated across their three reference months; "
+                  + ("the euro area uses the EA20 aggregate because the EA19 series has stopped "
+                     "in this archive" if "EA20 aggregate" in ev.growth_def.get("XM", "") else
+                     "the euro area uses the EA19 aggregate as a proxy against EA20 inflation")
+                  + "; Thailand has no growth input")
     add(f'<p class="sub">{gdesc}. Where no newer archived release is verified before the '
         "cutoff, the older observation is used and dated explicitly.</p>")
     us = ev.cpi_choice.get("US", {})
     add('<p class="sub">Inflation is headline CPI y/y from the freshest matching-definition '
         "archive per economy (BIS WS_LONG_CPI, the model-native source, wins ties; OECD "
-        "consumer-price and Key-Economic-Indicator archives qualify when fresher). The UK uses "
+        "consumer-price and Key-Economic-Indicator archives qualify when fresher). "
+        + (f"The DBnomics BIS archive is frozen (newest pre-cutoff commit "
+           f"{bcpi.available_by[:10] if bcpi else '?'}), so BIS WS_LONG_CPI as served on "
+           f"{snap_cpi.available_by[:10]} and cached by this repository’s weekly pipeline "
+           f"(commit {_commit(snap_cpi)}, committed {snap_cpi.available_by[:16]}Z, before the "
+           "cutoff) is also eligible; revisions published after that commit are not used. "
+           if snap_cpi else "")
+        + "The UK uses "
         "CPI, not the OECD’s national CPIH series; India uses the BIS Combined CPI history, "
         "not the different OECD India index; Japan, Mexico, Chile and Thailand use BIS where "
         "the OECD archives are stale or absent. US CPI is the BLS CPI-U all-items NSA index "
@@ -115,10 +138,15 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
     a3, a6, a12 = anc - 3, anc - 6, anc - 12
     ext_ann = [x for x in ev.extensions if x["source"].startswith("announced")]
     ext_months = sorted({x["month"] for x in ext_ann})
+    pol_src = (f"come from BIS WS_CBPOL as cached by this repository’s weekly pipeline (commit "
+               f"{_commit(snap_pol)}, committed {snap_pol.available_by[:16]}Z, before the cutoff), "
+               f"because the DBnomics BIS archive is frozen (newest pre-cutoff commit "
+               f"{bpol.available_by[:10] if bpol else '?'})" if snap_pol else
+               f"come from the immutable DBnomics BIS WS_CBPOL archive (commit "
+               f"{bpol.proof_url.rsplit('/', 1)[-1][:12] if bpol else '?'}, committed "
+               f"{bpol.available_by[:16] if bpol else '?'}Z)")
     add(f'<p class="sub">Completed policy training ends in {anc}. Monthly policy histories '
-        f"come from the immutable DBnomics BIS WS_CBPOL archive (commit "
-        f"{bpol.proof_url.rsplit('/', 1)[-1][:12] if bpol else '?'}, committed "
-        f"{bpol.available_by[:16] if bpol else '?'}Z)"
+        + pol_src
         + (f"; month-end values for {', '.join(ext_months)} beyond the archived monthly rows "
            "are publicly announced targets corroborated by daily decision histories, not "
            "claimed archived BIS statistical vintages" if ext_months else "")
@@ -145,12 +173,12 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             parts.append(f"{k}: {', '.join(g) if len(g) <= 12 else ', '.join(g[:6]) + f' … {len(g) - 6} more through ' + g[-1]}")
         add('<p class="sub">Original source observations remain missing (no values are '
             "filled): " + "; ".join(_e(p) for p in parts) + ".</p>")
-    add(f'<p class="sub">{BENCHMARK_NOTE.format(china=china_note(ed))}</p>')
-    cn = change_in_force("CN", ed)
-    if cn is not None:
-        add(f'<p class="sub">Benchmark source: <a href="{_e(cn["url"])}">{_e(cn["label"])}</a>. '
-            "It is public before this cutoff, so this edition uses it in place of the "
-            "earlier 3% benchmark.</p>")
+    add(f'<p class="sub">{BENCHMARK_NOTE.format(china=china_note(ed), south_africa=south_africa_note(ed))}</p>')
+    bsrc = sources_in_force(ed)
+    if bsrc:
+        add('<p class="sub">Benchmark sources, each public before this cutoff and used in place '
+            "of the earlier benchmark: " + "; ".join(
+                f'<a href="{_e(b["url"])}">{_e(b["label"])}</a>' for b in bsrc) + ".</p>")
 
     # ---- observation dates table ----------------------------------------
     add("<h3>Historical observation dates</h3>")
@@ -188,7 +216,9 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             continue
         evid = ("announced decision (listed below)"
                 if (cc, p.effective_since) in ann_keys
-                else f"in archive (daily to {p.archive_daily_end})")
+                else ("in repository snapshot (monthly to "
+                      f"{p.archive_daily_end[:7]})" if p.source.startswith("repo-")
+                      else f"in archive (daily to {p.archive_daily_end})"))
         rr = st.real_rate if st is not None else np.nan
         add(f'<tr><td class="name">{_e(c.name)}</td><td style="white-space:normal">'
             f"{_e(POLICY_INSTRUMENT.get(cc, ''))}</td>"
@@ -254,7 +284,9 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
     for k in sorted(led, key=lambda k: (led[k].kind, k)):
         e = led[k]
         proof = (f' · <a href="{_e(e.proof_url)}">proof</a>' if e.proof_url else "")
-        add(f'<li><a href="{_e(e.url)}">{_e(e.id)}</a> · available by {_e(e.available_by)} · '
+        ident = (f"{_e(e.id)} ({_e(e.url)})" if e.url.startswith("git:")
+                 else f'<a href="{_e(e.url)}">{_e(e.id)}</a>')
+        add(f'<li>{ident} · available by {_e(e.available_by)} · '
             f"sha256 {e.sha256[:16]}… · {_e(e.note)}{proof}</li>")
     add("</ul>")
     return "\n".join(H)

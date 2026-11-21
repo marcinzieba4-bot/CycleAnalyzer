@@ -98,6 +98,9 @@ class Evidence:
     announcements: list = field(default_factory=list)   # decisions after archive
     extensions: list = field(default_factory=list)      # month-ends filled from decisions
     notes: list = field(default_factory=list)
+    decisions: list = field(default_factory=list)       # recent effective decisions (real-time era)
+    era: str = "archive"                                # "archive" | "realtime"
+    rt: dict = field(default_factory=dict)              # real-time era: editions used
 
     def add(self, e: S.LedgerEntry) -> str:
         self.ledger[e.id] = e
@@ -112,6 +115,8 @@ class Evidence:
             "policy": {k: v.__dict__ for k, v in self.policy.items()},
             "announcements": self.announcements, "extensions": self.extensions,
             "notes": self.notes,
+            **({"era": self.era, "decisions": self.decisions, "rt": self.rt}
+               if self.era != "archive" else {}),
         }
 
 

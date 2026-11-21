@@ -1,0 +1,93 @@
+{
+ "_doc": "OECD Short-term economic statistics revisions database (DSD_STES_REVISIONS@DF_STES_REVISIONS; successor of the MEI Original Release Data and Revisions Database). Each EDITION holds the data as published in that month's Main Economic Indicators edition. CLI (LI_AA) of an edition is eligible from 'cli_public_by', the date of the earliest dated public report of that edition's CLI figures (an upper bound on the release date); where none is verified the edition month end applies. CPI (CP) of an edition is eligible only after its edition month has ended (conservative; no MEI print date is claimed). Each evidence item carries its own publication 'date'; a page lists only items published on or before its last eligible day.",
+ "200712": {
+  "cli_ref_month": "2007-10",
+  "cli_public_by": "2007-12-31",
+  "basis": "edition month end (conservative rule)",
+  "evidence": [
+   {
+    "label": "Haver Analytics archive entry 'OECD LEIs Are Sagging', dated 10 Dec 2007 (title and date as indexed; page no longer retrievable)",
+    "url": "https://haver.com/articles/archive-economy-oecd-leis-are-sagging",
+    "date": "2007-12-10"
+   },
+   {
+    "label": "ECB Monthly Bulletin, January 2008: 'In October, the composite leading indicator (CLI) for the OECD suggested that a moderate downturn in economic activity lies ahead in the OECD area'",
+    "url": "https://www.ecb.europa.eu/pub/pdf/mobu/mb200801en.pdf",
+    "date": "2008-01-17"
+   }
+  ],
+  "content_check": null
+ },
+ "200801": {
+  "cli_ref_month": "2007-11",
+  "cli_public_by": "2008-01-11",
+  "basis": "dated public report quoting this edition's figures",
+  "evidence": [
+   {
+    "label": "AFP report, datelined Paris, 11 Jan 2008 (Dawn, published 12 Jan 2008): the OECD leading indicators index 'fell by 0.5 points in November last year and was 2.2 points lower than November 2006'",
+    "url": "https://www.dawn.com/news/amp/284276",
+    "date": "2008-01-12"
+   },
+   {
+    "label": "Haver Analytics archive entry 'OECD Leading Indicators Showing Declining Momentum', dated 11 Jan 2008",
+    "url": "https://www.haver.com/articles/archive-economy-oecd-leading-indicators-showing-declining-momentum",
+    "date": "2008-01-11"
+   },
+   {
+    "label": "ECB Monthly Bulletin, February 2008 (statistics cut-off 6 Feb 2008): 'In November, the composite leading indicator (CLI) for the OECD suggested that a moderate slowdown in economic activity lies ahead'",
+    "url": "https://www.ecb.europa.eu/pub/pdf/mobu/mb200802en.pdf",
+    "date": "2008-02-14"
+   }
+  ],
+  "content_check": {
+   "area": "OECD",
+   "month": "2007-11",
+   "reported_mom": -0.5,
+   "reported_yoy": -2.2,
+   "tol": 0.06
+  }
+ },
+ "200802": {
+  "cli_ref_month": "2007-12",
+  "cli_public_by": "2008-02-08",
+  "basis": "dated public report quoting this edition's figures",
+  "evidence": [
+   {
+    "label": "AFP report, Emirates Business 24|7, published 8 Feb 2008 00:30 UAE, 'OECD sees weaker growth ahead in industrialised world': the CLI for the OECD's 30 members fell 0.3 points in December to 99.1 and was down 2.1 points over 12 months (body text as indexed by web search)",
+    "url": "https://www.emirates247.com/eb247/banking-finance/oecd-sees-weaker-growth-ahead-in-industrialised-world-2008-02-08-1.212587",
+    "date": "2008-02-08"
+   },
+   {
+    "label": "Haver Analytics archive entry 'OECD Leading Indices Drop: Except Japan', dated 8 Feb 2008",
+    "url": "https://www.haver.com/articles/archive-economy-oecd-leading-indices-drop-except-japan",
+    "date": "2008-02-08"
+   },
+   {
+    "label": "ECB Monthly Bulletin, March 2008 (statistics cut-off 5 Mar 2008): 'The OECD composite leading indicator (CLI) for December suggests that a slowdown in economic activity lies ahead in OECD countries'",
+    "url": "https://www.ecb.europa.eu/pub/pdf/mobu/mb200803en.pdf",
+    "date": "2008-03-13"
+   }
+  ],
+  "content_check": {
+   "area": "OECD",
+   "month": "2007-12",
+   "reported_level": 99.1,
+   "reported_mom": -0.3,
+   "reported_yoy": -2.1,
+   "tol": 0.06
+  }
+ },
+ "200803": {
+  "cli_ref_month": "2008-01",
+  "cli_public_by": "2008-03-07",
+  "basis": "dated Haver Analytics archive entry (content not retrievable); bracketed by the ECB Monthly Bulletin of March 2008 (published 13 Mar 2008), which at its 5 Mar 2008 statistics cut-off still cited the December CLI",
+  "evidence": [
+   {
+    "label": "Haver Analytics archive entry 'OECD Composite Leading Indicators: Moderate Slowing', dated 7 Mar 2008 (title and date as indexed; page no longer retrievable). Haver's dated entries for the January and February releases coincide with the AFP datelines above",
+    "url": "https://www.haver.com/articles/archive-economy-oecd-composite-leading-indicators-moderate-slowing",
+    "date": "2008-03-07"
+   }
+  ],
+  "content_check": null
+ }
+}

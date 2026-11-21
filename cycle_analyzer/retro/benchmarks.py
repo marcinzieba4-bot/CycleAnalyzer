@@ -9,10 +9,38 @@ historical fit (past target regimes are not reconstructed).
 
 from __future__ import annotations
 
+import json
 from datetime import date
+from pathlib import Path
 
 from ..universe import COUNTRIES
 from .editions import Edition
+
+ERA_FILES = sorted((Path(__file__).resolve().parents[2] / "data" / "retro").glob("benchmarks_*.json"))
+
+
+def era_benchmarks(ed: Edition) -> dict | None:
+    """Era register (e.g. ``data/retro/benchmarks_2008.json``) covering the edition:
+    the benchmark publicly in force for every economy, with any change announced
+    on or before the edition's last eligible day applied. None outside every era."""
+    for f in ERA_FILES:
+        reg = json.loads(f.read_text())
+        lo, hi = (date.fromisoformat(reg["era"][k]) for k in ("first_edition", "last_edition"))
+        if not lo <= ed.date <= hi:
+            continue
+        rows = {cc: dict(r) for cc, r in reg["rows"].items()}
+        applied = []
+        led = ed.last_eligible_day
+        for cc, chs in reg.get("changes", {}).items():
+            for ch in sorted(chs, key=lambda c: c["announced"]):
+                if date.fromisoformat(ch["announced"]) <= ed.last_eligible_day:
+                    rows[cc] = {k: v for k, v in ch.items() if k != "announced"}
+                    rows[cc]["announced"] = ch["announced"]
+                    applied.append(cc)
+        for r in rows.values():          # cite only sources already published
+            r["urls"] = [u for u in r.get("urls", []) if date.fromisoformat(u["date"]) <= led]
+        return {"note": reg.get("note", ""), "rows": rows, "applied": applied, "file": f.name}
+    return None
 
 # Benchmark changes announced after the universe benchmark was set.
 CHANGES: dict[str, list[dict]] = {
@@ -50,6 +78,10 @@ def change_in_force(cc: str, ed: Edition) -> dict | None:
 
 
 def targets_for(ed: Edition) -> dict[str, float]:
+    eb = era_benchmarks(ed)
+    if eb is not None:
+        return {cc: float(eb["rows"][cc]["value"]) if cc in eb["rows"] else c.infl_target
+                for cc, c in COUNTRIES.items()}
     out = {cc: c.infl_target for cc, c in COUNTRIES.items()}
     for cc in CHANGES:
         ch = change_in_force(cc, ed)

@@ -33,6 +33,8 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from cycle_analyzer.retro.editions import make_edition, biweekly_sundays   # noqa: E402
 from cycle_analyzer.retro import panels as P                               # noqa: E402
 from cycle_analyzer.retro.evidence_html import render as render_evidence   # noqa: E402
+from cycle_analyzer.retro import realtime as RT                            # noqa: E402
+from cycle_analyzer.retro.evidence_rt import render as render_evidence_rt  # noqa: E402
 from cycle_analyzer.retro.benchmarks import targets_for                    # noqa: E402
 from cycle_analyzer.analysis import run                                    # noqa: E402
 from cycle_analyzer.charts import render_all                               # noqa: E402
@@ -44,13 +46,14 @@ def build_one(d: date, reconstructed: str) -> Path:
     ed = make_edition(d)
     print(f"== {ed.iso}: cutoff {ed.cutoff_iso}, ALFRED vintage {ed.alfred_vintage}, "
           f"anchor {ed.anchor}")
-    panels, ev = P.build(ed, verbose=False)
+    rt = RT.is_realtime(ed)          # before the DBnomics archives: real-time vintages
+    panels, ev = (RT.build if rt else P.build)(ed, verbose=False)
     P.save(ed, panels, ev)
     snapshot = {cc: p.current for cc, p in ev.policy.items()}
     ctx = {"edition": ed.iso, "cutoff_utc": ed.cutoff_iso, "reconstructed": reconstructed}
     res = run(panels, snapshot=snapshot, anchor=ed.anchor, retro=ctx,
               targets=targets_for(ed))
-    ctx["evidence_html"] = render_evidence(ed, ev, res, reconstructed)
+    ctx["evidence_html"] = (render_evidence_rt if rt else render_evidence)(ed, ev, res, reconstructed)
     outdir = ROOT / "reports" / "retro" / ed.iso
     charts = render_all(res, outdir / "charts")
     html_path = outdir / "cycle_monitor.html"

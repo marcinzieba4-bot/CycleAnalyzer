@@ -19,8 +19,12 @@ Exit status 1 if any check fails.
 
 from __future__ import annotations
 
+import csv
+import hashlib
+import io
 import json
 import re
+import subprocess
 import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -31,6 +35,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from cycle_analyzer.retro.editions import make_edition          # noqa: E402
 from cycle_analyzer.retro import sources as S                    # noqa: E402
+from cycle_analyzer.retro import realtime as RT                  # noqa: E402
+from cycle_analyzer.retro.benchmarks import era_benchmarks       # noqa: E402
 
 SOURCES = json.loads((ROOT / "data/retro/announcement_sources.json").read_text())
 
@@ -70,8 +76,6 @@ def audit(d: date) -> list[str]:
             t = datetime.fromisoformat(e["available_by"].replace("Z", "+00:00"))
             check(t < cut, f"{k}: repository commit {t} not before cutoff {cut}")
             _, sha, path = e["url"].split(":", 2)
-            import hashlib
-            import subprocess
             raw = subprocess.run(["git", "-C", str(ROOT), "show", f"{sha}:{path}"],
                                  capture_output=True).stdout
             check(hashlib.sha256(raw).hexdigest() == e["sha256"],
@@ -83,6 +87,38 @@ def audit(d: date) -> list[str]:
         elif e["kind"] == "original-release":
             rd = date.fromisoformat(e["available_by"][:10])
             check(rd <= ed.last_eligible_day, f"{k}: released {rd} not before cutoff")
+        elif e["kind"] == "oecd-rt":
+            pub = date.fromisoformat(e["available_by"][:10])
+            check(pub <= ed.last_eligible_day,
+                  f"{k}: edition public by {pub}, after {ed.last_eligible_day}")
+            edition = re.search(r"\.\.\.(\d{6})\?", e["url"]).group(1)
+            measure = "LI_AA" if "..LI_AA..." in e["url"] else "CP"
+            want = (RT.cli_edition(ed) if measure == "LI_AA" else RT.cpi_edition(ed))
+            check(edition == want[0] and pub.isoformat() == want[1],
+                  f"{k}: edition {edition}/{pub} != eligible {want[0]}/{want[1]}")
+            raw, _, _ = S.cached_get(e["url"])
+            check(hashlib.sha256(raw).hexdigest() == e["sha256"], f"{k}: retained bytes changed")
+            eds = {r["EDITION"] for r in csv.DictReader(io.StringIO(raw.decode()))}
+            check(eds == {edition}, f"{k}: bytes contain editions {sorted(eds)}")
+            if measure == "LI_AA":
+                rows = RT.parse_rt(raw).get(("OECD", "M"), [])
+                try:
+                    RT._content_check(edition, rows)
+                    ok += 1
+                except RuntimeError as err:
+                    fails.append(f"{k}: {err}")
+        elif e["kind"] == "present-day-gated":
+            m = re.search(r"(?:endPeriod=|coed=)(\d{4}-\d{2})", e["url"])
+            gate = pd.Period(m.group(1), freq="M")
+            rule = (RT.gate_lag1(ed) if ("WS_EER" in e["url"] or "WS_LONG_CPI" in e["url"])
+                    else ed.anchor)
+            check(gate <= rule, f"{k}: gate {gate} later than the rule gate {rule}")
+            raw, _, _ = S.cached_get(e["url"])
+            check(hashlib.sha256(raw).hexdigest() == e["sha256"], f"{k}: retained bytes changed")
+            rows = (S.parse_bis_csv(raw) if "stats.bis.org" in e["url"]
+                    else [(p[:7], v) for p, v in S.parse_alfred_csv(raw)])
+            last = max(pd.Period(r[0][:7], freq="M") for r in rows) if rows else None
+            check(last is None or last <= gate, f"{k}: retained bytes reach {last}, after {gate}")
         elif e["kind"] == "bis-current":
             end = date.fromisoformat(e["url"].split("endPeriod=")[1][:10])
             check(end <= ed.last_eligible_day,
@@ -112,6 +148,19 @@ def audit(d: date) -> list[str]:
         if re.match(r"\d{4}-\d{2}-\d{2}$", es):
             check(date.fromisoformat(es) <= ed.last_eligible_day,
                   f"policy {cc} effective {es} after {ed.last_eligible_day}")
+    eb = era_benchmarks(ed)
+    for cc, r in (eb["rows"].items() if eb else []):
+        check(date.fromisoformat(r.get("announced", "1900-01-01")) <= ed.last_eligible_day,
+              f"benchmark {cc} announced {r.get('announced')} after cutoff day")
+        for u in r["urls"]:
+            check(date.fromisoformat(u["date"]) <= ed.last_eligible_day,
+                  f"benchmark source for {cc} dated {u['date']} shown before publication")
+    for x in ev.get("rt", {}).get("cli", {}).get("evidence", []):
+        check(date.fromisoformat(x["date"]) <= ed.last_eligible_day,
+              f"evidence item dated {x['date']} shown before it was published")
+    for a in ev.get("decisions", []):
+        check(date.fromisoformat(a["effective"]) <= ed.last_eligible_day,
+              f"decision {a} effective after cutoff day")
     for a in ev["announcements"]:
         check(date.fromisoformat(a["effective"]) <= ed.last_eligible_day,
               f"announcement {a} effective after cutoff day")
@@ -124,6 +173,7 @@ def audit(d: date) -> list[str]:
     page = (ROOT / "reports" / "retro" / "site" / f"{ed.iso}.html").read_text()
     txt = re.sub(r"data:image/png;base64,[A-Za-z0-9+/=]+", "", page)
     txt = re.sub(r'href="[^"]*"', "", txt)
+    txt = re.sub(r"sha256 [0-9a-f]{16}", "sha256 <hex>", txt)
     recon = re.search(r"Reconstructed (\d{4}-\d{2}-\d{2})", txt)
     allowed = ({recon.group(1)} if recon else set()) | {ed.iso}   # edition label itself
     for m in re.finditer(r"(?<![\d.])(20\d{2})-(\d{2})(?:-(\d{2}))?(?![\d])", txt):
@@ -147,7 +197,8 @@ def audit(d: date) -> list[str]:
                   f"page mentions month {m.group(0)} after edition month")
     # no year after the edition year anywhere except the reconstruction stamp
     stripped = re.sub(r"Reconstructed( on)? \d{4}-\d{2}-\d{2}", "", txt)
-    for yr in range(ed.date.year + 1, ed.date.year + 3):
+    recon_year = int(recon.group(1)[:4]) if recon else date.today().year
+    for yr in range(ed.date.year + 1, max(recon_year, ed.date.year + 2) + 1):
         n = len(re.findall(rf"(?<!\d){yr}(?!\d)", stripped))
         check(n == 0, f"page mentions {yr} outside the reconstruction stamp ({n}x)")
     # written-out dates ("12 November 2025", "March 2026") must not be later either

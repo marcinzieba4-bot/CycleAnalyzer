@@ -157,6 +157,27 @@ the economies they do not cover (Japan, Canada, Mexico, South Africa, Chile,
 Thailand, India) from verified original national releases. Editions after
 mid-2026 need a citation for every decision since July 2025.
 
+### Pre-archive editions (Q1 2008): real-time vintages
+
+No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
+reaches back to 2008, so editions dated on or before 2016-12-31 are built by
+`cycle_analyzer/retro/realtime.py` instead:
+
+| Input | Point-in-time source |
+|---|---|
+| OECD CLI, amplitude adjusted (20–21) | OECD real-time revisions database (`DSD_STES_REVISIONS@DF_STES_REVISIONS`), the newest monthly edition whose CLI was demonstrably public before the cutoff (`data/retro/oecd_rt_editions.json`: dated press reports, with a content check against the published OECD-area figures) |
+| CPI y/y (21) | CP index of the newest revisions-database edition whose edition month had ended; y/y computed inside that vintage (China is stored as previous-year = 100). US: ALFRED CPIAUCNS Friday vintage |
+| CPI Chile, Colombia, Thailand | present-day BIS `WS_LONG_CPI`, requested only through the month whose *following* month had ended |
+| REER (24) | present-day BIS broad REER, same one-full-month gate (no 2008 vintage exists; disclosed on every page) |
+| 10y yields (17) | present-day monthly market averages, completed months only |
+| Policy (24) | BIS daily decision history downloaded only to the last day before the cutoff; BIS end-of-month rates through the last completed month |
+| Inflation benchmarks | `data/retro/benchmarks_2008.json`: the objective publicly in force (e.g. BoJ ~1%, Norway 2.5%, Brazil 4.5%, China 3% → 4.8% from the 5 Mar 2008 Government Work Report), each with sources shown only once published |
+
+Inputs whose latest observation is more than 9 months older than the anchor
+month are not used (Turkey's CLI in the Dec-2007 and Jan-2008 editions).
+Editions built: 2008-01-06, 01-20, 02-03, 02-17, 03-02, 03-16, 03-30
+(`python scripts/retro_build.py --range 2008-01-01 2008-03-31 --every 14`).
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

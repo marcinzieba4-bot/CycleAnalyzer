@@ -8,6 +8,7 @@ histories and explicitly gated present-day histories.
 from __future__ import annotations
 
 import html
+from datetime import date
 
 import numpy as np
 
@@ -31,6 +32,13 @@ POLICY_INSTRUMENT_RT = {
     "KR": "Bank of Korea policy rate (BIS series)", "CL": "Monetary policy rate",
     "CO": "BanRep intervention rate", "TH": "BOT one-day repurchase rate",
 }
+
+
+def instrument(cc: str, ed: Edition) -> str:
+    """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2008, 12, 16):
+        return "Federal funds target range midpoint (0–0.25% range from 16 Dec 2008)"
+    return POLICY_INSTRUMENT_RT.get(cc, "")
 
 
 def _e(x) -> str:
@@ -75,7 +83,9 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         f"never revised afterwards; latest reference month {_e(ev.rt['cli'].get('ref', ''))}"
         f"). That edition is used because its CLI was public by {_e(cli['public_by'])} "
         f"({_e(cli['basis'])}).{chk_txt} Evidence: {_links(cli.get('evidence', [])) or 'edition month end'}. "
-        "Chile, Colombia and Thailand have no real-time leading indicator and no growth input; "
+        + (_e(cli["method_note"]["text"]) + " Source: "
+           + _links([cli["method_note"]]) + ". " if cli.get("method_note") else "")
+        + "Chile, Colombia and Thailand have no real-time leading indicator and no growth input; "
         f"an input whose latest observation is more than {R.STALE_MONTHS} months older than the "
         "anchor month is not used (data notes below)"
         + ".</p>")
@@ -167,7 +177,7 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             continue
         rr = st.real_rate if st is not None else np.nan
         add(f'<tr><td class="name">{_e(c.name)}</td><td style="white-space:normal">'
-            f"{_e(POLICY_INSTRUMENT_RT.get(cc, ''))}</td>"
+            f"{_e(instrument(cc, ed))}</td>"
             f'<td class="num">{p.current:.2f}%</td><td class="num">{_e(p.effective_since)}</td>'
             f'<td class="num">{tgt.get(cc, c.infl_target):.2f}%</td>'
             f'<td class="num">{ch.get("last", "–")}: {ch.get("last_value", float("nan")):.2f}%</td>'
@@ -183,7 +193,7 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         add('<ul class="standouts">')
         for a in sorted(ev.decisions, key=lambda a: a["effective"], reverse=True):
             add(f"<li><b>{_e(a['effective'])} · {_e(C[a['cc']].name)}</b> — "
-                f"{_e(POLICY_INSTRUMENT_RT.get(a['cc'], 'policy rate'))} {a['from']:g}% → "
+                f"{_e(instrument(a['cc'], ed) or 'policy rate')} {a['from']:g}% → "
                 f"{a['to']:g}% ({a['to'] - a['from']:+.2f}pp)</li>")
         add("</ul>")
     else:

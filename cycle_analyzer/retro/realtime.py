@@ -261,6 +261,9 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                       "basis": cli_basis, "content_check": chk,
                       "evidence": [x for x in register().get(cli_ed, {}).get("evidence", [])
                                    if date.fromisoformat(x["date"]) <= led]}
+    mn = register().get(cli_ed, {}).get("method_note")
+    if mn and date.fromisoformat(mn["date"]) <= led:
+        ev.rt["cli"]["method_note"] = mn
     for cc, area in RT_AREA.items():
         s = _cap(_monthly(cli.get((area, "M"), [])), ed)
         if not len(s) or not fresh("cli", cc, s, f"the {edition_label(cli_ed)} CLI edition"):

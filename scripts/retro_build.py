@@ -33,6 +33,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from cycle_analyzer.retro.editions import make_edition, biweekly_sundays   # noqa: E402
 from cycle_analyzer.retro import panels as P                               # noqa: E402
 from cycle_analyzer.retro.evidence_html import render as render_evidence   # noqa: E402
+from cycle_analyzer.retro.benchmarks import targets_for                    # noqa: E402
 from cycle_analyzer.analysis import run                                    # noqa: E402
 from cycle_analyzer.charts import render_all                               # noqa: E402
 import build_html                                                          # noqa: E402
@@ -47,7 +48,8 @@ def build_one(d: date, reconstructed: str) -> Path:
     P.save(ed, panels, ev)
     snapshot = {cc: p.current for cc, p in ev.policy.items()}
     ctx = {"edition": ed.iso, "cutoff_utc": ed.cutoff_iso, "reconstructed": reconstructed}
-    res = run(panels, snapshot=snapshot, anchor=ed.anchor, retro=ctx)
+    res = run(panels, snapshot=snapshot, anchor=ed.anchor, retro=ctx,
+              targets=targets_for(ed))
     ctx["evidence_html"] = render_evidence(ed, ev, res, reconstructed)
     outdir = ROOT / "reports" / "retro" / ed.iso
     charts = render_all(res, outdir / "charts")

@@ -11,6 +11,7 @@ import numpy as np
 from ..universe import COUNTRIES
 from .panels import Evidence, BCI_QUARTERLY, CLI_13
 from .editions import Edition
+from .benchmarks import china_note, change_in_force, targets_for
 
 SOURCES_FILE = Path(__file__).resolve().parents[2] / "data" / "retro" / "announcement_sources.json"
 
@@ -34,8 +35,7 @@ BENCHMARK_NOTE = (
     "CPIF, while this model uses headline CPI for both. Switzerland’s 1% is the midpoint of "
     "its 0–2% price-stability range; Australia’s 2.5% the midpoint of 2–3%; Thailand’s 2% "
     "the midpoint of 1–3%; South Africa’s 4.5% the midpoint of its 3–6% target range. "
-    "China’s 3% is the government’s last announced annual CPI objective (for 2024, “around "
-    "3%”), not a formal PBoC inflation target. Türkiye’s 5% is the medium-term goal; "
+    "{china} Türkiye’s 5% is the medium-term goal; "
     "Brazil’s 3% is the continuous "
     "target in force from January 2025.")
 
@@ -145,7 +145,12 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             parts.append(f"{k}: {', '.join(g) if len(g) <= 12 else ', '.join(g[:6]) + f' … {len(g) - 6} more through ' + g[-1]}")
         add('<p class="sub">Original source observations remain missing (no values are '
             "filled): " + "; ".join(_e(p) for p in parts) + ".</p>")
-    add(f'<p class="sub">{BENCHMARK_NOTE}</p>')
+    add(f'<p class="sub">{BENCHMARK_NOTE.format(china=china_note(ed))}</p>')
+    cn = change_in_force("CN", ed)
+    if cn is not None:
+        add(f'<p class="sub">Benchmark source: <a href="{_e(cn["url"])}">{_e(cn["label"])}</a>. '
+            "It is public before this cutoff, so this edition uses it in place of the "
+            "earlier 3% benchmark.</p>")
 
     # ---- observation dates table ----------------------------------------
     add("<h3>Historical observation dates</h3>")
@@ -174,6 +179,7 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         "<th>Current policy</th><th>Effective since</th><th>Evidence</th><th>Target</th>"
         "<th>Latest CPI</th><th>Assessed real rate</th></tr></thead><tbody>")
     ann_keys = {(a["cc"], a["effective"]) for a in ev.announcements}
+    tgt = targets_for(ed)
     for cc, c in C.items():
         p = ev.policy.get(cc)
         st = res.stances.get(cc)
@@ -188,7 +194,7 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             f"{_e(POLICY_INSTRUMENT.get(cc, ''))}</td>"
             f'<td class="num">{p.current:.3f}%</td><td class="num">{_e(p.effective_since)}</td>'
             f'<td>{_e(evid)}</td>'
-            f'<td class="num">{c.infl_target:.2f}%</td>'
+            f'<td class="num">{tgt.get(cc, c.infl_target):.2f}%</td>'
             f'<td class="num">{cpi.get("last", "–")}: {cpi.get("last_value", float("nan")):.2f}%</td>'
             f'<td class="num">{rr:+.3f}%</td></tr>')
     add("</tbody></table></div>")

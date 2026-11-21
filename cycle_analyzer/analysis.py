@@ -26,6 +26,7 @@ GROWTH_DANGER_Z = -1.0
 class Results:
     asof: str
     retro: dict = field(default=None, repr=False)   # retrospective edition context
+    targets: dict = field(default=None, repr=False)  # inflation benchmarks used, if overridden
     ind: dict = field(repr=False, default=None)
     clocks: dict[str, ClockReading] = None
     infl_fits: dict[str, OUFit] = None
@@ -65,14 +66,17 @@ def _fit_all(df: pd.DataFrame, tail: int = 300) -> dict[str, OUFit]:
 
 
 def run(panels: dict[str, pd.DataFrame], snapshot: dict[str, float] | None = None,
-        anchor: pd.Period | None = None, retro: dict | None = None) -> Results:
+        anchor: pd.Period | None = None, retro: dict | None = None,
+        targets: dict[str, float] | None = None) -> Results:
     """Run every model layer.
 
     ``snapshot``/``anchor``/``retro`` switch on the retrospective method
     (effective-policy snapshot with calendar anchors, fully charged negative
-    carry, retrospective wording). Without them the output is unchanged.
+    carry, retrospective wording). ``targets`` overrides inflation benchmarks
+    (retrospective: the benchmark publicly known at the cutoff). Without them
+    the output is unchanged.
     """
-    ind = build_indicators(panels)
+    ind = build_indicators(panels, targets=targets)
     gz, iz = ind["growth_z"], ind["infl_z"]
 
     asof_candidates = [p.index[-1] for k, p in panels.items() if not p.empty]
@@ -151,7 +155,7 @@ def run(panels: dict[str, pd.DataFrame], snapshot: dict[str, float] | None = Non
     curves = curve_signals(slope_fits, clocks, slope_ctx, stances)
 
     return Results(
-        asof=asof, retro=retro, ind=ind, clocks=clocks,
+        asof=asof, retro=retro, targets=targets, ind=ind, clocks=clocks,
         infl_fits=infl_fits, growth_fits=growth_fits,
         slope_fits=slope_fits, reer_fits=reer_fits,
         infl_danger=infl_danger, growth_danger=growth_danger,

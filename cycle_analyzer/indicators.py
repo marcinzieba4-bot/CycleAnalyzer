@@ -30,7 +30,10 @@ def _roll_z(df: pd.DataFrame, demean: bool = True) -> pd.DataFrame:
     return (df - m) / sd
 
 
-def build_indicators(panels: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
+def build_indicators(panels: dict[str, pd.DataFrame],
+                     targets: dict[str, float] | None = None) -> dict[str, pd.DataFrame]:
+    """``targets`` overrides the universe's inflation benchmarks per economy
+    (retrospective editions use the benchmark publicly known at the cutoff)."""
     cli, cpi = panels["cli"], panels["cpi"]
     policy, y10, reer = panels["policy"], panels["y10"], panels["reer"]
 
@@ -43,7 +46,8 @@ def build_indicators(panels: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]
     ind["growth_z"] = (dev / sd).clip(-3.5, 3.5)
 
     # Inflation gap vs target (pp) and its scaled version.
-    targets = pd.Series({cc: COUNTRIES[cc].infl_target for cc in cpi.columns})
+    tmap = targets or {}
+    targets = pd.Series({cc: tmap.get(cc, COUNTRIES[cc].infl_target) for cc in cpi.columns})
     gap = cpi.sub(targets, axis=1)
     ind["infl_gap"] = gap
     ind["cpi"] = cpi

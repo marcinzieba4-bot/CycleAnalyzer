@@ -113,6 +113,7 @@ Europe/Warsaw on that date (`cycle_analyzer/retro/`):
 | Business confidence (10) | DBnomics `DSD_STES@DF_BTS` commit; percent balance centred on its own pre-cutoff mean |
 | CPI y/y | freshest matching-definition pre-cutoff archive (BIS / OECD), plus verified original releases (`data/retro/original_releases.json`) |
 | Policy rates | DBnomics BIS `WS_CBPOL` commit; later decisions only if announced *and* effective before the cutoff, each cited (`data/retro/announcement_sources.json`) |
+| Inflation benchmarks | the benchmark publicly known at the cutoff (`cycle_analyzer/retro/benchmarks.py`; e.g. China's 2025 CPI objective of ~2%, announced 5 Mar 2025, applies from the 2025-03-16 edition) |
 
 The retrospective method also charges negative carry in full, measures policy
 changes from the effective snapshot to exact calendar month-ends, and prints
@@ -124,6 +125,9 @@ python scripts/retro_build.py --range 2025-01-01 2025-02-28 --every 14
 python scripts/retro_audit.py 2025-01-05 2025-01-19 2025-02-02 2025-02-16
 python scripts/retro_build.py 2025-01-05 ... --deploy   # archive only; latest.html untouched
 ```
+
+Editions built so far (biweekly Sundays): 2025-01-05 … 2025-02-16 and
+2025-03-02, 03-16, 03-30, 04-13, 04-27, 05-11, 05-25.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

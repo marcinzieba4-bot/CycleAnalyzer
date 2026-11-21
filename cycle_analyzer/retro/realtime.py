@@ -126,7 +126,11 @@ def gate_lag1(ed: Edition) -> pd.Period:
 # ------------------------------------------------------------------ fetchers
 
 def oecd_rt(measure: str, edition: str, public_by: str, basis: str) -> tuple[bytes, S.LedgerEntry]:
-    areas = "+".join(sorted(set(RT_AREA.values()) | {"OECD"}))
+    extra = set()
+    if measure == "LI_AA":       # an edition whose content check uses another area
+        chk = register().get(edition, {}).get("content_check") or {}
+        extra = {chk["area"]} if chk.get("area") else set()
+    areas = "+".join(sorted(set(RT_AREA.values()) | {"OECD"} | extra))
     url = f"{OECD_RT}/{areas}..{measure}...{edition}?format=csvfile"
     b, sha, got = S.cached_get(url)
     what = ("composite leading indicator, amplitude adjusted (LI_AA)" if measure == "LI_AA"
@@ -251,7 +255,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     b, e = oecd_rt("LI_AA", cli_ed, cli_pub, cli_basis)
     ev.add(e)
     cli = parse_rt(b)
-    chk = _content_check(cli_ed, cli.get(("OECD", "M"), []))
+    chk_area = (register().get(cli_ed, {}).get("content_check") or {}).get("area", "OECD")
+    chk = _content_check(cli_ed, cli.get((chk_area, "M"), []))
     ev.rt["cli"] = {"edition": cli_ed, "label": edition_label(cli_ed), "public_by": cli_pub,
                       "basis": cli_basis, "content_check": chk,
                       "evidence": [x for x in register().get(cli_ed, {}).get("evidence", [])

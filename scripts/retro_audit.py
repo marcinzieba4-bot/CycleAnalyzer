@@ -101,7 +101,8 @@ def audit(d: date) -> list[str]:
             eds = {r["EDITION"] for r in csv.DictReader(io.StringIO(raw.decode()))}
             check(eds == {edition}, f"{k}: bytes contain editions {sorted(eds)}")
             if measure == "LI_AA":
-                rows = RT.parse_rt(raw).get(("OECD", "M"), [])
+                area = (RT.register().get(edition, {}).get("content_check") or {}).get("area", "OECD")
+                rows = RT.parse_rt(raw).get((area, "M"), [])
                 try:
                     RT._content_check(edition, rows)
                     ok += 1

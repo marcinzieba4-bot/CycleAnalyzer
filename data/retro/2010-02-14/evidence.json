@@ -36,6 +36,17 @@
    "note": "OECD real-time revisions database, January 2010 edition, consumer price index (CP): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
+  "bis-wslongcpi-mcn771-to-2009-12": {
+   "id": "bis-wslongcpi-mcn771-to-2009-12",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CN.771?format=csv&startPeriod=1985-01&endPeriod=2009-12",
+   "sha256": "41a030cc0fc25363cc3478866c7205a60f277e5a7f61dcc9c0f373bb5bc89b96",
+   "nbytes": 6224,
+   "retrieved_at": "2026-11-21T22:10:57Z",
+   "available_by": "reference months through 2009-12 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CN.771 (CPI y/y): present-day BIS history requested with endPeriod=2009-12, so the retained bytes stop at 2009-12. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
   "bis-wslongcpi-mcl771-to-2009-12": {
    "id": "bis-wslongcpi-mcl771-to-2009-12",
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CL.771?format=csv&startPeriod=1985-01&endPeriod=2009-12",
@@ -1122,7 +1133,7 @@
   },
   "CN": {
    "cli": "2009-12",
-   "cpi": "2009-09",
+   "cpi": "2009-12",
    "reer": "2009-12",
    "policy": "2010-01"
   },
@@ -1323,7 +1334,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "alfred"
+   "kind": "alfred",
+   "reason": ""
   },
   "XM": {
    "chosen": "OECD real-time CPI index, euro-area aggregate as published (database code EA18), January 2010 edition, y/y within the vintage",
@@ -1340,7 +1352,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "JP": {
    "chosen": "OECD real-time CPI index JPN, January 2010 edition, y/y within the vintage",
@@ -1357,7 +1370,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "GB": {
    "chosen": "OECD real-time CPI index GBR, January 2010 edition, y/y within the vintage",
@@ -1374,7 +1388,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "CA": {
    "chosen": "OECD real-time CPI index CAN, January 2010 edition, y/y within the vintage",
@@ -1391,7 +1406,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "AU": {
    "chosen": "OECD real-time CPI index AUS (quarterly), January 2010 edition, y/y within the vintage",
@@ -1408,7 +1424,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": true,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "CH": {
    "chosen": "OECD real-time CPI index CHE, January 2010 edition, y/y within the vintage",
@@ -1425,7 +1442,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "SE": {
    "chosen": "OECD real-time CPI index SWE, January 2010 edition, y/y within the vintage",
@@ -1442,7 +1460,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "NO": {
    "chosen": "OECD real-time CPI index NOR, January 2010 edition, y/y within the vintage",
@@ -1459,7 +1478,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "NZ": {
    "chosen": "OECD real-time CPI index NZL (quarterly), January 2010 edition, y/y within the vintage",
@@ -1476,24 +1496,31 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": true,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "CN": {
-   "chosen": "OECD real-time CPI CHN, January 2010 edition (stored as same month of previous year = 100; y/y = value \u2212 100)",
-   "ledger": "oecd-rt-cp-201001",
-   "last": "2009-09",
-   "last_value": 12.08,
+   "chosen": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2009-12",
+   "ledger": "bis-wslongcpi-mcn771-to-2009-12",
+   "last": "2009-12",
+   "last_value": 1.703,
    "considered": [
     {
-     "candidate": "OECD real-time CPI CHN, January 2010 edition (stored as same month of previous year = 100; y/y = value \u2212 100)",
+     "candidate": "OECD real-time CPI index CHN (fixed base), January 2010 edition, y/y within the vintage",
      "last": "2009-09",
-     "last_value": 12.08
+     "last_value": -0.805
+    },
+    {
+     "candidate": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2009-12",
+     "last": "2009-12",
+     "last_value": 1.703
     }
    ],
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "bis_gated",
+   "reason": "fixed-base"
   },
   "IN": {
    "chosen": "OECD real-time CPI index IND, January 2010 edition, y/y within the vintage",
@@ -1510,7 +1537,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "BR": {
    "chosen": "OECD real-time CPI index BRA, January 2010 edition, y/y within the vintage",
@@ -1527,7 +1555,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "MX": {
    "chosen": "OECD real-time CPI index MEX, January 2010 edition, y/y within the vintage",
@@ -1544,7 +1573,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "ZA": {
    "chosen": "OECD real-time CPI index ZAF, January 2010 edition, y/y within the vintage",
@@ -1561,7 +1591,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "TR": {
    "chosen": "OECD real-time CPI index TUR, January 2010 edition, y/y within the vintage",
@@ -1578,7 +1609,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "PL": {
    "chosen": "OECD real-time CPI index POL, January 2010 edition, y/y within the vintage",
@@ -1595,7 +1627,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "HU": {
    "chosen": "OECD real-time CPI index HUN, January 2010 edition, y/y within the vintage",
@@ -1612,7 +1645,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "CZ": {
    "chosen": "OECD real-time CPI index CZE, January 2010 edition, y/y within the vintage",
@@ -1629,7 +1663,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "ID": {
    "chosen": "OECD real-time CPI index IDN, January 2010 edition, y/y within the vintage",
@@ -1646,7 +1681,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "KR": {
    "chosen": "OECD real-time CPI index KOR, January 2010 edition, y/y within the vintage",
@@ -1663,7 +1699,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "oecd_rt"
+   "kind": "oecd_rt",
+   "reason": ""
   },
   "CL": {
    "chosen": "BIS WS_LONG_CPI M.CL.771, present-day history gated at 2009-12",
@@ -1680,7 +1717,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "bis_gated"
+   "kind": "bis_gated",
+   "reason": ""
   },
   "CO": {
    "chosen": "BIS WS_LONG_CPI M.CO.771, present-day history gated at 2009-12",
@@ -1697,7 +1735,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "bis_gated"
+   "kind": "bis_gated",
+   "reason": ""
   },
   "TH": {
    "chosen": "BIS WS_LONG_CPI M.TH.771, present-day history gated at 2009-12",
@@ -1714,7 +1753,8 @@
    "supplements": [],
    "mean_abs_diff_vs_bis_60m": null,
    "quarterly": false,
-   "kind": "bis_gated"
+   "kind": "bis_gated",
+   "reason": ""
   }
  },
  "growth_def": {
@@ -1977,6 +2017,7 @@
   "cli/CZ: the February 2010 edition carries 2010-01, beyond the release's reference month 2009-12; later months are not used (not shown public by 2010-02-05).",
   "cli/ID: the February 2010 edition carries 2010-01, beyond the release's reference month 2009-12; later months are not used (not shown public by 2010-02-05).",
   "cli/KR: the February 2010 edition carries 2010-01, beyond the release's reference month 2009-12; later months are not used (not shown public by 2010-02-05).",
+  "cpi/CN: the January 2010 CPI edition stores a fixed-base index (y/y = 12-month ratio inside the vintage); the published y/y behind the one-full-month publication gate competes, and the published y/y (latest 2009-12) is used as the fresher series.",
   "policy/IN: BIS monthly differs from the daily month-end in 2007-03; monthly rows retained."
  ],
  "era": "realtime",

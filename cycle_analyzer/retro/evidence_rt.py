@@ -99,7 +99,8 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
     fixed_bis = [c for c, v in ev.cpi_choice.items()
                  if v.get("kind") == "bis_gated" and v.get("reason") == "fixed-base"]
     cn_ed = (ev.cpi_choice.get("CN") or {}).get("chosen", "")
-    if R.stored_as_yoy("CN", cpi["edition"]):
+    if (R.stored_as_yoy("CN", cpi["edition"])
+            or (ev.cpi_choice.get("CN") or {}).get("reason") != "fixed-base"):
         cn_txt = ("China’s series is stored as an index of the same month of the previous "
                   "year = 100, so its y/y is the value less 100. ")
     else:

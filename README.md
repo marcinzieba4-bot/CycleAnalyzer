@@ -248,6 +248,18 @@ Biweekly grid continued: 2010-01-03, 01-17, 01-31, 02-14, 02-28, 03-14,
   RBA's new Statement and South Africa's budget change wording only.
   Forward-year targets are paraphrased ("the following year's") so that no
   page names a later date.
+- **China CPI storage.** The revisions database stores China's CP as "same
+  month of the previous year = 100" only in the 2007–2008 editions; from
+  200911 it is a fixed-base index (2009-07: 111.08 vs 113.11 a year earlier
+  = −1.8%, the NBS figure). Reading it as previous-year = 100 reported the
+  index level less 100 (~11–15%) as inflation. Those editions now take the
+  12-month ratio inside the vintage, and since that derived index deviates
+  from the published y/y by up to ~0.9pp in some vintages, the published y/y
+  behind the one-full-month gate competes (the fresher wins; in every 2010
+  edition it is the published y/y). 2008 editions and the 2009 editions
+  where China is absent rebuild byte-identically. **Known issue:** the
+  already-published 2009-12-06 and 2009-12-20 pages were built before this
+  fix and still show China's CPI at 11.08% (true: −1.8% for 2009-07).
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

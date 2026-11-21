@@ -177,8 +177,14 @@ Inputs whose latest observation is more than 9 months older than the anchor
 month are not used (Turkey's CLI in the Dec-2007 and Jan-2008 editions).
 Editions built (biweekly grid): 2008-01-06, 01-20, 02-03, 02-17, 03-02,
 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22, 07-06, 07-20,
-08-03, 08-17, 08-31, 09-14, 09-28
-(`python scripts/retro_build.py --range 2008-01-01 2008-09-30 --every 14`).
+08-03, 08-17, 08-31, 09-14, 09-28, 10-12, 10-26, 11-09, 11-23, 12-07, 12-21
+(`python scripts/retro_build.py --range 2008-01-01 2008-12-31 --every 14`).
+Q4: the December 2008 CLI edition is the first under the OECD's revised
+method (double Hodrick–Prescott filter replacing PAT; the vintage's whole
+history was re-estimated) and the pages using it say so; the US instrument
+becomes the target-range midpoint only after 16 Dec 2008. Q4 benchmark
+announcements (South Africa's CPIX → CPI switch, India, US, UK, Colombia,
+New Zealand) changed wording only, not values.
 Q3 benchmark change: India 5.5 → 7.0 (RBI First Quarter Review, 29 Jul 2008:
 "close to 7.0 per cent" by end-March). The Q3 CLI editions are
 content-checked against dated reports (OECD area, or Italy for September).

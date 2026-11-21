@@ -212,6 +212,7 @@ def danger_tag(d):
 
 def build(res: Results, charts_dir: Path, out: Path) -> None:
     C = COUNTRIES
+    R = res.retro          # retrospective edition context (None for live runs)
     plays = _top_plays(res)
     H: list[str] = []
     add = H.append
@@ -221,19 +222,34 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
     add('<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
         'family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Sans:wght@400;600&'
         'family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">')
-    add(f"<style>{CSS}</style>")
+    add(f"<style>{CSS}{'a { overflow-wrap: anywhere; }' if R else ''}</style>")
     add('<div class="wrap">')
 
     # masthead
     add('<header class="masthead">')
-    add(f'<div class="eyebrow">CycleAnalyzer · data through {res.asof} · '
-        f'generated {date.today().isoformat()}</div>')
+    if R:
+        add(f'<div class="eyebrow">CycleAnalyzer · retrospective {R["edition"]} · '
+            f'model anchor {res.asof}</div>')
+    else:
+        add(f'<div class="eyebrow">CycleAnalyzer · data through {res.asof} · '
+            f'generated {date.today().isoformat()}</div>')
     add("<h1>DM+EM Cycle Monitor</h1>")
     add('<p class="dek">Twenty-four economies read as mean-reverting cycles: where each one '
         "sits on the growth × inflation clock, what comes next and when, which cycles are "
         "not endangered, who stands apart from the global pack — and what all of it says "
         "to play in FX and yield curves.</p>")
     add("</header>")
+    if R:
+        add(f'<p class="sub">Retrospective edition {R["edition"]}. Information strictly '
+            f'before 00:00 Europe/Warsaw ({R["cutoff_utc"]}). Monthly observations and '
+            "their release vintages are separately dated below. Policy snapshots include "
+            "only decisions already announced and effective. Negative FX funding costs "
+            "are fully charged; a benign domestic cycle does not make a negative "
+            "interest differential positive carry.</p>")
+        add(f'<p class="sub">Reconstructed {R["reconstructed"]} by applying the latest '
+            "corrected methodology to historical inputs. The edition date identifies the "
+            "information boundary; this is not a claim that these analyses or trades "
+            f'were published in {R["edition"][:4]}.</p>')
 
     counts = {}
     for clk in res.clocks.values():
@@ -254,6 +270,8 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
         "Cycles rotate counter-clockwise: Goldilocks → Overheating → Stagflation → "
         "Disinflation. The rotation speed gives the ETA to the next phase.</p>")
     add(img(charts_dir / "clock.png", "Cycle clock scatter",
+            ("Trails show the last six eligible matched growth/inflation observations. "
+             "Each country’s final matched month is disclosed below.") if R else
             "Trails show the last 6 months. The crowd in the upper-right — the heated, "
             "credit-friendly zone where the inflation fight comes next — is the story of this print."))
     add('<div class="tablewrap"><table><thead><tr>'
@@ -298,9 +316,13 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
     if safe:
         add('<div class="safebox"><b>Cycles not in danger:</b> '
             + ", ".join(C[cc].name for cc in safe)
-            + ". The model path stays clear of both thresholds for the full 36-month "
-              "horizon. These are the places to be paid for the benign part of the "
-              "cycle — carry and credit — without fighting the clock.</div>")
+            + (". The model path stays clear of both thresholds for the full 36-month "
+               "horizon. These are conditional model assessments of the domestic cycle. "
+               "They do not establish positive FX carry or remove currency, credit or "
+               "duration risk.</div>" if R else
+               ". The model path stays clear of both thresholds for the full 36-month "
+               "horizon. These are the places to be paid for the benign part of the "
+               "cycle — carry and credit — without fighting the clock.</div>"))
     ou = charts_dir / "ou.png"
     if ou.exists():
         add(img(ou, "OU projections",
@@ -368,10 +390,19 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
 
     # section 5: curves
     add('<h2><span class="no">05</span>Yield curves</h2>')
-    add('<p class="sub">Slope = 10y − policy. The call combines what the phase implies '
-        "(overheating flattens, disinflation steepens) with the OU stretch of the slope "
-        "against its own history; stars mark conviction, and phase + mean reversion "
-        "agreeing is the double-confirmation worth acting on.</p>")
+    if R:
+        add('<p class="sub">Model slope = 10y government yield minus the policy rate at '
+            "a matched historical month. This is a policy/long-rate proxy, not an observed "
+            "2s10s spread. The 2s10s legs below are a proposed execution expression "
+            "requiring separate market pricing. The call combines what the phase implies "
+            "(overheating flattens, disinflation steepens) with the OU stretch of the slope "
+            "against its own history; stars mark conviction, and phase + mean reversion "
+            "agreeing is the double-confirmation worth acting on.</p>")
+    else:
+        add('<p class="sub">Slope = 10y − policy. The call combines what the phase implies '
+            "(overheating flattens, disinflation steepens) with the OU stretch of the slope "
+            "against its own history; stars mark conviction, and phase + mean reversion "
+            "agreeing is the double-confirmation worth acting on.</p>")
     add(img(charts_dir / "slope.png", "Curve slopes",
             "Slope z-scores vs own history, colored by the model's call."))
     add('<div class="tablewrap"><table><thead><tr>'
@@ -402,9 +433,14 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
                   "Momentum": "#eda100", "Penalty": "#e87ba4"}
     add('<div class="engines">')
     for c in FX_DOC:
+        formula = c["formula"]
+        if R and c["name"] == "Carry":
+            formula = ("0.25 × policy-rate differential vs USD, clipped ±6pp; positive "
+                       "pickup halved only when inflation gap eats it; negative funding "
+                       "costs fully charged")
         add(f'<div class="engine" style="border-left-color:{engine_col[c["name"]]}">'
             f'<h4>{c["name"]}</h4>'
-            f'<p class="formula">{c["formula"]}</p>'
+            f'<p class="formula">{formula}</p>'
             f'<p><b>What it measures</b><br>{c["what"]}</p>'
             f'<p><b>Where the edge lies</b><br>{c["edge"]}</p>'
             f'<p><b>Where it fails</b><br>{c["fails"]}</p></div>')
@@ -425,8 +461,11 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
     add("<li><b>Why crosses instead of USD legs.</b> The scores are measured vs USD, "
         "but the cleanest expression pairs the strongest long against the weakest "
         "<i>credible</i> funder: the dollar — with its own cycle, its own politics — "
-        "nets out, leaving a pure relative-cycle position that is <i>paid</i> the "
-        "carry differential to wait.</li>")
+        + ("nets out, leaving a relative-cycle position. Its actual policy-rate "
+           "differential can be positive or negative; forward basis and trading costs "
+           "also matter.</li>" if R else
+           "nets out, leaving a pure relative-cycle position that is <i>paid</i> the "
+           "carry differential to wait.</li>"))
     add("<li><b>The penalty is a filter, not a signal.</b> A deeply negative penalty "
         "(TRY-style) removes the currency from both sides of the book: the carry is "
         "uncollectible and the short bleeds. Uninvestable is a verdict too.</li>")
@@ -481,10 +520,17 @@ def build(res: Results, charts_dir: Path, out: Path) -> None:
     add("<dt>Standouts</dt><dd>6m policy change vs universe median (robust MAD z), real-rate "
         "gap vs own decade, 3m inflation momentum → early hiker, deliberating hike, cutting "
         "into inflation, behind the curve, room to cut.</dd>")
-    add("<dt>Data</dt><dd>BIS (policy rates, CPI y/y, broad REER — all 24 economies, "
-        f"through {res.asof}), OECD CLI via DBnomics (23), FRED 10y yields (17). Cached in "
-        "the repository for reproducibility.</dd>")
+    if R:
+        add("<dt>Data</dt><dd>Explicit historical input matrices only. The reviewed source "
+            "ledger and country observation dates below govern this edition; the "
+            "present-day repository cache is not an input.</dd>")
+    else:
+        add("<dt>Data</dt><dd>BIS (policy rates, CPI y/y, broad REER — all 24 economies, "
+            f"through {res.asof}), OECD CLI via DBnomics (23), FRED 10y yields (17). Cached in "
+            "the repository for reproducibility.</dd>")
     add("</dl>")
+    if R:
+        add(R["evidence_html"])
 
     add("<footer>Model output from the CycleAnalyzer framework — not investment advice. "
         "Sources: BIS, OECD, FRED. All z-scores are vs each economy's own history, which is "

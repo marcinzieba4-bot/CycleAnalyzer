@@ -100,6 +100,35 @@ Research > Cycle Analyzer tab (white theme, weekly archive rotation to
 `/research/cycle/archive/`, CloudFront invalidation). A scheduled Routine
 runs the whole chain every Sunday 15:00 Europe/Warsaw (13:00 UTC).
 
+## Retrospective (point-in-time) editions
+
+`scripts/retro_build.py` rebuilds the monitor *as it could have been written*
+on a past Sunday, using only information available before 00:00
+Europe/Warsaw on that date (`cycle_analyzer/retro/`):
+
+| Input | Point-in-time source |
+|---|---|
+| REER (24), 10y yields (17), US CPI | ALFRED vintage of the Friday before the cutoff |
+| OECD CLI (13) | immutable DBnomics git commit of `DSD_KEI@DF_KEI` before the cutoff |
+| Business confidence (10) | DBnomics `DSD_STES@DF_BTS` commit; percent balance centred on its own pre-cutoff mean |
+| CPI y/y | freshest matching-definition pre-cutoff archive (BIS / OECD), plus verified original releases (`data/retro/original_releases.json`) |
+| Policy rates | DBnomics BIS `WS_CBPOL` commit; later decisions only if announced *and* effective before the cutoff, each cited (`data/retro/announcement_sources.json`) |
+
+The retrospective method also charges negative carry in full, measures policy
+changes from the effective snapshot to exact calendar month-ends, and prints
+an evidence appendix (observation dates, effective policy, CPI sources,
+source ledger with SHA-256). The live weekly pipeline is unchanged.
+
+```bash
+python scripts/retro_build.py --range 2025-01-01 2025-02-28 --every 14
+python scripts/retro_audit.py 2025-01-05 2025-01-19 2025-02-02 2025-02-16
+python scripts/retro_build.py 2025-01-05 ... --deploy   # archive only; latest.html untouched
+```
+
+`retro_audit.py` re-checks every edition for look-ahead (source availability,
+observation months, policy effective dates, dates mentioned in the page).
+Exact model inputs and evidence are retained under `data/retro/<date>/`.
+
 ## Caveats
 
 - Signals are monthly and slow; this is a strategic framework, not an

@@ -249,6 +249,7 @@ def _top_plays(res: Results) -> list[dict]:
     """Assemble the elaborated trade theses from the model outputs."""
     C = COUNTRIES
     plays: list[dict] = []
+    retro = res.retro is not None
 
     # 1. Best curve trade — chosen by the context filter, not by raw stretch:
     #    EARLY_TURN beats SETUP beats everything; TREND_INTACT is never picked.
@@ -270,7 +271,16 @@ def _top_plays(res: Results) -> list[dict]:
             f"({s.slope_z:+.1f}σ vs its own history, half-life "
             f"{s.half_life:.0f}m). The economy is in **{s.phase}**, which pushes "
             f"the slope {move}"]
-        if st is not None and st.direction != "on hold":
+        if st is not None and st.direction != "on hold" and retro:
+            tends = "steepen" if st.direction == "cutting" else "flatten"
+            helps = (tends == "steepen") == (s.direction == "steepener")
+            bits.append(
+                f", and {C[s.cc].cb} is {st.direction} ({st.d6:+.2f}pp over 6m at "
+                f"{st.policy:.2f}%) — with the long yield held fixed, that policy "
+                f"direction would tend to {tends} the proxy, "
+                f"{'supporting' if helps else 'working against'} the phase-led "
+                f"{s.direction} call")
+        elif st is not None and st.direction != "on hold":
             bits.append(
                 f", and {C[s.cc].cb} is {st.direction} ({st.d6:+.2f}pp over 6m at "
                 f"{st.policy:.2f}%) — policy moves hit the front end first, which "
@@ -308,7 +318,11 @@ def _top_plays(res: Results) -> list[dict]:
             "thesis": "".join(bits),
             "expression": s.expression,
             "context": _ctx_line(v),
-            "risk": (f"a growth shock flips the phase to Disinflation and the trade "
+            "risk": (("A new growth or inflation shock can alter the phase, policy "
+                      "path and term premium. The measured slope is 10y minus policy, "
+                      "not an observed 2s10s spread; the 2s10s expression requires "
+                      "separate execution pricing and DV01 sizing.") if retro else
+                     f"a growth shock flips the phase to Disinflation and the trade "
                      f"inverts; size for the {s.half_life:.0f}m half-life, not for a month."),
         })
 
@@ -320,9 +334,29 @@ def _top_plays(res: Results) -> list[dict]:
         lo_clk, sh_clk = res.clocks.get(lo.cc), res.clocks.get(sh.cc)
         lo_v = res.reer_ctx.get(lo.cc) if res.reer_ctx else None
         sh_v = res.reer_ctx.get(sh.cc) if res.reer_ctx else None
+        def _legs(sc, clk_):
+            return (f"carry {sc.carry:+.2f}, cycle {sc.cycle:+.2f} "
+                    f"({clk_.phase if clk_ else '?'}), valuation {sc.valuation:+.2f}, "
+                    f"momentum {sc.momentum:+.2f}, credibility component "
+                    f"{(sc.penalty if abs(sc.penalty) >= 0.005 else 0.0):+.2f}")
+        lo_st, sh_st = res.stances.get(lo.cc), res.stances.get(sh.cc)
+        retro_thesis = (
+            f"The widest credible model-score gap is {x['edge']:+.2f}. "
+            f"Long {x['long']}: {_legs(lo, lo_clk)}. "
+            + (f"{C[lo.cc].cb}'s calendar-based policy stance is {lo_st.direction}. "
+               if lo_st else "")
+            + f"Short {x['short']}: {_legs(sh, sh_clk)}. "
+            + (f"{C[sh.cc].cb}'s calendar-based policy stance is {sh_st.direction}. "
+               if sh_st else "")
+            + (f"The indicative annual policy-rate differential is "
+               f"{x['carry_pp']:+.2f}pp before forward basis and costs. "
+               if x.get("carry_pp") is not None else "")
+            + "A negative differential is a funding cost that the cycle/valuation "
+              "view must overcome. The cross expresses a relative-currency view; the "
+              "score is a heuristic, not a forecast return.")
         plays.append({
             "title": f"Long {x['long']} / short {x['short']}",
-            "thesis": (
+            "thesis": retro_thesis if retro else (
                 f"The widest credible gap in the FX scorecard ({x['edge']:+.2f}). "
                 f"{x['long']}: carry {lo.carry:+.2f}, cycle {lo.cycle:+.2f} "
                 f"({lo_clk.phase if lo_clk else '?'}"
@@ -363,10 +397,15 @@ def _top_plays(res: Results) -> list[dict]:
         plays.append({
             "title": f"The fresh signal: {C[s.cc].name}",
             "thesis": (
-                f"{s.headline}. This is the 'one fresh signal' class of trade: the "
-                f"market prices the pack, not the outlier, so the repricing when the "
-                f"outlier confirms is asymmetric — small loss if it stays parked, "
-                f"large gain if it moves."),
+                (f"{s.headline}. This is the 'one fresh signal' class of trade: the "
+                 f"model singles out a policy divergence. A trade requires that this "
+                 f"divergence is not already reflected in market prices; the monthly "
+                 f"inputs do not measure forwards or the distribution of gains and "
+                 f"losses.") if retro else
+                (f"{s.headline}. This is the 'one fresh signal' class of trade: the "
+                 f"market prices the pack, not the outlier, so the repricing when the "
+                 f"outlier confirms is asymmetric — small loss if it stays parked, "
+                 f"large gain if it moves.")),
             "expression": expr,
             "context": _momentum_ctx(res, s.cc),
             "risk": "single-meeting risk — one CPI print or one MPC vote can void "
@@ -377,6 +416,10 @@ def _top_plays(res: Results) -> list[dict]:
     safe = res.safe_list()
     if safe:
         cands = [s for s in res.fx if s.cc in safe]
+        if retro:
+            us_ = res.stances.get("US")
+            cands = [s for s in cands if us_ is not None and s.cc in res.stances
+                     and res.stances[s.cc].policy - us_.policy > 0]
         if cands:
             best = max(cands, key=lambda s: s.carry + s.total / 10)
             clk = res.clocks.get(best.cc)
@@ -390,11 +433,17 @@ def _top_plays(res: Results) -> list[dict]:
                     f"{C[best.cc].name} is the model's cleanest 'nothing breaks here' "
                     f"story: the OU projection keeps both the inflation gap and the "
                     f"growth cycle clear of danger thresholds for the whole 36-month "
-                    f"horizon{' (phase: ' + clk.phase + ')' if clk else ''}. When the "
-                    f"cycle is far from endangered you are being paid carry without "
-                    f"paying cycle risk — this is where 'we are ok with credit' "
-                    f"applies: local-currency duration and credit both clip coupon "
-                    f"while the clock stands still."),
+                    f"horizon{' (phase: ' + clk.phase + ')' if clk else ''}. "
+                    + ("When the cycle is far from endangered the positive policy-rate "
+                       "differential offers indicative carry under a benign model path, "
+                       "while FX, duration and surprise risk remain — this is where "
+                       "'we are ok with credit' applies: local-currency duration and "
+                       "credit both clip coupon while the clock stands still."
+                       if retro else
+                       "When the cycle is far from endangered you are being paid carry "
+                       "without paying cycle risk — this is where 'we are ok with "
+                       "credit' applies: local-currency duration and credit both clip "
+                       "coupon while the clock stands still.")),
                 "expression": (
                     f"long {best.ccy} vs USD via rolled 3m forwards (carry ≈ {pickup}), "
                     f"and/or unhedged local-currency 2–5y government bonds — the belly, "
@@ -418,7 +467,9 @@ def _top_plays(res: Results) -> list[dict]:
             f"once, not both at full size."
             if best_curve is not None and best_curve.cc == s.cc else "")
         plays.append({
-            "title": f"The reckoning trade: {C[s.cc].name} front end is mispriced",
+            "title": (f"The reckoning trade: {C[s.cc].name} front-end inflation "
+                      f"repricing risk" if retro else
+                      f"The reckoning trade: {C[s.cc].name} front end is mispriced"),
             "thesis": (
                 f"A central bank holding a negative real rate "
                 f"({st.real_rate:+.1f}%) with inflation {st.infl_gap:+.1f}pp above "

@@ -25,6 +25,7 @@ GROWTH_DANGER_Z = -1.0
 @dataclass
 class Results:
     asof: str
+    retro: dict = field(default=None, repr=False)   # retrospective edition context
     ind: dict = field(repr=False, default=None)
     clocks: dict[str, ClockReading] = None
     infl_fits: dict[str, OUFit] = None
@@ -63,12 +64,21 @@ def _fit_all(df: pd.DataFrame, tail: int = 300) -> dict[str, OUFit]:
     return fits
 
 
-def run(panels: dict[str, pd.DataFrame]) -> Results:
+def run(panels: dict[str, pd.DataFrame], snapshot: dict[str, float] | None = None,
+        anchor: pd.Period | None = None, retro: dict | None = None) -> Results:
+    """Run every model layer.
+
+    ``snapshot``/``anchor``/``retro`` switch on the retrospective method
+    (effective-policy snapshot with calendar anchors, fully charged negative
+    carry, retrospective wording). Without them the output is unchanged.
+    """
     ind = build_indicators(panels)
     gz, iz = ind["growth_z"], ind["infl_z"]
 
     asof_candidates = [p.index[-1] for k, p in panels.items() if not p.empty]
     asof = max(asof_candidates).strftime("%Y-%m") if asof_candidates else "?"
+    if anchor is not None:
+        asof = str(anchor)
 
     clocks: dict[str, ClockReading] = {}
     for cc in COUNTRIES:
@@ -87,7 +97,7 @@ def run(panels: dict[str, pd.DataFrame]) -> Results:
     growth_danger = {cc: distance_to_danger(f, GROWTH_DANGER_Z, "growth", direction=-1)
                      for cc, f in growth_fits.items()}
 
-    stances = compute_stances(ind)
+    stances = compute_stances(ind, snapshot=snapshot, anchor=anchor)
     standouts = find_standouts(stances)
 
     # ---- context filter: is each extreme supported or contradicted by the
@@ -136,15 +146,16 @@ def run(panels: dict[str, pd.DataFrame]) -> Results:
         ctx = -np.sign(f.z if np.isfinite(f.z) else 0.0) * appreciate
         reer_ctx[cc] = assess(ind["reer_dev"][cc], f, ctx, cc, "reer")
 
-    fx = score_fx(clocks, stances, reer_fits, reer_ctx)
+    fx = score_fx(clocks, stances, reer_fits, reer_ctx,
+                  charge_negative_carry=retro is not None)
     curves = curve_signals(slope_fits, clocks, slope_ctx, stances)
 
     return Results(
-        asof=asof, ind=ind, clocks=clocks,
+        asof=asof, retro=retro, ind=ind, clocks=clocks,
         infl_fits=infl_fits, growth_fits=growth_fits,
         slope_fits=slope_fits, reer_fits=reer_fits,
         infl_danger=infl_danger, growth_danger=growth_danger,
         stances=stances, standouts=standouts, pack=pack_summary(stances),
-        fx=fx, curves=curves, crosses=fx_crosses(fx, stances),
+        fx=fx, curves=curves, crosses=fx_crosses(fx, stances, retro=retro is not None),
         infl_ctx=infl_ctx, slope_ctx=slope_ctx, reer_ctx=reer_ctx,
     )

@@ -89,8 +89,13 @@ def clock_chart(res: Results, path: Path, trail: int = 6):
     ax.set_xlim(-lim, lim); ax.set_ylim(-lim, lim)
     ax.set_xlabel("Growth cycle (leading-indicator z-score)")
     ax.set_ylabel("Inflation gap vs target (z-score)")
-    ax.set_title(f"The cycle clock — {res.asof} (trail = last {trail} months; "
-                 "economies rotate counter-clockwise)", fontsize=11, color=INK)
+    if getattr(res, "retro", None):
+        title = (f"The cycle clock — retrospective {res.retro['edition']}, model anchor "
+                 f"{res.asof} (trail = last {trail} matched observations)")
+    else:
+        title = (f"The cycle clock — {res.asof} (trail = last {trail} months; "
+                 "economies rotate counter-clockwise)")
+    ax.set_title(title, fontsize=11, color=INK)
     _save(fig, path)
 
 

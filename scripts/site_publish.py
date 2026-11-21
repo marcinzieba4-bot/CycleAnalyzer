@@ -47,8 +47,8 @@ MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
 
-def wrap(report_date: str) -> str:
-    src = (ROOT / "reports" / "cycle_monitor.html").read_text()
+def wrap(report_date: str, src_path: Path | None = None, extra_meta: str = "") -> str:
+    src = (src_path or ROOT / "reports" / "cycle_monitor.html").read_text()
     marker = '<div class="wrap">'
     i = src.find(marker)
     if i < 0:
@@ -65,7 +65,7 @@ def wrap(report_date: str) -> str:
             '<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
             f'<meta name="report-date" content="{report_date}">\n'
-            + head + white + "\n</head>\n<body>\n" + body + "\n</body>\n</html>\n")
+            + extra_meta + head + white + "\n</head>\n<body>\n" + body + "\n</body>\n</html>\n")
 
 
 def _report_date_of(html: bytes) -> str | None:

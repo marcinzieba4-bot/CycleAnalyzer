@@ -56,7 +56,11 @@ class FXScore:
 
 def score_fx(clocks: dict[str, ClockReading], stances: dict[str, Stance],
              reer_fits: dict[str, OUFit],
-             reer_ctx: dict[str, ContextVerdict] | None = None) -> list[FXScore]:
+             reer_ctx: dict[str, ContextVerdict] | None = None,
+             charge_negative_carry: bool = False) -> list[FXScore]:
+    """``charge_negative_carry`` (retrospective method): the inflation haircut
+    halves only a *positive* pickup; a negative differential is a funding cost
+    and is charged in full."""
     us = stances.get("US")
     us_pol = us.policy if us else 0.0
     out: list[FXScore] = []
@@ -67,7 +71,11 @@ def score_fx(clocks: dict[str, ClockReading], stances: dict[str, Stance],
         # Carry: rate pickup vs USD, haircut when inflation eats it.
         pickup = st.policy - us_pol
         real_pickup = pickup - max(0.0, st.infl_gap if np.isfinite(st.infl_gap) else 0.0)
-        carry = 0.25 * np.clip(pickup, -6, 6) * (0.5 if real_pickup < 0 else 1.0)
+        if charge_negative_carry:
+            haircut = 0.5 if (pickup > 0 and real_pickup < 0) else 1.0
+        else:
+            haircut = 0.5 if real_pickup < 0 else 1.0
+        carry = 0.25 * np.clip(pickup, -6, 6) * haircut
 
         clk = clocks.get(cc)
         cycle = 0.0
@@ -177,7 +185,7 @@ def curve_signals(slope_fits: dict[str, OUFit],
 
 
 def fx_crosses(scores: list[FXScore], stances: dict[str, Stance] | None = None,
-               n: int = 3) -> list[dict]:
+               n: int = 3, retro: bool = False) -> list[dict]:
     """Pair the strongest longs against the weakest *fundable* currencies.
 
     A currency whose score is destroyed by the credibility penalty (TRY-style)
@@ -193,14 +201,23 @@ def fx_crosses(scores: list[FXScore], stances: dict[str, Stance] | None = None,
         carry_pp = None
         if stances and lo.cc in stances and sh.cc in stances:
             carry_pp = round(stances[lo.cc].policy - stances[sh.cc].policy, 2)
+        if retro:
+            diff = ""
+            if carry_pp is not None:
+                sign = "positive" if carry_pp > 0 else ("negative" if carry_pp < 0 else "zero")
+                diff = (f"; indicative {sign} policy-rate differential "
+                        f"{carry_pp:+.1f}pp annualized, before forward basis and costs")
+            expression = f"buy {lo.ccy}, sell {sh.ccy} via 3m FX forwards (rolled){diff}"
+        else:
+            expression = (
+                f"buy {lo.ccy}, sell {sh.ccy} via 3m FX forwards (rolled)"
+                + (f"; indicative positive carry ≈ {carry_pp:+.1f}pp annualized "
+                   f"from the policy-rate differential" if carry_pp is not None else ""))
         crosses.append({
             "long": lo.ccy, "short": sh.ccy,
             "edge": round(lo.total - sh.total, 2),
             "carry": round(lo.carry - sh.carry, 2),
             "carry_pp": carry_pp,
-            "expression": (
-                f"buy {lo.ccy}, sell {sh.ccy} via 3m FX forwards (rolled)"
-                + (f"; indicative positive carry ≈ {carry_pp:+.1f}pp annualized "
-                   f"from the policy-rate differential" if carry_pp is not None else "")),
+            "expression": expression,
         })
     return crosses

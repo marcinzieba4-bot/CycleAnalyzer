@@ -46,6 +46,7 @@ def build_indicators(panels: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]
     targets = pd.Series({cc: COUNTRIES[cc].infl_target for cc in cpi.columns})
     gap = cpi.sub(targets, axis=1)
     ind["infl_gap"] = gap
+    ind["cpi"] = cpi
     gsd = gap.rolling(WIN, min_periods=MIN_WIN).std()
     ind["infl_z"] = (gap / gsd).clip(-3.5, 3.5)
 

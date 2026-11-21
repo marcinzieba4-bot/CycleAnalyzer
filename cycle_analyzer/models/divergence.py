@@ -41,18 +41,50 @@ def _direction(d3: float, d6: float) -> str:
     return "on hold"
 
 
-def compute_stances(ind: dict[str, pd.DataFrame]) -> dict[str, Stance]:
+def compute_stances(ind: dict[str, pd.DataFrame],
+                    snapshot: dict[str, float] | None = None,
+                    anchor: pd.Period | None = None) -> dict[str, Stance]:
+    """Policy stance per central bank.
+
+    Default (live weekly report): changes over the last 3/6/12 monthly
+    observations, real rate = latest matched monthly observation.
+
+    With ``snapshot`` (current effective policy rate per economy, announced and
+    effective before the cutoff) and ``anchor`` (last completed month), the
+    retrospective method applies: changes are measured from the current
+    effective rate back to exact calendar month-ends (anchor-3, anchor-6,
+    anchor-12), the assessed real rate is the effective rate minus the latest
+    eligible CPI reading, compared with the unchanged monthly historical
+    median, and a partial current month never adds a completed month on hold.
+    """
     pol = ind["policy"]
     stances: dict[str, Stance] = {}
     for cc in pol.columns:
         s = pol[cc].dropna()
         if len(s) < 24:
             continue
-        d3, d6, d12 = (float(s.iloc[-1] - s.iloc[-1 - k]) if len(s) > k else np.nan
-                       for k in (3, 6, 12))
         rr = ind["real_rate"][cc].dropna() if cc in ind["real_rate"].columns else pd.Series(dtype=float)
-        real_rate = float(rr.iloc[-1]) if len(rr) else np.nan
-        real_gap = float(rr.iloc[-1] - rr.tail(120).median()) if len(rr) >= 24 else np.nan
+        if snapshot is not None and anchor is not None and cc in snapshot:
+            cur = float(snapshot[cc])
+            sp = s.copy()
+            sp.index = sp.index.to_period("M")
+
+            def _at(k: int) -> float:
+                p = anchor - k
+                return float(sp.loc[p]) if p in sp.index else np.nan
+            d3, d6, d12 = (cur - _at(k) for k in (3, 6, 12))
+            cpi = ind.get("cpi")
+            last_cpi = (float(cpi[cc].dropna().iloc[-1])
+                        if cpi is not None and cc in cpi.columns and cpi[cc].notna().any()
+                        else np.nan)
+            real_rate = cur - last_cpi
+            real_gap = float(real_rate - rr.tail(120).median()) if len(rr) >= 24 else np.nan
+        else:
+            cur = float(s.iloc[-1])
+            d3, d6, d12 = (float(s.iloc[-1] - s.iloc[-1 - k]) if len(s) > k else np.nan
+                           for k in (3, 6, 12))
+            real_rate = float(rr.iloc[-1]) if len(rr) else np.nan
+            real_gap = float(rr.iloc[-1] - rr.tail(120).median()) if len(rr) >= 24 else np.nan
         ig = ind["infl_gap"][cc].dropna() if cc in ind["infl_gap"].columns else pd.Series(dtype=float)
         im = ind["infl_mom"][cc].dropna() if cc in ind["infl_mom"].columns else pd.Series(dtype=float)
         # months since the policy rate last changed
@@ -62,8 +94,10 @@ def compute_stances(ind: dict[str, pd.DataFrame]) -> dict[str, Stance]:
             if v:
                 break
             months_hold += 1
+        if abs(cur - float(s.iloc[-1])) > 0.01:
+            months_hold = 0      # an effective decision after the last month-end
         stances[cc] = Stance(
-            cc=cc, policy=float(s.iloc[-1]), d3=d3, d6=d6, d12=d12,
+            cc=cc, policy=cur, d3=d3, d6=d6, d12=d12,
             real_rate=real_rate, real_gap=real_gap,
             infl_gap=float(ig.iloc[-1]) if len(ig) else np.nan,
             infl_mom=float(im.iloc[-1]) if len(im) else np.nan,

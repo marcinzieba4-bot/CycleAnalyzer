@@ -179,8 +179,9 @@ Editions built (biweekly grid): 2008-01-06, 01-20, 02-03, 02-17, 03-02,
 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22, 07-06, 07-20,
 08-03, 08-17, 08-31, 09-14, 09-28, 10-12, 10-26, 11-09, 11-23, 12-07, 12-21;
 2009-01-04, 01-18, 02-01, 02-15, 03-01, 03-15, 03-29, 04-12, 04-26, 05-10,
-05-24, 06-07, 06-21
-(`python scripts/retro_build.py --range 2008-01-01 2009-06-30 --every 14`).
+05-24, 06-07, 06-21, 07-05, 07-19, 08-02, 08-16, 08-30, 09-13, 09-27
+(`python scripts/retro_build.py --range 2008-01-01 2009-09-30 --every 14`).
+Q3 2009: India 5.0 from the RBI First Quarter Review (28 Jul 2009).
 China's CPI is absent from every 2009 real-time edition: when a series is
 missing from the eligible edition, the present-day BIS history behind the
 one-full-month gate competes with the newest earlier edition and the fresher

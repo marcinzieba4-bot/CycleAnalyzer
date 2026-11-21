@@ -64,6 +64,15 @@ LEVEL_EPS = 0.005        # BIS daily levels within this are the same rate (e.g. 
 # overnight interbank rate became Banxico's operational target from that day;
 # before it the daily level drifts with the market).
 MARKET_RATE_BEFORE = {"MX": date(2008, 1, 21)}
+# Instrument switches inside a BIS daily series: the level change on the switch
+# day is not a policy decision. For editions on or after the switch, earlier
+# history (daily and month-ends before the switch) is spliced onto the new
+# instrument by the switch-day difference, so policy changes and holds are
+# measured on one instrument; the current level is the new instrument's own.
+INSTRUMENT_SWITCH = {
+    "TR": {"date": date(2010, 5, 20), "old": "overnight borrowing rate",
+           "new": "one-week repo rate"},
+}
 ERA_LAST_DAY = date(2016, 12, 31)          # editions on or before use this builder
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
@@ -283,8 +292,22 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     mn = register().get(cli_ed, {}).get("method_note")
     if mn and date.fromisoformat(mn["date"]) <= led:
         ev.rt["cli"]["method_note"] = mn
+    # An edition admitted by a dated press report is shown public only up to that
+    # release's reference month; a country row the database edition carries beyond
+    # it (e.g. Jan-2010 values in the February 2010 edition) is not used until the
+    # edition month has ended.
+    ref_cap = None
+    if cli_basis != "edition month end (conservative rule)":
+        rm = register().get(cli_ed, {}).get("cli_ref_month")
+        ref_cap = pd.Period(rm, freq="M") if rm else None
     for cc, area in RT_AREA.items():
         s = _cap(_monthly(cli.get((area, "M"), [])), ed)
+        if ref_cap is not None and len(s) and s.index.max() > ref_cap:
+            ev.notes.append(
+                f"cli/{cc}: the {edition_label(cli_ed)} edition carries {s.index.max()}, beyond "
+                f"the release's reference month {ref_cap}; later months are not used (not "
+                f"shown public by {cli_pub}).")
+            s = s[s.index <= ref_cap]
         if not len(s) or not fresh("cli", cc, s, f"the {edition_label(cli_ed)} CLI edition"):
             continue
         panels["cli"][cc] = s
@@ -415,6 +438,22 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             continue
         ev.add(me)
         ev.add(de)
+        sw = INSTRUMENT_SWITCH.get(cc)
+        if sw and led >= sw["date"]:
+            t = pd.Timestamp(sw["date"])
+            pre, post = d[d.index < t], d[d.index >= t]
+            if len(pre) and len(post):
+                jump = round(float(post.iloc[0]) - float(pre.iloc[-1]), 3)
+                d = d.copy()
+                d[d.index < t] = d[d.index < t] + jump
+                months = [q for q in m.index if q.end_time < t]
+                m.loc[months] = m.loc[months] + jump
+                ev.notes.append(
+                    f"policy/{cc}: the {sw['new']} became the policy rate on "
+                    f"{sw['date'].isoformat()} (the BIS series switches from the {sw['old']}, "
+                    f"{float(pre.iloc[-1]):.2f}% → {float(post.iloc[0]):.2f}%). The switch is not a "
+                    f"decision: earlier history is spliced by {jump:+.2f}pp so that policy "
+                    "changes are measured on the new instrument.")
         # month-ends inside the daily window must agree with the monthly rows
         bad = [str(q) for q in m.index if q.start_time >= pd.Timestamp(DAILY_START)
                and (v := _value_on(d, q.end_time.date())) is not None

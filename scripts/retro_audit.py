@@ -138,6 +138,16 @@ def audit(d: date) -> list[str]:
             if last:
                 check(pd.Period(last, freq="M") <= ed.anchor,
                       f"obs {f}/{cc} {last} not before edition month")
+    # a CLI edition admitted by a dated press report is public only through the
+    # release's reference month
+    rcli = ev.get("rt", {}).get("cli", {})
+    if rcli and rcli.get("basis") != "edition month end (conservative rule)":
+        rm = RT.register().get(rcli["edition"], {}).get("cli_ref_month")
+        check(bool(rm), f"CLI edition {rcli['edition']} admitted by report has no cli_ref_month")
+        for cc, fam in ev["obs"].items():
+            if rm and fam.get("cli"):
+                check(pd.Period(fam["cli"], freq="M") <= pd.Period(rm, freq="M"),
+                      f"obs cli/{cc} {fam['cli']} beyond the release reference month {rm}")
     for f in ("policy", "cpi", "reer", "cli", "y10"):
         df = pd.read_csv(base / f"{f}.csv", index_col=0, parse_dates=True)
         mx = df.index.max().to_period("M")

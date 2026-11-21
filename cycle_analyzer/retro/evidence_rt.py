@@ -38,6 +38,9 @@ def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
     if cc == "US" and ed.last_eligible_day >= date(2008, 12, 16):
         return "Federal funds target range midpoint (0–0.25% range from 16 Dec 2008)"
+    if cc == "TR" and ed.last_eligible_day >= date(2010, 5, 20):
+        return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
+                "spliced from the overnight borrowing rate)")
     return POLICY_INSTRUMENT_RT.get(cc, "")
 
 

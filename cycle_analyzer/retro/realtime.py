@@ -71,7 +71,11 @@ MARKET_RATE_BEFORE = {"MX": date(2008, 1, 21)}
 # measured on one instrument; the current level is the new instrument's own.
 INSTRUMENT_SWITCH = {
     "TR": {"date": date(2010, 5, 20), "old": "overnight borrowing rate",
-           "new": "one-week repo rate"},
+           "new": "one-week repo rate",
+           "source": ("CBRT Monetary Policy Committee decision No. 2010-16, 18 May 2010: "
+                      "overnight rates kept unchanged; as a 'technical rate adjustment', "
+                      "'the one week repo rate, which becomes the new policy rate, is set at 7 "
+                      "percent—50 basis points above the overnight borrowing rates'")},
 }
 ERA_LAST_DAY = date(2016, 12, 31)          # editions on or before use this builder
 
@@ -452,8 +456,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                     f"policy/{cc}: the {sw['new']} became the policy rate on "
                     f"{sw['date'].isoformat()} (the BIS series switches from the {sw['old']}, "
                     f"{float(pre.iloc[-1]):.2f}% → {float(post.iloc[0]):.2f}%). The switch is not a "
-                    f"decision: earlier history is spliced by {jump:+.2f}pp so that policy "
-                    "changes are measured on the new instrument.")
+                    f"rate change ({sw['source']}): earlier history is spliced by {jump:+.2f}pp so "
+                    "that policy changes are measured on the new instrument.")
         # month-ends inside the daily window must agree with the monthly rows
         bad = [str(q) for q in m.index if q.start_time >= pd.Timestamp(DAILY_START)
                and (v := _value_on(d, q.end_time.date())) is not None

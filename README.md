@@ -178,8 +178,14 @@ month are not used (Turkey's CLI in the Dec-2007 and Jan-2008 editions).
 Editions built (biweekly grid): 2008-01-06, 01-20, 02-03, 02-17, 03-02,
 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, 06-08, 06-22, 07-06, 07-20,
 08-03, 08-17, 08-31, 09-14, 09-28, 10-12, 10-26, 11-09, 11-23, 12-07, 12-21;
-2009-01-04, 01-18, 02-01, 02-15, 03-01, 03-15, 03-29
-(`python scripts/retro_build.py --range 2008-01-01 2009-03-31 --every 14`).
+2009-01-04, 01-18, 02-01, 02-15, 03-01, 03-15, 03-29, 04-12, 04-26, 05-10,
+05-24, 06-07, 06-21
+(`python scripts/retro_build.py --range 2008-01-01 2009-06-30 --every 14`).
+China's CPI is absent from every 2009 real-time edition: when a series is
+missing from the eligible edition, the present-day BIS history behind the
+one-full-month gate competes with the newest earlier edition and the fresher
+one is used (data notes say which). India's benchmark follows the RBI's stated
+end-of-fiscal-year figure (4.0 from the 2009–10 Annual Policy, 21 Apr 2009).
 2009 editions use `data/retro/benchmarks_2009.json`: the current-year (2009)
 targets as publicly known — Türkiye 7.5, Colombia 5.0, Indonesia 4.5 (set
 during 2008), India 3.0 from the RBI's 27 Jan 2009 review, China 4.0 from the

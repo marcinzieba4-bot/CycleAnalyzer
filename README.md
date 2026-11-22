@@ -257,9 +257,15 @@ Biweekly grid continued: 2010-01-03, 01-17, 01-31, 02-14, 02-28, 03-14,
   from the published y/y by up to ~0.9pp in some vintages, the published y/y
   behind the one-full-month gate competes (the fresher wins; in every 2010
   edition it is the published y/y). 2008 editions and the 2009 editions
-  where China is absent rebuild byte-identically. **Known issue:** the
-  already-published 2009-12-06 and 2009-12-20 pages were built before this
-  fix and still show China's CPI at 11.08% (true: −1.8% for 2009-07).
+  where China is absent rebuild byte-identically. The 2009-12-06 and
+  2009-12-20 pages, built before this fix with China's CPI at 11.08% (true
+  −1.8% for 2009-07), were rebuilt and republished on 2026-11-22 (China now
+  −0.6%, the published October 2009 y/y), as were 2008-02-17 and 2008-03-02,
+  where the reference-month cap drops Switzerland's January 2008 CLI row
+  (the February 2008 release covered December 2007). Only those inputs
+  changed. Caveat: with China's real rate correctly positive, long CNY tops
+  the FX crosses in some editions; the model ignores the 2008–10 USD peg and
+  treats the 5.31% benchmark lending rate as carry.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

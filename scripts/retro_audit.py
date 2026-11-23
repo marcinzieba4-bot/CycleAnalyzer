@@ -94,7 +94,17 @@ def audit(d: date) -> list[str]:
             edition = re.search(r"\.\.\.(\d{6})\?", e["url"]).group(1)
             measure = "LI_AA" if "..LI_AA..." in e["url"] else "CP"
             want = (RT.cli_edition(ed) if measure == "LI_AA" else RT.cpi_edition(ed))
-            if measure == "LI_AA":
+            if measure == "LI_AA" and edition != want[0]:
+                # an older edition is admissible only for an area the eligible
+                # release withheld, before that edition's month has ended
+                wh = RT.register().get(want[0], {}).get("withheld", {})
+                el = RT.eligible_cli(ed, edition)
+                check(bool(wh) and edition < want[0]
+                      and RT._month_end(want[0]) > ed.last_eligible_day
+                      and el is not None and el[0] == pub.isoformat(),
+                      f"{k}: edition {edition}/{pub} is neither the eligible {want[0]} nor a "
+                      "fallback for a withheld area")
+            elif measure == "LI_AA":
                 check(edition == want[0] and pub.isoformat() == want[1],
                       f"{k}: edition {edition}/{pub} != eligible {want[0]}/{want[1]}")
             else:   # the eligible CPI edition, or an older one carrying a missing series

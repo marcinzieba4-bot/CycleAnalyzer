@@ -137,6 +137,38 @@ def cli_edition(ed: Edition) -> tuple[str, str, str]:
     return k, cands[k][0], cands[k][1]
 
 
+def eligible_cli(ed: Edition, e: str) -> tuple[str, str] | None:
+    """(public-by, basis) if CLI edition ``e`` was eligible for ``ed``, else None."""
+    led = ed.last_eligible_day
+    v = register().get(e)
+    if v and date.fromisoformat(v["cli_public_by"]) <= led:
+        return v["cli_public_by"], v["basis"]
+    if _month_end(e) <= led:
+        return _month_end(e).isoformat(), "edition month end (conservative rule)"
+    return None
+
+
+def _withheld_fallback(ed: Edition, cli_ed: str, area: str, depth: int = 3):
+    """Series for an area withheld from ``cli_ed``'s release: the newest earlier
+    eligible edition carrying it, capped at that release's reference month when
+    it was admitted by a press report. Returns (edition, rows, ledger entry)."""
+    p = pd.Period(f"{cli_ed[:4]}-{cli_ed[4:]}", freq="M")
+    for k in range(1, depth + 1):
+        q = p - k
+        e = f"{q.year}{q.month:02d}"
+        el = eligible_cli(ed, e)
+        if el is None:
+            continue
+        b, entry = oecd_rt("LI_AA", e, el[0], el[1])
+        rows = parse_rt(b).get((area, "M"), [])
+        rm = register().get(e, {}).get("cli_ref_month")
+        if rm and el[1] != "edition month end (conservative rule)":
+            rows = [(t, v) for t, v in rows if pd.Period(t, freq="M") <= pd.Period(rm, freq="M")]
+        if rows:
+            return e, rows, entry
+    return cli_ed, [], None
+
+
 def cpi_edition(ed: Edition) -> tuple[str, str, str]:
     e = _month_end_edition(ed)
     return e, _month_end(e).isoformat(), "edition month end (conservative rule)"
@@ -320,7 +352,32 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     if cli_basis != "edition month end (conservative rule)":
         rm = register().get(cli_ed, {}).get("cli_ref_month")
         ref_cap = pd.Period(rm, freq="M") if rm else None
+    # An area the release itself withheld (e.g. Japan in April 2011, after the
+    # earthquake) is not shown public by the press report even though the database
+    # edition carries it: until the edition month has ended, that area's series
+    # comes from the newest earlier edition that was itself eligible.
+    withheld = (register().get(cli_ed, {}).get("withheld", {})
+                if _month_end(cli_ed) > led else {})
     for cc, area in RT_AREA.items():
+        src_ed = cli_ed
+        if area in withheld:
+            src_ed, rows, e_prev = _withheld_fallback(ed, cli_ed, area)
+            s = _cap(_monthly(rows), ed)
+            if e_prev is not None:
+                ev.add(e_prev)
+            ev.notes.append(
+                f"cli/{cc}: withheld from the {edition_label(cli_ed)} release "
+                f"({withheld[area]}); the newest earlier eligible edition "
+                f"({edition_label(src_ed)}, through {s.index.max() if len(s) else 'n/a'}) is used.")
+            if not len(s) or not fresh("cli", cc, s, f"the {edition_label(src_ed)} CLI edition"):
+                continue
+            panels["cli"][cc] = s
+            ev.growth_def[cc] = (f"OECD composite leading indicator, amplitude adjusted, as "
+                                 f"published in the {edition_label(src_ed)} edition (real-time "
+                                 f"database, LI_AA {area}; withheld from the "
+                                 f"{edition_label(cli_ed)} release)")
+            record("cli", cc, s)
+            continue
         s = _cap(_monthly(cli.get((area, "M"), [])), ed)
         if ref_cap is not None and len(s) and s.index.max() > ref_cap:
             ev.notes.append(

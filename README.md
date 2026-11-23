@@ -267,6 +267,39 @@ Biweekly grid continued: 2010-01-03, 01-17, 01-31, 02-14, 02-28, 03-14,
   the FX crosses in some editions; the model ignores the 2008–10 USD peg and
   treats the 5.31% benchmark lending rate as carry.
 
+### 2011 editions
+
+Biweekly grid continued: 2011-01-02, 01-16, 01-30, 02-13, 02-27, 03-13,
+03-27, 04-10, 04-24, 05-08, 05-22, 06-05, 06-19, 07-03, 07-17, 07-31, 08-14,
+08-28, 09-11, 09-25, 10-09, 10-23, 11-06, 11-20, 12-04, 12-18
+(`python scripts/retro_build.py --range 2011-01-01 2011-12-31 --every 14`).
+
+- **CLI editions** January–August, October and November 2011 are registered
+  from dated public reports (Diario Financiero, City A.M., IBTimes, Reuters
+  via Fox Business, MercoPress, Le Moci, Korea Times), each content-checked
+  against the vintage (OECD area, euro area, Germany or the UK, whichever the
+  report quotes). The September and December 2011 releases (July and October
+  data) have no retrievable dated report with figures, so they are *not*
+  registered: the 2011-09-25 edition keeps the August release and 2011-12-18
+  keeps November's; both become eligible only through the edition-month-end
+  rule. (A blog's monthly "total leading index" percentages were rejected as
+  evidence: they match the OECD-area vintage in one month only.)
+- **Withheld areas.** The April 2011 release gave no figures for Japan after
+  the earthquake ("No figures were given for Japan", Reuters, 11 Apr 2011),
+  although the database edition carries them. A register entry's `withheld`
+  areas are taken, until that edition's month has ended, from the newest
+  earlier eligible edition (Japan in 2011-04-24 comes from the March release,
+  through January 2011); `retro_audit.py` checks the fallback's eligibility.
+  The October 2011 database edition carries September rows; the reference-
+  month cap drops them in 2011-10-23 and 2011-11-06.
+- **Benchmarks** (`data/retro/benchmarks_2011.json`): current-year targets
+  Türkiye 5.5, Brazil 4.5 (CMN Res. 3,748, 30 Jun 2009), Colombia 3 (2–4%,
+  Board of 19 Nov 2010), Indonesia 5 ±1 (PMK 143/2010); China 3 → 4 from the
+  5 Mar 2011 Government Work Report ("keep the CPI increase around 4
+  percent"); India's end-of-fiscal-year WPI projection 5.5 → 7.0 (25 Jan) →
+  6.0 for the following fiscal year (3 May) → 7.0 (26 Jul; kept 25 Oct).
+  Value-unchanged wording updates are not recorded.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

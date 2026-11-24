@@ -9,9 +9,9 @@
    "sha256": "c020619f8dd8fb26277771569f8f582621ed8ec6de695c2969eb4c46df377d49",
    "nbytes": 943788,
    "retrieved_at": "2026-11-24T08:13:27Z",
-   "available_by": "2012-02-29 (edition month end (conservative rule))",
+   "available_by": "2012-02-13 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2012 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2012 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2012-03-09": {
@@ -2165,10 +2165,40 @@
   "cli": {
    "edition": "201202",
    "label": "February 2012",
-   "public_by": "2012-02-29",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2012-02-13",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201202",
+    "area": "OECD",
+    "month": "2011-12",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.4,
+      "edition": 100.43,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.2,
+      "edition": 0.22,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "The Reformed Broker, 'OECD: Developed Economies Turning Positive (China, Brazil not so much)', 13 Feb 2012, quoting Reuters: the reading for the OECD group as a whole rose 0.2 points in December to 100.4",
+     "url": "https://thereformedbroker.com/2012/02/13/oecd-developed-economies-turning-positive-china-brazil-not-so-much/",
+     "date": "2012-02-13"
+    },
+    {
+     "label": "The Skeptical Speculator, 'OECD sees positive change in economic momentum', 14 Feb 2012: the release table, OECD area 100.1, 100.2, 100.4 (October\u2013December), euro area 98.8, 98.5, 98.3",
+     "url": "https://skepticalspeculator.blogspot.com/2012/02/oecd-sees-positive-change-in-economic.html",
+     "date": "2012-02-14"
+    }
+   ],
    "ref": "2011-12"
   },
   "cpi": {

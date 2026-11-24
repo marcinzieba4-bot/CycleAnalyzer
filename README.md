@@ -300,6 +300,40 @@ Biweekly grid continued: 2011-01-02, 01-16, 01-30, 02-13, 02-27, 03-13,
   6.0 for the following fiscal year (3 May) → 7.0 (26 Jul; kept 25 Oct).
   Value-unchanged wording updates are not recorded.
 
+### 2012 editions
+
+Biweekly grid continued: 2012-01-01, 01-15, 01-29, 02-12, 02-26, 03-11,
+03-25, 04-08, 04-22, 05-06, 05-20, 06-03, 06-17, 07-01, 07-15, 07-29, 08-12,
+08-26, 09-09, 09-23, 10-07, 10-21, 11-04, 11-18, 12-02, 12-16, 12-30
+(`python scripts/retro_build.py --range 2012-01-01 2012-12-31 --every 14`).
+
+- **CLI editions** January–December 2012 are all registered from dated
+  public reports (Domain-B, Reuters via The Reformed Broker / Business
+  Standard / Irish Times / Globe and Mail / Fox Business, City A.M., 24/7
+  Wall St, PTI, RTTNews), each page fetched and content-checked against the
+  vintage (OECD area, euro area, France, India or the US, whichever the
+  report quotes with a matching level *and* monthly change). The 2012-01-01
+  edition keeps the December 2011 edition through the edition-month-end rule.
+  The June 2012 database edition carries May rows for the OECD/euro-area
+  aggregates and Indonesia; the reference-month cap drops them.
+- **Method change.** The April 2012 edition is the first in which the CLI
+  targets GDP instead of industrial production as its reference series (OECD
+  methodology guideline, April 2012: "From April 2012 therefore the OECD has
+  switched to using GDP as the reference"); the vintage's whole history was
+  re-estimated, so levels shift (euro area January 2012: 98.7 in the March
+  edition, 99.6 in April's). Pages using it carry the method note, as the
+  December 2008 PAT → double-HP pages do.
+- **Benchmarks** (`data/retro/benchmarks_2012.json`): current-year targets
+  Türkiye 5 (set 10 Dec 2009), Brazil 4.5 (CMN Res. 3,880), Colombia 3 ±1
+  (Board of 25 Nov 2011), Indonesia 4.5 ±1 (PMK 143/2010); Canada cites its
+  8 Nov 2011 renewal; China ~4% re-set by the 5 Mar 2012 Government Work
+  Report; India's end-of-fiscal-year WPI projection 7.0 (kept 24 Jan) → 6.5
+  for the following fiscal year (17 Apr) → 7.0 (31 Jul) → 7.5 (30 Oct). Three
+  framework changes are recorded although the value is unchanged, because
+  they replace the row's wording: the FOMC's first explicit 2% (PCE) goal
+  (25 Jan), the BoJ's 1% "price stability goal" (14 Feb) and New Zealand's
+  Policy Targets Agreement of 20 Sep 2012.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

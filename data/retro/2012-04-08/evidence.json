@@ -9,9 +9,9 @@
    "sha256": "d6f0e0b2e38ae2f8851aef097cc23fe2d6ae99fee63852cc9018f0c053afb55a",
    "nbytes": 947892,
    "retrieved_at": "2026-11-24T08:13:29Z",
-   "available_by": "2012-03-31 (edition month end (conservative rule))",
+   "available_by": "2012-03-12 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, March 2012 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, March 2012 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2012-04-06": {
@@ -2165,10 +2165,40 @@
   "cli": {
    "edition": "201203",
    "label": "March 2012",
-   "public_by": "2012-03-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2012-03-12",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201203",
+    "area": "OECD",
+    "month": "2012-01",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.9,
+      "edition": 100.9,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.4,
+      "edition": 0.4,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "City A.M., 'OECD sees fresh signs of growth in UK and Eurozone as the States boom', 12 Mar 2012 (22:06): the OECD's overall leading indicator showed '0.4 per cent growth' for January (the release's +0.4 point change); the US improved by 0.7, the UK by 0.1",
+     "url": "https://www.cityam.com/oecd-sees-fresh-signs-growth-uk-and-eurozone-the-states-boom/",
+     "date": "2012-03-12"
+    },
+    {
+     "label": "The Skeptical Speculator, 'Mixed economic data for Asia but OECD sees positive change in momentum', 13 Mar 2012: the CLI for the OECD area rose to 100.9 in January from 100.5 in December; euro area 98.7 from 98.5",
+     "url": "https://skepticalspeculator.blogspot.com/2012/03/mixed-economic-data-for-asia-but-oecd.html",
+     "date": "2012-03-13"
+    }
+   ],
    "ref": "2012-01"
   },
   "cpi": {

@@ -5,13 +5,13 @@
  "ledger": {
   "oecd-rt-liaa-201201": {
    "id": "oecd-rt-liaa-201201",
-   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA18+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..LI_AA...201201?format=csvfile",
-   "sha256": "905f3465c6f64e809c2bd3034461bb543f31d06fea855d9615ea65965cd251f1",
-   "nbytes": 941398,
-   "retrieved_at": "2026-11-24T08:13:16Z",
-   "available_by": "2012-01-31 (edition month end (conservative rule))",
+   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA18+FRA+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..LI_AA...201201?format=csvfile",
+   "sha256": "87680838685973efb2b64e79571b077b3a1971102518fc3c7046a96b4da2643b",
+   "nbytes": 1002807,
+   "retrieved_at": "2026-11-24T08:31:54Z",
+   "available_by": "2012-01-14 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, January 2012 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, January 2012 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2012-02-10": {
@@ -2165,10 +2165,40 @@
   "cli": {
    "edition": "201201",
    "label": "January 2012",
-   "public_by": "2012-01-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2012-01-14",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201201",
+    "area": "FRA",
+    "month": "2011-11",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 98.2,
+      "edition": 98.2,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.3,
+      "edition": -0.27,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Domain-B, 'OECD indicators continue to point to slowdown in major world economies', 14 Jan 2012: in the euro area the November CLIs fell to 98.3; Germany fell from 98.6 to 97.9 and France declined to 98.2 from 98.5",
+     "url": "https://www.domain-b.com/economy/world-economy/oecd-indicators-continue-to-point-to-slowdown-in-major-world-economies",
+     "date": "2012-01-14"
+    },
+    {
+     "label": "The Skeptical Speculator, 'Euro area still weakest among major developed economies', 16 Jan 2012: the indicator for the OECD area as a whole fell 0.1 point in November to 100.1; euro area down 0.4 to 98.3; US up 0.2 to 101.2",
+     "url": "https://skepticalspeculator.blogspot.com/2012/01/euro-area-still-weakest-among-major.html",
+     "date": "2012-01-16"
+    }
+   ],
    "ref": "2011-11"
   },
   "cpi": {

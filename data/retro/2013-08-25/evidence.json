@@ -1,0 +1,2225 @@
+{
+ "edition": "2013-08-25",
+ "cutoff_utc": "2013-08-24T22:00:00Z",
+ "anchor": "2013-07",
+ "ledger": {
+  "oecd-rt-liaa-201307": {
+   "id": "oecd-rt-liaa-201307",
+   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA18+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..LI_AA...201307?format=csvfile",
+   "sha256": "35be7f8d222f2e5a0331b170fea3f509ca72f52c822f9f2d877d8e109163cd54",
+   "nbytes": 973548,
+   "retrieved_at": "2026-11-25T13:56:24Z",
+   "available_by": "2013-07-31 (edition month end (conservative rule))",
+   "kind": "oecd-rt",
+   "note": "OECD real-time revisions database, July 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
+  },
+  "alfred-cpiaucns-2013-08-23": {
+   "id": "alfred-cpiaucns-2013-08-23",
+   "url": "https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=CPIAUCNS&vintage_date=2013-08-23",
+   "sha256": "0f622941583862dfd799005e00ae0caecb67f58aff785f242a629ceeb12717d6",
+   "nbytes": 22107,
+   "retrieved_at": "2026-11-25T13:58:34Z",
+   "available_by": "2013-08-23T23:59:59-06:00",
+   "kind": "alfred",
+   "note": "Historical ALFRED vintage_date is the requested information set. Conservative availability bound is the end of that Friday in America/Chicago, strictly before Sunday 00:00 Europe/Warsaw. No exact original release intraday time is invented.",
+   "proof_url": "https://alfred.stlouisfed.org/series?seid=CPIAUCNS"
+  },
+  "oecd-rt-cp-201307": {
+   "id": "oecd-rt-cp-201307",
+   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA18+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..CP...201307?format=csvfile",
+   "sha256": "6b37a195919cfc9fd78fb824166954ac6c905600156312c99e98e4215ddf43a2",
+   "nbytes": 1079946,
+   "retrieved_at": "2026-11-25T13:56:27Z",
+   "available_by": "2013-07-31 (edition month end (conservative rule))",
+   "kind": "oecd-rt",
+   "note": "OECD real-time revisions database, July 2013 edition, consumer price index (CP): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
+  },
+  "bis-wslongcpi-mcn771-to-2013-06": {
+   "id": "bis-wslongcpi-mcn771-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CN.771?format=csv&startPeriod=1985-01&endPeriod=2013-06",
+   "sha256": "370e32935e30f28fe419ddabbcb56e509c33304905b3a7e0b13f68e86b71bc60",
+   "nbytes": 7817,
+   "retrieved_at": "2026-11-25T13:56:30Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CN.771 (CPI y/y): present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wslongcpi-mcl771-to-2013-06": {
+   "id": "bis-wslongcpi-mcl771-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CL.771?format=csv&startPeriod=1985-01&endPeriod=2013-06",
+   "sha256": "1f07bf2aef98e497a3e9f5aaa62558fadcad1e3eac6667dcacb4651242c52639",
+   "nbytes": 13556,
+   "retrieved_at": "2026-11-25T13:56:31Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CL.771 (CPI y/y): present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wslongcpi-mco771-to-2013-06": {
+   "id": "bis-wslongcpi-mco771-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CO.771?format=csv&startPeriod=1985-01&endPeriod=2013-06",
+   "sha256": "847eacaa58f553a72c82f9cac6fdf445f345ccb6237f49e2aea90942e47cb5a1",
+   "nbytes": 12588,
+   "retrieved_at": "2026-11-25T13:56:31Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CO.771 (CPI y/y): present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wslongcpi-mth771-to-2013-06": {
+   "id": "bis-wslongcpi-mth771-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.TH.771?format=csv&startPeriod=1985-01&endPeriod=2013-06",
+   "sha256": "27b075de09c6ee1a7023d09c961adfa535d390694a726652f437a2e3bf4ea13a",
+   "nbytes": 13115,
+   "retrieved_at": "2026-11-25T13:56:32Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.TH.771 (CPI y/y): present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbus-to-2013-06": {
+   "id": "bis-wseer-mrbus-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.US?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "f1bf9b97601261bf71e3cdf6d73da4da32017a572c4d61152ac9b0ae7073e06a",
+   "nbytes": 18622,
+   "retrieved_at": "2026-11-25T13:56:32Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.US: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01usm156n-to-2013-07": {
+   "id": "fred-irltlt01usm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01USM156N&coed=2013-07-01",
+   "sha256": "53e9b9b060cdc41b422a978ddab52d37669d319aa9c37ae4e70c9bc392468c15",
+   "nbytes": 11689,
+   "retrieved_at": "2026-11-25T13:56:33Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01USM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01USM156N"
+  },
+  "bis-wseer-mrbxm-to-2013-06": {
+   "id": "bis-wseer-mrbxm-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.XM?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "d14ec7148de385a3ff26191c097c066e778125d6c33c43ec2bd4d09e3e3219f7",
+   "nbytes": 17858,
+   "retrieved_at": "2026-11-25T13:56:33Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.XM: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01ezm156n-to-2013-07": {
+   "id": "fred-irltlt01ezm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01EZM156N&coed=2013-07-01",
+   "sha256": "5f64e8c13809f26c2dbb5ef1619abcf3ba867a55303e78b55e80dabbb781d998",
+   "nbytes": 15856,
+   "retrieved_at": "2026-11-25T13:56:34Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01EZM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01EZM156N"
+  },
+  "bis-wseer-mrbjp-to-2013-06": {
+   "id": "bis-wseer-mrbjp-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.JP?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "f221ea1f2fba8de6c33a452c9ac3e0620da90365e395a73869a4b893efc91c1d",
+   "nbytes": 16958,
+   "retrieved_at": "2026-11-25T13:56:35Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.JP: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01jpm156n-to-2013-07": {
+   "id": "fred-irltlt01jpm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01JPM156N&coed=2013-07-01",
+   "sha256": "a21288f5ecaaca17e37c052642df3d0268e2d9c9d171133f89769ffdbbc5b79d",
+   "nbytes": 5048,
+   "retrieved_at": "2026-11-25T13:56:35Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01JPM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01JPM156N"
+  },
+  "bis-wseer-mrbgb-to-2013-06": {
+   "id": "bis-wseer-mrbgb-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.GB?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "4d13076a01f090bdd485da275bd9f9fa29b472f50c279ed75074be8c9cb14c4f",
+   "nbytes": 19034,
+   "retrieved_at": "2026-11-25T13:56:36Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.GB: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01gbm156n-to-2013-07": {
+   "id": "fred-irltlt01gbm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01GBM156N&coed=2013-07-01",
+   "sha256": "464f9d8a5f9956b0556f3ced8f32b48f13e49e3102ed019d17cfdbbd7f5d8caa",
+   "nbytes": 11797,
+   "retrieved_at": "2026-11-25T13:56:36Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01GBM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01GBM156N"
+  },
+  "bis-wseer-mrbca-to-2013-06": {
+   "id": "bis-wseer-mrbca-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CA?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "55d7004ab0841ebb6332a540a41256cb2c1171005d740e228516dda08ba2626b",
+   "nbytes": 17111,
+   "retrieved_at": "2026-11-25T13:56:37Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CA: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01cam156n-to-2013-07": {
+   "id": "fred-irltlt01cam156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CAM156N&coed=2013-07-01",
+   "sha256": "29187295fbcaec1c159d7cbd66c6fbe268e9fd611b18985b37ff51dd95aa670d",
+   "nbytes": 20521,
+   "retrieved_at": "2026-11-25T13:56:37Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CAM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CAM156N"
+  },
+  "bis-wseer-mrbau-to-2013-06": {
+   "id": "bis-wseer-mrbau-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.AU?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "b96169b4c11ba397c77f069210d8642aa704540144533e407eb461f2d7ab04b3",
+   "nbytes": 17762,
+   "retrieved_at": "2026-11-25T13:56:38Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.AU: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01aum156n-to-2013-07": {
+   "id": "fred-irltlt01aum156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01AUM156N&coed=2013-07-01",
+   "sha256": "b9c8fcedc3923c3f68f163c7941c149af76e07a82d5ad3babe4450b588f0a096",
+   "nbytes": 15025,
+   "retrieved_at": "2026-11-25T13:56:39Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01AUM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01AUM156N"
+  },
+  "bis-wseer-mrbch-to-2013-06": {
+   "id": "bis-wseer-mrbch-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CH?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "bed9e59dd0fd9bc6609f95044e1ae64f21608dec84ebef800020df01fefebd51",
+   "nbytes": 18151,
+   "retrieved_at": "2026-11-25T13:56:39Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CH: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01chm156n-to-2013-07": {
+   "id": "fred-irltlt01chm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CHM156N&coed=2013-07-01",
+   "sha256": "2ec027ae59080a97aa0a1154c3aeb63739d0998cae6ad37b42a2494ae7111763",
+   "nbytes": 11984,
+   "retrieved_at": "2026-11-25T13:56:40Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CHM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CHM156N"
+  },
+  "bis-wseer-mrbse-to-2013-06": {
+   "id": "bis-wseer-mrbse-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.SE?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "eec47e6ff6daf9aeb91e256fe78a520c396147761cc5270f5e18134d3c124301",
+   "nbytes": 17193,
+   "retrieved_at": "2026-11-25T13:56:41Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.SE: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01sem156n-to-2013-07": {
+   "id": "fred-irltlt01sem156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01SEM156N&coed=2013-07-01",
+   "sha256": "2628beeb3cb40c56ade267d3b721d2946766dfc6da53bf2a04ec718c71454b80",
+   "nbytes": 6832,
+   "retrieved_at": "2026-11-25T13:56:41Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01SEM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01SEM156N"
+  },
+  "bis-wseer-mrbno-to-2013-06": {
+   "id": "bis-wseer-mrbno-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.NO?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "e1c73792e1c1e3e3cdf6d3cecc3de84012044a2bb5387d163a02821f964b59f4",
+   "nbytes": 17196,
+   "retrieved_at": "2026-11-25T13:56:42Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.NO: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01nom156n-to-2013-07": {
+   "id": "fred-irltlt01nom156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01NOM156N&coed=2013-07-01",
+   "sha256": "01db2f252770056a822e618c7662320b82d35561597114727edd6696cc9459ac",
+   "nbytes": 9715,
+   "retrieved_at": "2026-11-25T13:56:42Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01NOM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01NOM156N"
+  },
+  "bis-wseer-mrbnz-to-2013-06": {
+   "id": "bis-wseer-mrbnz-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.NZ?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "bc0309c68a9664311ef25dcc58183fdc6d5ee296157b501b87ccecb36a0fba3b",
+   "nbytes": 18212,
+   "retrieved_at": "2026-11-25T13:56:43Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.NZ: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01nzm156n-to-2013-07": {
+   "id": "fred-irltlt01nzm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01NZM156N&coed=2013-07-01",
+   "sha256": "a59c9cd42f8b204d73205482af1bc295b4b2c2e2a2afcfe904a87653c1f01f72",
+   "nbytes": 8550,
+   "retrieved_at": "2026-11-25T13:56:43Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01NZM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01NZM156N"
+  },
+  "bis-wseer-mrbcn-to-2013-06": {
+   "id": "bis-wseer-mrbcn-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CN?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "35c411022d2ac895a297b3c6cffe23532e78408c20e59ab86d897dd5d6a4d85a",
+   "nbytes": 16726,
+   "retrieved_at": "2026-11-25T13:56:44Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CN: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbin-to-2013-06": {
+   "id": "bis-wseer-mrbin-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.IN?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "cec3a366ae3b7dda72ff692f9c46e8ad9f9a493566c3176d6847e07a814df960",
+   "nbytes": 16747,
+   "retrieved_at": "2026-11-25T13:56:44Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.IN: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbbr-to-2013-06": {
+   "id": "bis-wseer-mrbbr-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.BR?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "e163eabe313a722243c04b351db2025b86c6b1e64ce0ff7160e04b153d41f114",
+   "nbytes": 17158,
+   "retrieved_at": "2026-11-25T13:56:45Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.BR: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbmx-to-2013-06": {
+   "id": "bis-wseer-mrbmx-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.MX?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "eead2f8933ee06cb31710e7b936d648b1048cb4ea6e568bb5cf5d62d2a03da4d",
+   "nbytes": 17193,
+   "retrieved_at": "2026-11-25T13:56:46Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.MX: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01mxm156n-to-2013-07": {
+   "id": "fred-irltlt01mxm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01MXM156N&coed=2013-07-01",
+   "sha256": "0308aabb2fd917bba98b1df56677eaab25b4435ab74304903d92aad4f565f4b3",
+   "nbytes": 2261,
+   "retrieved_at": "2026-11-25T13:56:46Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01MXM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01MXM156N"
+  },
+  "bis-wseer-mrbza-to-2013-06": {
+   "id": "bis-wseer-mrbza-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.ZA?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "4cf479b3afe17e1d7b0bc3cf6b0d69a4b72b74562f370f8ed9327903901a2a27",
+   "nbytes": 18579,
+   "retrieved_at": "2026-11-25T13:56:47Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.ZA: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01zam156n-to-2013-07": {
+   "id": "fred-irltlt01zam156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01ZAM156N&coed=2013-07-01",
+   "sha256": "17b495fbd30f52326da03578ba75cc2393ede99bb8bb119f1b971264ec2cb51e",
+   "nbytes": 19356,
+   "retrieved_at": "2026-11-25T13:56:48Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01ZAM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01ZAM156N"
+  },
+  "bis-wseer-mrbtr-to-2013-06": {
+   "id": "bis-wseer-mrbtr-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.TR?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "8e955e6f4579d58ad9541d0a1e196d026a257d8fd810863ed17448c4159c7c45",
+   "nbytes": 17177,
+   "retrieved_at": "2026-11-25T13:56:48Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.TR: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbpl-to-2013-06": {
+   "id": "bis-wseer-mrbpl-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.PL?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "d0a5b4f35c06f9f93953e125ed40af22dde70a4defd5e77ee176002b6796694d",
+   "nbytes": 17093,
+   "retrieved_at": "2026-11-25T13:56:49Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.PL: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01plm156n-to-2013-07": {
+   "id": "fred-irltlt01plm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01PLM156N&coed=2013-07-01",
+   "sha256": "aed61bf98ec76c57bff78e2a414d76438c5a83205c7d7f401a556fab302e213d",
+   "nbytes": 3516,
+   "retrieved_at": "2026-11-25T13:56:49Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01PLM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01PLM156N"
+  },
+  "bis-wseer-mrbhu-to-2013-06": {
+   "id": "bis-wseer-mrbhu-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.HU?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "ae93834fd5e55ccc77daf7572fd19192c8c942f507097c099bd773873932a6fa",
+   "nbytes": 17321,
+   "retrieved_at": "2026-11-25T13:56:50Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.HU: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01hum156n-to-2013-07": {
+   "id": "fred-irltlt01hum156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01HUM156N&coed=2013-07-01",
+   "sha256": "5aabe09d3cd51326c94d5a89fd102442cb8952673249392ee4d3c6ec2ce0384e",
+   "nbytes": 3871,
+   "retrieved_at": "2026-11-25T13:56:50Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01HUM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01HUM156N"
+  },
+  "bis-wseer-mrbcz-to-2013-06": {
+   "id": "bis-wseer-mrbcz-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CZ?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "ccccc21b2c546c6b8e9599ec09799c198ef1d49d2d1e1166d785a461f67cf0e2",
+   "nbytes": 17226,
+   "retrieved_at": "2026-11-25T13:56:51Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CZ: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01czm156n-to-2013-07": {
+   "id": "fred-irltlt01czm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CZM156N&coed=2013-07-01",
+   "sha256": "8581c172e8c8269318338affc17e97c03819faeae7f685fb59c6321840428569",
+   "nbytes": 4673,
+   "retrieved_at": "2026-11-25T13:56:52Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CZM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CZM156N"
+  },
+  "bis-wseer-mrbid-to-2013-06": {
+   "id": "bis-wseer-mrbid-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.ID?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "789cc9e6a6ffe549592a2d2ca09509ccab4d3eb74b13766a20b170716d2793a5",
+   "nbytes": 17782,
+   "retrieved_at": "2026-11-25T13:56:54Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.ID: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbkr-to-2013-06": {
+   "id": "bis-wseer-mrbkr-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.KR?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "1732f74dffaed1507a9a44edb2c472658bb2bbacc1468477d2075efcbcdaaf02",
+   "nbytes": 16853,
+   "retrieved_at": "2026-11-25T13:56:55Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.KR: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01krm156n-to-2013-07": {
+   "id": "fred-irltlt01krm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01KRM156N&coed=2013-07-01",
+   "sha256": "39480a751a66151615a34c20f06a24dec17438df27663eecdece24637e98a8da",
+   "nbytes": 2651,
+   "retrieved_at": "2026-11-25T13:56:56Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01KRM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01KRM156N"
+  },
+  "bis-wseer-mrbcl-to-2013-06": {
+   "id": "bis-wseer-mrbcl-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CL?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "7f8e0b6a162eb0dec461b39010619782e36a4673997dc7a43df075bb6e717f70",
+   "nbytes": 16958,
+   "retrieved_at": "2026-11-25T13:56:56Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CL: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01clm156n-to-2013-07": {
+   "id": "fred-irltlt01clm156n-to-2013-07",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CLM156N&coed=2013-07-01",
+   "sha256": "8e50970bc5d5960561a7cb3984a5e5baa35ae7b8fd2f0a0b44a6f450cdc49d0a",
+   "nbytes": 3085,
+   "retrieved_at": "2026-11-25T13:56:57Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CLM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2013-07-01, so the retained bytes stop at 2013-07. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CLM156N"
+  },
+  "bis-wseer-mrbco-to-2013-06": {
+   "id": "bis-wseer-mrbco-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CO?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "da6081cc657f20f2276fef5aefbe20be6b627150af09a748c74d0fd594330063",
+   "nbytes": 17633,
+   "retrieved_at": "2026-11-25T13:56:57Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CO: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbth-to-2013-06": {
+   "id": "bis-wseer-mrbth-to-2013-06",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.TH?format=csv&startPeriod=1994-01&endPeriod=2013-06",
+   "sha256": "b50d411bc969fe46a9028eddae3be5a7bf7aea1c727b4bedf963d3b720213f95",
+   "nbytes": 17453,
+   "retrieved_at": "2026-11-25T13:56:58Z",
+   "available_by": "reference months through 2013-06 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.TH: present-day BIS history requested with endPeriod=2013-06, so the retained bytes stop at 2013-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mus-to-2013-07": {
+   "id": "bis-wscbpol-mus-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.US?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "beba0e86a0556d6a22a97ab97bd70f58547da75cbfdea60ea209fc476662535d",
+   "nbytes": 89513,
+   "retrieved_at": "2026-11-25T13:56:59Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.US (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-us-2006-01-01-2013-08-24": {
+   "id": "bis-daily-us-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.US?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "33edcd72af566ccdaed44a33c7c4bee3cc04be59115f13ec7f4b2615a25202ea",
+   "nbytes": 732592,
+   "retrieved_at": "2026-11-25T13:58:36Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mxm-to-2013-07": {
+   "id": "bis-wscbpol-mxm-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.XM?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "72ccda8941b71b120c09ec997324742a87f4f9415acdb033b845401ed63469f8",
+   "nbytes": 101731,
+   "retrieved_at": "2026-11-25T13:57:01Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.XM (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-xm-2006-01-01-2013-08-24": {
+   "id": "bis-daily-xm-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.XM?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "ce930152e962b1f7c48bd633a8acf702798009bd25ae49ac4b95680faee51316",
+   "nbytes": 1623749,
+   "retrieved_at": "2026-11-25T13:58:37Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mjp-to-2013-07": {
+   "id": "bis-wscbpol-mjp-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.JP?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "aa7a351ac062a9d6da4d1a82e39eb6e3ce785062c9ca9379270fa406fffc6a25",
+   "nbytes": 661238,
+   "retrieved_at": "2026-11-25T13:57:15Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.JP (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-jp-2006-01-01-2013-08-24": {
+   "id": "bis-daily-jp-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.JP?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "dc3322bc55b3ca6d6db50d668a4b7859607065a774092174db2ed7144d2f6065",
+   "nbytes": 6471455,
+   "retrieved_at": "2026-11-25T13:59:06Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mgb-to-2013-07": {
+   "id": "bis-wscbpol-mgb-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.GB?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "630004a43fbb7a6944e39966a616459e84de404e358597fece3b0c03c9300fbe",
+   "nbytes": 130834,
+   "retrieved_at": "2026-11-25T13:57:18Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.GB (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-gb-2006-01-01-2013-08-24": {
+   "id": "bis-daily-gb-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.GB?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "0f5d330c1958746d4a72b3486b4507cf5a1c1bc992fc4f6df36cf6b0ffdc7de8",
+   "nbytes": 763146,
+   "retrieved_at": "2026-11-25T13:59:08Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mca-to-2013-07": {
+   "id": "bis-wscbpol-mca-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CA?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "23246bcd182b498facde66ef3f188dabecaf276b9c8231dec6b0c31e9555e0ae",
+   "nbytes": 213941,
+   "retrieved_at": "2026-11-25T13:57:20Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CA (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-ca-2006-01-01-2013-08-24": {
+   "id": "bis-daily-ca-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CA?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "535fcf52a718dd38bad1369996fdac3ae0ecca1aa7d2eb1a2a5ce6759efe7938",
+   "nbytes": 1741783,
+   "retrieved_at": "2026-11-25T13:59:10Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mau-to-2013-07": {
+   "id": "bis-wscbpol-mau-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.AU?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "bd5fe3662e6543fef7336934d3d4e61c7924114246ed06bd994688adfc60b496",
+   "nbytes": 237308,
+   "retrieved_at": "2026-11-25T13:57:23Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.AU (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-au-2006-01-01-2013-08-24": {
+   "id": "bis-daily-au-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.AU?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "43c09c92ce060e607d9b45b194b1f34619fec1fc8f1cbcb5101b33dbe0b011e8",
+   "nbytes": 1338198,
+   "retrieved_at": "2026-11-25T13:59:11Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mch-to-2013-07": {
+   "id": "bis-wscbpol-mch-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CH?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "d19970802b64fec9d9fef0a608aeac1a8237c57ad1d9b657010d87f44eb30931",
+   "nbytes": 94775,
+   "retrieved_at": "2026-11-25T13:57:25Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CH (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-ch-2006-01-01-2013-08-24": {
+   "id": "bis-daily-ch-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CH?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "3f739347802c2e47a56e9fa32e1683728c5d194003bb716caf46a474b13d59c7",
+   "nbytes": 555287,
+   "retrieved_at": "2026-11-25T13:59:13Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mse-to-2013-07": {
+   "id": "bis-wscbpol-mse-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.SE?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "a7a30809e1a19ebba7790a248230b65c4bbcf510e90350a60d4c7479008e7a1e",
+   "nbytes": 95144,
+   "retrieved_at": "2026-11-25T13:57:26Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.SE (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-se-2006-01-01-2013-08-24": {
+   "id": "bis-daily-se-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.SE?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "a11c4aafecd360604f65dfd0ed09cb86f587c9b75fe18aafa8eb3c0d8ab28b89",
+   "nbytes": 736526,
+   "retrieved_at": "2026-11-25T13:59:14Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mno-to-2013-07": {
+   "id": "bis-wscbpol-mno-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.NO?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "dd90f6dc9c36d7c10463c0835f2d67aa20d726acbeab7d61ea72993f41cecc64",
+   "nbytes": 74459,
+   "retrieved_at": "2026-11-25T13:57:29Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.NO (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-no-2006-01-01-2013-08-24": {
+   "id": "bis-daily-no-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.NO?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "24318a78fe6e499e03401319c54fef6f67b926323d249a5fc43d8c3507929a7c",
+   "nbytes": 634064,
+   "retrieved_at": "2026-11-25T13:59:15Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mnz-to-2013-07": {
+   "id": "bis-wscbpol-mnz-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.NZ?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "d54e3921c7bb7e71ca01ea8dde90f581d1a854d14b498c0b707a30a5bfbedbf8",
+   "nbytes": 120311,
+   "retrieved_at": "2026-11-25T13:57:32Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.NZ (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-nz-2006-01-01-2013-08-24": {
+   "id": "bis-daily-nz-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.NZ?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "860ff582e05c494c53e1f9d9ea17fb2b30f136699250483a577e45bc1508cbe5",
+   "nbytes": 980514,
+   "retrieved_at": "2026-11-25T13:59:16Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mcn-to-2013-07": {
+   "id": "bis-wscbpol-mcn-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CN?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "a4994e42b82e6fe55997d8991a879e00a4be81869381f55293566ed3a1fbc770",
+   "nbytes": 49937,
+   "retrieved_at": "2026-11-25T13:57:34Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CN (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-cn-2006-01-01-2013-08-24": {
+   "id": "bis-daily-cn-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CN?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "b33ecfee18e49b5cfde586df7f2244ca41e7e83fc85f6d77a080b960c7440b62",
+   "nbytes": 660833,
+   "retrieved_at": "2026-11-25T13:59:17Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-min-to-2013-07": {
+   "id": "bis-wscbpol-min-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.IN?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "2ad50229535fdf8c35bed62567e1ff6cdd93f5a2763a8b277215ebbd4074dc30",
+   "nbytes": 123338,
+   "retrieved_at": "2026-11-25T13:57:37Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.IN (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-in-2006-01-01-2013-08-24": {
+   "id": "bis-daily-in-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.IN?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "7e8ca83f83c4978f34b1eee4cb87c3a70da9a79a19290a018401de535f821fb4",
+   "nbytes": 993764,
+   "retrieved_at": "2026-11-25T13:59:19Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mbr-to-2013-07": {
+   "id": "bis-wscbpol-mbr-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.BR?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "468256df4e12249b46811e682398e4fe35f97bcb8ea02321799f7f414393d6b7",
+   "nbytes": 289540,
+   "retrieved_at": "2026-11-25T13:57:41Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.BR (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-br-2006-01-01-2013-08-24": {
+   "id": "bis-daily-br-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.BR?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "b48a62ecd10ed9ee19cfba2d7177a1601fdaf5b8b8dafca99a37b80396f4d2f8",
+   "nbytes": 2480475,
+   "retrieved_at": "2026-11-25T13:59:44Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mmx-to-2013-07": {
+   "id": "bis-wscbpol-mmx-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.MX?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "6c2b9d04483fe11cbf6a4d9b7881b153a9ea5af6bdb00ae4f7037fef13fa7919",
+   "nbytes": 72324,
+   "retrieved_at": "2026-11-25T13:57:44Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.MX (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-mx-2006-01-01-2013-08-24": {
+   "id": "bis-daily-mx-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.MX?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "10e2caf57b9342f785691e20aa76e7f3757c7920d2e658842cec2ff6f1c144ab",
+   "nbytes": 1140044,
+   "retrieved_at": "2026-11-25T13:59:52Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mza-to-2013-07": {
+   "id": "bis-wscbpol-mza-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.ZA?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "3b91c0f7590f5712682568741fb1581cb33838192f00576b6855bb6230833efd",
+   "nbytes": 50438,
+   "retrieved_at": "2026-11-25T13:57:46Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.ZA (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-za-2006-01-01-2013-08-24": {
+   "id": "bis-daily-za-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.ZA?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "89f318346e5501111282f3fe711eca305f9dfa863d149182c6a61f73ee3379a6",
+   "nbytes": 411434,
+   "retrieved_at": "2026-11-25T14:00:10Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mtr-to-2013-07": {
+   "id": "bis-wscbpol-mtr-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.TR?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "7c7d114483300cf15755f27eb07c7d4de539e68ddc548dc39b07d309d8d434b6",
+   "nbytes": 60784,
+   "retrieved_at": "2026-11-25T13:57:50Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.TR (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-tr-2006-01-01-2013-08-24": {
+   "id": "bis-daily-tr-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.TR?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "81f344f297f6103af45abcf419940421dfe1873e88a05f823de312140e75a471",
+   "nbytes": 1230445,
+   "retrieved_at": "2026-11-25T14:00:36Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mpl-to-2013-07": {
+   "id": "bis-wscbpol-mpl-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.PL?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "98f89576c753dd006a548cabc8a86c972222acc576807ec8a9bdfad0722c7509",
+   "nbytes": 158644,
+   "retrieved_at": "2026-11-25T13:57:53Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.PL (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-pl-2006-01-01-2013-08-24": {
+   "id": "bis-daily-pl-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.PL?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "0cbbdb8e1956086896205f1be27b4c4698d64d0bf9d7fe42d5776627dbad19da",
+   "nbytes": 1795583,
+   "retrieved_at": "2026-11-25T14:01:10Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mhu-to-2013-07": {
+   "id": "bis-wscbpol-mhu-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.HU?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "df8d3f87b6a0daad09ecc7914217855c9cdefbb59a01fbbfa30f7ad9d6606c0e",
+   "nbytes": 114204,
+   "retrieved_at": "2026-11-25T13:57:56Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.HU (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-hu-2006-01-01-2013-08-24": {
+   "id": "bis-daily-hu-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.HU?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "62c9b0d01bc44ed84743f3e7417875e8e5d64eb8251f5d75a0981045a5f8ec19",
+   "nbytes": 997434,
+   "retrieved_at": "2026-11-25T14:01:12Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mcz-to-2013-07": {
+   "id": "bis-wscbpol-mcz-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CZ?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "4e05c9daafcb4ff4cff00c3898f3f946cf9f4d14c49076b90693c8631ae340f5",
+   "nbytes": 98159,
+   "retrieved_at": "2026-11-25T13:57:58Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CZ (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-cz-2006-01-01-2013-08-24": {
+   "id": "bis-daily-cz-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CZ?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "c5226d8e56f8a2c218c9461b205655f719cf7dba37d8bee2637f247f8329cdad",
+   "nbytes": 924587,
+   "retrieved_at": "2026-11-25T14:01:13Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mid-to-2013-07": {
+   "id": "bis-wscbpol-mid-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.ID?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "80baf3c63927686f71920de4f8aae8bbfe317bd63ea634d01a0fd609a24495a5",
+   "nbytes": 65382,
+   "retrieved_at": "2026-11-25T13:58:00Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.ID (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-id-2006-01-01-2013-08-24": {
+   "id": "bis-daily-id-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.ID?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "f399e66ca6cb90bcf45145a0460c851d225f8deb60d4a452439fb8f384e2c9d7",
+   "nbytes": 1875187,
+   "retrieved_at": "2026-11-25T14:01:16Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mkr-to-2013-07": {
+   "id": "bis-wscbpol-mkr-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.KR?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "cd41f4200b85195fd5bed33a4e733110c647a840c3e9b36530dd9646d2fe7185",
+   "nbytes": 60479,
+   "retrieved_at": "2026-11-25T13:58:09Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.KR (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-kr-2006-01-01-2013-08-24": {
+   "id": "bis-daily-kr-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.KR?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "469c63b1fde98845b623ce6e910aca5cb55631899eede483a9bfb81007fe09b7",
+   "nbytes": 675263,
+   "retrieved_at": "2026-11-25T14:01:19Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mcl-to-2013-07": {
+   "id": "bis-wscbpol-mcl-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CL?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "3e4e1ee7ae2c2bb149905099ffa8c696b8a97afd285320fc1c3904e5f5de7d7d",
+   "nbytes": 84461,
+   "retrieved_at": "2026-11-25T13:58:18Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CL (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-cl-2006-01-01-2013-08-24": {
+   "id": "bis-daily-cl-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CL?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "c01e08151f0e3c072c72188967ae557a8382bf6e479c1d80e2ac24b8c4531ffb",
+   "nbytes": 1192176,
+   "retrieved_at": "2026-11-25T14:01:22Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mco-to-2013-07": {
+   "id": "bis-wscbpol-mco-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CO?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "b26930c7d261eec8fefdbef70abbe241049ed6a085bb6c34c483ea59ba7d4736",
+   "nbytes": 71824,
+   "retrieved_at": "2026-11-25T13:58:22Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CO (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-co-2006-01-01-2013-08-24": {
+   "id": "bis-daily-co-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CO?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "e45f289ba78e5fb4bcd8d73ffbcad7851e677daf261ec4413fd0a4a3a2eeeeb4",
+   "nbytes": 912811,
+   "retrieved_at": "2026-11-25T14:01:23Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mth-to-2013-07": {
+   "id": "bis-wscbpol-mth-to-2013-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.TH?format=csv&startPeriod=1985-01&endPeriod=2013-07",
+   "sha256": "3f93e735e2618a4cc4e6587069e12ec031d72b1e41396736a14ef43f54ab5630",
+   "nbytes": 43268,
+   "retrieved_at": "2026-11-25T13:58:24Z",
+   "available_by": "reference months through 2013-07 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.TH (end of period): present-day BIS history requested with endPeriod=2013-07, so the retained bytes stop at 2013-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-th-2006-01-01-2013-08-24": {
+   "id": "bis-daily-th-2006-01-01-2013-08-24",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.TH?format=csv&startPeriod=2006-01-01&endPeriod=2013-08-24",
+   "sha256": "62bd3cccc1c60aba1e7a33062a44a895798bbb5562e0d76d442be48d33f52809",
+   "nbytes": 760138,
+   "retrieved_at": "2026-11-25T14:01:25Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  }
+ },
+ "obs": {
+  "US": {
+   "cli": "2013-05",
+   "cpi": "2013-07",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "XM": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "JP": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "GB": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "CA": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "AU": {
+   "cli": "2013-05",
+   "cpi": "2013-03",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "CH": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "SE": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "NO": {
+   "cli": "2013-04",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "NZ": {
+   "cli": "2013-04",
+   "cpi": "2013-03",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "CN": {
+   "cli": "2013-05",
+   "cpi": "2013-06",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  },
+  "IN": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  },
+  "BR": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  },
+  "MX": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-06",
+   "policy": "2013-07"
+  },
+  "ZA": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "TR": {
+   "cli": "2013-05",
+   "cpi": "2013-06",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  },
+  "PL": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "HU": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "CZ": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "ID": {
+   "cli": "2013-05",
+   "cpi": "2013-06",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  },
+  "KR": {
+   "cli": "2013-05",
+   "cpi": "2013-05",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "CL": {
+   "cpi": "2013-06",
+   "reer": "2013-06",
+   "y10": "2013-07",
+   "policy": "2013-07"
+  },
+  "CO": {
+   "cpi": "2013-06",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  },
+  "TH": {
+   "cpi": "2013-06",
+   "reer": "2013-06",
+   "policy": "2013-07"
+  }
+ },
+ "gaps": {
+  "y10/MX": [
+   "2001-08",
+   "2001-09",
+   "2001-11",
+   "2007-10",
+   "2008-02",
+   "2008-05",
+   "2008-09",
+   "2009-01",
+   "2009-04",
+   "2009-08",
+   "2009-11",
+   "2010-01",
+   "2010-03",
+   "2010-06",
+   "2010-10",
+   "2011-01",
+   "2011-02",
+   "2011-03",
+   "2011-05",
+   "2011-09",
+   "2012-01",
+   "2012-02",
+   "2012-03",
+   "2012-04",
+   "2012-08",
+   "2012-12",
+   "2013-03"
+  ],
+  "policy/JP": [
+   "1999-03",
+   "1999-04",
+   "1999-05",
+   "1999-06",
+   "1999-07",
+   "1999-08",
+   "1999-09",
+   "1999-10",
+   "1999-11",
+   "1999-12",
+   "2000-01",
+   "2000-02",
+   "2000-03",
+   "2000-04",
+   "2000-05",
+   "2000-06",
+   "2000-07",
+   "2001-04",
+   "2001-05",
+   "2001-06",
+   "2001-07",
+   "2001-08",
+   "2001-09",
+   "2001-10",
+   "2001-11",
+   "2001-12",
+   "2002-01",
+   "2002-02",
+   "2002-03",
+   "2002-04",
+   "2002-05",
+   "2002-06",
+   "2002-07",
+   "2002-08",
+   "2002-09",
+   "2002-10",
+   "2002-11",
+   "2002-12",
+   "2003-01",
+   "2003-02",
+   "2003-03",
+   "2003-04",
+   "2003-05",
+   "2003-06",
+   "2003-07",
+   "2003-08",
+   "2003-09",
+   "2003-10",
+   "2003-11",
+   "2003-12",
+   "2004-01",
+   "2004-02",
+   "2004-03",
+   "2004-04",
+   "2004-05",
+   "2004-06",
+   "2004-07",
+   "2004-08",
+   "2004-09",
+   "2004-10",
+   "2004-11",
+   "2004-12",
+   "2005-01",
+   "2005-02",
+   "2005-03",
+   "2005-04",
+   "2005-05",
+   "2005-06",
+   "2005-07",
+   "2005-08",
+   "2005-09",
+   "2005-10",
+   "2005-11",
+   "2005-12",
+   "2006-01",
+   "2006-02"
+  ]
+ },
+ "cpi_choice": {
+  "US": {
+   "chosen": "BLS CPI-U all items NSA (CPIAUCNS), ALFRED 2013-08-23 vintage, calendar-month y/y",
+   "ledger": "alfred-cpiaucns-2013-08-23",
+   "last": "2013-07",
+   "last_value": 1.961,
+   "considered": [
+    {
+     "candidate": "BLS CPI-U all items NSA (CPIAUCNS), ALFRED 2013-08-23 vintage, calendar-month y/y",
+     "last": "2013-07",
+     "last_value": 1.961
+    },
+    {
+     "candidate": "OECD real-time CPI index USA, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.359
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "alfred",
+   "reason": ""
+  },
+  "XM": {
+   "chosen": "OECD real-time CPI index, euro-area aggregate as published (database code EA18), July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 1.467,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index, euro-area aggregate as published (database code EA18), July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.467
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "JP": {
+   "chosen": "OECD real-time CPI index JPN, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": -0.291,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index JPN, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": -0.291
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "GB": {
+   "chosen": "OECD real-time CPI index GBR, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 2.687,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index GBR, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 2.687
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CA": {
+   "chosen": "OECD real-time CPI index CAN, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 0.736,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CAN, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 0.736
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "AU": {
+   "chosen": "OECD real-time CPI index AUS (quarterly), July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-03",
+   "last_value": 2.5,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index AUS (quarterly), July 2013 edition, y/y within the vintage",
+     "last": "2013-03",
+     "last_value": 2.5
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": true,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CH": {
+   "chosen": "OECD real-time CPI index CHE, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": -0.507,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CHE, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": -0.507
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "SE": {
+   "chosen": "OECD real-time CPI index SWE, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": -0.222,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index SWE, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": -0.222
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "NO": {
+   "chosen": "OECD real-time CPI index NOR, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 1.974,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index NOR, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.974
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "NZ": {
+   "chosen": "OECD real-time CPI index NZL (quarterly), July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-03",
+   "last_value": 0.855,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index NZL (quarterly), July 2013 edition, y/y within the vintage",
+     "last": "2013-03",
+     "last_value": 0.855
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": true,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CN": {
+   "chosen": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2013-06",
+   "ledger": "bis-wslongcpi-mcn771-to-2013-06",
+   "last": "2013-06",
+   "last_value": 2.611,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CHN (fixed base), July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.923
+    },
+    {
+     "candidate": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2013-06",
+     "last": "2013-06",
+     "last_value": 2.611
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": "fixed-base"
+  },
+  "IN": {
+   "chosen": "OECD real-time CPI index IND, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 10.676,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index IND, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 10.676
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "BR": {
+   "chosen": "OECD real-time CPI index BRA, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 6.477,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index BRA, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 6.477
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "MX": {
+   "chosen": "OECD real-time CPI index MEX, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 4.634,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index MEX, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 4.634
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "ZA": {
+   "chosen": "OECD real-time CPI index ZAF, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 5.518,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index ZAF, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 5.518
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "TR": {
+   "chosen": "OECD real-time CPI index TUR, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-06",
+   "last_value": 8.297,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index TUR, July 2013 edition, y/y within the vintage",
+     "last": "2013-06",
+     "last_value": 8.297
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "PL": {
+   "chosen": "OECD real-time CPI index POL, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 0.569,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index POL, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 0.569
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "HU": {
+   "chosen": "OECD real-time CPI index HUN, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 1.819,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index HUN, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.819
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CZ": {
+   "chosen": "OECD real-time CPI index CZE, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 1.319,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CZE, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.319
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "ID": {
+   "chosen": "OECD real-time CPI index IDN, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-06",
+   "last_value": 5.908,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index IDN, July 2013 edition, y/y within the vintage",
+     "last": "2013-06",
+     "last_value": 5.908
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "KR": {
+   "chosen": "OECD real-time CPI index KOR, July 2013 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201307",
+   "last": "2013-05",
+   "last_value": 1.038,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index KOR, July 2013 edition, y/y within the vintage",
+     "last": "2013-05",
+     "last_value": 1.038
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CL": {
+   "chosen": "BIS WS_LONG_CPI M.CL.771, present-day history gated at 2013-06",
+   "ledger": "bis-wslongcpi-mcl771-to-2013-06",
+   "last": "2013-06",
+   "last_value": 1.89,
+   "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.CL.771, present-day history gated at 2013-06",
+     "last": "2013-06",
+     "last_value": 1.89
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": ""
+  },
+  "CO": {
+   "chosen": "BIS WS_LONG_CPI M.CO.771, present-day history gated at 2013-06",
+   "ledger": "bis-wslongcpi-mco771-to-2013-06",
+   "last": "2013-06",
+   "last_value": 2.155,
+   "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.CO.771, present-day history gated at 2013-06",
+     "last": "2013-06",
+     "last_value": 2.155
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": ""
+  },
+  "TH": {
+   "chosen": "BIS WS_LONG_CPI M.TH.771, present-day history gated at 2013-06",
+   "ledger": "bis-wslongcpi-mth771-to-2013-06",
+   "last": "2013-06",
+   "last_value": 2.238,
+   "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.TH.771, present-day history gated at 2013-06",
+     "last": "2013-06",
+     "last_value": 2.238
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": ""
+  }
+ },
+ "growth_def": {
+  "US": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA USA)",
+  "XM": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, euro-area aggregate as published, database code EA18)",
+  "JP": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA JPN)",
+  "GB": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA GBR)",
+  "CA": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA CAN)",
+  "AU": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA AUS)",
+  "CH": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA CHE)",
+  "SE": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA SWE)",
+  "NO": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA NOR)",
+  "NZ": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA NZL)",
+  "CN": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA CHN)",
+  "IN": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA IND)",
+  "BR": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA BRA)",
+  "MX": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA MEX)",
+  "ZA": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA ZAF)",
+  "TR": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA TUR)",
+  "PL": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA POL)",
+  "HU": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA HUN)",
+  "CZ": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA CZE)",
+  "ID": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA IDN)",
+  "KR": "OECD composite leading indicator, amplitude adjusted, as published in the July 2013 edition (real-time database, LI_AA KOR)"
+ },
+ "policy": {
+  "US": {
+   "cc": "US",
+   "monthly_last": "2013-07",
+   "monthly_value": 0.125,
+   "current": 0.125,
+   "effective_since": "2008-12-16",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mus-to-2013-07"
+  },
+  "XM": {
+   "cc": "XM",
+   "monthly_last": "2013-07",
+   "monthly_value": 0.5,
+   "current": 0.5,
+   "effective_since": "2013-05-08",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mxm-to-2013-07"
+  },
+  "JP": {
+   "cc": "JP",
+   "monthly_last": "2013-07",
+   "monthly_value": 0.05,
+   "current": 0.05,
+   "effective_since": "2010-10-05",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mjp-to-2013-07"
+  },
+  "GB": {
+   "cc": "GB",
+   "monthly_last": "2013-07",
+   "monthly_value": 0.5,
+   "current": 0.5,
+   "effective_since": "2009-03-05",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mgb-to-2013-07"
+  },
+  "CA": {
+   "cc": "CA",
+   "monthly_last": "2013-07",
+   "monthly_value": 1.0,
+   "current": 1.0,
+   "effective_since": "2010-09-08",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mca-to-2013-07"
+  },
+  "AU": {
+   "cc": "AU",
+   "monthly_last": "2013-07",
+   "monthly_value": 2.75,
+   "current": 2.5,
+   "effective_since": "2013-08-07",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mau-to-2013-07"
+  },
+  "CH": {
+   "cc": "CH",
+   "monthly_last": "2013-07",
+   "monthly_value": 0.125,
+   "current": 0.125,
+   "effective_since": "2011-08-03",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mch-to-2013-07"
+  },
+  "SE": {
+   "cc": "SE",
+   "monthly_last": "2013-07",
+   "monthly_value": 1.0,
+   "current": 1.0,
+   "effective_since": "2012-12-19",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mse-to-2013-07"
+  },
+  "NO": {
+   "cc": "NO",
+   "monthly_last": "2013-07",
+   "monthly_value": 1.5,
+   "current": 1.5,
+   "effective_since": "2012-03-15",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mno-to-2013-07"
+  },
+  "NZ": {
+   "cc": "NZ",
+   "monthly_last": "2013-07",
+   "monthly_value": 2.5,
+   "current": 2.5,
+   "effective_since": "2011-03-10",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mnz-to-2013-07"
+  },
+  "CN": {
+   "cc": "CN",
+   "monthly_last": "2013-07",
+   "monthly_value": 6.0,
+   "current": 6.0,
+   "effective_since": "2012-07-06",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mcn-to-2013-07"
+  },
+  "IN": {
+   "cc": "IN",
+   "monthly_last": "2013-07",
+   "monthly_value": 7.25,
+   "current": 7.25,
+   "effective_since": "2013-05-03",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-min-to-2013-07"
+  },
+  "BR": {
+   "cc": "BR",
+   "monthly_last": "2013-07",
+   "monthly_value": 8.5,
+   "current": 8.5,
+   "effective_since": "2013-07-11",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mbr-to-2013-07"
+  },
+  "MX": {
+   "cc": "MX",
+   "monthly_last": "2013-07",
+   "monthly_value": 4.0,
+   "current": 4.0,
+   "effective_since": "2013-03-08",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mmx-to-2013-07"
+  },
+  "ZA": {
+   "cc": "ZA",
+   "monthly_last": "2013-07",
+   "monthly_value": 5.0,
+   "current": 5.0,
+   "effective_since": "2012-07-20",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mza-to-2013-07"
+  },
+  "TR": {
+   "cc": "TR",
+   "monthly_last": "2013-07",
+   "monthly_value": 4.5,
+   "current": 4.5,
+   "effective_since": "2013-05-17",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mtr-to-2013-07"
+  },
+  "PL": {
+   "cc": "PL",
+   "monthly_last": "2013-07",
+   "monthly_value": 2.5,
+   "current": 2.5,
+   "effective_since": "2013-07-04",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mpl-to-2013-07"
+  },
+  "HU": {
+   "cc": "HU",
+   "monthly_last": "2013-07",
+   "monthly_value": 4.0,
+   "current": 4.0,
+   "effective_since": "2013-07-24",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mhu-to-2013-07"
+  },
+  "CZ": {
+   "cc": "CZ",
+   "monthly_last": "2013-07",
+   "monthly_value": 0.05,
+   "current": 0.05,
+   "effective_since": "2012-11-02",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mcz-to-2013-07"
+  },
+  "ID": {
+   "cc": "ID",
+   "monthly_last": "2013-07",
+   "monthly_value": 6.5,
+   "current": 6.5,
+   "effective_since": "2013-07-11",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mid-to-2013-07"
+  },
+  "KR": {
+   "cc": "KR",
+   "monthly_last": "2013-07",
+   "monthly_value": 2.5,
+   "current": 2.5,
+   "effective_since": "2013-05-09",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mkr-to-2013-07"
+  },
+  "CL": {
+   "cc": "CL",
+   "monthly_last": "2013-07",
+   "monthly_value": 5.0,
+   "current": 5.0,
+   "effective_since": "2012-01-13",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mcl-to-2013-07"
+  },
+  "CO": {
+   "cc": "CO",
+   "monthly_last": "2013-07",
+   "monthly_value": 3.25,
+   "current": 3.25,
+   "effective_since": "2013-03-26",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mco-to-2013-07"
+  },
+  "TH": {
+   "cc": "TH",
+   "monthly_last": "2013-07",
+   "monthly_value": 2.5,
+   "current": 2.5,
+   "effective_since": "2013-05-28",
+   "archive_daily_end": "2013-08-24",
+   "source": "bis-wscbpol-mth-to-2013-07"
+  }
+ },
+ "announcements": [],
+ "extensions": [
+  {
+   "cc": "JP",
+   "month": "2013-05",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-06",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-07",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  }
+ ],
+ "notes": [
+  "cpi/CN: the July 2013 CPI edition stores a fixed-base index (y/y = 12-month ratio inside the vintage); the published y/y behind the one-full-month publication gate competes, and the published y/y (latest 2013-06) is used as the fresher series.",
+  "policy/IN: BIS monthly differs from the daily month-end in 2007-03; monthly rows retained.",
+  "policy/TR: the one-week repo rate became the policy rate on 2010-05-20 (the BIS series switches from the overnight borrowing rate, 6.50% \u2192 7.00%). The switch is not a rate change (CBRT Monetary Policy Committee decision No. 2010-16, 18 May 2010: overnight rates kept unchanged; as a 'technical rate adjustment', 'the one week repo rate, which becomes the new policy rate, is set at 7 percent\u201450 basis points above the overnight borrowing rates'): earlier history is spliced by +0.50pp so that policy changes are measured on the new instrument."
+ ],
+ "era": "realtime",
+ "decisions": [
+  {
+   "cc": "XM",
+   "effective": "2013-05-08",
+   "from": 0.75,
+   "to": 0.5
+  },
+  {
+   "cc": "AU",
+   "effective": "2013-05-08",
+   "from": 3.0,
+   "to": 2.75
+  },
+  {
+   "cc": "AU",
+   "effective": "2013-08-07",
+   "from": 2.75,
+   "to": 2.5
+  },
+  {
+   "cc": "IN",
+   "effective": "2013-03-19",
+   "from": 7.75,
+   "to": 7.5
+  },
+  {
+   "cc": "IN",
+   "effective": "2013-05-03",
+   "from": 7.5,
+   "to": 7.25
+  },
+  {
+   "cc": "BR",
+   "effective": "2013-04-18",
+   "from": 7.25,
+   "to": 7.5
+  },
+  {
+   "cc": "BR",
+   "effective": "2013-05-30",
+   "from": 7.5,
+   "to": 8.0
+  },
+  {
+   "cc": "BR",
+   "effective": "2013-07-11",
+   "from": 8.0,
+   "to": 8.5
+  },
+  {
+   "cc": "MX",
+   "effective": "2013-03-08",
+   "from": 4.5,
+   "to": 4.0
+  },
+  {
+   "cc": "TR",
+   "effective": "2013-04-17",
+   "from": 5.5,
+   "to": 5.0
+  },
+  {
+   "cc": "TR",
+   "effective": "2013-05-17",
+   "from": 5.0,
+   "to": 4.5
+  },
+  {
+   "cc": "PL",
+   "effective": "2013-03-07",
+   "from": 3.75,
+   "to": 3.25
+  },
+  {
+   "cc": "PL",
+   "effective": "2013-05-09",
+   "from": 3.25,
+   "to": 3.0
+  },
+  {
+   "cc": "PL",
+   "effective": "2013-06-06",
+   "from": 3.0,
+   "to": 2.75
+  },
+  {
+   "cc": "PL",
+   "effective": "2013-07-04",
+   "from": 2.75,
+   "to": 2.5
+  },
+  {
+   "cc": "HU",
+   "effective": "2013-02-27",
+   "from": 5.5,
+   "to": 5.25
+  },
+  {
+   "cc": "HU",
+   "effective": "2013-03-27",
+   "from": 5.25,
+   "to": 5.0
+  },
+  {
+   "cc": "HU",
+   "effective": "2013-04-24",
+   "from": 5.0,
+   "to": 4.75
+  },
+  {
+   "cc": "HU",
+   "effective": "2013-05-29",
+   "from": 4.75,
+   "to": 4.5
+  },
+  {
+   "cc": "HU",
+   "effective": "2013-06-26",
+   "from": 4.5,
+   "to": 4.25
+  },
+  {
+   "cc": "HU",
+   "effective": "2013-07-24",
+   "from": 4.25,
+   "to": 4.0
+  },
+  {
+   "cc": "ID",
+   "effective": "2013-06-13",
+   "from": 5.75,
+   "to": 6.0
+  },
+  {
+   "cc": "ID",
+   "effective": "2013-07-11",
+   "from": 6.0,
+   "to": 6.5
+  },
+  {
+   "cc": "KR",
+   "effective": "2013-05-09",
+   "from": 2.75,
+   "to": 2.5
+  },
+  {
+   "cc": "CO",
+   "effective": "2013-02-25",
+   "from": 4.0,
+   "to": 3.75
+  },
+  {
+   "cc": "CO",
+   "effective": "2013-03-26",
+   "from": 3.75,
+   "to": 3.25
+  },
+  {
+   "cc": "TH",
+   "effective": "2013-05-28",
+   "from": 2.75,
+   "to": 2.5
+  }
+ ],
+ "rt": {
+  "cli": {
+   "edition": "201307",
+   "label": "July 2013",
+   "public_by": "2013-07-31",
+   "basis": "edition month end (conservative rule)",
+   "content_check": null,
+   "evidence": [],
+   "ref": "2013-05"
+  },
+  "cpi": {
+   "edition": "201307",
+   "label": "July 2013",
+   "public_by": "2013-07-31",
+   "basis": "edition month end (conservative rule)"
+  }
+ }
+}

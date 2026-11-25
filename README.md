@@ -371,6 +371,44 @@ byte-identical live; 33,513 audit checks, 0 failed).
   is recorded for its wording; the UK remit of 20 Mar and Thailand's
   unchanged 2013 core target are not.
 
+### 2014 editions
+
+Biweekly grid continued: 2014-01-12, 01-26, 02-09, 02-23, 03-09, 03-23,
+04-06, 04-20, 05-04, 05-18, 06-01, 06-15, 06-29, 07-13, 07-27, 08-10, 08-24,
+09-07, 09-21, 10-05, 10-19, 11-02, 11-16, 11-30, 12-14, 12-28
+(`python scripts/retro_build.py --range 2014-01-12 2014-12-31 --every 14`),
+published to the site archive on 2026-11-25 (all 26 pages verified
+byte-identical live; 33,369 audit checks, 0 failed).
+
+- **CLI editions** January, February and April–December 2014 are registered
+  from dated public reports (Reuters via Business Standard / Yahoo / Lincoln
+  Daily News, The Irish Times, RTÉ, PTI, Capital Market), each page fetched
+  and content-checked against the vintage (OECD area, euro area or India).
+  The January check uses the euro-area figures (101.0 from 100.8), because the
+  OECD-area value (100.85) sits on a rounding boundary; the September check
+  uses Reuters' two-decimal figures (OECD area 100.49; every two-decimal value
+  quoted equals the vintage). The March 2014 release (January data) has no
+  retrievable dated report with figures, so it is *not* registered: the
+  2014-03-09 and 2014-03-23 editions keep the February release, and the March
+  edition enters on 2014-04-06 through the edition-month-end rule (its
+  database rows run one month past the release for the OECD and euro-area
+  aggregates, which is irrelevant once the month has ended). Earliest dated
+  reports: 13 Jan, 10 Feb, 9 Apr (release 8 Apr), 13 May, 10 Jun, 8 Jul,
+  11 Aug, 8 Sep, 8 Oct, 12 Nov, 8 Dec. No 2014 edition re-estimates the CLI
+  history (revisions to 2000–2011 values stay below 0.15 outside China's
+  routine component revisions), so no method note applies.
+- **Benchmarks** (`data/retro/benchmarks_2014.json`): current-year targets
+  Türkiye 5 (CBRT policy document of 25 Dec 2012: "as was the case for the
+  2013-2014 period"), Brazil 4.5 (CMN Res. 4,095), Colombia 3 ±1 (Board of
+  29 Nov 2013), Indonesia 4.5 ±1 (PMK 66/PMK.011/2012), Korea 2.5–3.5%
+  (midpoint 3); India 5.0 (the WPI end-of-fiscal-year figure of 3 May 2013)
+  → 8.0 from the RBI's Third Quarter Review of 28 Jan 2014, which adopted the
+  Patel Committee's CPI glide path ("an objective of below 8 per cent CPI
+  inflation" by January of the following year): the first CPI-based Indian
+  benchmark in the register; China ~3.5% re-set by the 5 Mar 2014 Government
+  Work Report (recorded for its wording). Value-unchanged reaffirmations and
+  targets set during 2014 for later years are not recorded.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

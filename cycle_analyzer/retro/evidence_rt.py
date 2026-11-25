@@ -41,6 +41,13 @@ def instrument(cc: str, ed: Edition) -> str:
     if cc == "TR" and ed.last_eligible_day >= date(2010, 5, 20):
         return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
                 "spliced from the overnight borrowing rate)")
+    if cc == "JP" and ed.last_eligible_day >= date(2013, 4, 4):
+        # BoJ, 'Introduction of the "Quantitative and Qualitative Monetary Easing"',
+        # 4 Apr 2013: "the main operating target for money market operations is changed
+        # from the uncollateralized overnight call rate to the monetary base"
+        return ("BIS series at the former uncollateralized overnight call-rate guideline "
+                "(0–0.1%); from 4 Apr 2013 the BoJ's main operating target is the monetary "
+                "base (QQE), so the level is a short-rate proxy, not a target")
     return POLICY_INSTRUMENT_RT.get(cc, "")
 
 

@@ -334,6 +334,43 @@ Biweekly grid continued: 2012-01-01, 01-15, 01-29, 02-12, 02-26, 03-11,
   (25 Jan), the BoJ's 1% "price stability goal" (14 Feb) and New Zealand's
   Policy Targets Agreement of 20 Sep 2012.
 
+### 2013 editions
+
+Biweekly grid continued: 2013-01-13, 01-27, 02-10, 02-24, 03-10, 03-24,
+04-07, 04-21, 05-05, 05-19, 06-02, 06-16, 06-30, 07-14, 07-28, 08-11, 08-25,
+09-08, 09-22, 10-06, 10-20, 11-03, 11-17, 12-01, 12-15, 12-29
+(`python scripts/retro_build.py --range 2013-01-13 2013-12-31 --every 14`),
+published to the site archive on 2026-11-25 (all 26 pages verified
+byte-identical live; 33,513 audit checks, 0 failed).
+
+- **CLI editions** January–December 2013 are all registered from dated
+  public reports (City A.M., Reuters via Fox Business / Business Standard /
+  Yahoo, RTTNews, RTÉ, IANS, The Irish Times, a dated blog, and the OECD's
+  own releases of 11 Feb and 8 Aug 2013), each page fetched and
+  content-checked against the vintage (OECD area, UK or Japan). The October
+  check uses The Irish Times' two-decimal figures (OECD area 100.59; all six
+  quoted values equal the vintage exactly), because the rounded "100.6 from
+  100.5" reports differ from the vintage's +0.04 monthly change. Release
+  days: 14 Jan, 11 Feb, 11 Mar, 10 Apr, 14 May, 10 Jun, 8 Jul (public by the
+  9 Jul report), 8 Aug, 9 Sep, 9 Oct, 12 Nov, 9 Dec. No 2013 edition
+  re-estimates the CLI history, so no method note applies.
+- **Japan's instrument.** The BoJ's QQE statement of 4 Apr 2013 made the
+  monetary base its main operating target; the BIS series stays at the
+  former 0–0.1% call-rate guideline (0.05%). From the 2013-04-07 edition the
+  evidence page labels it a short-rate proxy, not a target (no level or
+  decision changes).
+- **Benchmarks** (`data/retro/benchmarks_2013.json`): current-year targets
+  Türkiye 5 (set 21 Dec 2010, kept 25 Dec 2012), Brazil 4.5 (CMN Res. 3,991),
+  Colombia 3 ±1 (Board of 23 Nov 2012), Indonesia 4.5 ±1 (PMK
+  66/PMK.011/2012), Korea 2.5–3.5% (midpoint 3, MPC of 11 Oct 2012); Japan
+  1 → 2 from the BoJ's "price stability target" (22 Jan); China ~4% → ~3.5%
+  from the 5 Mar 2013 Government Work Report; India's end-of-fiscal-year WPI
+  figure 7.5 → 6.8 (29 Jan) → 5.0 (3 May: "a level of 5.0 per cent by March"
+  of the following year; later 2013 reviews give no numeric end-March
+  figure). The RBA's new Statement on the Conduct of Monetary Policy (24 Oct)
+  is recorded for its wording; the UK remit of 20 Mar and Thailand's
+  unchanged 2013 core target are not.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

@@ -9,9 +9,9 @@
    "sha256": "a48e69dc51a85bfc2c62d8d6aaa99987b6b951d12e9c8fbed84b2d5c247e50ec",
    "nbytes": 957463,
    "retrieved_at": "2026-11-25T13:53:32Z",
-   "available_by": "2013-01-31 (edition month end (conservative rule))",
+   "available_by": "2013-01-14 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, January 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, January 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-02-08": {
@@ -2183,10 +2183,40 @@
   "cli": {
    "edition": "201301",
    "label": "January 2013",
-   "public_by": "2013-01-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-01-14",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201301",
+    "area": "GBR",
+    "month": "2012-11",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.7,
+      "edition": 100.67,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.2,
+      "edition": 0.2,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "City A.M., 'OECD: UK economy not on its way into triple-dip recession', 14 Jan 2013 (19:36): the UK's composite leading indicator edged up to 100.7 in November from 100.5 in October",
+     "url": "https://www.cityam.com/oecd-uk-economy-not-its-way-triple-dip-recession/",
+     "date": "2013-01-14"
+    },
+    {
+     "label": "Business Today (PTI), 'Indian economy poised for turnaround: OECD', 14 Jan 2013 (23:38 IST): India's CLI inched up to 97.9 in November compared to 97.8 in October; China's rose to 99.7 in November as against 99.5 in October",
+     "url": "https://www.businesstoday.in/latest/economy-politics/story/indian-economy-poised-for-turnaround-oecd-39094-2013-01-14",
+     "date": "2013-01-14"
+    }
+   ],
    "ref": "2012-11"
   },
   "cpi": {

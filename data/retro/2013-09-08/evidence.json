@@ -9,9 +9,9 @@
    "sha256": "a652c2b62f116bd1498ea96e7d9efc3faf75471d54e8e2775c7a85f116e80fc7",
    "nbytes": 975958,
    "retrieved_at": "2026-11-25T14:01:31Z",
-   "available_by": "2013-08-31 (edition month end (conservative rule))",
+   "available_by": "2013-08-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, August 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, August 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-09-06": {
@@ -2228,10 +2228,40 @@
   "cli": {
    "edition": "201308",
    "label": "August 2013",
-   "public_by": "2013-08-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-08-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201308",
+    "area": "OECD",
+    "month": "2013-06",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.7,
+      "edition": 100.71,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.1,
+      "edition": 0.12,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "OECD news release 'Composite leading indicators continue to point to diverging growth patterns across major economies', Paris, 8 August 2013 (copy hosted by Naftemporiki), Table 1: OECD Area 100.2 100.4 100.5 100.6 100.7 (February\u2013June 2013)",
+     "url": "https://services.naftemporiki.gr/cmsutils/downloadpdf.aspx?id=684651",
+     "date": "2013-08-08"
+    },
+    {
+     "label": "PTI via Business Standard, 'Indian economy sees positive momentum: OECD', 8 Aug 2013 (17:25 IST): India's CLI inched up to 97.9 in June from 97.7 in May; China's slipped to 99.4 in June from 99.6",
+     "url": "https://www.business-standard.com/amp/article/pti-stories/indian-economy-sees-positive-momentum-oecd-113080800905_1.html",
+     "date": "2013-08-08"
+    }
+   ],
    "ref": "2013-06"
   },
   "cpi": {

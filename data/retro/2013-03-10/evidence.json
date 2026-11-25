@@ -9,9 +9,9 @@
    "sha256": "f6be26600d1893aba92cf5845e0fa44332b0db63e7dc0672c1aa4e78d77ef382",
    "nbytes": 959859,
    "retrieved_at": "2026-11-25T13:57:08Z",
-   "available_by": "2013-02-28 (edition month end (conservative rule))",
+   "available_by": "2013-02-11 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-03-08": {
@@ -2189,10 +2189,40 @@
   "cli": {
    "edition": "201302",
    "label": "February 2013",
-   "public_by": "2013-02-28",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-02-11",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201302",
+    "area": "OECD",
+    "month": "2012-12",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.4,
+      "edition": 100.36,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.1,
+      "edition": 0.11,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Reuters via Fox Business, 'OECD: Economic Outlook Shows Improvement', 11 Feb 2013 (07:09 EST): the CLI for the 33 OECD member states rose to 100.4 in December from 100.3 the previous month; the United States climbed to 101.0 from 100.9, Britain to 100.7 from 100.6",
+     "url": "https://www.foxbusiness.com/markets/oecd-economic-outlook-shows-improvement",
+     "date": "2013-02-11"
+    },
+    {
+     "label": "OECD news release 'Composite leading indicators', Paris, 11 February 2013 (copy hosted by Naftemporiki), Table 1: OECD Area 100.1 100.1 100.2 100.3 100.4 (August\u2013December 2012)",
+     "url": "https://services.naftemporiki.gr/cmsutils/downloadpdf.aspx?id=609867",
+     "date": "2013-02-11"
+    }
+   ],
    "ref": "2012-12"
   },
   "cpi": {

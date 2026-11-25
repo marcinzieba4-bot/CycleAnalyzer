@@ -9,9 +9,9 @@
    "sha256": "6d14a90227bf9aa21e386186f53140351f37eaf7b3a4a544fc9d915906f4d826",
    "nbytes": 978257,
    "retrieved_at": "2026-11-25T13:52:57Z",
-   "available_by": "2013-09-30 (edition month end (conservative rule))",
+   "available_by": "2013-09-09 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, September 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, September 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-10-04": {
@@ -2222,10 +2222,35 @@
   "cli": {
    "edition": "201309",
    "label": "September 2013",
-   "public_by": "2013-09-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-09-09",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201309",
+    "area": "OECD",
+    "month": "2013-07",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.7,
+      "edition": 100.66,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.1,
+      "edition": 0.08,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Reuters via Business Standard, 'OECD leading growth indicator improves for developed world', 9 Sep 2013 (15:49 IST): the indicator rose to 100.7 in July from 100.6 in June; the United States rose to 101.1 from 101.0; the euro area to 100.5 from 100.3",
+     "url": "https://www.business-standard.com/amp/article/reuters/oecd-leading-growth-indicator-improves-for-developed-world-113090900434_1.html",
+     "date": "2013-09-09"
+    }
+   ],
    "ref": "2013-07"
   },
   "cpi": {

@@ -9,9 +9,9 @@
    "sha256": "a8b138ef28a1d21b1dc0c0ad15fee7b1850c6a8e8cd20e29d76c2c146437ed14",
    "nbytes": 980335,
    "retrieved_at": "2026-11-25T13:57:01Z",
-   "available_by": "2013-10-31 (edition month end (conservative rule))",
+   "available_by": "2013-10-09 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, October 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, October 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-11-01": {
@@ -2240,10 +2240,29 @@
   "cli": {
    "edition": "201310",
    "label": "October 2013",
-   "public_by": "2013-10-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-10-09",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201310",
+    "area": "OECD",
+    "month": "2013-08",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.59,
+      "edition": 100.59,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "The Irish Times, 'Momentum of economic growth gaining pace, OECD says', 9 Oct 2013 (12:11): Ireland's indicator rose from 100.46 in September 2012 to 101.94 in August; the euro area's from 99.13 to 100.6 and the OECD area's from 99.74 to 100.59 over the same period (all six figures equal this edition's values to two decimals)",
+     "url": "https://www.irishtimes.com/business/economy/momentum-of-economic-growth-gaining-pace-oecd-says-1.1555036",
+     "date": "2013-10-09"
+    }
+   ],
    "ref": "2013-08"
   },
   "cpi": {

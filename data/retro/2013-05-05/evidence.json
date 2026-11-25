@@ -9,9 +9,9 @@
    "sha256": "0fa007b823a4c036ff9b38b104185ac587337b258fb65d4841cb89ad3afb3e9a",
    "nbytes": 966717,
    "retrieved_at": "2026-11-25T13:56:52Z",
-   "available_by": "2013-04-30 (edition month end (conservative rule))",
+   "available_by": "2013-04-10 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, April 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, April 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-05-03": {
@@ -2190,10 +2190,40 @@
   "cli": {
    "edition": "201304",
    "label": "April 2013",
-   "public_by": "2013-04-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-04-10",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201304",
+    "area": "OECD",
+    "month": "2013-02",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.5,
+      "edition": 100.5,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.1,
+      "edition": 0.13,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Reuters via Fox Business, 'OECD: Growth Picking Up in Most Major Economies', 10 Apr 2013 (06:12 EDT): the monthly indicator for the 33 OECD member countries inched up to 100.5 in February from 100.4 in January; the euro area's is now at 99.9 from 99.7 in January",
+     "url": "https://www.foxbusiness.com/politics/oecd-growth-picking-up-in-most-major-economies",
+     "date": "2013-04-10"
+    },
+    {
+     "label": "RT\u00c9, 'Growth picking up in most major economies, says OECD', 10 Apr 2013: the indicator rose to 100.5 in February from 100.4 in January",
+     "url": "https://www.rte.ie/news/business/2013/0410/380679-growth-picking-up-in-most-major-economies-oecd/",
+     "date": "2013-04-10"
+    }
+   ],
    "ref": "2013-02"
   },
   "cpi": {

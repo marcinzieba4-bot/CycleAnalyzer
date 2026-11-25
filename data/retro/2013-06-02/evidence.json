@@ -9,9 +9,9 @@
    "sha256": "ffff363adc7ff0be2b92c529716126e48063d6700556916c62bb3da06db5d4fd",
    "nbytes": 969245,
    "retrieved_at": "2026-11-25T14:02:47Z",
-   "available_by": "2013-05-31 (edition month end (conservative rule))",
+   "available_by": "2013-05-14 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, May 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, May 2013 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2013-05-31": {
@@ -2216,10 +2216,35 @@
   "cli": {
    "edition": "201305",
    "label": "May 2013",
-   "public_by": "2013-05-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2013-05-14",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201305",
+    "area": "OECD",
+    "month": "2013-03",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.5,
+      "edition": 100.55,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.1,
+      "edition": 0.1,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "RTTNews, 'OECD Leading Index Points To Pick Up In Economic Growth', 14 May 2013 (08:31 ET): the composite leading index for the OECD area rose 0.1 percent month-on-month to 100.5 in March",
+     "url": "https://www.rttnews.com/2117179/oecd-leading-index-points-to-pick-up-in-economic-growth.aspx",
+     "date": "2013-05-14"
+    }
+   ],
    "ref": "2013-03"
   },
   "cpi": {

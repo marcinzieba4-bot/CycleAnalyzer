@@ -36,6 +36,11 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2015, 12, 17):
+        # FOMC statement of 16 Dec 2015: "the Committee decided to raise the target
+        # range for the federal funds rate to 1/4 to 1/2 percent"; effective 17 Dec
+        return ("Federal funds target range midpoint (0.25–0.50% range from 17 Dec 2015, "
+                "after 0–0.25% from 16 Dec 2008)")
     if cc == "US" and ed.last_eligible_day >= date(2008, 12, 16):
         return "Federal funds target range midpoint (0–0.25% range from 16 Dec 2008)"
     if cc == "TR" and ed.last_eligible_day >= date(2010, 5, 20):

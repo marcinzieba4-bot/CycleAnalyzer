@@ -52,6 +52,17 @@ EDITIONS_FILE = OUT_ROOT / "oecd_rt_editions.json"
 NO_RT = ["CL", "CO", "TH"]                 # not in the 2008 revisions-database editions
 RT_AREA = {cc: ("EA18" if cc == "XM" else c.iso3) for cc, c in COUNTRIES.items()
            if cc not in NO_RT}
+# The database files the euro-area aggregate under EA18 in every edition through
+# January 2015; from the February 2015 edition (after Lithuania joined on
+# 1 January 2015) only EA19 is carried. The aggregate is used as published.
+EA19_FROM = "201502"
+
+
+def rt_areas(edition: str) -> dict[str, str]:
+    """Database area code per economy for one real-time edition."""
+    if edition >= EA19_FROM:
+        return {**RT_AREA, "XM": "EA19"}
+    return RT_AREA
 # China's CP is stored as "same month of the previous year = 100" in the
 # editions through the one given; later editions (from 200911, the first to
 # carry China again) hold a fixed-base index: e.g. 2009-07 111.08 against
@@ -160,7 +171,8 @@ def _withheld_fallback(ed: Edition, cli_ed: str, area: str, depth: int = 3):
         if el is None:
             continue
         b, entry = oecd_rt("LI_AA", e, el[0], el[1])
-        rows = parse_rt(b).get((area, "M"), [])
+        a = rt_areas(e)["XM"] if area in ("EA18", "EA19") else area
+        rows = parse_rt(b).get((a, "M"), [])
         rm = register().get(e, {}).get("cli_ref_month")
         if rm and el[1] != "edition month end (conservative rule)":
             rows = [(t, v) for t, v in rows if pd.Period(t, freq="M") <= pd.Period(rm, freq="M")]
@@ -190,7 +202,7 @@ def oecd_rt(measure: str, edition: str, public_by: str, basis: str) -> tuple[byt
     if measure == "LI_AA":       # an edition whose content check uses another area
         chk = register().get(edition, {}).get("content_check") or {}
         extra = {chk["area"]} if chk.get("area") else set()
-    areas = "+".join(sorted(set(RT_AREA.values()) | {"OECD"} | extra))
+    areas = "+".join(sorted(set(rt_areas(edition).values()) | {"OECD"} | extra))
     url = f"{OECD_RT}/{areas}..{measure}...{edition}?format=csvfile"
     b, sha, got = S.cached_get(url)
     what = ("composite leading indicator, amplitude adjusted (LI_AA)" if measure == "LI_AA"
@@ -264,7 +276,7 @@ def _yoy_quarterly(rows: list[tuple[str, float]]) -> pd.Series:
 
 def _rt_cpi(cc: str, cp: dict, edition: str) -> tuple[pd.Series, str]:
     """CPI y/y for one economy from one real-time CP edition (empty if absent)."""
-    area = RT_AREA[cc]
+    area = rt_areas(edition)[cc]
     if cc in QUARTERLY_CPI:
         return (_yoy_quarterly(cp.get((area, "Q"), [])),
                 f"OECD real-time CPI index {area} (quarterly), {edition_label(edition)} "
@@ -358,7 +370,12 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     # comes from the newest earlier edition that was itself eligible.
     withheld = (register().get(cli_ed, {}).get("withheld", {})
                 if _month_end(cli_ed) > led else {})
-    for cc, area in RT_AREA.items():
+    if cli_ed >= EA19_FROM:
+        ev.notes.append(
+            f"cli/XM, cpi/XM: from the {edition_label(EA19_FROM)} edition the real-time database "
+            "carries the euro-area aggregate as EA19 (Lithuania joined the euro area on "
+            "1 January 2015) instead of EA18; the aggregate is used as published.")
+    for cc, area in rt_areas(cli_ed).items():
         src_ed = cli_ed
         if area in withheld:
             src_ed, rows, e_prev = _withheld_fallback(ed, cli_ed, area)

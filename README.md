@@ -466,7 +466,8 @@ Biweekly grid continued: 2016-01-10, 01-24, 02-07, 02-21, 03-06, 03-20,
 04-03, 04-17, 05-01, 05-15, 05-29, 06-12, 06-26, 07-10, 07-24, 08-07, 08-21,
 09-04, 09-18, 10-02, 10-16, 10-30, 11-13, 11-27, 12-11, 12-25
 (`python scripts/retro_build.py --range 2016-01-10 2016-12-31 --every 14`),
-PUBLISHED_LINE
+published to the site archive on 2026-11-26 (all 26 pages verified
+byte-identical live; 33,290 audit checks, 0 failed).
 
 - **CLI editions** January–June and October–December 2016 are registered
   from dated public reports (PTI and Reuters via Business Standard, RTTNews,

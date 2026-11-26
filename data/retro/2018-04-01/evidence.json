@@ -9,9 +9,9 @@
    "sha256": "9bdbd309213dbb38b60da7e5aab78190bae9eb35bee02aa2c3a40321a1f334f3",
    "nbytes": 1102818,
    "retrieved_at": "2026-11-26T12:22:53Z",
-   "available_by": "2018-03-31 (edition month end (conservative rule))",
+   "available_by": "2018-03-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, March 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, March 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2018-03-30": {
@@ -195,7 +195,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.AU?format=csv&startPeriod=1994-01&endPeriod=2018-02",
    "sha256": "d5872b8526649da592e3d7f41ea54d6760780870eb894a0a8284842fa6581168",
    "nbytes": 22014,
-   "retrieved_at": "2026-11-26T12:35:12Z",
+   "retrieved_at": "2026-11-26T12:35:13Z",
    "available_by": "reference months through 2018-02 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.AU: present-day BIS history requested with endPeriod=2018-02, so the retained bytes stop at 2018-02. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -250,7 +250,7 @@
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01SEM156N&coed=2018-03-01",
    "sha256": "cc59d549cb43417ef2e3e402e5b7493009dca54b9110e76f4ebe0a58d5421e12",
    "nbytes": 8008,
-   "retrieved_at": "2026-11-26T12:35:15Z",
+   "retrieved_at": "2026-11-26T12:35:16Z",
    "available_by": "reference months through 2018-03 (completed months)",
    "kind": "present-day-gated",
    "note": "10-year government bond yield (IRLTLT01SEM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2018-03-01, so the retained bytes stop at 2018-03. A completed month's average market yield was observable when the month ended.",
@@ -2405,10 +2405,35 @@
   "cli": {
    "edition": "201803",
    "label": "March 2018",
-   "public_by": "2018-03-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2018-03-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201803",
+    "area": "OECD",
+    "month": "2018-01",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.1,
+      "edition": 100.11,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.0,
+      "edition": -0.03,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash headlines, in Turkish), 8 Mar 2018 (14:07 TRT): OECD-area leading indicator for January 100.1 (previous 100.1); euro area 100.6 (100.6); US 99.9 (99.9); T\u00fcrkiye 101.4 (101.5)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-bolgesinde-ocakta-oncu-ekonomik-gostergeler-endeksi-100-1-onceki-100-1/1058349/",
+     "date": "2018-03-08"
+    }
+   ],
    "ref": "2018-01"
   },
   "cpi": {

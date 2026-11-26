@@ -9,9 +9,9 @@
    "sha256": "ec3aac209abdb106465d7892a726d7d124b740f9f7cff463f6eabac5df5e23af",
    "nbytes": 1100356,
    "retrieved_at": "2026-11-26T12:22:50Z",
-   "available_by": "2018-02-28 (edition month end (conservative rule))",
+   "available_by": "2018-02-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2018-03-02": {
@@ -2405,10 +2405,46 @@
   "cli": {
    "edition": "201802",
    "label": "February 2018",
-   "public_by": "2018-02-28",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2018-02-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201802",
+    "area": "OECD",
+    "month": "2017-12",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.2,
+      "edition": 100.16,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.0,
+      "edition": 0.0,
+      "ok": true
+     },
+     {
+      "what": "yoy",
+      "reported": 0.34,
+      "edition": 0.34,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (Dow Jones News, in German), 8 Feb 2018 (12:30 CET; wire time 11:00 GMT): for December the leading indicator for the whole OECD area held at 100.2; euro area 100.6, Germany 101.0, US 99.8, Japan 100.2",
+     "url": "https://www.finanznachrichten.de/nachrichten-2018-02/42959696-oecd-indikator-signalisiert-stabiles-wachstum-015.htm",
+     "date": "2018-02-08"
+    },
+    {
+     "label": "Uzmanpara (Foreks, in Turkish), 8 Feb 2018 (14:00 TRT): OECD area unchanged on the month, +0.34% on the year, at 100.2 (the text names November; its table and flashes give December); T\u00fcrkiye \u22120.10% and +2.04%, 101.5 from 101.6",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-bolgesinde-oncu-gostergeler-degismedi/1036518/",
+     "date": "2018-02-08"
+    }
+   ],
    "ref": "2017-12"
   },
   "cpi": {

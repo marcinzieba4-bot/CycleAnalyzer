@@ -9,9 +9,9 @@
    "sha256": "653b287b7732068037443f910abd4b9a788c18aa0a786502c59b6546ce29579a",
    "nbytes": 1107792,
    "retrieved_at": "2026-11-26T12:22:56Z",
-   "available_by": "2018-04-30 (edition month end (conservative rule))",
+   "available_by": "2018-04-10 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, April 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, April 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2018-05-11": {
@@ -206,7 +206,7 @@
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01AUM156N&coed=2018-04-01",
    "sha256": "2f7993ae7a631b8c94abf5e85656cfc6b2c04d1c222161779852c23c2430a967",
    "nbytes": 16621,
-   "retrieved_at": "2026-11-26T12:37:24Z",
+   "retrieved_at": "2026-11-26T12:37:25Z",
    "available_by": "reference months through 2018-04 (completed months)",
    "kind": "present-day-gated",
    "note": "10-year government bond yield (IRLTLT01AUM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2018-04-01, so the retained bytes stop at 2018-04. A completed month's average market yield was observable when the month ended.",
@@ -2387,10 +2387,46 @@
   "cli": {
    "edition": "201804",
    "label": "April 2018",
-   "public_by": "2018-04-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2018-04-10",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201804",
+    "area": "OECD",
+    "month": "2018-02",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.1,
+      "edition": 100.12,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.02,
+      "edition": -0.02,
+      "ok": true
+     },
+     {
+      "what": "yoy",
+      "reported": 0.22,
+      "edition": 0.22,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (dpa-AFX, in German), 10 Apr 2018 (12:05 CEST): the OECD's leading indicator CLI held at 100.1; table (February, previous month): OECD 100.1, 100.1; euro area 100.4, 100.5; Germany 100.7, 100.8; US 100.1, 100.0; Japan 100.0, 100.1",
+     "url": "https://www.finanznachrichten.de/nachrichten-2018-04/43485085-oecd-sieht-schwaecheres-wachstum-im-euroraum-016.htm",
+     "date": "2018-04-10"
+    },
+    {
+     "label": "Uzmanpara (Foreks, in Turkish), 10 Apr 2018 (13:00 TRT): OECD area February \u22120.02% on the month, +0.22% on the year, at 100.1; T\u00fcrkiye \u22120.05% and +2.45%, at 101.2",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-bolgesinde-oncu-gostergeler-degismedi/1080355/",
+     "date": "2018-04-10"
+    }
+   ],
    "ref": "2018-02"
   },
   "cpi": {
@@ -2434,6 +2470,13 @@
     "text": "the MPC raised the late liquidity window lending rate from 12.25% to 12.75%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
     "label": "CBRT MPC decision, 14 Dec 2017",
     "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-46"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-04-25",
+    "text": "the MPC raised the late liquidity window lending rate from 12.75% to 13.5%, keeping the one-week repo rate at 8% and the overnight lending (marginal funding) rate at 9.25%",
+    "label": "CBRT MPC decision, 25 Apr 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-10"
    }
   ]
  }

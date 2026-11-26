@@ -128,7 +128,7 @@ DAILY_BRIDGE = {
 # worth of data" - Simon Ward, Money Moves Markets, 8 Sep 2016. That source is
 # dated after the affected editions, so it is cited here, not on their pages.)
 NO_CLI_EDITIONS = {"201607", "201608"}
-ERA_LAST_DAY = date(2017, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2018, 12, 31)          # editions on or before use this builder
 # Operational policy facts that the BIS series does not show (e.g. Turkiye in 2017: the
 # CBRT kept the one-week repo rate at 8% but funded the market at the late liquidity
 # window rate). Disclosed on the page with their sources, never model inputs; an item is

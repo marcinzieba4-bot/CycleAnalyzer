@@ -9,9 +9,9 @@
    "sha256": "b706fa964cbb4b0b50a1e3ff93538e519323d0a5ad0f62755ebd48dbbfc869f9",
    "nbytes": 1114666,
    "retrieved_at": "2026-11-26T12:23:05Z",
-   "available_by": "2018-07-31 (edition month end (conservative rule))",
+   "available_by": "2018-07-09 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, July 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, July 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2018-08-03": {
@@ -85,7 +85,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.US?format=csv&startPeriod=1994-01&endPeriod=2018-06",
    "sha256": "2a0749a7cc106adf329795e0e82da178c27e87770cdc2d84fbd8e2fcf2c62025",
    "nbytes": 23361,
-   "retrieved_at": "2026-11-26T12:39:48Z",
+   "retrieved_at": "2026-11-26T12:39:49Z",
    "available_by": "reference months through 2018-06 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.US: present-day BIS history requested with endPeriod=2018-06, so the retained bytes stop at 2018-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -360,7 +360,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.ZA?format=csv&startPeriod=1994-01&endPeriod=2018-06",
    "sha256": "a6dd3ef7db494f72700a6daedb3088f5e793fde592183f6fe153e446ce6526f8",
    "nbytes": 23304,
-   "retrieved_at": "2026-11-26T12:40:03Z",
+   "retrieved_at": "2026-11-26T12:40:04Z",
    "available_by": "reference months through 2018-06 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.ZA: present-day BIS history requested with endPeriod=2018-06, so the retained bytes stop at 2018-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -492,7 +492,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CL?format=csv&startPeriod=1994-01&endPeriod=2018-06",
    "sha256": "9eb6bd8fe9a479ab71ec6b3c988236415628b6de75b2b69b21b931a4f3f5d7ac",
    "nbytes": 21273,
-   "retrieved_at": "2026-11-26T12:40:11Z",
+   "retrieved_at": "2026-11-26T12:40:12Z",
    "available_by": "reference months through 2018-06 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.CL: present-day BIS history requested with endPeriod=2018-06, so the retained bytes stop at 2018-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -525,7 +525,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.TH?format=csv&startPeriod=1994-01&endPeriod=2018-06",
    "sha256": "4caab9dc281daf09da5bab033d8bbe61fd4620a4836c5d339442cc5c0af83dac",
    "nbytes": 21884,
-   "retrieved_at": "2026-11-26T12:40:13Z",
+   "retrieved_at": "2026-11-26T12:40:14Z",
    "available_by": "reference months through 2018-06 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.TH: present-day BIS history requested with endPeriod=2018-06, so the retained bytes stop at 2018-06. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -2424,10 +2424,46 @@
   "cli": {
    "edition": "201807",
    "label": "July 2018",
-   "public_by": "2018-07-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2018-07-09",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201807",
+    "area": "OECD",
+    "month": "2018-05",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.9,
+      "edition": 99.87,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.08,
+      "edition": -0.08,
+      "ok": true
+     },
+     {
+      "what": "yoy",
+      "reported": -0.17,
+      "edition": -0.18,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanzen.net (Dow Jones Newswires, in German), 9 Jul 2018 (11:59 CEST; wire time 10:00 GMT): the leading indicator for all OECD members fell to 99.9 (April: 100.0) in May; euro area 99.9 (100.1), UK 99.1 (99.2), Germany 100.2 (100.3), Japan 100.0 (100.0), US 100.2 (100.2), China 99.6 (99.3), India 101.4 (101.2)",
+     "url": "https://www.finanzen.net/nachricht/aktien/oecd-sieht-sinkendes-wachstumsmomentum-im-euroraum-6365566",
+     "date": "2018-07-09"
+    },
+    {
+     "label": "Uzmanpara (Milliyet, in Turkish), 9 Jul 2018 (13:15 TRT): OECD area May \u22120.08% on the month, \u22120.17% on the year, at 99.9; T\u00fcrkiye \u22120.65% and \u22121.99%, 98.7 from 99.4",
+     "url": "https://uzmanpara.milliyet.com.tr/haber-detay/gundem2/oecd-bolgesinde-oncu-gostergeler-geriledi/84000/84350/",
+     "date": "2018-07-09"
+    }
+   ],
    "ref": "2018-05"
   },
   "cpi": {
@@ -2471,6 +2507,27 @@
     "text": "the MPC raised the late liquidity window lending rate from 12.25% to 12.75%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
     "label": "CBRT MPC decision, 14 Dec 2017",
     "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-46"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-04-25",
+    "text": "the MPC raised the late liquidity window lending rate from 12.75% to 13.5%, keeping the one-week repo rate at 8% and the overnight lending (marginal funding) rate at 9.25%",
+    "label": "CBRT MPC decision, 25 Apr 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-10"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-05-23",
+    "text": "the MPC raised the late liquidity window lending rate from 13.5% to 16.5% ('a strong monetary tightening'), keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
+    "label": "CBRT MPC decision, 23 May 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-18"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-05-28",
+    "text": "the CBRT completed the simplification of its operational framework: from 1 Jun 2018 'one-week repo rate will be the policy rate of the Central Bank. This rate will be equal to the current funding rate (16.50%)', with the overnight borrowing and lending rates 150 basis points below/above it. The BIS series' move from 8% to 16.5% on 1 Jun 2018 therefore ends the late-liquidity-window funding regime (the marginal funding rate was already 16.5% from 23 May); it is not a further tightening on that day",
+    "label": "CBRT press release on the operational framework, 28 May 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-21"
    }
   ]
  }

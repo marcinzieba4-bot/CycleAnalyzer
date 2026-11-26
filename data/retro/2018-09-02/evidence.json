@@ -9,9 +9,9 @@
    "sha256": "d385df708ef83ac5bb3aa51355f922ff1000c87641e0a6894b2d4887998b72b5",
    "nbytes": 1117034,
    "retrieved_at": "2026-11-26T12:23:08Z",
-   "available_by": "2018-08-31 (edition month end (conservative rule))",
+   "available_by": "2018-08-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, August 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, August 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2018-08-31": {
@@ -536,7 +536,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.US?format=csv&startPeriod=1985-01&endPeriod=2018-08",
    "sha256": "9b7f90261737b6136ce27a057e9a03a7c6bf22ecedc89f794ec0133e6c611c9b",
    "nbytes": 105495,
-   "retrieved_at": "2026-11-26T12:42:40Z",
+   "retrieved_at": "2026-11-26T12:42:41Z",
    "available_by": "reference months through 2018-08 (completed months)",
    "kind": "present-day-gated",
    "note": "BIS central bank policy rate M.US (end of period): present-day BIS history requested with endPeriod=2018-08, so the retained bytes stop at 2018-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -580,7 +580,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.JP?format=csv&startPeriod=1985-01&endPeriod=2018-08",
    "sha256": "e60f7e54a65489874b41da34110333c0d46c590302714f360d68e18dbfc895e8",
    "nbytes": 721358,
-   "retrieved_at": "2026-11-26T12:42:45Z",
+   "retrieved_at": "2026-11-26T12:42:47Z",
    "available_by": "reference months through 2018-08 (completed months)",
    "kind": "present-day-gated",
    "note": "BIS central bank policy rate M.JP (end of period): present-day BIS history requested with endPeriod=2018-08, so the retained bytes stop at 2018-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -2406,10 +2406,51 @@
   "cli": {
    "edition": "201808",
    "label": "August 2018",
-   "public_by": "2018-08-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2018-08-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201808",
+    "area": "OECD",
+    "month": "2018-06",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.8,
+      "edition": 99.78,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.09,
+      "edition": -0.08,
+      "ok": true
+     },
+     {
+      "what": "yoy",
+      "reported": -0.33,
+      "edition": -0.33,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanzen.net (Dow Jones Newswires, in German), 8 Aug 2018 (11:59 CEST): the leading indicator for the whole OECD area falls 0.1 to 99.8 for June; euro area down 0.1 to 99.9, Germany down 0.1 to 100.1, US stable at 100.0, Japan down 0.1 to 99.8",
+     "url": "https://www.finanzen.net/nachricht/aktien/oecd-fruehindikator-signalisiert-wachstumsabschwaechung-6477838",
+     "date": "2018-08-08"
+    },
+    {
+     "label": "Uzmanpara (Milliyet, in Turkish), 8 Aug 2018 (13:06 TRT): OECD area June \u22120.09% on the month, \u22120.33% on the year, at 99.8; T\u00fcrkiye \u22120.46% and \u22123.07%, 98.4 from 98.8",
+     "url": "https://uzmanpara.milliyet.com.tr/haber-detay/gundem2/oecd-bolgesinde-oncu-gostergeler-geriledi/85000/85327/",
+     "date": "2018-08-08"
+    },
+    {
+     "label": "ECO (Lusa, in Portuguese), 8 Aug 2018: OECD 99.8 in June, one tenth below May; euro area and G7 99.9; Brazil 103.3, Russia 100.4, China 99.8, India 101.4",
+     "url": "https://eco.sapo.pt/2018/08/08/detetados-sinais-de-desaceleracao-do-crescimento-na-ocde-e-na-zona-euro/",
+     "date": "2018-08-08"
+    }
+   ],
    "ref": "2018-06"
   },
   "cpi": {
@@ -2453,6 +2494,27 @@
     "text": "the MPC raised the late liquidity window lending rate from 12.25% to 12.75%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
     "label": "CBRT MPC decision, 14 Dec 2017",
     "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-46"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-04-25",
+    "text": "the MPC raised the late liquidity window lending rate from 12.75% to 13.5%, keeping the one-week repo rate at 8% and the overnight lending (marginal funding) rate at 9.25%",
+    "label": "CBRT MPC decision, 25 Apr 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-10"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-05-23",
+    "text": "the MPC raised the late liquidity window lending rate from 13.5% to 16.5% ('a strong monetary tightening'), keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
+    "label": "CBRT MPC decision, 23 May 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-18"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-05-28",
+    "text": "the CBRT completed the simplification of its operational framework: from 1 Jun 2018 'one-week repo rate will be the policy rate of the Central Bank. This rate will be equal to the current funding rate (16.50%)', with the overnight borrowing and lending rates 150 basis points below/above it. The BIS series' move from 8% to 16.5% on 1 Jun 2018 therefore ends the late-liquidity-window funding regime (the marginal funding rate was already 16.5% from 23 May); it is not a further tightening on that day",
+    "label": "CBRT press release on the operational framework, 28 May 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-21"
    }
   ]
  }

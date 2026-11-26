@@ -9,9 +9,9 @@
    "sha256": "2073544bf44e395c418833886ce1811bee3780d119c21d35dadb5f3574fb56c6",
    "nbytes": 1123870,
    "retrieved_at": "2026-11-26T12:23:17Z",
-   "available_by": "2018-11-30 (edition month end (conservative rule))",
+   "available_by": "2018-11-12 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, November 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, November 2018 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2018-12-07": {
@@ -2432,10 +2432,35 @@
   "cli": {
    "edition": "201811",
    "label": "November 2018",
-   "public_by": "2018-11-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2018-11-12",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201811",
+    "area": "OECD",
+    "month": "2018-09",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.5,
+      "edition": 99.5,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.1,
+      "edition": -0.14,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (Dow Jones News, in German), 'OECD-Fr\u00fchindikator deutet weiter auf schw\u00e4cheres Wachstum', 12 Nov 2018 (12:31; wire time 11:00 GMT): in September the leading indicator for the whole OECD area fell 0.1 to 99.5",
+     "url": "https://www.finanznachrichten.de/nachrichten-2018-11/45251767-oecd-fruehindikator-deutet-weiter-auf-schwaecheres-wachstum-015.htm",
+     "date": "2018-11-12"
+    }
+   ],
    "ref": "2018-09"
   },
   "cpi": {
@@ -2479,6 +2504,27 @@
     "text": "the MPC raised the late liquidity window lending rate from 12.25% to 12.75%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
     "label": "CBRT MPC decision, 14 Dec 2017",
     "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-46"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-04-25",
+    "text": "the MPC raised the late liquidity window lending rate from 12.75% to 13.5%, keeping the one-week repo rate at 8% and the overnight lending (marginal funding) rate at 9.25%",
+    "label": "CBRT MPC decision, 25 Apr 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-10"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-05-23",
+    "text": "the MPC raised the late liquidity window lending rate from 13.5% to 16.5% ('a strong monetary tightening'), keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
+    "label": "CBRT MPC decision, 23 May 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-18"
+   },
+   {
+    "cc": "TR",
+    "date": "2018-05-28",
+    "text": "the CBRT completed the simplification of its operational framework: from 1 Jun 2018 'one-week repo rate will be the policy rate of the Central Bank. This rate will be equal to the current funding rate (16.50%)', with the overnight borrowing and lending rates 150 basis points below/above it. The BIS series' move from 8% to 16.5% on 1 Jun 2018 therefore ends the late-liquidity-window funding regime (the marginal funding rate was already 16.5% from 23 May); it is not a further tightening on that day",
+    "label": "CBRT press release on the operational framework, 28 May 2018",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2018/ANO2018-21"
    }
   ]
  }

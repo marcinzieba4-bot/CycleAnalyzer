@@ -39,6 +39,26 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2018, 12, 20):
+        # FOMC statement of 19 Dec 2018: "the Committee decided to raise the target
+        # range for the federal funds rate to 2-1/4 to 2-1/2 percent"; effective 20 Dec
+        return ("Federal funds target range midpoint (2.25–2.50% range from 20 Dec 2018, "
+                "after 2.00–2.25% from 27 Sep 2018)")
+    if cc == "US" and ed.last_eligible_day >= date(2018, 9, 27):
+        # FOMC statement of 26 Sep 2018: "the Committee decided to raise the target
+        # range for the federal funds rate to 2 to 2-1/4 percent"; effective 27 Sep
+        return ("Federal funds target range midpoint (2.00–2.25% range from 27 Sep 2018, "
+                "after 1.75–2.00% from 14 Jun 2018)")
+    if cc == "US" and ed.last_eligible_day >= date(2018, 6, 14):
+        # FOMC statement of 13 Jun 2018: "the Committee decided to raise the target
+        # range for the federal funds rate to 1-3/4 to 2 percent"; effective 14 Jun
+        return ("Federal funds target range midpoint (1.75–2.00% range from 14 Jun 2018, "
+                "after 1.50–1.75% from 22 Mar 2018)")
+    if cc == "US" and ed.last_eligible_day >= date(2018, 3, 22):
+        # FOMC statement of 21 Mar 2018: "the Committee decided to raise the target
+        # range for the federal funds rate to 1-1/2 to 1-3/4 percent"; effective 22 Mar
+        return ("Federal funds target range midpoint (1.50–1.75% range from 22 Mar 2018, "
+                "after 1.25–1.50% from 14 Dec 2017)")
     if cc == "US" and ed.last_eligible_day >= date(2017, 12, 14):
         # FOMC statement of 13 Dec 2017: "the Committee decided to raise the target
         # range for the federal funds rate to 1-1/4 to 1-1/2 percent"; effective 14 Dec
@@ -66,6 +86,12 @@ def instrument(cc: str, ed: Edition) -> str:
                 "after 0–0.25% from 16 Dec 2008)")
     if cc == "US" and ed.last_eligible_day >= date(2008, 12, 16):
         return "Federal funds target range midpoint (0–0.25% range from 16 Dec 2008)"
+    if cc == "TR" and ed.last_eligible_day >= date(2018, 6, 1):
+        # CBRT press release of 28 May 2018 on the simplification of the operational
+        # framework: from 1 Jun 2018 the one-week repo rate is the policy (funding) rate
+        return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
+                "spliced from the overnight borrowing rate; again the CBRT's funding rate from "
+                "1 Jun 2018, see the operational context below the policy decisions)")
     if cc == "TR" and ed.last_eligible_day >= date(2010, 5, 20):
         return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
                 "spliced from the overnight borrowing rate)")

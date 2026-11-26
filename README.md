@@ -672,6 +672,14 @@ ranges of 2018, Türkiye's label from 1 Jun 2018) is included here unchanged.
   and the UK remit of 29 Oct 2018 are value-unchanged reaffirmations and are
   not recorded; no wording names a later year.
 
+`retro_scorecard.py` (ex-post, deliberately using later data; never an edition input)
+scores the published calls: the top three FX crosses held 3 months (BIS daily spot
+plus the stated policy-rate differential) and the ★★/★★★ curve calls (3-month change
+of 10y minus policy). For the 2019 editions: top cross 62% hit, +1.2% per 3 months
+(+2.2% through the 2019-11-10 edition; the 2019-12-08 and 12-22 holds ran into the
+February–March 2020 sell-off, MXN/JPY −6% and −21%); ★★★ curve calls 13/15 right,
+★★ calls a coin flip (44%).
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

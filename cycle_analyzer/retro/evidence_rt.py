@@ -256,19 +256,23 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             f"{R.DECISION_MIN_PP:.2f}pp). Every one took effect on or before "
             f"{ed.last_eligible_day.isoformat()}.</p>")
         add('<ul class="standouts">')
-        bridged = {(a["cc"], a["effective"]) for a in ev.announcements
-                   if a.get("source") == "daily bridge"}
         for a in sorted(ev.decisions, key=lambda a: a["effective"], reverse=True):
-            src = ANN_SOURCES.get(f"{a['cc']}|{a['effective']}") if (
-                a["cc"], a["effective"]) in bridged else None
-            cite = (f"; BIS daily series blank, level as announced {_e(src['announced'])}: "
-                    f'<a href="{_e(src["url"])}">{_e(src["label"])}</a>' if src else "")
             add(f"<li><b>{_e(a['effective'])} · {_e(C[a['cc']].name)}</b> — "
                 f"{_e(instrument(a['cc'], ed) or 'policy rate')} {a['from']:g}% → "
-                f"{a['to']:g}% ({a['to'] - a['from']:+.2f}pp){cite}</li>")
+                f"{a['to']:g}% ({a['to'] - a['from']:+.2f}pp)</li>")
         add("</ul>")
     else:
         add('<p class="sub">None.</p>')
+    bridges = [a for a in ev.announcements if a.get("source") == "daily bridge"]
+    if bridges:
+        parts = []
+        for a in bridges:
+            src = ANN_SOURCES[f"{a['cc']}|{a['effective']}"]
+            parts.append(f"{_e(C[a['cc']].name)} from {_e(a['effective'])} at {a['to']:g}% "
+                         f"(announced {_e(src['announced'])}): "
+                         f'<a href="{_e(src["url"])}">{_e(src["label"])}</a>')
+        add('<p class="sub">Levels used where the BIS daily history is blank (see the data '
+            "notes): " + "; ".join(parts) + ".</p>")
 
     # ---- inflation inputs -------------------------------------------------------------
     add("<h3>Inflation inputs</h3>")

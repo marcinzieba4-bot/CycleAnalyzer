@@ -103,7 +103,11 @@ INSTRUMENT_SWITCH = {
                       "percent—50 basis points above the overnight borrowing rates'")},
     "ID": {"date": date(2016, 8, 19), "old": "BI Rate",
            "new": "BI 7-Day (Reverse) Repo Rate",
-           "source": "ID_SWITCH_SOURCE"},
+           "source": "Bank Indonesia press release No. 18/67/DKom, 19 Aug 2016: the Board of Governors "
+                      "(18–19 Aug 2016) held the BI 7-day Reverse Repo Rate at 5.25% and, as announced on "
+                      "15 Apr 2016, 'terhitung mulai hari ini Bank Indonesia menggunakan BI 7-day RR Rate "
+                      "sebagai suku bunga kebijakan menggantikan BI Rate' (from today the BI 7-day RR "
+                      "Rate replaces the BI Rate as the policy rate); the BI Rate had stood at 6.50%"},
 }
 # Levels the BIS daily history leaves blank although they were announced and in
 # force. Japan's series is empty from 4 Apr 2013 (QQE made the monetary base the
@@ -608,7 +612,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                 + (f" to {br['until'].isoformat()}" if led >= resumes.date() else "")
                 + "; months without a BIS row carry the last BIS level as a proxy. From "
                 f"{br['effective'].isoformat()} the {br['what']}, {br['value']:.2f}% (announced "
-                f"{br['announced']}; source under the decisions), fills the blank days"
+                f"{br['announced']}; source below the policy decisions), fills the blank days"
                 + (f"; the BIS series resumes at the same level on {resumes.date().isoformat()}"
                    if led >= resumes.date() else "") + ".")
         sw = INSTRUMENT_SWITCH.get(cc)
@@ -687,6 +691,13 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                     ev.decisions.append({"cc": cc, "effective": t.date().isoformat(),
                                          "from": lvl, "to": v})
                 lvl = v
+        # a bridged level starts from the last BIS level before the blank days (Japan:
+        # 0.05%, below the decision threshold of the October 2010 move from 0.1%)
+        for a in ev.announcements:
+            if a["cc"] == cc and a.get("source") == "daily bridge" and a["from"] is not None:
+                for x in ev.decisions:
+                    if x["cc"] == cc and x["effective"] == a["effective"]:
+                        x["from"] = a["from"]
         panels["policy"][cc] = m
         record("policy", cc, m)
         ev.policy[cc] = PolicySnap(

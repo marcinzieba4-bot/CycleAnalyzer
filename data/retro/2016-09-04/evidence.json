@@ -1,0 +1,2459 @@
+{
+ "edition": "2016-09-04",
+ "cutoff_utc": "2016-09-03T22:00:00Z",
+ "anchor": "2016-08",
+ "ledger": {
+  "oecd-rt-liaa-201606": {
+   "id": "oecd-rt-liaa-201606",
+   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA19+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..LI_AA...201606?format=csvfile",
+   "sha256": "f7125d8a37f806c750187be030d3e004fc67c80cb91a575493cff1bf46f34ab8",
+   "nbytes": 1054808,
+   "retrieved_at": "2026-11-26T09:30:02Z",
+   "available_by": "2016-06-08 (dated public report quoting this edition's figures)",
+   "kind": "oecd-rt",
+   "note": "OECD real-time revisions database, June 2016 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
+   "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
+  },
+  "alfred-cpiaucns-2016-09-02": {
+   "id": "alfred-cpiaucns-2016-09-02",
+   "url": "https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=CPIAUCNS&vintage_date=2016-09-02",
+   "sha256": "4ce07b2ab4fc4a8cd67262920bffe6b8861325c2dac1e7d686e20f95c2c3637e",
+   "nbytes": 22791,
+   "retrieved_at": "2026-11-26T09:34:06Z",
+   "available_by": "2016-09-02T23:59:59-06:00",
+   "kind": "alfred",
+   "note": "Historical ALFRED vintage_date is the requested information set. Conservative availability bound is the end of that Friday in America/Chicago, strictly before Sunday 00:00 Europe/Warsaw. No exact original release intraday time is invented.",
+   "proof_url": "https://alfred.stlouisfed.org/series?seid=CPIAUCNS"
+  },
+  "oecd-rt-cp-201608": {
+   "id": "oecd-rt-cp-201608",
+   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA19+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..CP...201608?format=csvfile",
+   "sha256": "96d011ce2b6c0910498ab5cd68d4696bf86e813787462997f40733e5374e8b6d",
+   "nbytes": 1148015,
+   "retrieved_at": "2026-11-26T09:34:05Z",
+   "available_by": "2016-08-31 (edition month end (conservative rule))",
+   "kind": "oecd-rt",
+   "note": "OECD real-time revisions database, August 2016 edition, consumer price index (CP): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
+  },
+  "bis-wslongcpi-mcn771-to-2016-07": {
+   "id": "bis-wslongcpi-mcn771-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CN.771?format=csv&startPeriod=1985-01&endPeriod=2016-07",
+   "sha256": "fd5185b8d42be1de8eb1e36e3b1ce0ec9f46a29236086df640b2330caea7af8e",
+   "nbytes": 9217,
+   "retrieved_at": "2026-11-26T09:34:07Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CN.771 (CPI y/y): present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wslongcpi-mcl771-to-2016-07": {
+   "id": "bis-wslongcpi-mcl771-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CL.771?format=csv&startPeriod=1985-01&endPeriod=2016-07",
+   "sha256": "3709eab619373dbea4eca1fc2cf0b87f20df1c45ec427f2b5eabe3519c7b2b44",
+   "nbytes": 14991,
+   "retrieved_at": "2026-11-26T09:34:09Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CL.771 (CPI y/y): present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wslongcpi-mco771-to-2016-07": {
+   "id": "bis-wslongcpi-mco771-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.CO.771?format=csv&startPeriod=1985-01&endPeriod=2016-07",
+   "sha256": "43bf469493c8142809adf79722fc391e26bbb776b397faccf34e359d159e6c3a",
+   "nbytes": 13917,
+   "retrieved_at": "2026-11-26T09:34:09Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.CO.771 (CPI y/y): present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wslongcpi-mth771-to-2016-07": {
+   "id": "bis-wslongcpi-mth771-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_LONG_CPI/1.0/M.TH.771?format=csv&startPeriod=1985-01&endPeriod=2016-07",
+   "sha256": "8f8708a9812514940599da75fb16e1f3d28a22de19d9e04275d317491d0287d1",
+   "nbytes": 14535,
+   "retrieved_at": "2026-11-26T09:34:10Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS WS_LONG_CPI M.TH.771 (CPI y/y): present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbus-to-2016-07": {
+   "id": "bis-wseer-mrbus-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.US?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "3327fe28cbace4df8438b21875ed6dd24b28cb3abc0394d7d4561d980be9a5dc",
+   "nbytes": 21542,
+   "retrieved_at": "2026-11-26T09:34:11Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.US: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01usm156n-to-2016-08": {
+   "id": "fred-irltlt01usm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01USM156N&coed=2016-08-01",
+   "sha256": "4d087bed566cbfde25260007869ad7465283e89553d7a966caa13dccbd936866",
+   "nbytes": 12281,
+   "retrieved_at": "2026-11-26T09:34:11Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01USM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01USM156N"
+  },
+  "bis-wseer-mrbxm-to-2016-07": {
+   "id": "bis-wseer-mrbxm-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.XM?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "de761e0b11daa7509ea6119f37cc105445f9cf51abc1fb28e065c2503750f0d0",
+   "nbytes": 20649,
+   "retrieved_at": "2026-11-26T09:34:13Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.XM: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01ezm156n-to-2016-08": {
+   "id": "fred-irltlt01ezm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01EZM156N&coed=2016-08-01",
+   "sha256": "397fb16326810cc163ff9279c7a1b0993b0bd38f8bc3473913eba3800f711069",
+   "nbytes": 16966,
+   "retrieved_at": "2026-11-26T09:34:14Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01EZM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01EZM156N"
+  },
+  "bis-wseer-mrbjp-to-2016-07": {
+   "id": "bis-wseer-mrbjp-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.JP?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "9cfc9239a28389b648d88aa97caac8508f5b26e75d4a78d28252f6af93480866",
+   "nbytes": 19590,
+   "retrieved_at": "2026-11-26T09:34:14Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.JP: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01jpm156n-to-2016-08": {
+   "id": "fred-irltlt01jpm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01JPM156N&coed=2016-08-01",
+   "sha256": "0347ee1b2f06b61b85520f1408a8c14179a4307d18e7e7e89f7ea25b500cebf8",
+   "nbytes": 5684,
+   "retrieved_at": "2026-11-26T09:34:15Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01JPM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01JPM156N"
+  },
+  "bis-wseer-mrbgb-to-2016-07": {
+   "id": "bis-wseer-mrbgb-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.GB?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "203377fd6b20e3fdcd10574484686c60f7ff106f36e0ab62c424d3f8b88b1940",
+   "nbytes": 22026,
+   "retrieved_at": "2026-11-26T09:34:17Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.GB: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01gbm156n-to-2016-08": {
+   "id": "fred-irltlt01gbm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01GBM156N&coed=2016-08-01",
+   "sha256": "910366b7d82e728926067c8a5c499a54fbbe1c2bb98bc640a0be01ce963bb114",
+   "nbytes": 12463,
+   "retrieved_at": "2026-11-26T09:34:17Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01GBM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01GBM156N"
+  },
+  "bis-wseer-mrbca-to-2016-07": {
+   "id": "bis-wseer-mrbca-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CA?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "efaad54265a5421f1467556b0eedfd2ab4213bd7e6de2652ab19b967b1054ecf",
+   "nbytes": 19805,
+   "retrieved_at": "2026-11-26T09:34:18Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CA: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01cam156n-to-2016-08": {
+   "id": "fred-irltlt01cam156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CAM156N&coed=2016-08-01",
+   "sha256": "0c76ad61280246011a05c6f51f1f3ce809aaa4bc26e5c89481e9ee6a46dd2f55",
+   "nbytes": 21594,
+   "retrieved_at": "2026-11-26T09:34:18Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CAM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CAM156N"
+  },
+  "bis-wseer-mrbau-to-2016-07": {
+   "id": "bis-wseer-mrbau-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.AU?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "27656fe2b7456dbffa79040febb1072888140d145d34133d5224ad859d5917d1",
+   "nbytes": 20572,
+   "retrieved_at": "2026-11-26T09:34:19Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.AU: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01aum156n-to-2016-08": {
+   "id": "fred-irltlt01aum156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01AUM156N&coed=2016-08-01",
+   "sha256": "740cddb18fe64d8851a61b98a595a601b2e6969c63ad448954fe12cd124d08f0",
+   "nbytes": 16061,
+   "retrieved_at": "2026-11-26T09:34:20Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01AUM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01AUM156N"
+  },
+  "bis-wseer-mrbch-to-2016-07": {
+   "id": "bis-wseer-mrbch-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CH?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "eb47b853dd55116200aaabe4be88a60873536b8f517e633bf06d3c712c626809",
+   "nbytes": 21010,
+   "retrieved_at": "2026-11-26T09:34:21Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CH: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01chm156n-to-2016-08": {
+   "id": "fred-irltlt01chm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CHM156N&coed=2016-08-01",
+   "sha256": "0814ddf50a141511161179abba57ae4b2780f67d4cf2aebc66c96b9948167fcd",
+   "nbytes": 12630,
+   "retrieved_at": "2026-11-26T09:34:21Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CHM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CHM156N"
+  },
+  "bis-wseer-mrbse-to-2016-07": {
+   "id": "bis-wseer-mrbse-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.SE?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "594bbb46a39529b53f1eb67f86ad54044004b05e50433669efbe109338feb2fc",
+   "nbytes": 19889,
+   "retrieved_at": "2026-11-26T09:34:21Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.SE: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01sem156n-to-2016-08": {
+   "id": "fred-irltlt01sem156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01SEM156N&coed=2016-08-01",
+   "sha256": "9aea999ad21a5c017df018bce08a7185d30c4d2b8c7e822cd38d8d68ede22174",
+   "nbytes": 7609,
+   "retrieved_at": "2026-11-26T09:34:22Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01SEM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01SEM156N"
+  },
+  "bis-wseer-mrbno-to-2016-07": {
+   "id": "bis-wseer-mrbno-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.NO?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "d243b25258127ff25ef453c5725f38a25a42c1027be16b650a9447619b18480e",
+   "nbytes": 19895,
+   "retrieved_at": "2026-11-26T09:34:22Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.NO: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01nom156n-to-2016-08": {
+   "id": "fred-irltlt01nom156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01NOM156N&coed=2016-08-01",
+   "sha256": "387f8e785bf9f0c1cd8bc0c311dae3af3a4f682fba09f41b66fcc66ea001d51d",
+   "nbytes": 10751,
+   "retrieved_at": "2026-11-26T09:34:23Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01NOM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01NOM156N"
+  },
+  "bis-wseer-mrbnz-to-2016-07": {
+   "id": "bis-wseer-mrbnz-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.NZ?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "8c804ce94f91a8e4f246ed0d242d5643eaac2cd2926b9afd876476c49d119239",
+   "nbytes": 21091,
+   "retrieved_at": "2026-11-26T09:34:24Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.NZ: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01nzm156n-to-2016-08": {
+   "id": "fred-irltlt01nzm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01NZM156N&coed=2016-08-01",
+   "sha256": "c1fc86ebf0e248e4de98264b314e64a66688e2d8d4401056138d5ef06ae8d27f",
+   "nbytes": 9142,
+   "retrieved_at": "2026-11-26T09:34:24Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01NZM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01NZM156N"
+  },
+  "bis-wseer-mrbcn-to-2016-07": {
+   "id": "bis-wseer-mrbcn-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CN?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "5e1519a1b6e8f1581e6b2b19155659fed069ba1f1f3080db3870039e27dda51a",
+   "nbytes": 19367,
+   "retrieved_at": "2026-11-26T09:34:25Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CN: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbin-to-2016-07": {
+   "id": "bis-wseer-mrbin-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.IN?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "61ca0d1e29d336555efbadf22868a1dfd349acfc37469162be1c64b8e4ab9cd8",
+   "nbytes": 19373,
+   "retrieved_at": "2026-11-26T09:34:25Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.IN: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbbr-to-2016-07": {
+   "id": "bis-wseer-mrbbr-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.BR?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "97aab84e988abb50cc99fe3fb4fa786ddd251c1cbf66cdd0053c8b2253a95f3c",
+   "nbytes": 19853,
+   "retrieved_at": "2026-11-26T09:34:26Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.BR: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbmx-to-2016-07": {
+   "id": "bis-wseer-mrbmx-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.MX?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "38e4201039f40605dd7cdc648ff355cdb2c3aa6f80aa9cc642569a5d87281725",
+   "nbytes": 19890,
+   "retrieved_at": "2026-11-26T09:34:26Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.MX: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01mxm156n-to-2016-08": {
+   "id": "fred-irltlt01mxm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01MXM156N&coed=2016-08-01",
+   "sha256": "5f73a473ecbc1c13431c6d9ca7c98efce952b248804d1d34b6599d2bd83c7ea9",
+   "nbytes": 2809,
+   "retrieved_at": "2026-11-26T09:34:27Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01MXM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01MXM156N"
+  },
+  "bis-wseer-mrbza-to-2016-07": {
+   "id": "bis-wseer-mrbza-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.ZA?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "425142d562328752679d93bd1cdb92df5735056b5afa92c84bf09c39d855134b",
+   "nbytes": 21489,
+   "retrieved_at": "2026-11-26T09:34:27Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.ZA: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01zam156n-to-2016-08": {
+   "id": "fred-irltlt01zam156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01ZAM156N&coed=2016-08-01",
+   "sha256": "53c5c65146886304a06d39f1bfe072447773724786c98d983e7d113b710e326d",
+   "nbytes": 20392,
+   "retrieved_at": "2026-11-26T09:34:28Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01ZAM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01ZAM156N"
+  },
+  "bis-wseer-mrbtr-to-2016-07": {
+   "id": "bis-wseer-mrbtr-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.TR?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "450fbee0b5692a0533d394ef60c01b67ba5fe1cfb87083db04aec3ca3e673a3c",
+   "nbytes": 19870,
+   "retrieved_at": "2026-11-26T09:34:29Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.TR: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbpl-to-2016-07": {
+   "id": "bis-wseer-mrbpl-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.PL?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "c3ce17519cf9b34c4ebec4b01024604cd6c62e85fa9f685e1f35e4c092f8c759",
+   "nbytes": 19772,
+   "retrieved_at": "2026-11-26T09:34:29Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.PL: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01plm156n-to-2016-08": {
+   "id": "fred-irltlt01plm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01PLM156N&coed=2016-08-01",
+   "sha256": "57c8a98cc711eea9eca5b8893a4ae76454b03ff1da284ab20f22a6a53bea5f19",
+   "nbytes": 4367,
+   "retrieved_at": "2026-11-26T09:34:30Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01PLM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01PLM156N"
+  },
+  "bis-wseer-mrbhu-to-2016-07": {
+   "id": "bis-wseer-mrbhu-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.HU?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "c196d18f3734f965580dd93699676016fd934fd0e015134210736dafe6ebf6c7",
+   "nbytes": 20058,
+   "retrieved_at": "2026-11-26T09:34:30Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.HU: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01hum156n-to-2016-08": {
+   "id": "fred-irltlt01hum156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01HUM156N&coed=2016-08-01",
+   "sha256": "e7a606944997ead7d6a6ef890b0c64a65928f6b5d098999bb46f368735c0af8d",
+   "nbytes": 4685,
+   "retrieved_at": "2026-11-26T09:34:31Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01HUM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01HUM156N"
+  },
+  "bis-wseer-mrbcz-to-2016-07": {
+   "id": "bis-wseer-mrbcz-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CZ?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "2b63abf04305dedb2eb67a576ce8940067b32ce07a634362604a7c800cb1d3c1",
+   "nbytes": 19924,
+   "retrieved_at": "2026-11-26T09:34:31Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CZ: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01czm156n-to-2016-08": {
+   "id": "fred-irltlt01czm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CZM156N&coed=2016-08-01",
+   "sha256": "58b694199c7fad7676ff52f9c24939d2f3f4fcbe28907d8d3679cdce8a40fc11",
+   "nbytes": 5746,
+   "retrieved_at": "2026-11-26T09:34:32Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CZM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CZM156N"
+  },
+  "bis-wseer-mrbid-to-2016-07": {
+   "id": "bis-wseer-mrbid-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.ID?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "e9363805e3246f7ff07745b1cd53a06fa7fa9637ba61910e1c99f20def3bede6",
+   "nbytes": 20564,
+   "retrieved_at": "2026-11-26T09:34:32Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.ID: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbkr-to-2016-07": {
+   "id": "bis-wseer-mrbkr-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.KR?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "af115bf7a18df3080495311168f45757acc1ee2feecf7db2b4dd83a47ba31f7d",
+   "nbytes": 19504,
+   "retrieved_at": "2026-11-26T09:34:33Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.KR: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01krm156n-to-2016-08": {
+   "id": "fred-irltlt01krm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01KRM156N&coed=2016-08-01",
+   "sha256": "abb8947e3bd35412d17cf6cfe817b66a5db69b74a96743fbc9b54a56e9c400fc",
+   "nbytes": 3280,
+   "retrieved_at": "2026-11-26T09:34:33Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01KRM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01KRM156N"
+  },
+  "bis-wseer-mrbcl-to-2016-07": {
+   "id": "bis-wseer-mrbcl-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CL?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "8e27eaf190f807b47e5500bc71d7bfdc57c271582263e425118b66c3b2614569",
+   "nbytes": 19619,
+   "retrieved_at": "2026-11-26T09:34:34Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CL: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "fred-irltlt01clm156n-to-2016-08": {
+   "id": "fred-irltlt01clm156n-to-2016-08",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01CLM156N&coed=2016-08-01",
+   "sha256": "39af91d601a73815613765eb5ec142cc72534b233c149a1027a78b9f63932d67",
+   "nbytes": 4121,
+   "retrieved_at": "2026-11-26T09:34:34Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "10-year government bond yield (IRLTLT01CLM156N): present-day FRED (OECD Main Economic Indicators) monthly history requested with coed=2016-08-01, so the retained bytes stop at 2016-08. A completed month's average market yield was observable when the month ended.",
+   "proof_url": "https://fred.stlouisfed.org/series/IRLTLT01CLM156N"
+  },
+  "bis-wseer-mrbco-to-2016-07": {
+   "id": "bis-wseer-mrbco-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CO?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "cea904cc011c62f34cb243e6ea5f4408b73639865f749299e0170c74fb83b821",
+   "nbytes": 20402,
+   "retrieved_at": "2026-11-26T09:34:36Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.CO: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wseer-mrbth-to-2016-07": {
+   "id": "bis-wseer-mrbth-to-2016-07",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.TH?format=csv&startPeriod=1994-01&endPeriod=2016-07",
+   "sha256": "4ff673e2f8884f7afc619e9dfa323f81a3f64da0641de2f7379d3f7464027b48",
+   "nbytes": 20187,
+   "retrieved_at": "2026-11-26T09:34:35Z",
+   "available_by": "reference months through 2016-07 (one-full-month publication-lag gate)",
+   "kind": "present-day-gated",
+   "note": "BIS broad real effective exchange rate M.R.B.TH: present-day BIS history requested with endPeriod=2016-07, so the retained bytes stop at 2016-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mus-to-2016-08": {
+   "id": "bis-wscbpol-mus-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.US?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "aa0b0f20dcd4ebc9a322d0acca692f2e2e27c3846f5b553a491f28d64fc6e546",
+   "nbytes": 99207,
+   "retrieved_at": "2026-11-26T09:34:38Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.US (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-us-2006-01-01-2016-09-03": {
+   "id": "bis-daily-us-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.US?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "136996c6fbb8f855ae3fa64084529c49e4bd449d53131746bf4ab2fbf7072257",
+   "nbytes": 1023470,
+   "retrieved_at": "2026-11-26T09:34:39Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mxm-to-2016-08": {
+   "id": "bis-wscbpol-mxm-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.XM?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "11c72000bccd43a9d0a094a9df45553186d42c73711a9b735b466d38e0e216c6",
+   "nbytes": 123244,
+   "retrieved_at": "2026-11-26T09:34:38Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.XM (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-xm-2006-01-01-2016-09-03": {
+   "id": "bis-daily-xm-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.XM?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "43271c10e0eccfecc1832554c3276b51cf4794844b01f6be7f9c1c7039c83371",
+   "nbytes": 2267951,
+   "retrieved_at": "2026-11-26T09:34:55Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mjp-to-2016-08": {
+   "id": "bis-wscbpol-mjp-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.JP?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "aa7a351ac062a9d6da4d1a82e39eb6e3ce785062c9ca9379270fa406fffc6a25",
+   "nbytes": 661238,
+   "retrieved_at": "2026-11-26T09:34:52Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.JP (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-jp-2006-01-01-2016-09-03": {
+   "id": "bis-daily-jp-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.JP?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "dc3322bc55b3ca6d6db50d668a4b7859607065a774092174db2ed7144d2f6065",
+   "nbytes": 6471455,
+   "retrieved_at": "2026-11-26T09:34:58Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mgb-to-2016-08": {
+   "id": "bis-wscbpol-mgb-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.GB?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "8b9a11f0f256ecc3ab578df5622b9086e1c2c09e8b523fbfdb46abcaa6c1e211",
+   "nbytes": 144895,
+   "retrieved_at": "2026-11-26T09:35:00Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.GB (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-gb-2006-01-01-2016-09-03": {
+   "id": "bis-daily-gb-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.GB?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "13a3b642869eb172e4a651f2f067aac75b15f046870aacaacd4a8efd9116c083",
+   "nbytes": 1064157,
+   "retrieved_at": "2026-11-26T09:35:01Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mca-to-2016-08": {
+   "id": "bis-wscbpol-mca-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CA?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "630a070d916f3e0c7b00157982cc201fc0e120ec7d35cf5e6e3631136b41f04c",
+   "nbytes": 236964,
+   "retrieved_at": "2026-11-26T09:35:08Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CA (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-ca-2006-01-01-2016-09-03": {
+   "id": "bis-daily-ca-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CA?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "98ce75d2a89e5848915febf4914a0f6ff54ef2c376aadd8f7fcaee21787d8161",
+   "nbytes": 2250982,
+   "retrieved_at": "2026-11-26T09:35:24Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mau-to-2016-08": {
+   "id": "bis-wscbpol-mau-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.AU?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "608a296a22f44179feeb45ef0d1b3cd0739c25f24e98e3baf8e0a26a06772614",
+   "nbytes": 262857,
+   "retrieved_at": "2026-11-26T09:35:25Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.AU (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-au-2006-01-01-2016-09-03": {
+   "id": "bis-daily-au-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.AU?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "2bf3f99b772c9aabafaf3cada523d330abc32924f1a6044b7541600d71f61d60",
+   "nbytes": 1868585,
+   "retrieved_at": "2026-11-26T09:35:29Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mch-to-2016-08": {
+   "id": "bis-wscbpol-mch-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CH?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "96396b3bb072afc1f0ff2963876ae12b3c10b96a97bf258ec2060402f09ad117",
+   "nbytes": 105061,
+   "retrieved_at": "2026-11-26T09:35:30Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CH (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-ch-2006-01-01-2016-09-03": {
+   "id": "bis-daily-ch-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CH?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "f51b43db26e324412b2bd67f18a85c7f9dd482d38b699e52f9e8a63305513370",
+   "nbytes": 775697,
+   "retrieved_at": "2026-11-26T09:35:34Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mse-to-2016-08": {
+   "id": "bis-wscbpol-mse-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.SE?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "bb82a736aa943a1576824ce90dd831cdacb23da1279e9a9d94fc2da8bc348cf1",
+   "nbytes": 105417,
+   "retrieved_at": "2026-11-26T09:35:35Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.SE (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-se-2006-01-01-2016-09-03": {
+   "id": "bis-daily-se-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.SE?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "f3df3377f88ed0ff8b62e5134e8b50699c69763d258d48c3b1429d13da80f44d",
+   "nbytes": 1043398,
+   "retrieved_at": "2026-11-26T09:35:38Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mno-to-2016-08": {
+   "id": "bis-wscbpol-mno-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.NO?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "a7860689b75fd230c3dbdb9d96d6c03a02dffe5cc02feff6457d4487faf89b1e",
+   "nbytes": 82827,
+   "retrieved_at": "2026-11-26T09:35:39Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.NO (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-no-2006-01-01-2016-09-03": {
+   "id": "bis-daily-no-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.NO?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "ace04db4d7e7cd7151d896ab9a163a5f0ea3582b8774454206e0a837a76d20e0",
+   "nbytes": 885232,
+   "retrieved_at": "2026-11-26T09:35:41Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mnz-to-2016-08": {
+   "id": "bis-wscbpol-mnz-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.NZ?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "cae700d7641e1a72fbf51a3e8d824ae554c6b85138167e382f2cf02d5e19c374",
+   "nbytes": 133262,
+   "retrieved_at": "2026-11-26T09:35:42Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.NZ (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-nz-2006-01-01-2016-09-03": {
+   "id": "bis-daily-nz-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.NZ?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "a2e310c03b9849a5431f2948debd4ea0aa49997452cc157ec114e0ff14caa62a",
+   "nbytes": 1368849,
+   "retrieved_at": "2026-11-26T09:35:43Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mcn-to-2016-08": {
+   "id": "bis-wscbpol-mcn-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CN?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "8ac8fa054fa1f7de20bd482f5ce5831026081acfa27f445f3c3cba3438ef2dfe",
+   "nbytes": 58617,
+   "retrieved_at": "2026-11-26T09:35:45Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CN (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-cn-2006-01-01-2016-09-03": {
+   "id": "bis-daily-cn-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CN?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "9ead001a1f42f2633ae748f2980d7e5409fbb9b4414383f3606f9065506d1014",
+   "nbytes": 921387,
+   "retrieved_at": "2026-11-26T09:35:49Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-min-to-2016-08": {
+   "id": "bis-wscbpol-min-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.IN?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "ee989b571c8297e76eadb5d14b8c7f1df5d3d6e34b12e42232e9d8177ff7c448",
+   "nbytes": 136650,
+   "retrieved_at": "2026-11-26T09:35:50Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.IN (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-in-2006-01-01-2016-09-03": {
+   "id": "bis-daily-in-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.IN?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "20d178716c32c501faf8f64faf5729d4a0c84238f42b6fc79ebfe8753d2ce118",
+   "nbytes": 1389232,
+   "retrieved_at": "2026-11-26T09:35:51Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mbr-to-2016-08": {
+   "id": "bis-wscbpol-mbr-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.BR?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "6f7cb2691c8693212ad105a80f175660dd2bddb143851f27012ad4a83a24133a",
+   "nbytes": 322361,
+   "retrieved_at": "2026-11-26T09:35:57Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.BR (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-br-2006-01-01-2016-09-03": {
+   "id": "bis-daily-br-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.BR?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "e7beb2ac377ff866316dac270a52b3fcca11d7379f24d9c9550d831e16678a4b",
+   "nbytes": 3462616,
+   "retrieved_at": "2026-11-26T09:36:02Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mmx-to-2016-08": {
+   "id": "bis-wscbpol-mmx-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.MX?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "05f4a5aca906d4933d2826f8a44265b5497eadae7a793fdc99e6717719e39934",
+   "nbytes": 87355,
+   "retrieved_at": "2026-11-26T09:36:04Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.MX (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-mx-2006-01-01-2016-09-03": {
+   "id": "bis-daily-mx-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.MX?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "a757daafb6ff0f2aea6849f7157e825fcff9dd9a341590a9b8b99ac0684d1a50",
+   "nbytes": 1590463,
+   "retrieved_at": "2026-11-26T09:36:42Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mza-to-2016-08": {
+   "id": "bis-wscbpol-mza-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.ZA?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "851f4cf804cfa0137327c020c1481e212a10fe38016076ef29558a8d9c0dd3de",
+   "nbytes": 55863,
+   "retrieved_at": "2026-11-26T09:36:43Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.ZA (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-za-2006-01-01-2016-09-03": {
+   "id": "bis-daily-za-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.ZA?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "23c8901495e914d069bf4b1313c370d7b75f78424c0c6f2b78e0f6e1f40c96dd",
+   "nbytes": 574792,
+   "retrieved_at": "2026-11-26T09:36:44Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mtr-to-2016-08": {
+   "id": "bis-wscbpol-mtr-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.TR?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "c58f1d2fd31be6f04ae44b2e2aec81b7ea757cef1bf8d1eda4d4f34f1ad03d88",
+   "nbytes": 77031,
+   "retrieved_at": "2026-11-26T09:36:45Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.TR (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-tr-2006-01-01-2016-09-03": {
+   "id": "bis-daily-tr-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.TR?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "e199a1737e9d57b56ed43ba70c76599caa371727d5001395eefaaaa92d2e66fd",
+   "nbytes": 1717173,
+   "retrieved_at": "2026-11-26T09:36:47Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mpl-to-2016-08": {
+   "id": "bis-wscbpol-mpl-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.PL?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "de72790c1e6ce7fea5c14fe3cfab747473a0a4dafca62f43eea549de9196971e",
+   "nbytes": 182388,
+   "retrieved_at": "2026-11-26T09:36:48Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.PL (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-pl-2006-01-01-2016-09-03": {
+   "id": "bis-daily-pl-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.PL?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "3e68181e6326914d2ebb51022225323db852ce06141a6860c902d8646b201263",
+   "nbytes": 2506541,
+   "retrieved_at": "2026-11-26T09:36:51Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mhu-to-2016-08": {
+   "id": "bis-wscbpol-mhu-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.HU?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "82d29367a3dddda5aac677b858abf3d7e52a00a2dc87c913e45a718eb898541e",
+   "nbytes": 127460,
+   "retrieved_at": "2026-11-26T09:36:52Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.HU (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-hu-2006-01-01-2016-09-03": {
+   "id": "bis-daily-hu-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.HU?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "3fe128e95b975b7c99702e3cf395c862013adaf47034815717e77c582db6362d",
+   "nbytes": 1394690,
+   "retrieved_at": "2026-11-26T09:36:53Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mcz-to-2016-08": {
+   "id": "bis-wscbpol-mcz-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CZ?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "a22346e760cec2f4f5f12c66eda1ba47ef97178f9fb9e581d61c2060ea2b25fa",
+   "nbytes": 115290,
+   "retrieved_at": "2026-11-26T09:36:56Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CZ (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-cz-2006-01-01-2016-09-03": {
+   "id": "bis-daily-cz-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CZ?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "21231e80377cd4fe2945ce6d6faa8d72f3ee3a4998d107e9eff406cff284600d",
+   "nbytes": 1289728,
+   "retrieved_at": "2026-11-26T09:36:57Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mid-to-2016-08": {
+   "id": "bis-wscbpol-mid-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.ID?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "871bd67639e3702798d3e6076127c20f205d9b29161ab5403b795416120a915a",
+   "nbytes": 90251,
+   "retrieved_at": "2026-11-26T09:36:58Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.ID (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-id-2006-01-01-2016-09-03": {
+   "id": "bis-daily-id-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.ID?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "2d5c1ff46af3e1d5d9851e232fbb0078528d2b5d6076423917a338d7fd54ecc9",
+   "nbytes": 2607546,
+   "retrieved_at": "2026-11-26T09:37:02Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mkr-to-2016-08": {
+   "id": "bis-wscbpol-mkr-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.KR?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "f08db6ef42969a97eab13f05e9521a42c4b38b54d551e98709b10cc300604fed",
+   "nbytes": 73538,
+   "retrieved_at": "2026-11-26T09:37:03Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.KR (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-kr-2006-01-01-2016-09-03": {
+   "id": "bis-daily-kr-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.KR?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "4677526e6abc51491961a129bbb0712bc98bc78dbda97236c1ce4bfb690aa27d",
+   "nbytes": 939660,
+   "retrieved_at": "2026-11-26T09:37:04Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mcl-to-2016-08": {
+   "id": "bis-wscbpol-mcl-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CL?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "f7b602433ad0050d9bfa6dc3fe9f0cafdd329d73171774c452853fc6e335ae02",
+   "nbytes": 100193,
+   "retrieved_at": "2026-11-26T09:37:04Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CL (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-cl-2006-01-01-2016-09-03": {
+   "id": "bis-daily-cl-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CL?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "e81b25372907d3ecce36d5bde65e5b21f4bebcf11b6332c611d77742648786b6",
+   "nbytes": 1663826,
+   "retrieved_at": "2026-11-26T09:37:07Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mco-to-2016-08": {
+   "id": "bis-wscbpol-mco-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.CO?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "a965ab32d5b2f0a5adc1b9244a3279357dc557ad3cc649938312ff8d8250df3e",
+   "nbytes": 83898,
+   "retrieved_at": "2026-11-26T09:37:07Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.CO (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-co-2006-01-01-2016-09-03": {
+   "id": "bis-daily-co-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.CO?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "ffe757b3af662de79f2238a9b545e14937fac077a4838a133d113d04fd414c8d",
+   "nbytes": 1274786,
+   "retrieved_at": "2026-11-26T09:37:11Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  },
+  "bis-wscbpol-mth-to-2016-08": {
+   "id": "bis-wscbpol-mth-to-2016-08",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.TH?format=csv&startPeriod=1985-01&endPeriod=2016-08",
+   "sha256": "58ec639b991d9f611718f7d99db3d3b636af2cbe30c06996c4eb3c75f2628f77",
+   "nbytes": 53276,
+   "retrieved_at": "2026-11-26T09:37:14Z",
+   "available_by": "reference months through 2016-08 (completed months)",
+   "kind": "present-day-gated",
+   "note": "BIS central bank policy rate M.TH (end of period): present-day BIS history requested with endPeriod=2016-08, so the retained bytes stop at 2016-08. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
+   "proof_url": ""
+  },
+  "bis-daily-th-2006-01-01-2016-09-03": {
+   "id": "bis-daily-th-2006-01-01-2016-09-03",
+   "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/D.TH?format=csv&startPeriod=2006-01-01&endPeriod=2016-09-03",
+   "sha256": "b4bed5527f7c18cc40a5fc8292103b330018dd5bddb6ef91838a0b06b9d72238",
+   "nbytes": 1007970,
+   "retrieved_at": "2026-11-26T09:37:16Z",
+   "available_by": "n/a (decision facts)",
+   "kind": "bis-current",
+   "note": "Current BIS daily policy history, read only for the dates of publicly announced decisions effective before the cutoff; not an archived statistical vintage.",
+   "proof_url": ""
+  }
+ },
+ "obs": {
+  "US": {
+   "cli": "2016-04",
+   "cpi": "2016-07",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "XM": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "JP": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "GB": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "CA": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "AU": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "CH": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "SE": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "NO": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "NZ": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "CN": {
+   "cli": "2016-04",
+   "cpi": "2016-07",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  },
+  "IN": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  },
+  "BR": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  },
+  "MX": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "ZA": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "TR": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  },
+  "PL": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "HU": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "CZ": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "ID": {
+   "cli": "2016-04",
+   "cpi": "2016-07",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  },
+  "KR": {
+   "cli": "2016-04",
+   "cpi": "2016-06",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "CL": {
+   "cpi": "2016-07",
+   "reer": "2016-07",
+   "y10": "2016-08",
+   "policy": "2016-08"
+  },
+  "CO": {
+   "cpi": "2016-07",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  },
+  "TH": {
+   "cpi": "2016-07",
+   "reer": "2016-07",
+   "policy": "2016-08"
+  }
+ },
+ "gaps": {
+  "y10/MX": [
+   "2001-08",
+   "2001-09",
+   "2001-11",
+   "2007-10",
+   "2008-02",
+   "2008-05",
+   "2008-09",
+   "2009-01",
+   "2009-04",
+   "2009-08",
+   "2009-11",
+   "2010-01",
+   "2010-03",
+   "2010-06",
+   "2010-10",
+   "2011-01",
+   "2011-02",
+   "2011-03",
+   "2011-05",
+   "2011-09",
+   "2012-01",
+   "2012-02",
+   "2012-03",
+   "2012-04",
+   "2012-08",
+   "2012-12",
+   "2013-03",
+   "2013-07",
+   "2013-11",
+   "2014-02",
+   "2014-06",
+   "2014-09",
+   "2015-01",
+   "2015-05",
+   "2015-08",
+   "2015-10",
+   "2015-12",
+   "2016-04",
+   "2016-07"
+  ],
+  "policy/JP": [
+   "1999-03",
+   "1999-04",
+   "1999-05",
+   "1999-06",
+   "1999-07",
+   "1999-08",
+   "1999-09",
+   "1999-10",
+   "1999-11",
+   "1999-12",
+   "2000-01",
+   "2000-02",
+   "2000-03",
+   "2000-04",
+   "2000-05",
+   "2000-06",
+   "2000-07",
+   "2001-04",
+   "2001-05",
+   "2001-06",
+   "2001-07",
+   "2001-08",
+   "2001-09",
+   "2001-10",
+   "2001-11",
+   "2001-12",
+   "2002-01",
+   "2002-02",
+   "2002-03",
+   "2002-04",
+   "2002-05",
+   "2002-06",
+   "2002-07",
+   "2002-08",
+   "2002-09",
+   "2002-10",
+   "2002-11",
+   "2002-12",
+   "2003-01",
+   "2003-02",
+   "2003-03",
+   "2003-04",
+   "2003-05",
+   "2003-06",
+   "2003-07",
+   "2003-08",
+   "2003-09",
+   "2003-10",
+   "2003-11",
+   "2003-12",
+   "2004-01",
+   "2004-02",
+   "2004-03",
+   "2004-04",
+   "2004-05",
+   "2004-06",
+   "2004-07",
+   "2004-08",
+   "2004-09",
+   "2004-10",
+   "2004-11",
+   "2004-12",
+   "2005-01",
+   "2005-02",
+   "2005-03",
+   "2005-04",
+   "2005-05",
+   "2005-06",
+   "2005-07",
+   "2005-08",
+   "2005-09",
+   "2005-10",
+   "2005-11",
+   "2005-12",
+   "2006-01",
+   "2006-02"
+  ]
+ },
+ "cpi_choice": {
+  "US": {
+   "chosen": "BLS CPI-U all items NSA (CPIAUCNS), ALFRED 2016-09-02 vintage, calendar-month y/y",
+   "ledger": "alfred-cpiaucns-2016-09-02",
+   "last": "2016-07",
+   "last_value": 0.835,
+   "considered": [
+    {
+     "candidate": "BLS CPI-U all items NSA (CPIAUCNS), ALFRED 2016-09-02 vintage, calendar-month y/y",
+     "last": "2016-07",
+     "last_value": 0.835
+    },
+    {
+     "candidate": "OECD real-time CPI index USA, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 1.005
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "alfred",
+   "reason": ""
+  },
+  "XM": {
+   "chosen": "OECD real-time CPI index, euro-area aggregate as published (database code EA19), August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 0.074,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index, euro-area aggregate as published (database code EA19), August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 0.074
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "JP": {
+   "chosen": "OECD real-time CPI index JPN, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": -0.482,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index JPN, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": -0.482
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "GB": {
+   "chosen": "OECD real-time CPI index GBR, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 0.402,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index GBR, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 0.402
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CA": {
+   "chosen": "OECD real-time CPI index CAN, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 1.492,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CAN, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 1.492
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "AU": {
+   "chosen": "OECD real-time CPI index AUS (quarterly), August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 1.028,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index AUS (quarterly), August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 1.028
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": true,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CH": {
+   "chosen": "OECD real-time CPI index CHE, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": -0.375,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CHE, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": -0.375
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "SE": {
+   "chosen": "OECD real-time CPI index SWE, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 1.023,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index SWE, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 1.023
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "NO": {
+   "chosen": "OECD real-time CPI index NOR, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 3.715,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index NOR, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 3.715
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "NZ": {
+   "chosen": "OECD real-time CPI index NZL (quarterly), August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 0.417,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index NZL (quarterly), August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 0.417
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": true,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CN": {
+   "chosen": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2016-07",
+   "ledger": "bis-wslongcpi-mcn771-to-2016-07",
+   "last": "2016-07",
+   "last_value": 1.899,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CHN (fixed base), August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 2.183
+    },
+    {
+     "candidate": "BIS WS_LONG_CPI M.CN.771, present-day history gated at 2016-07",
+     "last": "2016-07",
+     "last_value": 1.899
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": "fixed-base"
+  },
+  "IN": {
+   "chosen": "OECD real-time CPI index IND, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 6.127,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index IND, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 6.127
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "BR": {
+   "chosen": "OECD real-time CPI index BRA, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 8.815,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index BRA, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 8.815
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "MX": {
+   "chosen": "OECD real-time CPI index MEX, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 2.536,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index MEX, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 2.536
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "ZA": {
+   "chosen": "OECD real-time CPI index ZAF, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 6.59,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index ZAF, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 6.59
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "TR": {
+   "chosen": "OECD real-time CPI index TUR, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 7.637,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index TUR, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 7.637
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "PL": {
+   "chosen": "OECD real-time CPI index POL, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": -0.893,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index POL, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": -0.893
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "HU": {
+   "chosen": "OECD real-time CPI index HUN, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": -0.178,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index HUN, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": -0.178
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CZ": {
+   "chosen": "OECD real-time CPI index CZE, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 0.083,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index CZE, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 0.083
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "ID": {
+   "chosen": "OECD real-time CPI index IDN, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-07",
+   "last_value": 3.228,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index IDN, August 2016 edition, y/y within the vintage",
+     "last": "2016-07",
+     "last_value": 3.228
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "KR": {
+   "chosen": "OECD real-time CPI index KOR, August 2016 edition, y/y within the vintage",
+   "ledger": "oecd-rt-cp-201608",
+   "last": "2016-06",
+   "last_value": 0.756,
+   "considered": [
+    {
+     "candidate": "OECD real-time CPI index KOR, August 2016 edition, y/y within the vintage",
+     "last": "2016-06",
+     "last_value": 0.756
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "oecd_rt",
+   "reason": ""
+  },
+  "CL": {
+   "chosen": "BIS WS_LONG_CPI M.CL.771, present-day history gated at 2016-07",
+   "ledger": "bis-wslongcpi-mcl771-to-2016-07",
+   "last": "2016-07",
+   "last_value": 4.012,
+   "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.CL.771, present-day history gated at 2016-07",
+     "last": "2016-07",
+     "last_value": 4.012
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": ""
+  },
+  "CO": {
+   "chosen": "BIS WS_LONG_CPI M.CO.771, present-day history gated at 2016-07",
+   "ledger": "bis-wslongcpi-mco771-to-2016-07",
+   "last": "2016-07",
+   "last_value": 8.965,
+   "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.CO.771, present-day history gated at 2016-07",
+     "last": "2016-07",
+     "last_value": 8.965
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": ""
+  },
+  "TH": {
+   "chosen": "BIS WS_LONG_CPI M.TH.771, present-day history gated at 2016-07",
+   "ledger": "bis-wslongcpi-mth771-to-2016-07",
+   "last": "2016-07",
+   "last_value": 0.11,
+   "considered": [
+    {
+     "candidate": "BIS WS_LONG_CPI M.TH.771, present-day history gated at 2016-07",
+     "last": "2016-07",
+     "last_value": 0.11
+    }
+   ],
+   "supplements": [],
+   "mean_abs_diff_vs_bis_60m": null,
+   "quarterly": false,
+   "kind": "bis_gated",
+   "reason": ""
+  }
+ },
+ "growth_def": {
+  "US": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA USA)",
+  "XM": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, euro-area aggregate as published, database code EA19)",
+  "JP": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA JPN)",
+  "GB": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA GBR)",
+  "CA": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA CAN)",
+  "AU": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA AUS)",
+  "CH": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA CHE)",
+  "SE": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA SWE)",
+  "NO": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA NOR)",
+  "NZ": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA NZL)",
+  "CN": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA CHN)",
+  "IN": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA IND)",
+  "BR": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA BRA)",
+  "MX": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA MEX)",
+  "ZA": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA ZAF)",
+  "TR": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA TUR)",
+  "PL": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA POL)",
+  "HU": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA HUN)",
+  "CZ": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA CZE)",
+  "ID": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA IDN)",
+  "KR": "OECD composite leading indicator, amplitude adjusted, as published in the June 2016 edition (real-time database, LI_AA KOR)"
+ },
+ "policy": {
+  "US": {
+   "cc": "US",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.375,
+   "current": 0.375,
+   "effective_since": "2015-12-17",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mus-to-2016-08"
+  },
+  "XM": {
+   "cc": "XM",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.0,
+   "current": 0.0,
+   "effective_since": "2016-03-16",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mxm-to-2016-08"
+  },
+  "JP": {
+   "cc": "JP",
+   "monthly_last": "2016-08",
+   "monthly_value": -0.1,
+   "current": -0.1,
+   "effective_since": "2016-02-16",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mjp-to-2016-08"
+  },
+  "GB": {
+   "cc": "GB",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.25,
+   "current": 0.25,
+   "effective_since": "2016-08-04",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mgb-to-2016-08"
+  },
+  "CA": {
+   "cc": "CA",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.5,
+   "current": 0.5,
+   "effective_since": "2015-07-15",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mca-to-2016-08"
+  },
+  "AU": {
+   "cc": "AU",
+   "monthly_last": "2016-08",
+   "monthly_value": 1.5,
+   "current": 1.5,
+   "effective_since": "2016-08-03",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mau-to-2016-08"
+  },
+  "CH": {
+   "cc": "CH",
+   "monthly_last": "2016-08",
+   "monthly_value": -0.75,
+   "current": -0.75,
+   "effective_since": "2015-01-15",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mch-to-2016-08"
+  },
+  "SE": {
+   "cc": "SE",
+   "monthly_last": "2016-08",
+   "monthly_value": -0.5,
+   "current": -0.5,
+   "effective_since": "2016-02-17",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mse-to-2016-08"
+  },
+  "NO": {
+   "cc": "NO",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.5,
+   "current": 0.5,
+   "effective_since": "2016-03-18",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mno-to-2016-08"
+  },
+  "NZ": {
+   "cc": "NZ",
+   "monthly_last": "2016-08",
+   "monthly_value": 2.0,
+   "current": 2.0,
+   "effective_since": "2016-08-11",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mnz-to-2016-08"
+  },
+  "CN": {
+   "cc": "CN",
+   "monthly_last": "2016-08",
+   "monthly_value": 4.35,
+   "current": 4.35,
+   "effective_since": "2015-10-24",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mcn-to-2016-08"
+  },
+  "IN": {
+   "cc": "IN",
+   "monthly_last": "2016-08",
+   "monthly_value": 6.5,
+   "current": 6.5,
+   "effective_since": "2016-04-05",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-min-to-2016-08"
+  },
+  "BR": {
+   "cc": "BR",
+   "monthly_last": "2016-08",
+   "monthly_value": 14.25,
+   "current": 14.25,
+   "effective_since": "2015-07-30",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mbr-to-2016-08"
+  },
+  "MX": {
+   "cc": "MX",
+   "monthly_last": "2016-08",
+   "monthly_value": 4.25,
+   "current": 4.25,
+   "effective_since": "2016-06-30",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mmx-to-2016-08"
+  },
+  "ZA": {
+   "cc": "ZA",
+   "monthly_last": "2016-08",
+   "monthly_value": 7.0,
+   "current": 7.0,
+   "effective_since": "2016-03-18",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mza-to-2016-08"
+  },
+  "TR": {
+   "cc": "TR",
+   "monthly_last": "2016-08",
+   "monthly_value": 7.5,
+   "current": 7.5,
+   "effective_since": "2015-02-25",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mtr-to-2016-08"
+  },
+  "PL": {
+   "cc": "PL",
+   "monthly_last": "2016-08",
+   "monthly_value": 1.5,
+   "current": 1.5,
+   "effective_since": "2015-03-05",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mpl-to-2016-08"
+  },
+  "HU": {
+   "cc": "HU",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.9,
+   "current": 0.9,
+   "effective_since": "2016-05-25",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mhu-to-2016-08"
+  },
+  "CZ": {
+   "cc": "CZ",
+   "monthly_last": "2016-08",
+   "monthly_value": 0.05,
+   "current": 0.05,
+   "effective_since": "2012-11-02",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mcz-to-2016-08"
+  },
+  "ID": {
+   "cc": "ID",
+   "monthly_last": "2016-08",
+   "monthly_value": 5.25,
+   "current": 5.25,
+   "effective_since": "2016-06-16",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mid-to-2016-08"
+  },
+  "KR": {
+   "cc": "KR",
+   "monthly_last": "2016-08",
+   "monthly_value": 1.25,
+   "current": 1.25,
+   "effective_since": "2016-06-09",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mkr-to-2016-08"
+  },
+  "CL": {
+   "cc": "CL",
+   "monthly_last": "2016-08",
+   "monthly_value": 3.5,
+   "current": 3.5,
+   "effective_since": "2015-12-18",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mcl-to-2016-08"
+  },
+  "CO": {
+   "cc": "CO",
+   "monthly_last": "2016-08",
+   "monthly_value": 7.75,
+   "current": 7.75,
+   "effective_since": "2016-08-01",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mco-to-2016-08"
+  },
+  "TH": {
+   "cc": "TH",
+   "monthly_last": "2016-08",
+   "monthly_value": 1.5,
+   "current": 1.5,
+   "effective_since": "2015-04-29",
+   "archive_daily_end": "2016-09-03",
+   "source": "bis-wscbpol-mth-to-2016-08"
+  }
+ },
+ "announcements": [
+  {
+   "cc": "JP",
+   "effective": "2016-02-16",
+   "from": 0.05,
+   "to": -0.1,
+   "source": "daily bridge"
+  }
+ ],
+ "extensions": [
+  {
+   "cc": "JP",
+   "month": "2013-05",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-06",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-07",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-08",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-09",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-10",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-11",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2013-12",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-01",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-02",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-03",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-04",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-05",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-06",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-07",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-08",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-09",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-10",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-11",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2014-12",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-01",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-02",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-03",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-04",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-05",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-06",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-07",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-08",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-09",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-10",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-11",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2015-12",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-01",
+   "value": 0.05,
+   "source": "BIS daily month-end (monthly row absent)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-02",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-03",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-04",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-05",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-06",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-07",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  },
+  {
+   "cc": "JP",
+   "month": "2016-08",
+   "value": -0.1,
+   "source": "daily bridge month-end (BIS daily blank; announced level, see the data notes)"
+  }
+ ],
+ "notes": [
+  "cli: the July 2016 and August 2016 editions of the real-time database carry no composite leading indicator (no records for any area); the newest edition with one (June 2016) is used.",
+  "cli/XM, cpi/XM: from the February 2015 edition the real-time database carries the euro-area aggregate as EA19 (Lithuania joined the euro area on 1 January 2015) instead of EA18; the aggregate is used as published.",
+  "cpi/CN: the August 2016 CPI edition stores a fixed-base index (y/y = 12-month ratio inside the vintage); the published y/y behind the one-full-month publication gate competes, and the published y/y (latest 2016-07) is used as the fresher series.",
+  "policy/JP: the BIS daily series is blank from 2013-04-04; months without a BIS row carry the last BIS level as a proxy. From 2016-02-16 the rate applied to Policy-Rate Balances, -0.10% (announced 2016-01-29; source below the policy decisions), fills the blank days.",
+  "policy/IN: BIS monthly differs from the daily month-end in 2007-03; monthly rows retained.",
+  "policy/TR: the one-week repo rate became the policy rate on 2010-05-20 (the BIS series switches from the overnight borrowing rate, 6.50% \u2192 7.00%). The switch is not a rate change (CBRT Monetary Policy Committee decision No. 2010-16, 18 May 2010: overnight rates kept unchanged; as a 'technical rate adjustment', 'the one week repo rate, which becomes the new policy rate, is set at 7 percent\u201450 basis points above the overnight borrowing rates'): earlier history is spliced by +0.50pp so that policy changes are measured on the new instrument.",
+  "policy/ID: the BI 7-Day (Reverse) Repo Rate became the policy rate on 2016-08-19 (the BIS series switches from the BI Rate, 6.50% \u2192 5.25%). The switch is not a rate change (Bank Indonesia press release No. 18/67/DKom, 19 Aug 2016: the Board of Governors (18\u201319 Aug 2016) held the BI 7-day Reverse Repo Rate at 5.25% and, as announced on 15 Apr 2016, 'terhitung mulai hari ini Bank Indonesia menggunakan BI 7-day RR Rate sebagai suku bunga kebijakan menggantikan BI Rate' (from today the BI 7-day RR Rate replaces the BI Rate as the policy rate); the BI Rate had stood at 6.50%): earlier history is spliced by -1.25pp so that policy changes are measured on the new instrument."
+ ],
+ "era": "realtime",
+ "decisions": [
+  {
+   "cc": "GB",
+   "effective": "2016-08-04",
+   "from": 0.5,
+   "to": 0.25
+  },
+  {
+   "cc": "AU",
+   "effective": "2016-05-04",
+   "from": 2.0,
+   "to": 1.75
+  },
+  {
+   "cc": "AU",
+   "effective": "2016-08-03",
+   "from": 1.75,
+   "to": 1.5
+  },
+  {
+   "cc": "NO",
+   "effective": "2016-03-18",
+   "from": 0.75,
+   "to": 0.5
+  },
+  {
+   "cc": "NZ",
+   "effective": "2016-03-10",
+   "from": 2.5,
+   "to": 2.25
+  },
+  {
+   "cc": "NZ",
+   "effective": "2016-08-11",
+   "from": 2.25,
+   "to": 2.0
+  },
+  {
+   "cc": "IN",
+   "effective": "2016-04-05",
+   "from": 6.75,
+   "to": 6.5
+  },
+  {
+   "cc": "MX",
+   "effective": "2016-06-30",
+   "from": 3.75,
+   "to": 4.25
+  },
+  {
+   "cc": "ZA",
+   "effective": "2016-03-18",
+   "from": 6.75,
+   "to": 7.0
+  },
+  {
+   "cc": "HU",
+   "effective": "2016-03-23",
+   "from": 1.35,
+   "to": 1.2
+  },
+  {
+   "cc": "HU",
+   "effective": "2016-04-27",
+   "from": 1.2,
+   "to": 1.05
+  },
+  {
+   "cc": "HU",
+   "effective": "2016-05-25",
+   "from": 1.05,
+   "to": 0.9
+  },
+  {
+   "cc": "ID",
+   "effective": "2016-03-17",
+   "from": 5.75,
+   "to": 5.5
+  },
+  {
+   "cc": "ID",
+   "effective": "2016-06-16",
+   "from": 5.5,
+   "to": 5.25
+  },
+  {
+   "cc": "KR",
+   "effective": "2016-06-09",
+   "from": 1.5,
+   "to": 1.25
+  },
+  {
+   "cc": "CO",
+   "effective": "2016-03-22",
+   "from": 6.25,
+   "to": 6.5
+  },
+  {
+   "cc": "CO",
+   "effective": "2016-05-02",
+   "from": 6.5,
+   "to": 7.0
+  },
+  {
+   "cc": "CO",
+   "effective": "2016-05-31",
+   "from": 7.0,
+   "to": 7.25
+  },
+  {
+   "cc": "CO",
+   "effective": "2016-06-23",
+   "from": 7.25,
+   "to": 7.5
+  },
+  {
+   "cc": "CO",
+   "effective": "2016-08-01",
+   "from": 7.5,
+   "to": 7.75
+  }
+ ],
+ "rt": {
+  "cli": {
+   "edition": "201606",
+   "label": "June 2016",
+   "public_by": "2016-06-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201606",
+    "area": "CHN",
+    "month": "2016-04",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 98.41,
+      "edition": 98.41,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.03,
+      "edition": 0.03,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Lincoln Daily News (Reuters), 'OECD lead indicator flags first signs of growth stabilization', 8 Jun 2016 (Wednesday): the U.S. improved to 98.95 in April from 98.93 in March; China rose to 98.41 from 98.38; the euro zone fell to 100.38 from 100.42",
+     "url": "https://archives.lincolndailynews.com/2016/Jun/08/NEWS/news_r.shtml",
+     "date": "2016-06-08"
+    },
+    {
+     "label": "Business Standard (Reuters), 'OECD lead indicator flags signs of growth stability', 9 Jun 2016 (00:30 IST): the same figures",
+     "url": "https://www.business-standard.com/article/international/oecd-lead-indicator-flags-signs-of-growth-stability-116060800657_1.html",
+     "date": "2016-06-09"
+    }
+   ],
+   "ref": "2016-04"
+  },
+  "cpi": {
+   "edition": "201608",
+   "label": "August 2016",
+   "public_by": "2016-08-31",
+   "basis": "edition month end (conservative rule)"
+  }
+ }
+}

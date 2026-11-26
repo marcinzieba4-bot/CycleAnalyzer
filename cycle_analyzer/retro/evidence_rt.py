@@ -39,6 +39,32 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2019, 10, 31):
+        # FOMC statement of 30 Oct 2019: "the Committee decided to lower the target
+        # range for the federal funds rate to 1-1/2 to 1-3/4 percent"; effective 31 Oct
+        return ("Federal funds target range midpoint (1.50–1.75% range from 31 Oct 2019, "
+                "after 1.75–2.00% from 19 Sep 2019)")
+    if cc == "US" and ed.last_eligible_day >= date(2019, 9, 19):
+        # FOMC statement of 18 Sep 2019: "the Committee decided to lower the target
+        # range for the federal funds rate to 1-3/4 to 2 percent"; effective 19 Sep
+        return ("Federal funds target range midpoint (1.75–2.00% range from 19 Sep 2019, "
+                "after 2.00–2.25% from 1 Aug 2019)")
+    if cc == "US" and ed.last_eligible_day >= date(2019, 8, 1):
+        # FOMC statement of 31 Jul 2019: "the Committee decided to lower the target
+        # range for the federal funds rate to 2 to 2-1/4 percent"; effective 1 Aug
+        return ("Federal funds target range midpoint (2.00–2.25% range from 1 Aug 2019, "
+                "after 2.25–2.50% from 20 Dec 2018)")
+    if cc == "CN" and ed.last_eligible_day >= date(2019, 8, 20):
+        # PBoC Announcement [2019] No. 15, 17 Aug 2019: LPR reform; first new 1-year
+        # LPR published 20 Aug 2019 (4.25%); the BIS series switches that day
+        return ("One-year loan prime rate (LPR), the reference rate for new loans under the "
+                "PBoC's reform announced 17 Aug 2019 (first fixing 20 Aug 2019); earlier "
+                "history spliced from the PBoC one-year benchmark lending rate")
+    if cc == "CH" and ed.last_eligible_day >= date(2019, 6, 13):
+        # SNB monetary policy assessment of 13 Jun 2019: introduction of the SNB policy
+        # rate (-0.75%), replacing the target range for three-month CHF Libor
+        return ("SNB policy rate (introduced 13 Jun 2019 at −0.75%, replacing the "
+                "three-month CHF Libor target range, whose midpoint the earlier months use)")
     if cc == "US" and ed.last_eligible_day >= date(2018, 12, 20):
         # FOMC statement of 19 Dec 2018: "the Committee decided to raise the target
         # range for the federal funds rate to 2-1/4 to 2-1/2 percent"; effective 20 Dec
@@ -174,7 +200,9 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
     us = ev.cpi_choice.get("US", {})
     extra_bis = [c for c, v in ev.cpi_choice.items()
                  if v.get("kind") == "bis_gated" and c not in R.NO_RT
-                 and v.get("reason") != "fixed-base"]
+                 and v.get("reason") not in ("fixed-base", "definition")]
+    def_bis = [c for c, v in ev.cpi_choice.items()
+               if v.get("kind") == "bis_gated" and v.get("reason") == "definition"]
     fixed_bis = [c for c, v in ev.cpi_choice.items()
                  if v.get("kind") == "bis_gated" and v.get("reason") == "fixed-base"]
     cn_ed = (ev.cpi_choice.get("CN") or {}).get("chosen", "")
@@ -201,11 +229,13 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                    for c in extra_bis))
         + ("".join(f", and {_e(C[c].name)} (published y/y fresher than the vintage index)"
                    for c in fixed_bis))
+        + ("".join(f", and {_e(C[c].name)} (its vintage series is the CPI for Industrial "
+                   "Workers, not the Combined CPI the RBI targets)" for c in def_bis))
         + " use the present-day BIS CPI "
         f"history requested only through {lag1}: a reference month is admitted once the whole "
         "following month has passed, although these offices publish within about ten days. "
         + ("Headline CPI y/y is rarely revised, but those three histories are not vintages. "
-           if not (extra_bis or fixed_bis) else
+           if not (extra_bis or fixed_bis or def_bis) else
            "Headline CPI y/y is rarely revised, but those histories are not vintages. ")
         + 
         "Newer national releases that were public before the cutoff but are absent from the "

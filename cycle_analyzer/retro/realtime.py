@@ -74,6 +74,24 @@ YOY_INDEX = {"CN": "200812"}
 # published y/y behind the one-full-month gate competes; the fresher series is
 # used, the vintage on a tie.
 BIS_COMPETES_FIXED_BASE = {"CN"}
+# Definition mismatch: the revisions database's India CP series is the CPI for
+# Industrial Workers, not the all-India Combined CPI that the RBI targets (4%
+# since the MPC resolution of 6 Apr 2017). Over 2015-2019 the two y/y rates
+# differ by 1.4pp on average and by up to 5.6pp (2019-08: 6.31% vs 3.38%), which
+# would invert India's inflation gap. As in the archive-era builder ("India:
+# Combined CPI only"), editions from the given date use the present-day BIS
+# Combined CPI behind the one-full-month gate instead; the vintage index is shown
+# as a considered candidate. Earlier real-time editions are left as published.
+CPI_DEFINITION_BIS = {
+    "IN": {"from": date(2019, 1, 1),
+           "why": ("the real-time database's India series is the CPI for Industrial Workers, "
+                   "while the RBI's 4% objective refers to the all-India Combined CPI")},
+}
+
+
+def bis_for_definition(cc: str, ed: Edition) -> bool:
+    d = CPI_DEFINITION_BIS.get(cc)
+    return d is not None and ed.date >= d["from"]
 
 
 def stored_as_yoy(cc: str, edition: str) -> bool:
@@ -108,6 +126,17 @@ INSTRUMENT_SWITCH = {
                       "15 Apr 2016, 'terhitung mulai hari ini Bank Indonesia menggunakan BI 7-day RR Rate "
                       "sebagai suku bunga kebijakan menggantikan BI Rate' (from today the BI 7-day RR "
                       "Rate replaces the BI Rate as the policy rate); the BI Rate had stood at 6.50%"},
+    "CN": {"date": date(2019, 8, 20), "old": "one-year benchmark lending rate",
+           "new": "one-year loan prime rate (LPR)",
+           "not_change": ("The switch is an instrument change, not a decision on the benchmark rate, "
+                          "which was retained at 4.35%; the first fixing of the new reference rate was "
+                          "0.10pp lower, and that gap is not counted as a policy move"),
+           "source": ("PBoC Announcement [2019] No. 15 (signed 16 Aug, posted 17 Aug 2019): from "
+                      "20 Aug 2019 the National Interbank Funding Center publishes the loan prime rate "
+                      "on the 20th of each month, and banks are to price new loans mainly off it "
+                      "('各银行应在新发放的贷款中主要参考贷款市场报价利率定价'); the PBoC's Q&A of the "
+                      "same day: 'the benchmark deposit and lending rates are retained'; first new "
+                      "one-year LPR, 20 Aug 2019: 4.25%")},
 }
 # Levels the BIS daily history leaves blank although they were announced and in
 # force. Japan's series is empty from 4 Apr 2013 (QQE made the monetary base the
@@ -128,7 +157,7 @@ DAILY_BRIDGE = {
 # worth of data" - Simon Ward, Money Moves Markets, 8 Sep 2016. That source is
 # dated after the affected editions, so it is cited here, not on their pages.)
 NO_CLI_EDITIONS = {"201607", "201608"}
-ERA_LAST_DAY = date(2018, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2019, 12, 31)          # editions on or before use this builder
 # Operational policy facts that the BIS series does not show (e.g. Turkiye in 2017: the
 # CBRT kept the one-week repo rate at 8% but funded the market at the late liquidity
 # window rate). Disclosed on the page with their sources, never model inputs; an item is
@@ -140,8 +169,13 @@ def policy_context(ed: Edition) -> list[dict]:
     if not POLICY_CONTEXT_FILE.exists():
         return []
     reg = json.loads(POLICY_CONTEXT_FILE.read_text())
-    return [{"cc": cc, **x} for cc, xs in reg.items() if not cc.startswith("_")
-            for x in xs if date.fromisoformat(x["date"]) <= ed.last_eligible_day]
+    # "until": the last day the described arrangement applied (a later item records
+    # what replaced it); the item is not shown in editions after that day.
+    led = ed.last_eligible_day
+    return [{"cc": cc, **{k: v for k, v in x.items() if k != "until"}}
+            for cc, xs in reg.items() if not cc.startswith("_")
+            for x in xs if date.fromisoformat(x["date"]) <= led
+            and ("until" not in x or led <= date.fromisoformat(x["until"]))]
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
           "September", "October", "November", "December"]
@@ -488,7 +522,21 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             cands.append(("alfred", us_yoy, ae, "BLS CPI-U all items NSA (CPIAUCNS), ALFRED "
                           f"{ed.alfred_vintage.isoformat()} vintage, calendar-month y/y"))
         missing_note = None
-        if cc in RT_AREA:
+        shown_only = []
+        if cc in RT_AREA and bis_for_definition(cc, ed):
+            s, lbl = _rt_cpi(cc, cp, cpi_ed)
+            shown_only.append((s, lbl.replace(
+                f"OECD real-time CPI index {rt_areas(cpi_ed)[cc]}",
+                f"OECD real-time CPI index {rt_areas(cpi_ed)[cc]} (CPI for Industrial Workers; "
+                "not used: not the targeted index)", 1)))
+            bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
+                               f"BIS WS_LONG_CPI M.{cc}.771 (CPI y/y)",
+                               "one-full-month publication-lag gate")
+            cands.append(("bis_gated", _monthly(S.parse_bis_csv(bb)), be,
+                          f"BIS WS_LONG_CPI M.{cc}.771 (all-India Combined CPI), present-day "
+                          f"history gated at {lag1}"))
+            missing_note = ("definition", None)
+        elif cc in RT_AREA:
             s, lbl = _rt_cpi(cc, cp, cpi_ed)
             e_rt = cpi_e
             if s.empty:
@@ -536,10 +584,20 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                                "last_value": round(float(s.iloc[-1]), 3)})
             if best is None or s.index.max() > best[1].index.max():
                 best = (k, s, e, lbl)
+        for s0, lbl0 in shown_only:
+            s0 = _cap(s0.dropna(), ed)
+            if not s0.empty:
+                considered.append({"candidate": lbl0, "last": str(s0.index.max()),
+                                   "last_value": round(float(s0.iloc[-1]), 3)})
         if best is None:
             continue
         k, s, e, lbl = best
-        if missing_note and missing_note[0] == "fixed-base":
+        if missing_note and missing_note[0] == "definition":
+            ev.notes.append(
+                f"cpi/{cc}: {CPI_DEFINITION_BIS[cc]['why']}; the present-day BIS Combined CPI "
+                f"history behind the one-full-month publication gate (latest {s.index.max()}) "
+                f"is used, not the {edition_label(cpi_ed)} vintage index.")
+        elif missing_note and missing_note[0] == "fixed-base":
             ev.notes.append(
                 f"cpi/{cc}: the {edition_label(cpi_ed)} CPI edition stores a fixed-base index "
                 "(y/y = 12-month ratio inside the vintage); the published y/y behind the "
@@ -568,6 +626,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                              "quarterly": cc in QUARTERLY_CPI, "kind": k,
                              "reason": ("fixed-base" if missing_note and
                                         missing_note[0] == "fixed-base" else
+                                        "definition" if missing_note and
+                                        missing_note[0] == "definition" else
                                         "absent" if missing_note else "")}
         record("cpi", cc, s)
     if used_cpi_rt:
@@ -644,8 +704,10 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                 ev.notes.append(
                     f"policy/{cc}: the {sw['new']} became the policy rate on "
                     f"{sw['date'].isoformat()} (the BIS series switches from the {sw['old']}, "
-                    f"{float(pre.iloc[-1]):.2f}% → {float(post.iloc[0]):.2f}%). The switch is not a "
-                    f"rate change ({sw['source']}): earlier history is spliced by {jump:+.2f}pp so "
+                    f"{float(pre.iloc[-1]):.2f}% → {float(post.iloc[0]):.2f}%). "
+                    + (f"{sw['not_change']} ({sw['source']})" if sw.get("not_change") else
+                       f"The switch is not a rate change ({sw['source']})")
+                    + f": earlier history is spliced by {jump:+.2f}pp so "
                     "that policy changes are measured on the new instrument.")
         # month-ends inside the daily window must agree with the monthly rows
         bad = [str(q) for q in m.index if q.start_time >= pd.Timestamp(DAILY_START)

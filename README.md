@@ -460,6 +460,67 @@ byte-identical live; 33,317 audit checks, 0 failed).
   Value-unchanged reaffirmations and targets set during 2015 for later years
   are not recorded; no wording names a later year.
 
+### 2016 editions
+
+Biweekly grid continued: 2016-01-10, 01-24, 02-07, 02-21, 03-06, 03-20,
+04-03, 04-17, 05-01, 05-15, 05-29, 06-12, 06-26, 07-10, 07-24, 08-07, 08-21,
+09-04, 09-18, 10-02, 10-16, 10-30, 11-13, 11-27, 12-11, 12-25
+(`python scripts/retro_build.py --range 2016-01-10 2016-12-31 --every 14`),
+PUBLISHED_LINE
+
+- **CLI editions** January–June and October–December 2016 are registered
+  from dated public reports (PTI and Reuters via Business Standard, RTTNews,
+  Gazeta do Povo, Republika, Investing.com, Lincoln Daily News, Uzmanpara /
+  Milliyet, and the OECD's own release of 8 Mar 2016), each page fetched and
+  content-checked against the vintage (OECD area, US, Germany or China). The
+  June check uses Reuters' two-decimal figures (China 98.41 from 98.38; every
+  two-decimal value quoted equals the vintage). The November report (Turkish)
+  labels the month August, but its four two-decimal percentages (OECD area
+  −0.01% m/m and −0.26% y/y, Türkiye +0.06% and +1.22%) equal the November
+  edition's September values and not the October edition's August values.
+  Release days: 11 Jan, 8 Feb, 8 Mar, 11 Apr, 11 May, 8 Jun, 10 Oct, 9 Nov,
+  8 Dec.
+- **No CLI in July and August.** The OECD suspended CLI publication over the
+  summer of 2016 and released three months' worth of data on 8 Sep 2016; the
+  July and August 2016 editions of the revisions database carry no LI_AA
+  records at all (`NO_CLI_EDITIONS` in `realtime.py`), so 2016-07-10 …
+  2016-09-18 keep the June release and the pages say so. The September release
+  has no retrievable dated report with figures (the one Reuters copy found is
+  not fetchable), so it is *not* registered and enters on 2016-10-02 through
+  the edition-month-end rule. No 2016 edition re-estimates the CLI history, so
+  no method note applies.
+- **Japan's policy rate.** The BIS series is blank from 4 Apr 2013 (QQE) until
+  21 Sep 2016. From 16 Feb 2016 the BoJ applied −0.1% to Policy-Rate Balances
+  (announced 29 Jan 2016, BoJ statement cited on the page); that level fills
+  the blank days (`DAILY_BRIDGE`), so the easing is dated when it took effect
+  (0.05% proxy → −0.10%), and from 21 Sep 2016 the BIS series resumes at the
+  same level as the short-term policy interest rate under yield-curve control.
+  Interior months without a BIS monthly row take the daily month-end, as
+  trailing months already did (earlier editions rebuild identically).
+- **Indonesia's instrument switch.** On 19 Aug 2016 the BI 7-Day (Reverse)
+  Repo Rate (5.25%) replaced the BI Rate (6.50%) as the policy rate (Bank
+  Indonesia release No. 18/67/DKom, as announced on 15 Apr 2016). The BIS
+  series switches that day; it is not a cut: from the switch on, earlier
+  history is spliced onto the new instrument (−1.25pp), as for Türkiye in 2010.
+- **US instrument.** From the 2016-12-25 edition
+  the label names the 0.50–0.75% target range effective 15 Dec 2016 (FOMC
+  statement and implementation note of 14 Dec 2016).
+- **Benchmarks** (`data/retro/benchmarks_2016.json`): current-year targets
+  Türkiye 5 (CBRT policy document of 24 Dec 2013, para 1: "the inflation
+  target for 2016 is set as 5 percent"), Brazil 4.5 ±2 (CMN Res. 4,345 of
+  25 Jun 2014), Colombia 3 ±1 (Board of 27 Nov 2015), Indonesia 4 ±1 (PMK
+  93/PMK.011/2014), Korea 2 (MPC of 16 Dec 2015, replacing 2.5–3.5%), Thailand
+  2.5 ±1.5 (Cabinet, 29 Dec 2015); India 6 → 5: the glide-path objective of
+  below 6 per cent by January has reached its horizon, so the RBI's objective
+  of "around 5 per cent by the end of fiscal" year (29 Sep 2015) is the
+  current-year benchmark, with the statutory 4% ±2 target notified on
+  5 Aug 2016 recorded for its wording (value unchanged; the MPC reaffirmed the
+  5 per cent objective on 4 Oct 2016); China ~3% re-set by the 5 Mar 2016
+  Government Work Report and the RBA's Statement of 19 Sep 2016, both recorded
+  for their wording. Value-unchanged reaffirmations and targets set during 2016
+  for later years (Canada's renewal of 24 Oct 2016) are not recorded; no
+  wording names a later year.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

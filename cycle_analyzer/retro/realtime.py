@@ -123,7 +123,10 @@ DAILY_BRIDGE = {
 # Editions of the revisions database that carry no CLI (LI_AA) at all: the July
 # and August 2016 editions hold CP and the other MEI measures but no leading
 # indicator (the query returns no records). They are never eligible as growth
-# input; the newest earlier edition with a CLI is used instead.
+# input; the newest earlier edition with a CLI is used instead. (The OECD suspended
+# CLI publication over the summer of 2016 and on 8 Sep 2016 "released three months'
+# worth of data" - Simon Ward, Money Moves Markets, 8 Sep 2016. That source is
+# dated after the affected editions, so it is cited here, not on their pages.)
 NO_CLI_EDITIONS = {"201607", "201608"}
 ERA_LAST_DAY = date(2016, 12, 31)          # editions on or before use this builder
 

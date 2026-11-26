@@ -9,9 +9,9 @@
    "sha256": "424fbc763d4d9f41f7ad03e41909963daf2ff5c053b9f98fc86d245cfb8b69e5",
    "nbytes": 1089227,
    "retrieved_at": "2026-11-26T09:53:03Z",
-   "available_by": "2017-09-30 (edition month end (conservative rule))",
+   "available_by": "2017-09-07 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, September 2017 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, September 2017 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2017-09-29": {
@@ -2433,10 +2433,41 @@
   "cli": {
    "edition": "201709",
    "label": "September 2017",
-   "public_by": "2017-09-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2017-09-07",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201709",
+    "area": "EA19",
+    "month": "2017-07",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.5,
+      "edition": 100.5,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.03,
+      "edition": 0.03,
+      "ok": true
+     },
+     {
+      "what": "yoy",
+      "reported": 0.6,
+      "edition": 0.6,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "OECD news release 'Composite leading indicators continue to point to stable growth momentum in the OECD area', Paris, 7 Sep 2017 (copy hosted by astrid-online.it), Table 1, July: OECD area 100.1 (+0.03% m/m, +0.56% y/y), euro area 100.5 (+0.03%, +0.60%), United States 99.7 (+0.01%, +0.66%), Brazil 102.8 (+0.34%, +3.43%)",
+     "url": "https://www.astrid-online.it/static/upload/oecd/oecd-cli-09-17.pdf",
+     "date": "2017-09-07"
+    }
+   ],
    "ref": "2017-07"
   },
   "cpi": {
@@ -2444,6 +2475,36 @@
    "label": "September 2017",
    "public_by": "2017-09-30",
    "basis": "edition month end (conservative rule)"
-  }
+  },
+  "policy_context": [
+   {
+    "cc": "TR",
+    "date": "2017-01-13",
+    "text": "the CBRT lowered banks' borrowing limits at its Interbank Money Market to TL 22 billion from 11 Jan 2017 (announced 10 Jan) and to TL 11 billion from 16 Jan 2017, said funding through Borsa Istanbul repo markets 'may be limited' on days deemed necessary, and that banks could meet their remaining liquidity needs 'without limits at late liquidity window funding rate at the end of the day'; the one-week repo rate (the BIS series) stays at 8%, so it understates the CBRT's marginal funding cost from then on",
+    "label": "CBRT press release, 13 Jan 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2017/ANO2017-02"
+   },
+   {
+    "cc": "TR",
+    "date": "2017-01-24",
+    "text": "the MPC raised the marginal funding (overnight lending) rate from 8.5% to 9.25% and the late liquidity window lending rate from 10% to 11%, keeping the one-week repo rate at 8%",
+    "label": "CBRT MPC decision, 24 Jan 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-04"
+   },
+   {
+    "cc": "TR",
+    "date": "2017-03-16",
+    "text": "the MPC raised the late liquidity window lending rate from 11% to 11.75%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
+    "label": "CBRT MPC decision, 16 Mar 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-14"
+   },
+   {
+    "cc": "TR",
+    "date": "2017-04-26",
+    "text": "the MPC raised the late liquidity window lending rate from 11.75% to 12.25%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
+    "label": "CBRT MPC decision, 26 Apr 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-19"
+   }
+  ]
  }
 }

@@ -160,7 +160,7 @@ mid-2026 need a citation for every decision since July 2025.
 ### Pre-archive editions (Q1 2008): real-time vintages
 
 No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
-reaches back to 2008, so editions dated on or before 2016-12-31 are built by
+reaches back to 2008, so editions dated on or before 2017-12-31 are built by
 `cycle_analyzer/retro/realtime.py` instead:
 
 | Input | Point-in-time source |
@@ -521,6 +521,72 @@ byte-identical live; 33,290 audit checks, 0 failed).
   for their wording. Value-unchanged reaffirmations and targets set during 2016
   for later years (Canada's renewal of 24 Oct 2016) are not recorded; no
   wording names a later year.
+
+### 2017 editions
+
+Biweekly grid continued: 2017-01-08, 01-22, 02-05, 02-19, 03-05, 03-19,
+04-02, 04-16, 04-30, 05-14, 05-28, 06-11, 06-25, 07-09, 07-23, 08-06, 08-20,
+09-03, 09-17, 10-01, 10-15, 10-29, 11-12, 11-26, 12-10, 12-24
+(`python scripts/retro_build.py --range 2017-01-08 2017-12-31 --every 14`),
+published to the site archive on 2026-11-26 (all 26 pages verified
+byte-identical live; 33,382 audit checks, 0 failed).
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2017-12-31: all twelve
+  2017 editions of the revisions database carry CLI (LI_AA) and CP records
+  for every economy used, so 2017 is built exactly as 2008–2016 are.
+- **CLI editions** January, February and April–November 2017 are registered
+  from dated public reports (Dow Jones Newswires in German via
+  finanznachrichten.de, dpa-AFX via finanzen.net, City A.M., RTTNews, Fox
+  Business, askanews, Bigpara, Uzmanpara, and the OECD's own releases of
+  10 Jul and 7 Sep 2017 as hosted by Hellenic Shipping News and
+  astrid-online.it), each page fetched and content-checked against the vintage
+  (OECD area, euro area, US, UK or Türkiye). The February check uses the UK
+  level only (City A.M.: "rose to 99.5"; vintage 99.46): the Reuters copy with
+  more figures is not fetchable here. The August check uses Türkiye's figures
+  (100.8 from 100.5, +0.30% m/m, +1.72% y/y; vintage 100.82, +0.30, +1.71),
+  because the OECD-area and US values sit on rounding boundaries (100.05,
+  99.65). The March and December 2017 releases (January and October data)
+  have no retrievable dated report with figures, so they are *not*
+  registered: 2017-03-19 keeps the February release and the March edition
+  enters on 2017-04-02 through the edition-month-end rule; 2017-12-24 keeps
+  November's. Release days: 11 Jan, 8 Feb,
+  10 Apr, 10 May, 12 Jun, 10 Jul, 8 Aug, 7 Sep, 9 Oct, 9 Nov. No 2017 edition
+  re-estimates the CLI history: OECD-area revisions to 2000–2013 values stay
+  at or below 0.07; country-level component revisions reach 1.25 (Czechia,
+  February) and 1.0 (UK, January), so no method note applies.
+- **Policy.** The BIS daily histories show only real decisions in 2017 (no
+  instrument switch). US instrument labels follow the target-range moves
+  effective 16 Mar (0.75–1.00%), 15 Jun (1.00–1.25%) and 14 Dec 2017
+  (1.25–1.50%; FOMC statements of 15 Mar, 14 Jun and 13 Dec).
+- **Türkiye's funding rate** (`data/retro/policy_context.json`, new). The BIS
+  series is the CBRT one-week repo rate, 8% all year, while the CBRT
+  restricted funding at that rate from mid-January 2017 and supplied the
+  market at the late liquidity window (LLW) lending rate (press release of
+  13 Jan; MPC decisions raising the LLW lending rate to 11% on 24 Jan, 11.75%
+  on 16 Mar, 12.25% on 26 Apr and 12.75% on 14 Dec 2017). Each fact is shown
+  on the evidence page, with its source, only from its own date; it is a
+  disclosure, not a model input (the policy level, carry and real rate stay
+  on the BIS series). The CBRT's statement that one-week repo auctions were
+  suspended from 12 Jan 2017 is in Inflation Report 2017-I, whose retrievable
+  PDF was created on 1 Mar 2017; it is not cited.
+- **Benchmarks** (`data/retro/benchmarks_2017.json`): current-year targets
+  Türkiye 5 (CBRT policy document of 10 Dec 2014, para 1, restated with the
+  ±2pp band on 6 Dec 2016), Brazil 4.5 ±1.5 (CMN Res. 4,419 of 25 Jun 2015),
+  Colombia 3 ±1 (Board of 25 Nov 2016, cited from the bank's English release:
+  the Spanish page sits behind a bot check), Indonesia 4 ±1 (PMK
+  93/PMK.011/2014), Thailand 2.5 ±1.5 (Cabinet, 20 Dec 2016; Bank of Thailand
+  and Fiscal Policy Office announcements of 21 Dec 2016), Canada 2% under the
+  renewal of 24 Oct 2016 (now the agreement in force), India 5 (MPC of
+  4 Oct 2016: 5 per cent by Q4 of the fiscal year ending in March). Changes
+  announced during 2017: China ~3% re-set by the 5 Mar 2017 Government Work
+  Report (recorded for its wording); India 5 → 4 from the MPC resolution of
+  6 Apr 2017 (the medium-term 4% target, once the Q4 objective reached its
+  horizon); Sweden's target variable CPI → CPIF (7 Sep 2017; value unchanged,
+  recorded because it replaces the row's index and wording). The benchmark
+  note no longer says that only one economy targets an index other than
+  headline CPI. Value-unchanged reaffirmations are not recorded (the UK remit
+  of 8 Mar 2017; New Zealand's unchanged Policy Targets Agreements of 6 Jun
+  and 7 Nov 2017; Korea's 2%); no wording names a later year.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

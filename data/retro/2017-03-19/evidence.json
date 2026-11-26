@@ -9,9 +9,9 @@
    "sha256": "630719791e813226e225e0a005d395439923ebe016f597d9f42ca61430bce0c0",
    "nbytes": 1073349,
    "retrieved_at": "2026-11-26T09:52:40Z",
-   "available_by": "2017-02-28 (edition month end (conservative rule))",
+   "available_by": "2017-02-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2017 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2017 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2017-03-17": {
@@ -2407,10 +2407,29 @@
   "cli": {
    "edition": "201702",
    "label": "February 2017",
-   "public_by": "2017-02-28",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2017-02-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201702",
+    "area": "GBR",
+    "month": "2016-12",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.5,
+      "edition": 99.46,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "City A.M., 'The UK economy is gaining momentum despite Brexit fears, says the OECD', 8 Feb 2017 (14:43 GMT): the UK composite leading indicator rose to 99.5 (December), continuing a clear upward trend from July 2016; stable growth momentum for the 35 OECD countries",
+     "url": "https://www.cityam.com/uk-economy-gaining-momentum-despite-brexit-fears-says-oecd/",
+     "date": "2017-02-08"
+    }
+   ],
    "ref": "2016-12"
   },
   "cpi": {
@@ -2418,6 +2437,29 @@
    "label": "February 2017",
    "public_by": "2017-02-28",
    "basis": "edition month end (conservative rule)"
-  }
+  },
+  "policy_context": [
+   {
+    "cc": "TR",
+    "date": "2017-01-13",
+    "text": "the CBRT lowered banks' borrowing limits at its Interbank Money Market to TL 22 billion from 11 Jan 2017 (announced 10 Jan) and to TL 11 billion from 16 Jan 2017, said funding through Borsa Istanbul repo markets 'may be limited' on days deemed necessary, and that banks could meet their remaining liquidity needs 'without limits at late liquidity window funding rate at the end of the day'; the one-week repo rate (the BIS series) stays at 8%, so it understates the CBRT's marginal funding cost from then on",
+    "label": "CBRT press release, 13 Jan 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/Main+Menu/Announcements/Press+Releases/2017/ANO2017-02"
+   },
+   {
+    "cc": "TR",
+    "date": "2017-01-24",
+    "text": "the MPC raised the marginal funding (overnight lending) rate from 8.5% to 9.25% and the late liquidity window lending rate from 10% to 11%, keeping the one-week repo rate at 8%",
+    "label": "CBRT MPC decision, 24 Jan 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-04"
+   },
+   {
+    "cc": "TR",
+    "date": "2017-03-16",
+    "text": "the MPC raised the late liquidity window lending rate from 11% to 11.75%, keeping the one-week repo rate at 8% and the overnight lending rate at 9.25%",
+    "label": "CBRT MPC decision, 16 Mar 2017",
+    "url": "https://www.tcmb.gov.tr/wps/wcm/connect/EN/TCMB+EN/MPC/MPC+Meeting+Decisions/ANO2017-14"
+   }
+  ]
  }
 }

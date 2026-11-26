@@ -9,9 +9,9 @@
    "sha256": "9f7a570811da054088e15e3448cf08d5db61c6e4f7a90be1ae93c2aa4501a28a",
    "nbytes": 1144363,
    "retrieved_at": "2026-11-26T13:15:11Z",
-   "available_by": "2019-08-31 (edition month end (conservative rule))",
+   "available_by": "2019-08-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, August 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, August 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2019-08-30": {
@@ -503,7 +503,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CL?format=csv&startPeriod=1994-01&endPeriod=2019-07",
    "sha256": "fa33992d11df1a987011071147691feafaafcdd327b75de945e690fb682b3eb0",
    "nbytes": 22209,
-   "retrieved_at": "2026-11-26T13:15:57Z",
+   "retrieved_at": "2026-11-26T13:15:58Z",
    "available_by": "reference months through 2019-07 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.CL: present-day BIS history requested with endPeriod=2019-07, so the retained bytes stop at 2019-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -525,7 +525,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CO?format=csv&startPeriod=1994-01&endPeriod=2019-07",
    "sha256": "565bba2514ae4d102b1b0a81746e9d9fbf590584a53c462acb19ab7758ee3e8d",
    "nbytes": 23097,
-   "retrieved_at": "2026-11-26T13:15:58Z",
+   "retrieved_at": "2026-11-26T13:15:59Z",
    "available_by": "reference months through 2019-07 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.CO: present-day BIS history requested with endPeriod=2019-07, so the retained bytes stop at 2019-07. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -2440,10 +2440,46 @@
   "cli": {
    "edition": "201908",
    "label": "August 2019",
-   "public_by": "2019-08-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2019-08-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201908",
+    "area": "TUR",
+    "month": "2019-06",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 98.3,
+      "edition": 98.27,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.18,
+      "edition": 0.18,
+      "ok": true
+     },
+     {
+      "what": "yoy",
+      "reported": -1.65,
+      "edition": -1.65,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Milliyet; Foreks wire, in Turkish), 'OECD B\u00f6lgesi'nde \u00d6nc\u00fc g\u00f6stergeler de\u011fi\u015fmedi', 8 Aug 2019 (13:00 +03:00): OECD area June \u22120.05% on the month, \u22121.25% on the year, at 99.1; T\u00fcrkiye +0.18% and \u22121.65%, 98.3 from 98.1; June levels Germany 98.7 (May 99.0), euro area 99.0 (99.1), US 98.8 (98.9), China 98.9 (98.8)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-bolgesinde-oncu-gostergeler-degismedi/1387807/",
+     "date": "2019-08-08"
+    },
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: T\u00dcRK\u0130YE'DE HAZ\u0130RAN'DA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 AYLIK %0,18, YILLIK -%1,65', 8 Aug 2019 (13:00 +03:00)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-turkiyede-haziranda-oncu-gostergeler-endeksi-aylik-0-18--yillik--1-65/1387816/",
+     "date": "2019-08-08"
+    }
+   ],
    "ref": "2019-06"
   },
   "cpi": {

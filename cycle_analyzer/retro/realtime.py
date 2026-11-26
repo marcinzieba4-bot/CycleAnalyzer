@@ -128,7 +128,20 @@ DAILY_BRIDGE = {
 # worth of data" - Simon Ward, Money Moves Markets, 8 Sep 2016. That source is
 # dated after the affected editions, so it is cited here, not on their pages.)
 NO_CLI_EDITIONS = {"201607", "201608"}
-ERA_LAST_DAY = date(2016, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2017, 12, 31)          # editions on or before use this builder
+# Operational policy facts that the BIS series does not show (e.g. Turkiye in 2017: the
+# CBRT kept the one-week repo rate at 8% but funded the market at the late liquidity
+# window rate). Disclosed on the page with their sources, never model inputs; an item is
+# shown only in editions whose last eligible day is on or after its source date.
+POLICY_CONTEXT_FILE = OUT_ROOT / "policy_context.json"
+
+
+def policy_context(ed: Edition) -> list[dict]:
+    if not POLICY_CONTEXT_FILE.exists():
+        return []
+    reg = json.loads(POLICY_CONTEXT_FILE.read_text())
+    return [{"cc": cc, **x} for cc, xs in reg.items() if not cc.startswith("_")
+            for x in xs if date.fromisoformat(x["date"]) <= ed.last_eligible_day]
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
           "September", "October", "November", "December"]
@@ -707,6 +720,10 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             cc=cc, monthly_last=str(m.index.max()), monthly_value=float(m.iloc[-1]),
             current=float(cur), effective_since=since, archive_daily_end=led.isoformat(),
             source=me.id)
+
+    pc = policy_context(ed)
+    if pc:
+        ev.rt["policy_context"] = pc
 
     out = {}
     for k, dct in panels.items():

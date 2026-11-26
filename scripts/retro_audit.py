@@ -189,6 +189,9 @@ def audit(d: date) -> list[str]:
     for x in ev.get("rt", {}).get("cli", {}).get("evidence", []):
         check(date.fromisoformat(x["date"]) <= ed.last_eligible_day,
               f"evidence item dated {x['date']} shown before it was published")
+    for x in ev.get("rt", {}).get("policy_context", []):
+        check(date.fromisoformat(x["date"]) <= ed.last_eligible_day,
+              f"policy context item {x['cc']} dated {x['date']} shown before it was published")
     for a in ev.get("decisions", []):
         check(date.fromisoformat(a["effective"]) <= ed.last_eligible_day,
               f"decision {a} effective after cutoff day")

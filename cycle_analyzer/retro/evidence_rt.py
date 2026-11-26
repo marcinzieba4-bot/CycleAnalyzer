@@ -39,6 +39,21 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2017, 12, 14):
+        # FOMC statement of 13 Dec 2017: "the Committee decided to raise the target
+        # range for the federal funds rate to 1-1/4 to 1-1/2 percent"; effective 14 Dec
+        return ("Federal funds target range midpoint (1.25–1.50% range from 14 Dec 2017, "
+                "after 1.00–1.25% from 15 Jun 2017)")
+    if cc == "US" and ed.last_eligible_day >= date(2017, 6, 15):
+        # FOMC statement of 14 Jun 2017: "the Committee decided to raise the target
+        # range for the federal funds rate to 1 to 1-1/4 percent"; effective 15 Jun
+        return ("Federal funds target range midpoint (1.00–1.25% range from 15 Jun 2017, "
+                "after 0.75–1.00% from 16 Mar 2017)")
+    if cc == "US" and ed.last_eligible_day >= date(2017, 3, 16):
+        # FOMC statement of 15 Mar 2017: "the Committee decided to raise the target
+        # range for the federal funds rate to 3/4 to 1 percent"; effective 16 Mar
+        return ("Federal funds target range midpoint (0.75–1.00% range from 16 Mar 2017, "
+                "after 0.50–0.75% from 15 Dec 2016)")
     if cc == "US" and ed.last_eligible_day >= date(2016, 12, 15):
         # FOMC statement of 14 Dec 2016: "the Committee decided to raise the target
         # range for the federal funds rate to 1/2 to 3/4 percent"; effective 15 Dec
@@ -273,6 +288,12 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                          f'<a href="{_e(src["url"])}">{_e(src["label"])}</a>')
         add('<p class="sub">Levels used where the BIS daily history is blank (see the data '
             "notes): " + "; ".join(parts) + ".</p>")
+    pctx = ev.rt.get("policy_context", [])
+    if pctx:
+        add('<p class="sub">Operational context the BIS series does not show (disclosed for '
+            "reading the policy rows; not a model input): " + " ".join(
+                f"{_e(C[x['cc']].name)} — {_e(x['text'])} "
+                f'(<a href="{_e(x["url"])}">{_e(x["label"])}</a>).' for x in pctx) + "</p>")
 
     # ---- inflation inputs -------------------------------------------------------------
     add("<h3>Inflation inputs</h3>")

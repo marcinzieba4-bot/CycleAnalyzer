@@ -8,6 +8,7 @@ histories and explicitly gated present-day histories.
 from __future__ import annotations
 
 import html
+import json
 from datetime import date
 
 import numpy as np
@@ -17,6 +18,8 @@ from .editions import Edition
 from .panels import Evidence
 from . import realtime as R
 from .benchmarks import era_benchmarks, targets_for
+
+ANN_SOURCES = json.loads((R.OUT_ROOT / "announcement_sources.json").read_text())
 
 POLICY_INSTRUMENT_RT = {
     "US": "Federal funds target rate", "XM": "ECB main refinancing operations rate",
@@ -36,6 +39,11 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2016, 12, 15):
+        # FOMC statement of 14 Dec 2016: "the Committee decided to raise the target
+        # range for the federal funds rate to 1/2 to 3/4 percent"; effective 15 Dec
+        return ("Federal funds target range midpoint (0.50–0.75% range from 15 Dec 2016, "
+                "after 0.25–0.50% from 17 Dec 2015)")
     if cc == "US" and ed.last_eligible_day >= date(2015, 12, 17):
         # FOMC statement of 16 Dec 2015: "the Committee decided to raise the target
         # range for the federal funds rate to 1/4 to 1/2 percent"; effective 17 Dec
@@ -46,6 +54,24 @@ def instrument(cc: str, ed: Edition) -> str:
     if cc == "TR" and ed.last_eligible_day >= date(2010, 5, 20):
         return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
                 "spliced from the overnight borrowing rate)")
+    if cc == "ID" and ed.last_eligible_day >= date(2016, 8, 19):
+        return ("BI 7-Day (Reverse) Repo Rate (policy rate from 19 Aug 2016; earlier history "
+                "spliced from the BI Rate)")
+    if cc == "JP" and ed.last_eligible_day >= date(2016, 9, 21):
+        # BoJ, 'New Framework for Strengthening Monetary Easing: "Quantitative and
+        # Qualitative Monetary Easing with Yield Curve Control"', 21 Sep 2016
+        return ("Short-term policy interest rate: −0.1% applied to Policy-Rate Balances in "
+                "BoJ current accounts (QQE with Yield Curve Control, from 21 Sep 2016; the same "
+                "rate applied from 16 Feb 2016). Earlier months at the former 0–0.1% "
+                "call-rate guideline (0.05%), a proxy while the monetary base was the main "
+                "operating target")
+    if cc == "JP" and ed.last_eligible_day >= date(2016, 2, 16):
+        # BoJ, 'Introduction of "Quantitative and Qualitative Monetary Easing with a
+        # Negative Interest Rate"', 29 Jan 2016, effective 16 Feb 2016
+        return ("Rate applied to Policy-Rate Balances in BoJ current accounts (−0.1% from "
+                "16 Feb 2016, announced 29 Jan 2016); the main operating target remains the "
+                "monetary base (QQE). Earlier months at the former 0–0.1% call-rate guideline "
+                "(0.05%), a short-rate proxy")
     if cc == "JP" and ed.last_eligible_day >= date(2013, 4, 4):
         # BoJ, 'Introduction of the "Quantitative and Qualitative Monetary Easing"',
         # 4 Apr 2013: "the main operating target for money market operations is changed
@@ -230,10 +256,16 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
             f"{R.DECISION_MIN_PP:.2f}pp). Every one took effect on or before "
             f"{ed.last_eligible_day.isoformat()}.</p>")
         add('<ul class="standouts">')
+        bridged = {(a["cc"], a["effective"]) for a in ev.announcements
+                   if a.get("source") == "daily bridge"}
         for a in sorted(ev.decisions, key=lambda a: a["effective"], reverse=True):
+            src = ANN_SOURCES.get(f"{a['cc']}|{a['effective']}") if (
+                a["cc"], a["effective"]) in bridged else None
+            cite = (f"; BIS daily series blank, level as announced {_e(src['announced'])}: "
+                    f'<a href="{_e(src["url"])}">{_e(src["label"])}</a>' if src else "")
             add(f"<li><b>{_e(a['effective'])} · {_e(C[a['cc']].name)}</b> — "
                 f"{_e(instrument(a['cc'], ed) or 'policy rate')} {a['from']:g}% → "
-                f"{a['to']:g}% ({a['to'] - a['from']:+.2f}pp)</li>")
+                f"{a['to']:g}% ({a['to'] - a['from']:+.2f}pp){cite}</li>")
         add("</ul>")
     else:
         add('<p class="sub">None.</p>')

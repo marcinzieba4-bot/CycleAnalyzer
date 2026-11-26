@@ -101,7 +101,26 @@ INSTRUMENT_SWITCH = {
                       "overnight rates kept unchanged; as a 'technical rate adjustment', "
                       "'the one week repo rate, which becomes the new policy rate, is set at 7 "
                       "percent—50 basis points above the overnight borrowing rates'")},
+    "ID": {"date": date(2016, 8, 19), "old": "BI Rate",
+           "new": "BI 7-Day (Reverse) Repo Rate",
+           "source": "ID_SWITCH_SOURCE"},
 }
+# Levels the BIS daily history leaves blank although they were announced and in
+# force. Japan's series is empty from 4 Apr 2013 (QQE made the monetary base the
+# main operating target) until the short-term policy interest rate of 21 Sep 2016.
+# From 16 Feb 2016 the BoJ applied -0.1% to Policy-Rate Balances (announced
+# 29 Jan 2016); that rate is used for the blank days from its effective date, so
+# the easing is dated when it took effect. Only days without a BIS observation are
+# filled; each bridge cites its announcement (data/retro/announcement_sources.json).
+DAILY_BRIDGE = {
+    "JP": [{"effective": date(2016, 2, 16), "until": date(2016, 9, 20), "value": -0.1,
+            "announced": "2016-01-29", "what": "rate applied to Policy-Rate Balances"}],
+}
+# Editions of the revisions database that carry no CLI (LI_AA) at all: the July
+# and August 2016 editions hold CP and the other MEI measures but no leading
+# indicator (the query returns no records). They are never eligible as growth
+# input; the newest earlier edition with a CLI is used instead.
+NO_CLI_EDITIONS = {"201607", "201608"}
 ERA_LAST_DAY = date(2016, 12, 31)          # editions on or before use this builder
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
@@ -133,13 +152,21 @@ def _month_end_edition(ed: Edition) -> str:
     return f"{p.year}{p.month:02d}"
 
 
+def _with_cli(e: str) -> str:
+    """``e``, or the newest earlier edition that carries a CLI at all."""
+    p = pd.Period(f"{e[:4]}-{e[4:]}", freq="M")
+    while f"{p.year}{p.month:02d}" in NO_CLI_EDITIONS:
+        p -= 1
+    return f"{p.year}{p.month:02d}"
+
+
 def cli_edition(ed: Edition) -> tuple[str, str, str]:
     """(edition, public-by date, basis) for the growth input: the newest edition
     either evidenced public before the cutoff in the register, or whose edition
-    month has ended."""
+    month has ended (editions without a CLI are skipped)."""
     reg = register()
-    cands = {_month_end_edition(ed): (_month_end(_month_end_edition(ed)).isoformat(),
-                                      "edition month end (conservative rule)")}
+    me = _with_cli(_month_end_edition(ed))
+    cands = {me: (_month_end(me).isoformat(), "edition month end (conservative rule)")}
     for k, v in reg.items():
         if date.fromisoformat(v["cli_public_by"]) <= ed.last_eligible_day:
             if k not in cands or v["cli_public_by"] < cands[k][0]:
@@ -151,6 +178,8 @@ def cli_edition(ed: Edition) -> tuple[str, str, str]:
 def eligible_cli(ed: Edition, e: str) -> tuple[str, str] | None:
     """(public-by, basis) if CLI edition ``e`` was eligible for ``ed``, else None."""
     led = ed.last_eligible_day
+    if e in NO_CLI_EDITIONS:
+        return None
     v = register().get(e)
     if v and date.fromisoformat(v["cli_public_by"]) <= led:
         return v["cli_public_by"], v["basis"]
@@ -344,6 +373,14 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     # ---- growth: real-time CLI ------------------------------------------
     cli_ed, cli_pub, cli_basis = cli_edition(ed)
     log(f"growth: OECD real-time CLI, {edition_label(cli_ed)} edition (public by {cli_pub})")
+    skipped = sorted(e for e in NO_CLI_EDITIONS if cli_ed < e <= _month_end_edition(ed))
+    if skipped:
+        ev.notes.append(
+            "cli: the " + " and ".join(edition_label(e) for e in skipped)
+            + (" editions" if len(skipped) > 1 else " edition")
+            + " of the real-time database " + ("carry" if len(skipped) > 1 else "carries")
+            + " no composite leading indicator (no records for any area); the newest edition "
+            f"with one ({edition_label(cli_ed)}) is used.")
     b, e = oecd_rt("LI_AA", cli_ed, cli_pub, cli_basis)
     ev.add(e)
     cli = parse_rt(b)
@@ -550,6 +587,30 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             continue
         ev.add(me)
         ev.add(de)
+        bridged: set = set()
+        for br in DAILY_BRIDGE.get(cc, []):
+            if led < br["effective"]:
+                continue
+            days = pd.date_range(br["effective"], min(led, br["until"]), freq="D")
+            fill = days.difference(d.index)
+            if not len(fill):
+                continue
+            before = d[d.index < pd.Timestamp(br["effective"])]
+            d = pd.concat([d, pd.Series(br["value"], index=fill, dtype=float)]).sort_index()
+            bridged |= set(fill)
+            ev.announcements.append({"cc": cc, "effective": br["effective"].isoformat(),
+                                     "from": float(before.iloc[-1]) if len(before) else None,
+                                     "to": br["value"], "source": "daily bridge"})
+            resumes = pd.Timestamp(br["until"]) + pd.Timedelta(days=1)
+            ev.notes.append(
+                f"policy/{cc}: the BIS daily series is blank from "
+                f"{(before.index.max() + pd.Timedelta(days=1)).date().isoformat()}"
+                + (f" to {br['until'].isoformat()}" if led >= resumes.date() else "")
+                + "; months without a BIS row carry the last BIS level as a proxy. From "
+                f"{br['effective'].isoformat()} the {br['what']}, {br['value']:.2f}% (announced "
+                f"{br['announced']}; source under the decisions), fills the blank days"
+                + (f"; the BIS series resumes at the same level on {resumes.date().isoformat()}"
+                   if led >= resumes.date() else "") + ".")
         sw = INSTRUMENT_SWITCH.get(cc)
         if sw and led >= sw["date"]:
             t = pd.Timestamp(sw["date"])
@@ -573,7 +634,25 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         if bad:
             ev.notes.append(f"policy/{cc}: BIS monthly differs from the daily month-end in "
                             f"{', '.join(bad)}; monthly rows retained.")
+        def _ext_source(p: pd.Period) -> str:
+            last_day = d[d.index <= p.end_time].index.max()
+            return ("daily bridge month-end (BIS daily blank; announced level, see the data "
+                    "notes)" if last_day in bridged else
+                    "BIS daily month-end (monthly row absent)")
+
         last_m = m.index.max() if len(m) else None
+        if last_m is not None:
+            # interior months without a BIS monthly row (e.g. Japan from May 2013 once
+            # the series resumes) take the daily month-end, as trailing months do
+            inner = pd.period_range(max(m.index.min(), pd.Period(DAILY_START, freq="M")),
+                                    last_m, freq="M").difference(m.index)
+            for p in inner:
+                v = _value_on(d, p.end_time.date())
+                if v is not None:
+                    m.loc[p] = v
+                    ev.extensions.append({"cc": cc, "month": str(p), "value": v,
+                                          "source": _ext_source(p)})
+            m = m.sort_index()
         if last_m is None or last_m < ed.anchor:
             start = (last_m + 1) if last_m is not None else ed.anchor
             for p in pd.period_range(start, ed.anchor, freq="M"):
@@ -581,7 +660,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                 if v is not None:
                     m.loc[p] = v
                     ev.extensions.append({"cc": cc, "month": str(p), "value": v,
-                                          "source": "BIS daily month-end (monthly row absent)"})
+                                          "source": _ext_source(p)})
             m = m.sort_index()
         cur = _value_on(d, led)
         if cur is None:

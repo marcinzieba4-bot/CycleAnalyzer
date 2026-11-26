@@ -409,6 +409,57 @@ byte-identical live; 33,369 audit checks, 0 failed).
   Work Report (recorded for its wording). Value-unchanged reaffirmations and
   targets set during 2014 for later years are not recorded.
 
+### 2015 editions
+
+Biweekly grid continued: 2015-01-11, 01-25, 02-08, 02-22, 03-08, 03-22,
+04-05, 04-19, 05-03, 05-17, 05-31, 06-14, 06-28, 07-12, 07-26, 08-09, 08-23,
+09-06, 09-20, 10-04, 10-18, 11-01, 11-15, 11-29, 12-13, 12-27
+(`python scripts/retro_build.py --range 2015-01-11 2015-12-31 --every 14`),
+published to the site archive on 2026-11-26 (all 26 pages verified
+byte-identical live; 33,317 audit checks, 0 failed).
+
+- **CLI editions** January–October 2015 are registered from dated public
+  reports (Reuters via Lincoln Daily News / Investing.com / Daily FT / Voice
+  of America, RTÉ, The Irish Times, RTTNews, IBTimes, Governance Now), each
+  page fetched and content-checked against the vintage (OECD area, euro area,
+  US, UK, China or India). Where the OECD-area monthly change sits on a
+  rounding boundary (January: 100.44 → 100.49 reported as "100.5 from 100.4")
+  another quoted area is checked. The May report prints the U.S. reading as
+  "98.8 to 98.6" (vintage 99.8 to 99.6, apparently a misprint); its China,
+  euro-area, German, French, Italian and Japanese figures all match, and the
+  check uses China. The November and December 2015 releases (September and
+  October data) have no retrievable dated report with figures, so they are
+  *not* registered: 2015-11-15 and 2015-11-29 keep the October release, and
+  the November edition enters on 2015-12-13 through the edition-month-end rule.
+  Earliest dated reports: 12 Jan, 9 Feb, 9 Mar, 9 Apr, 12 May, 9 Jun, 8 Jul,
+  10 Aug, 8 Sep, 8 Oct. No 2015 edition re-estimates the CLI history
+  (revisions to 2000–2012 values stay at or below 0.34, the UK in October),
+  so no method note applies.
+- **Euro-area code.** The real-time database files the euro area as EA18 in
+  every edition through January 2015 and only as EA19 from the February 2015
+  edition (Lithuania joined on 1 January 2015). `realtime.rt_areas()` now
+  picks the code per edition (CLI and CPI); earlier editions request the same
+  URLs as before (a rebuilt 2014-12-28 page is byte-identical), and pages
+  using an EA19 edition say so in the data notes.
+- **US instrument.** From the 2015-12-27 edition the label names the
+  0.25–0.50% target range effective 17 Dec 2015 (FOMC statement of 16 Dec:
+  "decided to raise the target range for the federal funds rate to 1/4 to 1/2
+  percent"); the BIS daily history moves 0.125 → 0.375 on that day.
+- **Benchmarks** (`data/retro/benchmarks_2015.json`): current-year targets
+  Türkiye 5 (CBRT policy document of 25 Dec 2012, para 19: "the inflation
+  target for 2015 was set as 5 percent"), Brazil 4.5 ±2 (CMN Res. 4,237 of
+  28 Jun 2013), Colombia 3 ±1 (Board of 28 Nov 2014), Indonesia 4.5 → 4 ±1
+  (PMK 66/PMK.011/2012), Korea 2.5–3.5% (midpoint 3, the MPC's target for
+  the three years from 2013); India 8 → 6, the second objective of the RBI's
+  28 Jan 2014 glide path ("below 6 per cent CPI inflation" by January of the
+  following year), with the Monetary Policy Framework Agreement recorded for
+  its wording from the Governor's statement of 4 Mar 2015 (value unchanged);
+  Thailand 1.75 (core 0.5–3.0%) → 2.5, the headline target of 2.5% ±1.5
+  approved by the Cabinet on 6 Jan 2015; China ~3.5% → ~3% from the 5 Mar 2015
+  Government Work Report ("keep the increase in the CPI at around 3%").
+  Value-unchanged reaffirmations and targets set during 2015 for later years
+  are not recorded; no wording names a later year.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

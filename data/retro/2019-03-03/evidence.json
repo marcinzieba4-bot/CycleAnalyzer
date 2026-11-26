@@ -9,9 +9,9 @@
    "sha256": "a2eaf9fb232e9699c2ca26cdcfcb5bfce7ba7b9f72332dbff0eb2eed4c421057",
    "nbytes": 1130805,
    "retrieved_at": "2026-11-26T13:07:31Z",
-   "available_by": "2019-02-28 (edition month end (conservative rule))",
+   "available_by": "2019-02-11 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2019-03-01": {
@@ -2425,10 +2425,35 @@
   "cli": {
    "edition": "201902",
    "label": "February 2019",
-   "public_by": "2019-02-28",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2019-02-11",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201902",
+    "area": "OECD",
+    "month": "2018-12",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.2,
+      "edition": 99.2,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.1,
+      "edition": -0.13,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator weist weiter auf Wachstumsabschw\u00e4chung', 11 Feb 2019 (12:44 CET; 06:13 ET / 11:13 GMT): the leading indicator for the whole OECD area fell 0.1 on the month to 99.2 in December",
+     "url": "https://www.finanznachrichten.de/nachrichten-2019-02/45932813-oecd-fruehindikator-weist-weiter-auf-wachstumsabschwaechung-015.htm",
+     "date": "2019-02-11"
+    }
+   ],
    "ref": "2018-12"
   },
   "cpi": {

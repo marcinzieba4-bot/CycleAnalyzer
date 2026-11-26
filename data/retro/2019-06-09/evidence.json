@@ -9,9 +9,9 @@
    "sha256": "97d0c87f6b3bbfb4b53a5a206e00eee92de0d0bad051fdc6ff02ab1f1eb34d0b",
    "nbytes": 1137508,
    "retrieved_at": "2026-11-26T13:11:02Z",
-   "available_by": "2019-05-31 (edition month end (conservative rule))",
+   "available_by": "2019-05-13 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, May 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, May 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2019-06-07": {
@@ -2385,10 +2385,40 @@
   "cli": {
    "edition": "201905",
    "label": "May 2019",
-   "public_by": "2019-05-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2019-05-13",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201905",
+    "area": "OECD",
+    "month": "2019-03",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.0,
+      "edition": 98.98,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.1,
+      "edition": -0.08,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator deutet weiter auf Konjunkturabschw\u00e4chung', 13 May 2019 (12:31 CEST; 06:00 ET / 10:00 GMT): the leading indicator for the whole OECD area fell 0.1 to 99.0 in March",
+     "url": "https://www.finanznachrichten.de/nachrichten-2019-05/46693310-oecd-fruehindikator-deutet-weiter-auf-konjunkturabschwaechung-015.htm",
+     "date": "2019-05-13"
+    },
+    {
+     "label": "RTTNews, 'OECD Leading Index Signals Easing Growth Momentum', 13 May 2019 (7:33 AM ET): the leading indicator fell slightly to 99.0 in March from 99.1 in February",
+     "url": "https://www.rttnews.com/3000346/oecd-leading-index-signals-easing-growth-momentum.aspx",
+     "date": "2019-05-13"
+    }
+   ],
    "ref": "2019-03"
   },
   "cpi": {

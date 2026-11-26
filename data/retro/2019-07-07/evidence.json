@@ -9,9 +9,9 @@
    "sha256": "e8675aed29be6c15a3c3f720f47beed1eda045b1417514e1d4042eb7cc9755ac",
    "nbytes": 1139883,
    "retrieved_at": "2026-11-26T12:50:43Z",
-   "available_by": "2019-06-30 (edition month end (conservative rule))",
+   "available_by": "2019-06-11 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, June 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, June 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2019-07-05": {
@@ -2390,10 +2390,35 @@
   "cli": {
    "edition": "201906",
    "label": "June 2019",
-   "public_by": "2019-06-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2019-06-11",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201906",
+    "area": "OECD",
+    "month": "2019-04",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.0,
+      "edition": 99.03,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.1,
+      "edition": -0.06,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator weist auf schw\u00e4cheres Wachstum hin', 11 Jun 2019 (12:31 CEST; 06:00 ET / 10:00 GMT): the leading indicator for the whole OECD area fell 0.1 to 99.0 in April",
+     "url": "https://www.finanznachrichten.de/nachrichten-2019-06/46923278-oecd-fruehindikator-weist-auf-schwaecheres-wachstum-hin-015.htm",
+     "date": "2019-06-11"
+    }
+   ],
    "ref": "2019-04"
   },
   "cpi": {

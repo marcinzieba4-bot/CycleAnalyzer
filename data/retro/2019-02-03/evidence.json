@@ -9,9 +9,9 @@
    "sha256": "3c026442903004cffd546ad9ea33237cbcb8c5cf14e20bd662fb84b692285c4f",
    "nbytes": 1128315,
    "retrieved_at": "2026-11-26T12:50:40Z",
-   "available_by": "2019-01-31 (edition month end (conservative rule))",
+   "available_by": "2019-01-14 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, January 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, January 2019 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2019-02-01": {
@@ -2443,10 +2443,40 @@
   "cli": {
    "edition": "201901",
    "label": "January 2019",
-   "public_by": "2019-01-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2019-01-14",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "201901",
+    "area": "OECD",
+    "month": "2018-11",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.3,
+      "edition": 99.32,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.1,
+      "edition": -0.13,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator weist auf nachlassende Wachstumsdynamik', 14 Jan 2019 (12:31 CET; 06:00 ET / 11:00 GMT): the leading indicator for the whole OECD area fell 0.1 to 99.3 in November",
+     "url": "https://www.finanznachrichten.de/nachrichten-2019-01/45707795-oecd-fruehindikator-weist-auf-nachlassende-wachstumsdynamik-015.htm",
+     "date": "2019-01-14"
+    },
+    {
+     "label": "CBC News, 'Economic growth in Canada and the world is slowing, OECD says', 14 Jan 2019 (12:06 PM EST): Canada's composite leading indicator 99.1 and the OECD total 99.3 for November",
+     "url": "https://www.cbc.ca/news/business/oecd-canada-economy-1.4977307",
+     "date": "2019-01-14"
+    }
+   ],
    "ref": "2018-11"
   },
   "cpi": {

@@ -588,6 +588,90 @@ byte-identical live; 33,382 audit checks, 0 failed).
   of 8 Mar 2017; New Zealand's unchanged Policy Targets Agreements of 6 Jun
   and 7 Nov 2017; Korea's 2%); no wording names a later year.
 
+### 2019 editions
+
+Biweekly grid continued: 2019-01-06, 01-20, 02-03, 02-17, 03-03, 03-17,
+03-31, 04-14, 04-28, 05-12, 05-26, 06-09, 06-23, 07-07, 07-21, 08-04, 08-18,
+09-01, 09-15, 09-29, 10-13, 10-27, 11-10, 11-24, 12-08, 12-22
+(`python scripts/retro_build.py --range 2019-01-06 2019-12-31 --every 14`),
+published to the site archive on 2026-11-26 (26 pages; 33,804 audit checks,
+0 failed). 2018 is being built separately; its builder extension (US target
+ranges of 2018, Türkiye's label from 1 Jun 2018) is included here unchanged.
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2019-12-31: every
+  edition of the revisions database from December 2018 to December 2019
+  carries CLI (LI_AA) and CP records for all 21 economies used, so 2019 is
+  built exactly as 2008–2017 are. A rebuilt 2017-12-24 page is
+  byte-identical to the published one.
+- **CLI editions** January–December 2019 are all registered from dated public
+  reports, each page fetched and content-checked against the vintage:
+  January–June from Dow Jones Newswires in German via finanznachrichten.de
+  (OECD-area level and monthly change; January also CBC News, May also
+  RTTNews), July–December from the Foreks wire on Uzmanpara/Milliyet
+  (Türkiye's level, monthly and annual change, or the US level in December,
+  because the OECD-area or other values sit on rounding boundaries). Every
+  report is dated the release day: 14 Jan, 11 Feb, 11 Mar, 8 Apr, 13 May,
+  11 Jun (10 Jun was Whit Monday), 8 Jul, 8 Aug, 9 Sep, 8 Oct, 12 Nov and
+  9 Dec. Only 2019-01-06 uses the December 2018 edition through the
+  edition-month-end rule. No 2019 edition re-estimates the CLI history
+  (OECD-area revisions to 2000–2014 values at or below 0.05; country-level
+  component revisions up to 0.81, New Zealand in December), so no method
+  note applies.
+- **India's CPI definition** (`CPI_DEFINITION_BIS` in `realtime.py`, new).
+  The revisions database's India CP series is the CPI for Industrial Workers,
+  not the all-India Combined CPI the RBI targets. Against the BIS Combined CPI,
+  the two y/y rates differ by 1.4pp on average over 2015–2019 and by up to
+  5.6pp (2019-08: 6.31% vs 3.38%), enough to invert India's inflation gap.
+  The other 20 vintage series track the published CPI closely (mean gap at or
+  below 0.22pp, the UK's CPIH-like series). From the 2019 editions India uses the
+  present-day BIS Combined CPI behind the one-full-month gate, as the
+  archive-era builder already does ("India: Combined CPI only"); the vintage
+  index is listed as a considered candidate and the data notes say why.
+  Earlier real-time editions are left as published. The same mismatch affects
+  the 2014–2017 pages, where India's benchmark was already CPI-based.
+- **China's instrument switch.** From 20 Aug 2019 the BIS series is the
+  one-year loan prime rate (4.25%), replacing the one-year benchmark lending
+  rate (4.35%; PBoC Announcement [2019] No. 15, posted 17 Aug 2019, cited in
+  Chinese; the benchmark was retained). As for Türkiye in 2010 and Indonesia
+  in 2016, earlier history is spliced (−0.10pp), so the switch is not counted
+  as a cut. The LPR fixings of 20 Sep (4.20%) and 20 Nov (4.15%) are policy
+  moves. The data note says that the first fixing was 0.10pp below the
+  benchmark.
+- **Instrument labels.** US target ranges follow the FOMC cuts effective
+  1 Aug (2.00–2.25%), 19 Sep (1.75–2.00%) and 31 Oct 2019 (1.50–1.75%;
+  statements and implementation notes of 31 Jul, 18 Sep and 30 Oct).
+  Switzerland's label names the SNB policy rate (−0.75%) from 13 Jun 2019,
+  which replaced the three-month Libor target range at the same level.
+- **Türkiye's funding rate** (`data/retro/policy_context.json`). Items may now
+  carry `until`, the last day the arrangement they describe applied. The 2017
+  late-liquidity-window items end on 2018-05-31 and no longer appear. Four
+  items are new, each shown from its source's own date:
+  - The CBRT's simplification of 28 May 2018: from 1 Jun 2018 the one-week
+    repo rate is again the funding rate, set equal to the 16.5% funding rate
+    then in force. This is why the BIS series moves from 8% to 16.5%.
+  - The one-week repo auction suspensions of 22 Mar and 9 May 2019 (CBRT
+    press releases: "for a period of time"). While they lasted, marginal
+    funding was at the 25.5% overnight lending rate, against the 24% policy
+    rate.
+  - The 8 Apr resumption, first documented by ING on 18 Apr. The 2019-04-14
+    page therefore shows only the suspension.
+  - The 21 May resumption (Reuters via Arab News).
+  These are disclosures, not model inputs.
+- **Benchmarks** (`data/retro/benchmarks_2019.json`): current-year targets
+  Türkiye 5 (CBRT Monetary and Exchange Rate Policy for 2019, 5 Dec 2018),
+  Brazil 4.25 ±1.5 (CMN Res. 4,582 of 29 Jun 2017), Indonesia 3.5 ±1 (PMK
+  124/PMK.010/2017), Colombia 3 (2–4%, Board of 30 Nov 2018), Thailand 2.5 ±1.5
+  (Cabinet and MPC, 25 Dec 2018), Korea 2 (Monetary Policy Board, 26 Dec 2018:
+  the target from 2019 with no fixed period), India 4 (MPC, 6 Apr 2017,
+  restated through 2019). Changes announced during 2018 carried in: Norway
+  2.5 → 2 (Regulation of 2 Mar 2018), New Zealand's Policy Targets Agreement of
+  26 Mar 2018 (value unchanged), China ~3% (Government Work Report, 5 Mar 2018).
+  Changes announced during 2019 (both value-unchanged, recorded for their
+  wording): New Zealand's Remit for the Monetary Policy Committee (14 Feb
+  2019), China ~3% (5 Mar 2019). The FOMC's amended statement of 29 Jan 2019
+  and the UK remit of 29 Oct 2018 are value-unchanged reaffirmations and are
+  not recorded; no wording names a later year.
+
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).
 Exact model inputs and evidence are retained under `data/retro/<date>/`.

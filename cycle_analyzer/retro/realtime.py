@@ -515,8 +515,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             if e_prev is None:
                 ev.notes.append(
                     f"cli/{cc}: the {edition_label(cli_ed)} edition carries no {area} leading "
-                    f"indicator, nor does any of the previous {CLI_ABSENT_DEPTH} eligible "
-                    "editions; no growth input.")
+                    f"indicator, nor does any eligible edition among the {CLI_ABSENT_DEPTH} "
+                    "before it; no growth input.")
                 continue
             ev.add(e_prev)
             ev.notes.append(

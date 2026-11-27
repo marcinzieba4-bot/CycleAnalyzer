@@ -58,6 +58,17 @@
    "note": "BIS WS_CBPOL (policy rates, monthly + daily). Immutable DBnomics git commit 33517d02aa63ca4f0b859fc2a9ecc38db0bcfde7 (created 2025-07-10T21:02:36.000+00:00, committed 2025-07-10T21:02:36.000+00:00), both before the cutoff. Commit time is an availability upper bound; no exact original release time is claimed.",
    "proof_url": "https://git.nomics.world/dbnomics-json-data/bis-json-data/-/commit/33517d02aa63ca4f0b859fc2a9ecc38db0bcfde7"
   },
+  "dbnomics-oecd-bts-c054aaaeecb0": {
+   "id": "dbnomics-oecd-bts-c054aaaeecb0",
+   "url": "https://git.nomics.world/api/v4/projects/140/repository/files/DSD_STES%40DF_BTS%2Fseries.jsonl/raw?ref=c054aaaeecb0d23aec6e67e5bf51798c90456e08",
+   "sha256": "719ae664371d87a397817ef531d0fc667d4f83ac9b7d4d27af4560d2b2445618",
+   "nbytes": 8299210,
+   "retrieved_at": "2026-11-27T22:53:36Z",
+   "available_by": "2026-04-04T19:25:20.000+00:00",
+   "kind": "dbnomics-git",
+   "note": "OECD business tendency surveys. Immutable DBnomics git commit c054aaaeecb0d23aec6e67e5bf51798c90456e08 (created 2026-04-04T19:25:20.000+00:00, committed 2026-04-04T19:25:20.000+00:00), both before the cutoff. Commit time is an availability upper bound; no exact original release time is claimed.",
+   "proof_url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/c054aaaeecb0d23aec6e67e5bf51798c90456e08"
+  },
   "alfred-cpiaucns-2026-06-05": {
    "id": "alfred-cpiaucns-2026-06-05",
    "url": "https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=CPIAUCNS&vintage_date=2026-06-05",
@@ -5855,5 +5866,7 @@
    "source": "announced target (BIS daily decision history)"
   }
  ],
- "notes": []
+ "notes": [
+  "archive: DBnomics commit 75f17ddca0bc carries a partial conversion of some model series; their missing observations come from the newest earlier pre-cutoff commits that carry them, the newer values kept wherever they exist: EA19.M.BCICP.PB.C.Y._Z._Z.N (ends at 2023-12; from c054aaaeecb0)."
+ ]
 }

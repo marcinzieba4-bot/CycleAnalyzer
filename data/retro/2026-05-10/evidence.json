@@ -58,6 +58,17 @@
    "note": "BIS WS_CBPOL (policy rates, monthly + daily). Immutable DBnomics git commit 33517d02aa63ca4f0b859fc2a9ecc38db0bcfde7 (created 2025-07-10T21:02:36.000+00:00, committed 2025-07-10T21:02:36.000+00:00), both before the cutoff. Commit time is an availability upper bound; no exact original release time is claimed.",
    "proof_url": "https://git.nomics.world/dbnomics-json-data/bis-json-data/-/commit/33517d02aa63ca4f0b859fc2a9ecc38db0bcfde7"
   },
+  "dbnomics-oecd-bts-c054aaaeecb0": {
+   "id": "dbnomics-oecd-bts-c054aaaeecb0",
+   "url": "https://git.nomics.world/api/v4/projects/140/repository/files/DSD_STES%40DF_BTS%2Fseries.jsonl/raw?ref=c054aaaeecb0d23aec6e67e5bf51798c90456e08",
+   "sha256": "719ae664371d87a397817ef531d0fc667d4f83ac9b7d4d27af4560d2b2445618",
+   "nbytes": 8299210,
+   "retrieved_at": "2026-11-27T22:53:36Z",
+   "available_by": "2026-04-04T19:25:20.000+00:00",
+   "kind": "dbnomics-git",
+   "note": "OECD business tendency surveys. Immutable DBnomics git commit c054aaaeecb0d23aec6e67e5bf51798c90456e08 (created 2026-04-04T19:25:20.000+00:00, committed 2026-04-04T19:25:20.000+00:00), both before the cutoff. Commit time is an availability upper bound; no exact original release time is claimed.",
+   "proof_url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/c054aaaeecb0d23aec6e67e5bf51798c90456e08"
+  },
   "alfred-cpiaucns-2026-05-08": {
    "id": "alfred-cpiaucns-2026-05-08",
    "url": "https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=CPIAUCNS&vintage_date=2026-05-08",
@@ -1940,7 +1951,7 @@
    "policy": "2026-04"
   },
   "XM": {
-   "cli": "2026-03",
+   "cli": "2026-01",
    "cpi": "2026-04",
    "reer": "2026-03",
    "y10": "2026-01",
@@ -2396,8 +2407,8 @@
    "quarterly": false
   },
   "CA": {
-   "chosen": "OECD CAN.M.N.CPI.PA._T.N.GY",
-   "ledger": "dbnomics-oecd-prices-71a35b68c908",
+   "chosen": "OECD KEI CAN.M.CP.GR._Z._Z.GY",
+   "ledger": "dbnomics-oecd-kei-71a35b68c908",
    "last": "2026-03",
    "last_value": 2.385,
    "considered": [
@@ -2409,7 +2420,8 @@
     {
      "candidate": "OECD CAN.M.N.CPI.PA._T.N.GY",
      "last": "2026-03",
-     "last_value": 2.385
+     "last_value": 2.385,
+     "truncated": true
     },
     {
      "candidate": "OECD KEI CAN.M.CP.GR._Z._Z.GY",
@@ -2418,7 +2430,7 @@
     }
    ],
    "supplements": [],
-   "mean_abs_diff_vs_bis_60m": null,
+   "mean_abs_diff_vs_bis_60m": 0.0,
    "quarterly": false
   },
   "AU": {
@@ -3496,7 +3508,7 @@
   "TR": "OECD composite leading indicator, amplitude adjusted (TUR.M.LI.IX._T.AA._Z, KEI archive 71a35b68c908)",
   "ID": "OECD composite leading indicator, amplitude adjusted (IDN.M.LI.IX._T.AA._Z, KEI archive 71a35b68c908)",
   "KR": "OECD composite leading indicator, amplitude adjusted (KOR.M.LI.IX._T.AA._Z, KEI archive 71a35b68c908)",
-  "XM": "OECD composite business confidence (EA20.M.BCICP.PB.C.Y._Z._Z.N), percent balance normalized to 100 + deviation from its own pre-cutoff average \u2014 a proxy for the amplitude-adjusted confidence index, not a CLI; EA20 aggregate (EA19 has stopped in this archive)",
+  "XM": "OECD composite business confidence (EA19.M.BCICP.PB.C.Y._Z._Z.N), percent balance normalized to 100 + deviation from its own pre-cutoff average \u2014 a proxy for the amplitude-adjusted confidence index, not a CLI; EA19 aggregate used as euro-area proxy against EA20 inflation",
   "CH": "OECD composite business confidence (CHE.M.BCICP.PB.C.Y._Z._Z.N), percent balance normalized to 100 + deviation from its own pre-cutoff average \u2014 a proxy for the amplitude-adjusted confidence index, not a CLI",
   "SE": "OECD composite business confidence (SWE.M.BCICP.PB.C.Y._Z._Z.N), percent balance normalized to 100 + deviation from its own pre-cutoff average \u2014 a proxy for the amplitude-adjusted confidence index, not a CLI",
   "PL": "OECD composite business confidence (POL.M.BCICP.PB.C.Y._Z._Z.N), percent balance normalized to 100 + deviation from its own pre-cutoff average \u2014 a proxy for the amplitude-adjusted confidence index, not a CLI",
@@ -5481,5 +5493,7 @@
    "source": "announced target (BIS daily decision history)"
   }
  ],
- "notes": []
+ "notes": [
+  "archive: DBnomics commit 08d15a699a1c carries a partial conversion of some model series; their missing observations come from the newest earlier pre-cutoff commits that carry them, the newer values kept wherever they exist: EA19.M.BCICP.PB.C.Y._Z._Z.N (ends at 2023-12; from c054aaaeecb0)."
+ ]
 }

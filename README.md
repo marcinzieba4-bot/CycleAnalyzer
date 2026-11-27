@@ -913,6 +913,93 @@ and rebuilt 2021 pages are byte-identical to the first build.
   for later years (Canada's renewal of 13 Dec, Colombia's Board of 26 Nov) are
   not recorded; no wording names a later year.
 
+### 2022 editions
+
+Biweekly grid continued: 2022-01-02, 01-16, 01-30, 02-13, 02-27, 03-13,
+03-27, 04-10, 04-24, 05-08, 05-22, 06-05, 06-19, 07-03, 07-17, 07-31, 08-14,
+08-28, 09-11, 09-25, 10-09, 10-23, 11-06, 11-20, 12-04, 12-18
+(`python scripts/retro_build.py --range 2022-01-02 2022-12-31 --every 14`),
+published to the site archive on 2026-11-27 (all 26 pages verified
+byte-identical live; index 440 archived reports; 36,412 audit checks, 0 failed,
+and no abbreviated date such as "17 Mar 2022" after any cutoff). A rebuilt
+2021-12-19 page is byte-identical to the published one, and rebuilt 2022 pages
+are byte-identical to the first build. Every edition has 20 clocks.
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2022-12-31. Every 2022
+  edition of the revisions database carries the CLI for all economies except
+  New Zealand (absent since April 2020; the February 2022 release says its CLI
+  "is currently under revision and could not be updated this month": no growth
+  input, 20 growth inputs) and CP for all 21 economies, but see Japan below.
+- **Japan's CPI** (`CPI_TRUNCATED_BIS`, new; only from the July 2022 CPI
+  edition, so earlier pages rebuild unchanged). Japan's CP index runs to
+  2022-04 in the June 2022 edition but ends at 2021-06 in every edition from
+  July 2022 on, which would freeze Japan's inflation at mid-2021 and drop its
+  clock once stale. From the 2022-08-14 page the present-day BIS CPI behind the
+  one-full-month gate is used instead (as for India), the vintage index is shown
+  as a considered candidate, and the data notes say so.
+- **CLI editions** January–December 2022 are registered from dated public
+  reports, each page fetched and content-checked against the vintage: Foreks
+  flashes on Uzmanpara/Milliyet (14:00 +03:00 in winter, 13:00 in summer, i.e.
+  12:00 Paris) and Dow Jones Newswires in German via finanznachrichten.de.
+  March has Foreks flashes only (no Dow Jones story); July has no surviving
+  Foreks flash (Dow Jones and Börsen-Zeitung); April adds Lusa's two-decimal
+  levels (Observador). Release days: 17 Jan (not the 12th, so the 2022-01-16
+  page still uses the December 2021 edition), 9 Feb, 9 Mar (the February
+  release had announced 8 Mar), 11 Apr, 10 May, 13 Jun, 11 Jul, 9 Aug, 12 Sep,
+  11 Oct, 9 Nov, 8 Dec. Checks use China (January), the OECD area (February,
+  March and September at the level only, July), the euro area (April at two
+  decimals, August, October), Germany (May, November) and the US (June,
+  December); every reported value matches the vintage exactly at the report's
+  precision. No check uses a figure the reports misprint (Dow Jones' US level
+  99.0 in January; Germany's July comparator 98.8 in September). Uzmanpara
+  rewrites years inside some 2022 headlines; the OECD flashes carry no year and
+  are dated by their timestamps.
+- **Caution notes.** Each page cites its own release's caution that the CLIs be
+  interpreted with care (Omicron in January–March; the war in Ukraine, COVID-19
+  and high inflation from April): January from Lusa's report, February and
+  March from the OECD's February release PDF (no same-day March text was
+  retrieved), April from Hellenic Shipping News' reprint (13 Apr), May–December
+  from Mirage News reprints. The December release was "the final OECD Composite
+  Leading Indicators news release in the current format" (the CLIs continue for
+  a reduced set of countries); the 2022-12-18 page says so without naming the
+  later date. No 2022 edition re-estimates the CLI history (OECD-area revisions
+  to pre-2019 values at most 0.13, May; country components up to 1.29, India,
+  April), so no method note applies.
+- **Policy.** No BIS daily errata, bridges or instrument splices were needed:
+  every 2022 move in the daily histories is an announced decision (the global
+  hiking cycle: US seven hikes from 17 Mar, euro area from 27 Jul, Switzerland
+  out of negative rates on 23 Sep; Türkiye's cuts from 19 Aug; China's LPR cuts).
+  `DAILY_DATE_FIX` (new): the BIS daily series carries China's one-year LPR cut
+  to 3.65% from Saturday 20 Aug 2022, but the fixing was published on Monday
+  22 Aug (Xinhua via gov.cn); the two days are read at 3.70%, the change is dated
+  22 Aug, and the page says so. US labels follow the seven 2022 target ranges
+  (0.25–0.50% from 17 Mar to 4.25–4.50% from 15 Dec). The ECB's hike effective
+  21 Dec and Indonesia's of 22 Dec fall after the last edition.
+- **Hungary's operational rates** (`data/retro/policy_context.json`;
+  disclosures, not model inputs). The one-week deposit rate stayed above the
+  base rate (40–245bp) until the MNB raised it to the base rate at the tender of
+  30 Jun 2022 (Monetary Council, 28 Jun); from 14 Oct 2022 the effective
+  marginal rate was the 18% overnight deposit quick tender against the 13% base
+  rate, and one-week deposit tenders stopped from 17 Oct (MNB press releases,
+  Budapest Business Journal/MTI tender reports, Portfolio, ING Think, Reuters).
+  Items now carry `until` so each page shows the current tender level and the
+  latest Council statement (2021 pages unchanged); the instrument label follows
+  the alignment and the October regime.
+- **Benchmarks** (`data/retro/benchmarks_2022.json`): current-year targets
+  Brazil 3.75 → 3.50 ±1.5 (CMN Res. 4,724 of 27 Jun 2019, DOU 1 Jul 2019),
+  Indonesia 3 ±1 (PMK 101/PMK.010/2021, Art. 2(3)(a)), Thailand 2.0, the midpoint
+  of the 1–3% range (Cabinet, 14 Dec 2021; the BoT's scanned announcement cited
+  from its file's creation on 23 Dec 2021), Türkiye 5 (CBRT Monetary and
+  Exchange Rate Policy for 2022, 29 Dec 2021), Colombia 3 (2–4%, Board of
+  26 Nov 2021, cited from same-day reports), Canada's renewed framework of
+  13 Dec 2021 (value unchanged, wording replaced). One change announced during
+  2022: China's ~3% objective from the Report on the Work of the Government of
+  5 Mar (value unchanged; applies from 2022-03-13). Value-unchanged
+  reaffirmations (FOMC 25 Jan, UK remit of 17 Nov, the SNB's strategy review),
+  targets for later years (Brazil's of 23 Jun 2022) and announcements after the
+  last cutoff (Korea 20 Dec, Thailand 27 Dec, Türkiye 30 Dec) are not recorded;
+  no wording names a later year.
+
 `retro_scorecard.py` (ex-post, deliberately using later data; never an edition input)
 scores the published calls: the top three FX crosses held 3 months (BIS daily spot
 plus the stated policy-rate differential) and the ★★/★★★ curve calls (3-month change
@@ -931,7 +1018,15 @@ long MXN/GBP from August (8 of 10 positive), the best BRL/HUF from 2021-03-28
 (+10.8%) and the worst CNY/HUF from 2021-03-14 (−4.7%). Curve calls were a coin flip:
 231 ★★/★★★, 45% right (+0.01pp); the 142 flatteners, mostly in the second half as
 hiking cycles began, were right only 35% of the time (−0.10pp), the 89 steepeners 61%
-(+0.18pp); ★★★ 4 of 8.
+(+0.18pp); ★★★ 4 of 8. For the 2022 editions: 78 crosses, 54% hit, +0.1% per 3 months
+(H1 +1.6%, 64% hit; H2 −1.4%, 44%), but the top cross gained in only 10 of 26
+editions (−1.6%): long MXN/CHF in January (+5.9 to +8.0%), then long ZAR (against
+EUR, CHF, AUD, KRW or JPY) in 20 of the remaining 23 editions, which carry could not
+save through the spring risk-off (five of the six 2022-04-10 to 06-19 holds lost 5–8%),
+and long INR or IDR against CHF or AUD in October–November (−4.6 to −8.1%); best
+ZAR/EUR from 2022-01-02 (+12.0%), worst IDR/KRW from 2022-11-06 (−8.5%). Curve calls: 186 ★★/★★★, 176 of them flatteners as hiking
+cycles matured, 51% right (+0.15pp; flatteners 53%, +0.21pp; the 10 steepeners 20%);
+★★★ 4 of 4 (Norway flatteners, August–September).
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

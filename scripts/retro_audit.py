@@ -28,6 +28,7 @@ import subprocess
 import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -39,6 +40,7 @@ from cycle_analyzer.retro import realtime as RT                  # noqa: E402
 from cycle_analyzer.retro.benchmarks import era_benchmarks       # noqa: E402
 
 SOURCES = json.loads((ROOT / "data/retro/announcement_sources.json").read_text())
+RT_WARSAW = ZoneInfo("Europe/Warsaw")
 
 
 def audit(d: date) -> list[str]:
@@ -132,6 +134,24 @@ def audit(d: date) -> list[str]:
                     ok += 1
                 except RuntimeError as err:
                     fails.append(f"{k}: {err}")
+                dchk = RT.register().get(edition, {}).get("dbnomics_check")
+                if dchk and pub.isoformat() != RT._month_end(edition).isoformat():
+                    # admitted by a DBnomics commit: its figures must equal the edition's,
+                    # and the commit (as GitLab reports it now) must predate the cutoff, with
+                    # its Europe/Warsaw date equal to the register's public-by date
+                    try:
+                        RT._dbnomics_check(edition, raw)
+                        ok += 1
+                    except RuntimeError as err:
+                        fails.append(f"{k}: {err}")
+                    meta = json.loads(S.http_get(f"{S.GITLAB}/{S.OECD_PROJECT}/repository/"
+                                                 f"commits/{dchk['commit']}"))
+                    ts = [datetime.fromisoformat(meta[x]) for x in ("created_at", "committed_date")]
+                    check(all(t < cut for t in ts),
+                          f"{k}: evidence commit {dchk['commit'][:12]} {ts} not before cutoff")
+                    check(ts[1].astimezone(RT_WARSAW).date() == pub,
+                          f"{k}: evidence commit's Warsaw date {ts[1].astimezone(RT_WARSAW).date()} "
+                          f"!= public-by {pub}")
         elif e["kind"] == "present-day-gated":
             m = re.search(r"(?:endPeriod=|coed=)(\d{4}-\d{2})", e["url"])
             gate = pd.Period(m.group(1), freq="M")

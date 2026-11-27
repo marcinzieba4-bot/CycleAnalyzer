@@ -1,5 +1,5 @@
 {
- "_doc": "OECD Short-term economic statistics revisions database (DSD_STES_REVISIONS@DF_STES_REVISIONS; successor of the MEI Original Release Data and Revisions Database). Each EDITION holds the data as published in that month's Main Economic Indicators edition. CLI (LI_AA) of an edition is eligible from 'cli_public_by', the date of the earliest dated public report of that edition's CLI figures (an upper bound on the release date); where none is verified the edition month end applies. CPI (CP) of an edition is eligible only after its edition month has ended (conservative; no MEI print date is claimed). Each evidence item carries its own publication 'date'; a page lists only items published on or before its last eligible day.",
+ "_doc": "OECD Short-term economic statistics revisions database (DSD_STES_REVISIONS@DF_STES_REVISIONS; successor of the MEI Original Release Data and Revisions Database). Each EDITION holds the data as published in that month's Main Economic Indicators edition. CLI (LI_AA) of an edition is eligible from 'cli_public_by', the date of the earliest dated public report of that edition's CLI figures (an upper bound on the release date); where none is verified the edition month end applies. CPI (CP) of an edition is eligible only after its edition month has ended (conservative; no MEI print date is claimed). Each evidence item carries its own publication 'date'; a page lists only items published on or before its last eligible day. From the January 2023 edition the OECD no longer issues CLI news releases (its release of 8 Dec 2022 was the final one in that format) and the database carries the CLI only for the 13 economies it still estimates. These editions are admitted from the date, in Europe/Warsaw time, of the earliest DBnomics git commit of the OECD MEI_CLI dataset that carries the same CLIs (basis 'dated DBnomics git commit carrying this edition's figures'): 'dbnomics_check' names the commit, and the builder and the audit re-check that, for all 13 economies, the commit's latest reference month equals the edition's and every overlapping value agrees within rounding (the database prints two decimals, DBnomics five; largest difference 0.005).",
  "200712": {
   "cli_ref_month": "2007-10",
   "cli_public_by": "2007-12-31",
@@ -4098,6 +4098,390 @@
    "url": "https://www.miragenews.com/composite-leading-indicators-oecd-december-2022-911632/",
    "label": "Mirage News (OECD release reprinted), 'Composite Leading Indicators, OECD, December 2022', 8 Dec 2022: 'Given the persistent uncertainties related to the impact of the war in Ukraine, the CLI components might be subject to larger-than-usual fluctuations. As a result, the indicators should be interpreted with care'; 'This is the final OECD Composite Leading Indicators news release in the current format'; 'The CLIs will continue to be estimated for a reduced set of countries (most G20 economies plus Spain)'",
    "date": "2022-12-08"
+  }
+ },
+ "202301": {
+  "cli_ref_month": "2022-12",
+  "cli_public_by": "2023-01-10",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 16d9dc10ceb1, committed 2023-01-10 10:26 UTC (11:26 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through December 2022, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/16d9dc10ceb10f0af2d18e4a2e3274243ea5c8e6",
+    "date": "2023-01-10"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "16d9dc10ceb10f0af2d18e4a2e3274243ea5c8e6",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-01-10T10:26:48Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202302": {
+  "cli_ref_month": "2023-01",
+  "cli_public_by": "2023-02-07",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit d258a2d03540, committed 2023-02-07 13:01 UTC (14:01 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through January 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/d258a2d03540f922f81890bcb5657fb9659e4449",
+    "date": "2023-02-07"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "d258a2d03540f922f81890bcb5657fb9659e4449",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-02-07T13:01:48Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202303": {
+  "cli_ref_month": "2023-02",
+  "cli_public_by": "2023-03-07",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 768a1479a838, committed 2023-03-07 21:19 UTC (22:19 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through February 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/768a1479a8386e18f28acdf1df99b2fd58f863eb",
+    "date": "2023-03-07"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "768a1479a8386e18f28acdf1df99b2fd58f863eb",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-03-07T21:19:13Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202304": {
+  "cli_ref_month": "2023-03",
+  "cli_public_by": "2023-04-07",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 2d3ec876c94d, committed 2023-04-06 22:22 UTC (00:22 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through March 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/2d3ec876c94dd06d41854c70bb676f0e6bf073d5",
+    "date": "2023-04-07"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "2d3ec876c94dd06d41854c70bb676f0e6bf073d5",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-04-06T22:22:35Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202305": {
+  "cli_ref_month": "2023-04",
+  "cli_public_by": "2023-05-06",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 15b7bd068167, committed 2023-05-06 10:18 UTC (12:18 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through April 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/15b7bd0681671d254a99060fee3930a7854cca8d",
+    "date": "2023-05-06"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "15b7bd0681671d254a99060fee3930a7854cca8d",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-05-06T10:18:40Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202306": {
+  "cli_ref_month": "2023-05",
+  "cli_public_by": "2023-06-08",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 7dd852a5679e, committed 2023-06-08 13:34 UTC (15:34 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through May 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/7dd852a5679e8073f4f7404d5aaa7e7f98bec9df",
+    "date": "2023-06-08"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "7dd852a5679e8073f4f7404d5aaa7e7f98bec9df",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-06-08T13:34:43Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202307": {
+  "cli_ref_month": "2023-06",
+  "cli_public_by": "2023-07-06",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit eccf5b487444, committed 2023-07-06 11:33 UTC (13:33 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through June 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/eccf5b487444cfc11478b96d4d3e0b1c3c69e4b4",
+    "date": "2023-07-06"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "eccf5b487444cfc11478b96d4d3e0b1c3c69e4b4",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-07-06T11:33:00Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202308": {
+  "cli_ref_month": "2023-07",
+  "cli_public_by": "2023-08-05",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 94cac720775c, committed 2023-08-05 16:22 UTC (18:22 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through July 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/94cac720775cc3ffc1d9f10e125b492dd8bd1225",
+    "date": "2023-08-05"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "94cac720775cc3ffc1d9f10e125b492dd8bd1225",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-08-05T16:22:12Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202309": {
+  "cli_ref_month": "2023-08",
+  "cli_public_by": "2023-09-07",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 6be38cef4f4e, committed 2023-09-07 11:13 UTC (13:13 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through August 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/6be38cef4f4e70583ffd5af09dc40326c88f4878",
+    "date": "2023-09-07"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "6be38cef4f4e70583ffd5af09dc40326c88f4878",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-09-07T11:13:20Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202310": {
+  "cli_ref_month": "2023-09",
+  "cli_public_by": "2023-10-06",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit 79fef1f6a77a, committed 2023-10-06 03:38 UTC (05:38 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through September 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/79fef1f6a77ac2111dcd4dbea4930ea0f9726864",
+    "date": "2023-10-06"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "79fef1f6a77ac2111dcd4dbea4930ea0f9726864",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-10-06T03:38:53Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202311": {
+  "cli_ref_month": "2023-10",
+  "cli_public_by": "2023-11-09",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit dd2fa9d16ca6, committed 2023-11-09 16:51 UTC (17:51 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through October 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/dd2fa9d16ca6bf1dd73398fcc6a87b5f618b6cf2",
+    "date": "2023-11-09"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "dd2fa9d16ca6bf1dd73398fcc6a87b5f618b6cf2",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-11-09T16:51:34Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202312": {
+  "cli_ref_month": "2023-11",
+  "cli_public_by": "2023-12-07",
+  "basis": "dated DBnomics git commit carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "DBnomics, OECD Main Economic Indicators CLI dataset (MEI_CLI, series LOLITOAA), git commit dd34bcfec647, committed 2023-12-07 20:03 UTC (21:03 Warsaw time): the amplitude-adjusted CLIs of the 13 economies through November 2023, equal to this edition's values within rounding (an immutable, timestamped copy of the OECD's published data; the commit time is an upper bound on the release)",
+    "url": "https://git.nomics.world/dbnomics-json-data/oecd-json-data/-/commit/dd34bcfec6471f81e60fc6dc493065bb601ac015",
+    "date": "2023-12-07"
+   }
+  ],
+  "dbnomics_check": {
+   "commit": "dd34bcfec6471f81e60fc6dc493065bb601ac015",
+   "path": "MEI_CLI/series.jsonl",
+   "committed": "2023-12-07T20:03:48Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
   }
  }
 }

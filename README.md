@@ -160,7 +160,7 @@ mid-2026 need a citation for every decision since July 2025.
 ### Pre-archive editions (Q1 2008): real-time vintages
 
 No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
-reaches back to 2008, so editions dated on or before 2022-12-31 are built by
+reaches back to 2008, so editions dated on or before 2023-12-31 are built by
 `cycle_analyzer/retro/realtime.py` instead:
 
 | Input | Point-in-time source |
@@ -1000,6 +1000,100 @@ are byte-identical to the first build. Every edition has 20 clocks.
   last cutoff (Korea 20 Dec, Thailand 27 Dec, Türkiye 30 Dec) are not recorded;
   no wording names a later year.
 
+### 2023 editions
+
+Biweekly grid continued: 2023-01-01, 01-15, 01-29, 02-12, 02-26, 03-12,
+03-26, 04-09, 04-23, 05-07, 05-21, 06-04, 06-18, 07-02, 07-16, 07-30, 08-13,
+08-27, 09-10, 09-24, 10-08, 10-22, 11-05, 11-19, 12-03, 12-17, 12-31
+(`python scripts/retro_build.py --range 2023-01-01 2023-12-31 --every 14`),
+published to the site archive on 2026-11-27 (27 pages; 37,985 audit checks,
+0 failed, and no abbreviated date such as "27 Sep 2023" after any cutoff).
+Rebuilt 2022-12-04 and 2022-12-18 pages are byte-identical to the published ones.
+2023-01-01 still uses the December 2022 CLI edition (20 clocks); every later
+edition has 23 clocks.
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2023-12-31.
+- **Reduced CLI set.** The OECD's release of 8 Dec 2022 was its last CLI news
+  release in that format ("The CLIs will continue to be estimated for a reduced
+  set of countries"). From the January 2023 edition the revisions database
+  carries the CLI only for the 13 economies the archive-era builder also uses
+  (US, Japan, UK, Canada, Australia, China, India, Brazil, Mexico, South Africa,
+  Türkiye, Indonesia, Korea); the euro area, Switzerland, Sweden, Norway, Poland,
+  Hungary and Czechia drop out, and no OECD-area aggregate is carried.
+- **Business confidence for the other ten** (`BCI_FROM_CLI_EDITION`,
+  `BCI_AREAS`; only editions whose CLI edition is 202301 or later, so earlier
+  pages rebuild unchanged). The euro area (EA19), Switzerland, Sweden, Norway,
+  New Zealand, Poland, Hungary, Czechia, Chile and Colombia take the OECD
+  business confidence indicator BSCICP03 (amplitude adjusted, long-term
+  average 100: the CLI's own scale, used as published), from the newest
+  DBnomics git commit of the OECD `MEI_CLI` dataset committed before the
+  cutoff: the live pipeline's own fallback, labelled on every page as a
+  survey-based proxy, not a CLI. New Zealand (no CLI since 2020), Chile and
+  Colombia (not in the revisions database) thus regain a growth input; Thailand
+  has none. Norway's and New Zealand's surveys are quarterly and lag by up to
+  three months, within the 9-month staleness rule.
+- **CLI editions dated by DBnomics commits.** With no news releases there are
+  no wire reports to date the 2023 editions. Each one is registered from the
+  earliest DBnomics `MEI_CLI` commit carrying the same CLIs (basis "dated DBnomics
+  git commit carrying this edition's figures", `dbnomics_check` in the
+  register): for all 13 economies the commit's latest reference month equals the
+  edition's, and all ~7,000–7,200 overlapping values agree within rounding (the
+  database prints two decimals, DBnomics five; largest difference 0.005).
+  `retro_audit.py` re-runs that check and re-reads the commit's timestamps from
+  GitLab (both before the cutoff, Warsaw date equal to the public-by date).
+  Public-by days (Europe/Warsaw): 10 Jan, 7 Feb, 7 Mar, 7 Apr (committed 6 Apr
+  22:22 UTC), 6 May, 8 Jun, 6 Jul, 5 Aug, 7 Sep, 6 Oct, 9 Nov, 7 Dec. No 2023
+  edition re-estimates the CLI history (revisions to pre-2019 values at most
+  0.87, Korea, March), so no method note applies.
+- **Euro-area CPI code** (`EA20_FROM`). The January–March 2023 editions carry
+  the euro-area CPI as EA19; from the April 2023 edition only as EA20 (Croatia
+  joined on 1 January 2023). The aggregate is used as published; the data notes
+  say which. Japan's CPI stays on the gated BIS history (`CPI_TRUNCATED_BIS`; the
+  vintage index still stops at 2021-06), India's on the Combined CPI.
+- **Policy.** No BIS daily errata, bridges or instrument splices were needed:
+  every 2023 move in the daily histories is an announced decision (the last
+  hikes of the cycle: US to 5.25–5.50% from 27 Jul, euro area to a 4.50% main
+  refinancing rate from 20 Sep, UK, Norway, Sweden, Switzerland; Türkiye's hikes from 8.5%
+  to 42.5% from 23 Jun; the first cuts: Chile from 31 Jul, Brazil from 3 Aug,
+  Poland from 7 Sep, Hungary's base rate from 25 Oct, Czechia 22 Dec, Colombia
+  20 Dec). `DAILY_DATE_FIX` gains China's one-year LPR cut to 3.45%, which the
+  BIS series carries from Sunday 20 Aug 2023; the fixing was published on Monday
+  21 Aug (Xinhua via People's Daily Online), so the change is dated 21 Aug. US
+  labels follow the four 2023 target ranges (4.50–4.75% from 2 Feb to
+  5.25–5.50% from 27 Jul).
+- **Hungary's operational rates** (`data/retro/policy_context.json`;
+  disclosures, not model inputs). The 18% overnight deposit quick tender stayed
+  the effective rate against the 13% base rate until the Council of 23 May
+  (18 → 17% from the next day), then fell in 100bp steps (20 Jun, 25 Jul,
+  29 Aug); on 25 Apr only the corridor top was lowered (25 → 20.5%). On 26 Sep
+  the effective rate was cut to the 13% base rate, which "will become the
+  effective central bank interest rate", with a symmetric ±100bp corridor; the
+  base-rate cuts of 24 Oct, 21 Nov and 19 Dec (to 10.75%) follow. Each page
+  shows the Council press release and ING Think's same-day review in force at
+  its cutoff (21 new items; the open 2022 items now carry `until` dates from
+  2022-12-19 on, so 2022 pages are unchanged); the instrument label follows the
+  quick-tender, step-down and re-unified regimes. Türkiye: no item added. Every
+  2023 CBRT decision defines the policy rate as the one-week repo rate; dated
+  commentary (TEPAV, Dec 2023) that lira swap funding ran slightly below it is
+  not a CBRT statement and is not disclosed.
+- **Benchmarks** (`data/retro/benchmarks_2023.json`): current-year targets
+  Brazil 3.50 → 3.25 ±1.5 (CMN Res. 4,831 of 25 Jun 2020, DOU 26 Jun 2020),
+  Indonesia 3 ±1 (PMK 101/PMK.010/2021, Art. 2(3)(b)), Thailand 2.0, the
+  midpoint of the 1–3% range (Cabinet, 27 Dec 2022; the BoT's scanned
+  announcement cited from its file's creation on 3 Jan 2023), Türkiye 5, the
+  medium-term target (CBRT Monetary Policy and Liraization Strategy for 2023,
+  30 Dec 2022), Colombia 3 (Board of 25 Nov 2022), Korea 2 (unchanged by the
+  BoK's review of 20 Dec 2022). Changes announced during 2023, all value-
+  unchanged and recorded because they replace the row's wording: China's ~3%
+  (Report on the Work of the Government, 5 Mar; applies from 2023-03-12), New
+  Zealand's new remit (27 Jun; from 2023-07-02) and amended remit dropping the
+  employment objective (13 Dec; from 2023-12-17), Australia's new Statement on
+  the Conduct of Monetary Policy (8 Dec; from 2023-12-17). Value-unchanged
+  reaffirmations (FOMC 31 Jan, UK remit of 22 Nov, the BoJ's review decision of
+  28 Apr, the new Riksbank Act) and targets for later years (Brazil's CMN of
+  29 Jun, Thailand's Cabinet of 26 Dec, the CBRT's text of 29 Dec, Colombia's
+  Board of 30 Nov) are not recorded; no wording names a later year.
+
 `retro_scorecard.py` (ex-post, deliberately using later data; never an edition input)
 scores the published calls: the top three FX crosses held 3 months (BIS daily spot
 plus the stated policy-rate differential) and the ★★/★★★ curve calls (3-month change
@@ -1026,7 +1120,16 @@ save through the spring risk-off (five of the six 2022-04-10 to 06-19 holds lost
 and long INR or IDR against CHF or AUD in October–November (−4.6 to −8.1%); best
 ZAR/EUR from 2022-01-02 (+12.0%), worst IDR/KRW from 2022-11-06 (−8.5%). Curve calls: 186 ★★/★★★, 176 of them flatteners as hiking
 cycles matured, 51% right (+0.15pp; flatteners 53%, +0.21pp; the 10 steepeners 20%);
-★★★ 4 of 4 (Norway flatteners, August–September).
+★★★ 4 of 4 (Norway flatteners, August–September). For the 2023 editions:
+81 crosses, 79 scored (the two BRL/CLP holds of September lack a BIS daily CLP rate),
+81% hit, +3.2% per 3 months (H1 +4.1%, 31 of 39 positive; H2 +2.3%, 33 of 40); the top cross gained in
+25 of 27 editions (+5.6%), riding the year's high-carry rally: long BRL against THB or JPY
+through June (+6.1 to +12.8%), long ZAR/JPY in March–April, then long MXN (against CNY,
+JPY, KRW, INR, EUR or NZD) from July, losing only in the two August MXN/KRW holds (−3.3%,
+−1.5%); best BRL/THB from 2023-03-26 (+16.5%), worst ZAR/CNY from 2023-01-01 (−4.1%).
+Curve calls: 151 ★★/★★★, 60% right (+0.15pp; the 104 flatteners 64%, +0.14pp; the 47
+steepeners 49%, +0.17pp); ★★★ 7 of 13 (Hungary's November–December steepeners
++1.7 to +2.8pp, Poland's September–October steepeners wrong).
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

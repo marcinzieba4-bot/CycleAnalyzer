@@ -56,10 +56,15 @@ RT_AREA = {cc: ("EA18" if cc == "XM" else c.iso3) for cc, c in COUNTRIES.items()
 # January 2015; from the February 2015 edition (after Lithuania joined on
 # 1 January 2015) only EA19 is carried. The aggregate is used as published.
 EA19_FROM = "201502"
+# From the April 2023 edition (after Croatia joined on 1 January 2023) the CPI is carried
+# only as EA20; the January-March 2023 editions still carry EA19.
+EA20_FROM = "202304"
 
 
 def rt_areas(edition: str) -> dict[str, str]:
     """Database area code per economy for one real-time edition."""
+    if edition >= EA20_FROM:
+        return {**RT_AREA, "XM": "EA20"}
     if edition >= EA19_FROM:
         return {**RT_AREA, "XM": "EA19"}
     return RT_AREA
@@ -183,7 +188,13 @@ DAILY_DATE_FIX = {
             "source": ("Xinhua via gov.cn, 'China cuts benchmark lending rate LPR', 22 Aug 2022: "
                        "'The one-year loan prime rate (LPR) came in at 3.65 percent on Aug 22, "
                        "down from 3.7 percent, according to the National Interbank Funding "
-                       "Center'")}],
+                       "Center'")},
+           # the 20th of August 2023 was a Sunday; the BIS daily series carries 3.45% from it
+           {"bis_from": date(2023, 8, 20), "published": date(2023, 8, 21),
+            "source": ("Xinhua via People's Daily Online, 'China's one-year LPR drops Monday', "
+                       "21 Aug 2023: the National Interbank Funding Center 'saw its one-year "
+                       "rate come in at 3.45 percent on Monday', down from the previous reading "
+                       "of 3.55 percent")}],
 }
 # Editions of the revisions database that carry no CLI (LI_AA) at all: the July
 # and August 2016 editions hold CP and the other MEI measures but no leading
@@ -207,7 +218,28 @@ NO_CLI_NOTICES = {
                         "Scoop, 10 Mar 2020: 'originally scheduled for 9 March 2020, has been "
                         "cancelled')")},
 }
-ERA_LAST_DAY = date(2022, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2023, 12, 31)          # editions on or before use this builder
+# From the January 2023 edition the real-time database carries the CLI only for the 13
+# economies the OECD still estimates (its release of 8 Dec 2022: "The CLIs will continue to
+# be estimated for a reduced set of countries"); the euro area, Switzerland, Sweden, Norway,
+# Poland, Hungary and Czechia drop out. In editions whose CLI edition is on or after this
+# one, every economy without a CLI that has an OECD business confidence indicator takes it
+# instead, exactly as the live pipeline and the archive-era builder do: BSCICP03 (amplitude
+# adjusted, long-term average = 100, the CLI's own scale), as served in the newest DBnomics
+# git commit of the OECD MEI_CLI dataset committed before the cutoff. Thailand has none.
+# Earlier editions are built exactly as published.
+BCI_FROM_CLI_EDITION = "202301"
+BCI_AREAS = {"XM": "EA19", "CH": "CHE", "SE": "SWE", "NO": "NOR", "NZ": "NZL", "PL": "POL",
+             "HU": "HUN", "CZ": "CZE", "CL": "CHL", "CO": "COL"}
+MEI_CLI_PATH = "MEI_CLI/series.jsonl"
+REDUCED_SET_SOURCE = {
+    "url": "https://www.miragenews.com/composite-leading-indicators-oecd-december-2022-911632/",
+    "label": ("Mirage News (OECD release reprinted), 'Composite Leading Indicators, OECD, "
+              "December 2022', 8 Dec 2022: 'This is the final OECD Composite Leading Indicators "
+              "news release in the current format'; 'The CLIs will continue to be estimated for "
+              "a reduced set of countries (most G20 economies plus Spain)'"),
+    "date": "2022-12-08"}
+DBN_CHECK_TOL = 0.005    # the database prints two decimals; DBnomics serves five
 # An area the chosen CLI edition does not carry at all (from the April 2020 release
 # the OECD stopped computing some economies' CLIs, e.g. New Zealand, and left others
 # out of single releases) takes the newest earlier eligible edition carrying it, at
@@ -313,7 +345,7 @@ def _withheld_fallback(ed: Edition, cli_ed: str, area: str, depth: int = 3):
         if el is None:
             continue
         b, entry = oecd_rt("LI_AA", e, el[0], el[1])
-        a = rt_areas(e)["XM"] if area in ("EA18", "EA19") else area
+        a = rt_areas(e)["XM"] if area in ("EA18", "EA19", "EA20") else area
         rows = parse_rt(b).get((a, "M"), [])
         rm = register().get(e, {}).get("cli_ref_month")
         if rm and el[1] != "edition month end (conservative rule)":
@@ -474,6 +506,42 @@ def _content_check(ed: str, rows: list[tuple[str, float]]) -> dict | None:
     return res
 
 
+def _dbnomics_check(ed: str, rt_bytes: bytes) -> dict | None:
+    """For a CLI edition admitted by a dated DBnomics git commit (register
+    ``dbnomics_check``): the commit must carry, for every listed area, the same latest
+    reference month as the edition and every overlapping value within rounding (the
+    database prints two decimals, DBnomics serves five). Raises otherwise."""
+    chk = register().get(ed, {}).get("dbnomics_check")
+    if not chk:
+        return None
+    url = (f"{S.GITLAB}/{S.OECD_PROJECT}/repository/files/{S._q(chk['path'])}/raw"
+           f"?ref={chk['commit']}")
+    b, sha, _ = S.cached_get(url)
+    ser = S.read_jsonl_series(b, {f"LOLITOAA.{a}.M" for a in chk["areas"]})
+    rt = parse_rt(rt_bytes)
+    n, mx, bad = 0, 0.0, []
+    for a in chk["areas"]:
+        rows = dict(rt.get((a, "M"), []))
+        cs = dict(ser.get(f"LOLITOAA.{a}.M", []))
+        if not rows or not cs or max(rows) != max(cs):
+            bad.append(f"{a}: latest month {max(rows) if rows else None} in the edition, "
+                       f"{max(cs) if cs else None} in the commit")
+            continue
+        for p, v in rows.items():
+            if p in cs:
+                n += 1
+                d = abs(cs[p] - v)
+                mx = max(mx, d)
+                if d > DBN_CHECK_TOL + 1e-6:
+                    bad.append(f"{a} {p}: {v} in the edition, {cs[p]} in the commit")
+    if bad:
+        raise RuntimeError(f"edition {ed} CLI does not match DBnomics commit {chk['commit'][:12]}: "
+                           + "; ".join(bad[:5]))
+    return {"edition": ed, "commit": chk["commit"], "committed": chk["committed"],
+            "areas": len(chk["areas"]), "values": n, "max_abs_diff": round(mx, 4),
+            "sha256": sha, "url": url, "ok": True}
+
+
 # ------------------------------------------------------------------- build
 
 def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], Evidence]:
@@ -525,6 +593,11 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                       "basis": cli_basis, "content_check": chk,
                       "evidence": [x for x in register().get(cli_ed, {}).get("evidence", [])
                                    if date.fromisoformat(x["date"]) <= led]}
+    if cli_basis != "edition month end (conservative rule)":
+        dchk = _dbnomics_check(cli_ed, b)
+        if dchk:
+            ev.rt["cli"]["dbnomics_check"] = dchk
+    bci_era = cli_ed >= BCI_FROM_CLI_EDITION
     mn = register().get(cli_ed, {}).get("method_note")
     if mn and date.fromisoformat(mn["date"]) <= led:
         ev.rt["cli"]["method_note"] = mn
@@ -542,7 +615,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     # comes from the newest earlier edition that was itself eligible.
     withheld = (register().get(cli_ed, {}).get("withheld", {})
                 if _month_end(cli_ed) > led else {})
-    if cli_ed >= EA19_FROM:
+    if cli_ed >= EA19_FROM and not bci_era:
         ev.notes.append(
             f"cli/XM, cpi/XM: from the {edition_label(EA19_FROM)} edition the real-time database "
             "carries the euro-area aggregate as EA19 (Lithuania joined the euro area on "
@@ -568,6 +641,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             record("cli", cc, s)
             continue
         s = _cap(_monthly(cli.get((area, "M"), [])), ed)
+        if not len(s) and bci_era and cc in BCI_AREAS:
+            continue            # no CLI estimated any more: business confidence below
         if not len(s) and ed.date >= CLI_ABSENT_FALLBACK_FROM:
             src_ed, rows, e_prev = _withheld_fallback(ed, cli_ed, area, CLI_ABSENT_DEPTH)
             s = _cap(_monthly(rows), ed)
@@ -614,6 +689,48 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
 
     ev.rt["cli"]["ref"] =max(ev.obs[cc]["cli"] for cc in panels["cli"]) if panels["cli"] else ""
 
+    # ---- growth: business confidence where the CLI is no longer estimated ---------
+    if bci_era:
+        bb, be = S.dbnomics_file(
+            S.OECD_PROJECT, MEI_CLI_PATH, ed.cutoff_iso, "dbnomics-oecd-meicli",
+            "OECD Main Economic Indicators, composite leading indicators dataset (MEI_CLI), "
+            "read only for the business confidence indicator BSCICP03 (amplitude adjusted, "
+            "long-term average = 100).")
+        ser = S.read_jsonl_series(bb, {f"BSCICP03.{i3}.M" for i3 in BCI_AREAS.values()})
+        sha12 = be.proof_url.rsplit("/", 1)[-1][:12]
+        n_li = len(panels["cli"])
+        used = []
+        for cc, i3 in BCI_AREAS.items():
+            if cc in panels["cli"]:
+                continue
+            code = f"BSCICP03.{i3}.M"
+            s = _cap(_monthly(ser.get(code, [])), ed)
+            if not len(s) or not fresh("cli", cc, s, f"the business confidence indicator {code}"):
+                continue
+            panels["cli"][cc] = s
+            ev.growth_def[cc] = (
+                f"OECD business confidence indicator, amplitude adjusted (long-term average = "
+                f"100; {code}), DBnomics MEI_CLI commit {sha12}: a survey-based proxy on the "
+                "CLI's scale, not a CLI" + ("; EA19 aggregate as the euro-area proxy"
+                                           if cc == "XM" else ""))
+            record("cli", cc, s)
+            used.append(cc)
+        if used:
+            ev.add(be)
+        ev.rt["cli"]["bci"] = {"commit": sha12, "committed": be.available_by, "ledger": be.id,
+                               "url": be.proof_url, "areas": used, "n_cli": n_li}
+        ev.notes.append(
+            f"cli: from the {edition_label(BCI_FROM_CLI_EDITION)} edition the real-time "
+            f"database carries the leading indicator only for the {n_li} economies the OECD "
+            "still estimates (its release of 2022-12-08 announced that the CLIs would continue "
+            "to be estimated for a reduced set of countries); the economies without one ("
+            + ", ".join(COUNTRIES[c].name for c in used) + ") take the OECD "
+            "business confidence indicator BSCICP03 (amplitude adjusted, long-term average 100) "
+            f"as served in DBnomics git commit {sha12} of the OECD MEI_CLI dataset, committed "
+            f"{be.available_by[:16].replace('T', ' ')} UTC, before the cutoff. It is the live "
+            "pipeline's fallback: a survey-based proxy on the CLI's scale, not a leading "
+            "indicator.")
+
     # ---- inflation --------------------------------------------------------
     cpi_ed, cpi_pub, cpi_basis = cpi_edition(ed)
     log(f"inflation: OECD real-time CPI, {edition_label(cpi_ed)} edition; US ALFRED "
@@ -622,6 +739,14 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     cp = parse_rt(b)
     ev.rt["cpi"] = {"edition": cpi_ed, "label": edition_label(cpi_ed), "public_by": cpi_pub,
                       "basis": cpi_basis}
+    if bci_era:
+        ev.notes.append(
+            "cpi/XM: " + (f"from the {edition_label(EA20_FROM)} edition the real-time database "
+                          "carries the euro-area aggregate as EA20 (Croatia joined the euro area "
+                          "on 1 January 2023) instead of EA19; the aggregate is used as published."
+                          if cpi_ed >= EA20_FROM else
+                          "this edition of the real-time database carries the euro-area "
+                          "aggregate as EA19; the aggregate is used as published."))
     ab, ae = S.alfred("CPIAUCNS", ed.alfred_vintage.isoformat())
     us_yoy = _yoy_monthly(_monthly([(p[:7], v) for p, v in S.parse_alfred_csv(ab)]))
     lag1 = gate_lag1(ed)

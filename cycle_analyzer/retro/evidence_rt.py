@@ -39,6 +39,20 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "HU" and ed.last_eligible_day >= date(2023, 9, 27):
+        # MNB press release of 26 Sep 2023: the effective rate cut by 100 bp to 13% and
+        # "the base rate will become the effective central bank interest rate"; ING Think,
+        # 26 Sep 2023 ("Delivering the promise"): the quick tender is phased out
+        return ("MNB base rate (again the MNB's effective rate from 27 Sep 2023, replacing the "
+                "overnight deposit quick tender set above it from 14 Oct 2022; see the "
+                "operational context below the policy decisions)")
+    if cc == "HU" and ed.last_eligible_day >= date(2023, 5, 24):
+        # MNB press release of 23 May 2023: quick-tender rate cut by 100 bp (18% -> 17%)
+        # from the next day; further 100 bp steps announced 20 Jun, 25 Jul and 29 Aug 2023
+        return ("MNB base rate (unchanged since 28 Sep 2022; the MNB's effective marginal rate "
+                "is the overnight deposit quick tender, set above the base rate from 14 Oct "
+                "2022 and lowered towards it in 100 bp steps from 24 May 2023; see the "
+                "operational context below the policy decisions)")
     if cc == "HU" and ed.last_eligible_day >= date(2022, 10, 14):
         # MNB press release, effective 8:45 a.m. 14 Oct 2022: O/N collateralised lending
         # rate 25%, daily O/N deposit quick tenders; 18% announced by deputy governor Virág
@@ -59,6 +73,26 @@ def instrument(cc: str, ed: Edition) -> str:
         return ("MNB base rate (from the tender of 18 Nov 2021 the one-week deposit rate, set "
                 "at weekly tenders, stands above it; see the operational context below the "
                 "policy decisions)")
+    if cc == "US" and ed.last_eligible_day >= date(2023, 7, 27):
+        # FOMC statement of 26 Jul 2023: "the Committee decided to raise the target
+        # range for the federal funds rate to 5-1/4 to 5-1/2 percent"; effective 27 Jul
+        return ("Federal funds target range midpoint (5.25–5.50% range from 27 Jul 2023, "
+                "after 5.00–5.25% from 4 May 2023)")
+    if cc == "US" and ed.last_eligible_day >= date(2023, 5, 4):
+        # FOMC statement of 3 May 2023: "the Committee decided to raise the target
+        # range for the federal funds rate to 5 to 5-1/4 percent"; effective 4 May
+        return ("Federal funds target range midpoint (5.00–5.25% range from 4 May 2023, "
+                "after 4.75–5.00% from 23 Mar 2023)")
+    if cc == "US" and ed.last_eligible_day >= date(2023, 3, 23):
+        # FOMC statement of 22 Mar 2023: "the Committee decided to raise the target
+        # range for the federal funds rate to 4-3/4 to 5 percent"; effective 23 Mar
+        return ("Federal funds target range midpoint (4.75–5.00% range from 23 Mar 2023, "
+                "after 4.50–4.75% from 2 Feb 2023)")
+    if cc == "US" and ed.last_eligible_day >= date(2023, 2, 2):
+        # FOMC statement of 1 Feb 2023: "the Committee decided to raise the target
+        # range for the federal funds rate to 4-1/2 to 4-3/4 percent"; effective 2 Feb
+        return ("Federal funds target range midpoint (4.50–4.75% range from 2 Feb 2023, "
+                "after 4.25–4.50% from 15 Dec 2022)")
     if cc == "US" and ed.last_eligible_day >= date(2022, 12, 15):
         # FOMC statement of 14 Dec 2022: "the Committee decided to raise the target
         # range for the federal funds rate to 4-1/4 to 4-1/2 percent"; effective 15 Dec
@@ -274,18 +308,48 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         chk_txt = (" Content check: the edition’s " + _e(chk["area"]) + " aggregate for "
                    + _e(chk["month"]) + " gives " + ", ".join(_got(x) for x in chk["items"])
                    + ", matching the published " + ", ".join(_rep(x) for x in chk["items"]) + ".")
-    add(f'<p class="sub"><b>Growth.</b> {n_cli} growth inputs are OECD composite leading '
-        f"indicators, amplitude adjusted, exactly as published in the {_e(cli['label'])} "
-        "edition of the OECD real-time revisions database (Main Economic Indicators vintages, "
-        f"never revised afterwards; latest reference month {_e(ev.rt['cli'].get('ref', ''))}"
-        f"). That edition is used because its CLI was public by {_e(cli['public_by'])} "
-        f"({_e(cli['basis'])}).{chk_txt} Evidence: {_links(cli.get('evidence', [])) or 'edition month end'}. "
-        + (_e(cli["method_note"]["text"]) + " Source: "
-           + _links([cli["method_note"]]) + ". " if cli.get("method_note") else "")
-        + "Chile, Colombia and Thailand have no real-time leading indicator and no growth input; "
-        f"an input whose latest observation is more than {R.STALE_MONTHS} months older than the "
-        "anchor month is not used (data notes below)"
-        + ".</p>")
+    dchk = cli.get("dbnomics_check")
+    if dchk:
+        chk_txt += (f" Content check: all {dchk['values']:,} values the commit carries for the "
+                    f"{dchk['areas']} economies equal the edition’s within rounding (largest "
+                    f"difference {dchk['max_abs_diff']:.3f}; the database prints two decimals, "
+                    "DBnomics five), with the same latest reference month.")
+    bci = cli.get("bci")
+    if bci:
+        add(f'<p class="sub"><b>Growth.</b> {bci["n_cli"]} growth inputs are OECD composite leading '
+            "indicators, amplitude adjusted, exactly as published in the "
+            f"{_e(cli['label'])} edition of the OECD real-time revisions database (Main Economic "
+            "Indicators vintages, never revised afterwards; latest reference month "
+            f"{_e(cli.get('ref', ''))}). That edition is used because its CLI was public by "
+            f"{_e(cli['public_by'])} ({_e(cli['basis'])}).{chk_txt} Evidence: "
+            f"{_links(cli.get('evidence', [])) or 'edition month end'}. "
+            + (_e(cli["method_note"]["text"]) + " Source: " + _links([cli["method_note"]]) + ". "
+               if cli.get("method_note") else "")
+            + f"From the {_e(R.edition_label(R.BCI_FROM_CLI_EDITION))} edition the OECD estimates "
+            f"the CLI only for a reduced set of countries ({_links([R.REDUCED_SET_SOURCE])}). The "
+            f"other {len(bci['areas'])} growth inputs ("
+            + _e(", ".join(C[c].name for c in bci["areas"]))
+            + ") are therefore the OECD business confidence indicator (BSCICP03, amplitude "
+            "adjusted, long-term average 100 — the CLI’s own scale), as served in "
+            f'<a href="{_e(bci["url"])}">DBnomics git commit {_e(bci["commit"])}</a> of the OECD '
+            f"MEI_CLI dataset, committed {_e(bci['committed'][:16].replace('T', ' '))} UTC, the "
+            "newest before the cutoff: the live pipeline’s own fallback, a survey-based proxy, "
+            "not a leading indicator. Thailand has no growth input; an input whose latest "
+            f"observation is more than {R.STALE_MONTHS} months older than the anchor month is "
+            "not used (data notes below).</p>")
+    else:
+        add(f'<p class="sub"><b>Growth.</b> {n_cli} growth inputs are OECD composite leading '
+            f"indicators, amplitude adjusted, exactly as published in the {_e(cli['label'])} "
+            "edition of the OECD real-time revisions database (Main Economic Indicators vintages, "
+            f"never revised afterwards; latest reference month {_e(ev.rt['cli'].get('ref', ''))}"
+            f"). That edition is used because its CLI was public by {_e(cli['public_by'])} "
+            f"({_e(cli['basis'])}).{chk_txt} Evidence: {_links(cli.get('evidence', [])) or 'edition month end'}. "
+            + (_e(cli["method_note"]["text"]) + " Source: "
+               + _links([cli["method_note"]]) + ". " if cli.get("method_note") else "")
+            + "Chile, Colombia and Thailand have no real-time leading indicator and no growth input; "
+            f"an input whose latest observation is more than {R.STALE_MONTHS} months older than the "
+            "anchor month is not used (data notes below)"
+            + ".</p>")
     us = ev.cpi_choice.get("US", {})
     extra_bis = [c for c, v in ev.cpi_choice.items()
                  if v.get("kind") == "bis_gated" and c not in R.NO_RT
@@ -478,7 +542,8 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
     add("<h3>Growth input definitions</h3>")
     add('<p class="sub">' + "; ".join(
         f"{_e(C[cc].name)}: {_e(ev.growth_def[cc])}" for cc in C if cc in ev.growth_def)
-        + "; Chile, Colombia, Thailand: no real-time growth input.</p>")
+        + ("; Thailand: no growth input.</p>" if ev.rt["cli"].get("bci") else
+           "; Chile, Colombia, Thailand: no real-time growth input.</p>"))
     if ev.notes:
         add('<p class="sub">Data notes: ' + " ".join(_e(n) for n in ev.notes) + "</p>")
 

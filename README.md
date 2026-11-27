@@ -160,7 +160,7 @@ mid-2026 need a citation for every decision since July 2025.
 ### Pre-archive editions (Q1 2008): real-time vintages
 
 No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
-reaches back to 2008, so editions dated on or before 2017-12-31 are built by
+reaches back to 2008, so editions dated on or before 2018-12-31 are built by
 `cycle_analyzer/retro/realtime.py` instead:
 
 | Input | Point-in-time source |
@@ -588,6 +588,75 @@ byte-identical live; 33,382 audit checks, 0 failed).
   of 8 Mar 2017; New Zealand's unchanged Policy Targets Agreements of 6 Jun
   and 7 Nov 2017; Korea's 2%); no wording names a later year.
 
+### 2018 editions
+
+Biweekly grid continued: 2018-01-07, 01-21, 02-04, 02-18, 03-04, 03-18,
+04-01, 04-15, 04-29, 05-13, 05-27, 06-10, 06-24, 07-08, 07-22, 08-05, 08-19,
+09-02, 09-16, 09-30, 10-14, 10-28, 11-11, 11-25, 12-09, 12-23
+(`python scripts/retro_build.py --range 2018-01-07 2018-12-31 --every 14`),
+published to the site archive on 2026-11-26 (all 26 pages verified
+byte-identical live; 33,480 audit checks, 0 failed).
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2018-12-31: all twelve
+  2018 editions of the revisions database carry CLI (LI_AA) and CP records
+  for every economy used. Before extending, the published 2017-12-24 page was
+  rebuilt here and came out byte-identical.
+- **CLI editions** January–December 2018 are all registered from dated
+  public reports (dpa-AFX and Dow Jones Newswires in German via
+  finanznachrichten.de and finanzen.net, Foreks via Uzmanpara, Bigpara, ECO /
+  Lusa, and the International Economic and Financial Cooperation Center of
+  China's Ministry of Finance), each page fetched and content-checked against
+  the vintage. Release days: 15 Jan, 8 Feb, 8 Mar, 10 Apr, 14 May, 13 Jun,
+  9 Jul, 8 Aug, 10 Sep, 8 Oct, 12 Nov, 10 Dec. Where the OECD-area value sits
+  on a rounding boundary another quoted area is checked: January uses
+  Türkiye's two-decimal figures (101.4, −0.29% m/m, +1.94% y/y; OECD area
+  100.15), June uses Germany (100.3 from 100.5; the euro-area, French,
+  Italian and UK values are on boundaries), September uses China (99.9,
+  +0.32% m/m, from the Chinese Ministry of Finance note of 12 Sep; OECD-area
+  level 99.65). The March check rests on Foreks flash headlines only (OECD
+  area 100.1, previous 100.1; euro area, US and Türkiye also quoted). No 2018
+  edition re-estimates the CLI history: OECD-area revisions to 2000–2014
+  values stay at or below 0.08; country-level component revisions reach 1.26
+  (Türkiye, April), so no method note applies.
+- **Policy.** The BIS daily histories show only real decisions in 2018 except
+  Türkiye's 1 Jun 2018 step (below). US instrument labels follow the
+  target-range moves effective 22 Mar (1.50–1.75%), 14 Jun (1.75–2.00%),
+  27 Sep (2.00–2.25%) and 20 Dec 2018 (2.25–2.50%; FOMC statements of 21 Mar,
+  13 Jun, 26 Sep and 19 Dec). The Riksbank's December hike took effect on
+  9 Jan of the following year and is in no 2018 edition.
+- **Türkiye's funding regime** (`data/retro/policy_context.json`). The late
+  liquidity window lending rate rose to 13.5% (MPC of 25 Apr) and 16.5%
+  (23 May) while the one-week repo rate (the BIS series) stayed at 8%; on
+  28 May the CBRT announced that from 1 Jun 2018 the one-week repo rate is its
+  policy rate again, "equal to the current funding rate (16.50%)". The BIS
+  series' 8% → 16.5% move on 1 Jun is therefore the end of the LLW regime, not
+  a tightening on that day; the pages say so beside the policy decisions and
+  in the instrument label. As in 2017 it is a disclosure, not a model input:
+  the policy level, carry and real rate stay on the BIS series (17.75% from
+  8 Jun and 24% from 14 Sep are ordinary decisions).
+- **Benchmarks** (`data/retro/benchmarks_2018.json`): current-year targets
+  Türkiye 5 (CBRT Monetary and Exchange Rate Policy for 2016, 9 Dec 2015,
+  restated 6 Dec 2016), Brazil 4.5 ±1.5 (CMN Res. 4,499 of 30 Jun 2016),
+  Colombia 3 (2–4%, Board of 24 Nov 2017), Indonesia 4 → 3.5 ±1 (PMK
+  93/PMK.011/2014), Thailand 2.5 ±1.5 (agreed 29 Nov 2017, Cabinet approval of
+  19 Dec 2017; the December 2017 Monetary Policy Report is shown only from its
+  retrievable PDF's creation date, 21 Feb 2018). Changes announced during
+  2018: Norway 2.5 → 2 under the Regulation on Monetary Policy of 2 Mar 2018,
+  applied from Norges Bank's Monetary Policy Report 1/18 (15 Mar 2018), the
+  earliest fetched source stating the figure (the Ministry of Finance release
+  returns HTTP 403 and Norges Bank's release of 2 Mar does not state it), so
+  2018-03-04 still uses 2.5; China's ~3% re-set by the 5 Mar 2018 Government
+  Work Report and New Zealand's Policy Targets Agreement of 26 Mar 2018 (same
+  1–3% with the 2% focus, adds supporting maximum sustainable employment),
+  both recorded for their wording. Value-unchanged reaffirmations and targets
+  set during 2018 for later years are not recorded; no wording names a later
+  year.
+- **Merged branch.** The 2018 editions were built on a parallel branch and
+  merged here afterwards. Since then the 2018 late-liquidity-window items in
+  `policy_context.json` carry `until` 2018-05-31, and the 28 May 2018 item
+  uses the 2019 builder's wording, so a rebuilt June–December 2018 page
+  differs from the published one in the Türkiye context lines only.
+
 ### 2019 editions
 
 Biweekly grid continued: 2019-01-06, 01-20, 02-03, 02-17, 03-03, 03-17,
@@ -595,8 +664,8 @@ Biweekly grid continued: 2019-01-06, 01-20, 02-03, 02-17, 03-03, 03-17,
 09-01, 09-15, 09-29, 10-13, 10-27, 11-10, 11-24, 12-08, 12-22
 (`python scripts/retro_build.py --range 2019-01-06 2019-12-31 --every 14`),
 published to the site archive on 2026-11-26 (26 pages; 33,804 audit checks,
-0 failed). 2018 is being built separately; its builder extension (US target
-ranges of 2018, Türkiye's label from 1 Jun 2018) is included here unchanged.
+0 failed). 2018 was built on a parallel branch; its builder extension (US
+target ranges of 2018, Türkiye's label from 1 Jun 2018) is included unchanged.
 
 - **Real-time era extended.** `ERA_LAST_DAY` is now 2019-12-31: every
   edition of the revisions database from December 2018 to December 2019

@@ -747,9 +747,10 @@ Biweekly grid continued: 2020-01-05, 01-19, 02-02, 02-16, 03-01, 03-15,
 03-29, 04-12, 04-26, 05-10, 05-24, 06-07, 06-21, 07-05, 07-19, 08-02, 08-16,
 08-30, 09-13, 09-27, 10-11, 10-25, 11-08, 11-22, 12-06, 12-20
 (`python scripts/retro_build.py --range 2020-01-05 2020-12-31 --every 14`),
-published to the site archive on 2026-11-27 (26 pages; 35,201 audit checks,
-0 failed). The parallel 2018 and 2019 branches were merged first; a rebuilt
-2019-12-22 page is byte-identical to the published one.
+published to the site archive on 2026-11-27 (all 26 pages verified
+byte-identical live; 35,201 audit checks, 0 failed). The parallel 2018 and
+2019 branches were merged first; a rebuilt 2019-12-22 page is byte-identical
+to the published one.
 
 - **Real-time era extended.** `ERA_LAST_DAY` is now 2020-12-31. Every 2020
   edition of the revisions database carries CP for all 21 economies; the

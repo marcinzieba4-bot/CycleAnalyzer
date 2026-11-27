@@ -160,7 +160,7 @@ mid-2026 need a citation for every decision since July 2025.
 ### Pre-archive editions (Q1 2008): real-time vintages
 
 No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
-reaches back to 2008, so editions dated on or before 2023-12-31 are built by
+reaches back to 2008, so editions dated on or before 2024-12-31 are built by
 `cycle_analyzer/retro/realtime.py` instead:
 
 | Input | Point-in-time source |
@@ -1095,6 +1095,91 @@ edition has 23 clocks.
   29 Jun, Thailand's Cabinet of 26 Dec, the CBRT's text of 29 Dec, Colombia's
   Board of 30 Nov) are not recorded; no wording names a later year.
 
+### 2024 editions
+
+Biweekly grid continued: 2024-01-14, 01-28, 02-11, 02-25, 03-10, 03-24,
+04-07, 04-21, 05-05, 05-19, 06-02, 06-16, 06-30, 07-14, 07-28, 08-11, 08-25,
+09-08, 09-22, 10-06, 10-20, 11-03, 11-17, 12-01, 12-15, 12-29
+(`python scripts/retro_build.py --range 2024-01-14 2024-12-31 --every 14`),
+published to the site archive on 2026-11-27 (all 26 pages verified
+byte-identical live; index 493 archived reports; 35,397 audit checks,
+0 failed, and no abbreviated date such as "18 Sep 2024" after any cutoff).
+Rebuilt 2023-12-17 and 2023-12-31 pages are byte-identical to the published ones.
+Every 2024 edition has 23 clocks. The 2024-12-29 edition is followed a week
+later by the live grid's first edition, 2025-01-05.
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2024-12-31. The archive-era
+  builder cannot take over earlier: DBnomics' OECD archive has no commit between
+  2024-01-13 and 2024-10-27, and its BIS CPI archive none before June 2024.
+- **CLI editions dated by ALFRED vintages** (`alfred_check` in the register). With
+  no news releases and no DBnomics conversions, each 2024 edition is registered
+  from the first ALFRED vintage of FRED's copies of the 13 CLIs
+  (`<ISO3>LOLITOAASTSAM`) that carries its latest reference month: for all 13
+  economies the vintage's latest month equals the edition's, all ~7,200–7,400
+  overlapping values agree within rounding (largest difference 0.005), ALFRED
+  serves it as that day's vintage, and the previous day's vintage does not yet
+  carry the month. ALFRED vintage dates are US Central time, so public-by is the
+  next day: 12 Jan, 11 Apr, 16 May, 18 Jun, 17 Sep, 16 Oct, 16 Nov, 17 Dec.
+  `retro_audit.py` re-runs the check. The February, March and July releases never
+  appear as an ALFRED vintage (FRED next updated with the following release), so
+  those editions enter by the edition-month-end rule (2024-03-10, 04-07, 08-11).
+- **No CLI in the August 2024 edition** (`NO_CLI_EDITIONS`): the database query
+  returns no records for any area, and no ALFRED vintage ever carried July 2024 as
+  its newest month. The 2024-08-25 and 2024-09-08 editions keep the July edition;
+  the latter says so in its data notes.
+- **Business confidence for the other ten** (`BCI_GATED_FROM`, `bts_gated`). The
+  DBnomics MEI_CLI archive ends with its commit of 2024-01-13 (BSCICP03 through
+  December 2023). From the 2024 editions a second candidate competes for the euro
+  area, Switzerland, Sweden, Norway, New Zealand, Poland, Hungary, Czechia, Chile
+  and Colombia: the OECD business-tendency-survey composite confidence balance for
+  manufacturing (`DSD_STES@DF_BTS`, `BCICP.PB.C`; euro area as EA20, Norway and New
+  Zealand quarterly), present-day history requested only through the
+  one-full-month gate and normalized to 100 + its deviation from its own
+  pre-cutoff average, the archive-era builder's method. The fresher candidate is
+  used, the dated archive on a tie: the archive for all ten in 2024-01-14 and
+  01-28; the gated balance for Norway, New Zealand and Colombia in 2024-02-11 and
+  02-25, and for all ten from 2024-03-10.
+  Seasonal-adjustment revisions of the balances are not removed (disclosed).
+- **REER from ALFRED vintages** (`REER_ALFRED_FROM`). ALFRED holds vintages of
+  FRED's copies of the BIS broad REERs (`RB<cc>BIS`) throughout 2024, so all 24
+  REER histories are the Friday vintage before each cutoff instead of present-day
+  BIS histories behind a gate (the fallback, unused). The page text says so.
+- **Mexico's CPI** (`CPI_TRUNCATED_BIS`): from the October 2024 edition the
+  database's MEX index stops at 2024-07, so the 2024-11-03 to 12-29 editions use
+  the gated BIS history (latest 2024-09 / 2024-10), the vintage shown as a
+  candidate. Japan stays on BIS, India on the Combined CPI.
+- **Euro-area instrument switch** (`INSTRUMENT_SWITCH["XM"]`, `new_before`). The BIS
+  series is the MRO rate until 17 Sep 2024 and the deposit facility rate from
+  18 Sep 2024 (4.25% → 3.50%). That day also carries a real decision (DFR 3.75% →
+  3.50%, ECB 12 Sep 2024; the MRO–DFR spread narrowed to 15bp under the
+  operational framework of 13 Mar 2024), so earlier history is spliced by −0.50pp,
+  the DFR's level before the switch, not by the switch-day jump: the June and
+  September 2024 moves read 4.00 → 3.75 and 3.75 → 3.50. Exact for the five years
+  before the switch (the spread was 50bp from 18 Sep 2019); disclosed on the page.
+- **Policy labels.** US target ranges 4.75–5.00% from 19 Sep, 4.50–4.75% from
+  8 Nov, 4.25–4.50% from 19 Dec 2024; Japan's uncollateralized overnight call rate
+  at around 0–0.1% from 21 Mar 2024 (BIS midpoint 0.05%, after −0.1%) and around
+  0.25% from 1 Aug 2024 (BoJ statements of 19 Mar and 31 Jul, quoted as written).
+  China's 2024 LPR cuts were published on the fixing days (Mon 22 Jul, Mon 21 Oct;
+  Xinhua), so no `DAILY_DATE_FIX` is needed; every other 2024 move is an announced
+  decision. Hungary kept the symmetric ±100bp corridor around the base rate, still
+  the effective rate, all year (cuts from 10.75% to 6.50%): no new context item.
+- **Benchmarks** (`data/retro/benchmarks_2024.json`): current-year targets
+  Brazil 3.25 → 3.0 ±1.5 (CMN Res. 4,918 of 24 Jun 2021, DOU 25 Jun 2021; no
+  normativos PDF exists, so the BCB record and Agência Brasil are cited), Indonesia
+  3 → 2.5 ±1 (PMK 101/PMK.010/2021, Art. 2(3)(c)), Thailand 2.0, the midpoint of the
+  1–3% range (Cabinet, 26 Dec 2023; BoT MPC announcement No. 2/2566), Türkiye 5
+  (CBRT Monetary Policy for 2024, 29 Dec 2023; the current PDFs were re-saved on
+  26 Dec 2024, so Bloomberg HT's same-day report corroborates the text), Colombia 3
+  (Board of 30 Nov 2023), Korea 2 (carried). One change during 2024, value
+  unchanged: China's ~3% (Report on the Work of the Government, 5 Mar; applies from
+  2024-03-10). Value-unchanged reaffirmations (FOMC, the BoJ's exit from negative
+  rates "with the price stability target of 2 percent", the UK remit of 14 Nov, the
+  BoK's review of 18 Dec) and targets set during 2024 for later years (Brazil's
+  continuous target, Indonesia's PMK 31/2024, Poland's guidelines, Thailand's
+  Cabinet of 24 Dec, the CBRT's text of 25 Dec, Colombia's Board of 29 Nov) are not
+  recorded; no wording names a later year.
+
 `retro_scorecard.py` (ex-post, deliberately using later data; never an edition input)
 scores the published calls: the top three FX crosses held 3 months (BIS daily spot
 plus the stated policy-rate differential) and the ★★/★★★ curve calls (3-month change
@@ -1130,7 +1215,17 @@ JPY, KRW, INR, EUR or NZD) from July, losing only in the two August MXN/KRW hold
 −1.5%); best BRL/THB from 2023-03-26 (+16.5%), worst ZAR/CNY from 2023-01-01 (−4.1%).
 Curve calls: 151 ★★/★★★, 60% right (+0.15pp; the 104 flatteners 64%, +0.14pp; the 47
 steepeners 49%, +0.17pp); ★★★ 7 of 13 (Hungary's November–December steepeners
-+1.7 to +2.8pp, Poland's September–October steepeners wrong).
++1.7 to +2.8pp, Poland's September–October steepeners wrong). For the 2024 editions:
+78 crosses, 46% hit, −0.3% per 3 months (H1 −2.2%, 13 of 39 positive; H2 +1.6%, 23 of 39),
+and the top cross gained in only 11 of 26 editions (+0.0%): long MXN/CHF in January–February
+(+7.4 to +11.2%; −2.1% from 2024-03-10), then long BRL, almost always against CHF, from
+2024-03-24 to year-end, which lost from every March–October entry but two as the real slid
+(worst BRL/CHF from 2024-05-05, −14.0%) and gained from every November–December entry
+(+5.1 to +9.3%); the May–June MXN/CZK holds ran into the Mexican election shock
+(−8.9 to −13.8%); best MXN/CHF from 2024-01-14 (+11.2%). Curve calls: 200 ★★/★★★, 51% right
+(+0.06pp); the 85 steepeners 79% (+0.44pp), the 115 flatteners only 30% (−0.22pp; worst in
+Mexico, the UK, Norway and the US); ★★★ 16 of 23 (Hungary's January–February
+steepeners +2.3 to +3.2pp).
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

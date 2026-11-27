@@ -67,6 +67,54 @@ REER_ALFRED = {cc: f"RB{cc}BIS" for cc in COUNTRIES}
 #             decision history (each later decision cited)
 STALE_DAYS = 30
 
+# Days on which the present-day BIS daily history shows a level that no decision set
+# (data errors, not policy moves). Once such a window has begun before the cutoff, its
+# days - and a repository snapshot's month-end inside it - are read at the level the
+# central bank's own decision put in force; the page says so. Hungary: the Monetary
+# Council of 23 Jun 2026 cut the base rate from 6.25% to 6.00% with effect from 24 Jun
+# 2026 (MNB Decree 17/2026 (VI. 23.)); the next decision took effect on 22 Jul 2026, yet
+# the BIS daily series shows 6.25% again on 25-30 Jun 2026 and 6.00% from 1 Jul.
+DAILY_ERRATA = {
+    "HU": [{"from": date(2026, 6, 25), "to": date(2026, 6, 30), "bis": 6.25, "value": 6.00,
+            "source": ("MNB press release on the Monetary Council meeting of 23 June 2026 and "
+                       "MNB Decree 17/2026 (VI. 23.): base rate 6.00% in force from "
+                       "24 June 2026")}],
+}
+
+
+def _apply_daily_errata(cc: str, d: pd.Series, last_day: date, ev) -> pd.Series:
+    for er in DAILY_ERRATA.get(cc, []):
+        if last_day < er["from"]:
+            continue
+        hi = min(er["to"], last_day)
+        win = d[(d.index >= pd.Timestamp(er["from"])) & (d.index <= pd.Timestamp(hi))]
+        bad = win[(win - er["bis"]).abs() < 1e-6]
+        if not len(bad):
+            continue
+        d = d.copy()
+        d.loc[bad.index] = er["value"]
+        ev.notes.append(
+            f"policy/{cc}: the BIS daily series shows {er['bis']:.2f}% on "
+            f"{bad.index.min().date().isoformat()} to {bad.index.max().date().isoformat()}, "
+            f"although {er['source']} and no decision in between was announced; those days "
+            f"are read at {er['value']:.2f}% (a data error, not a policy move).")
+    return d
+
+
+def _apply_monthly_errata(cc: str, m: pd.Series, last_day: date, ev) -> pd.Series:
+    for er in DAILY_ERRATA.get(cc, []):
+        if last_day < er["to"]:
+            continue
+        for q in list(m.index):
+            if er["from"] <= q.end_time.date() <= er["to"] and abs(float(m.loc[q]) - er["bis"]) < 1e-6:
+                m = m.copy()
+                m.loc[q] = er["value"]
+                ev.notes.append(
+                    f"policy/{cc}: the repository snapshot's month-end for {q} "
+                    f"({er['bis']:.2f}%) carries the same BIS data error and is read at "
+                    f"{er['value']:.2f}%.")
+    return m
+
 
 def _stale(e: S.LedgerEntry, ed: Edition) -> bool:
     t = datetime.fromisoformat(e.available_by.replace("Z", "+00:00"))
@@ -429,6 +477,7 @@ def _build_policy(ed, ev, bpol, bpol_e, panels, record, log, snap=None):
         b, e_cur = S.bis_daily_current(cc, DAILY_START, last_day.isoformat())
         d_cur = _daily(S.parse_bis_csv(b))
         d_cur = d_cur[d_cur.index <= pd.Timestamp(last_day)]
+        d_cur = _apply_daily_errata(cc, d_cur, last_day, ev)
         src_id = bpol_e.id
         if snap is not None:
             got = S.repo_file(snap, f"bis:WS_CBPOL__M_{cc}.csv", f"repo-bis-cbpol-{cc.lower()}",
@@ -437,6 +486,7 @@ def _build_policy(ed, ev, bpol, bpol_e, panels, record, log, snap=None):
                 src_id = ev.add(got[1])
                 m = _monthly(S.parse_cache_csv(got[0]))
                 m = m[m.index <= ed.anchor]
+                m = _apply_monthly_errata(cc, m, last_day, ev)
                 snap_end = m.index.max().end_time.date()
                 # the snapshot's coverage plays the role of the archive: decision
                 # facts up to its last month must agree with its month-ends

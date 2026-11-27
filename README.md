@@ -160,7 +160,7 @@ mid-2026 need a citation for every decision since July 2025.
 ### Pre-archive editions (Q1 2008): real-time vintages
 
 No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
-reaches back to 2008, so editions dated on or before 2018-12-31 are built by
+reaches back to 2008, so editions dated on or before 2020-12-31 are built by
 `cycle_analyzer/retro/realtime.py` instead:
 
 | Input | Point-in-time source |
@@ -741,13 +741,109 @@ target ranges of 2018, Türkiye's label from 1 Jun 2018) is included unchanged.
   and the UK remit of 29 Oct 2018 are value-unchanged reaffirmations and are
   not recorded; no wording names a later year.
 
+### 2020 editions
+
+Biweekly grid continued: 2020-01-05, 01-19, 02-02, 02-16, 03-01, 03-15,
+03-29, 04-12, 04-26, 05-10, 05-24, 06-07, 06-21, 07-05, 07-19, 08-02, 08-16,
+08-30, 09-13, 09-27, 10-11, 10-25, 11-08, 11-22, 12-06, 12-20
+(`python scripts/retro_build.py --range 2020-01-05 2020-12-31 --every 14`),
+published to the site archive on 2026-11-27 (26 pages; 35,201 audit checks,
+0 failed). The parallel 2018 and 2019 branches were merged first; a rebuilt
+2019-12-22 page is byte-identical to the published one.
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2020-12-31. Every 2020
+  edition of the revisions database carries CP for all 21 economies; the
+  March 2020 edition carries no CLI at all, and from April some economies'
+  CLIs are left out of single releases (below).
+- **CLI editions** January, February and April–December 2020 are registered
+  from dated public reports, each page fetched and content-checked against the
+  vintage. The earliest dated report is always the Foreks wire on
+  Uzmanpara/Milliyet (flash headlines or tables stamped the release minute);
+  Dow Jones Newswires or dpa-AFX in German via finanznachrichten.de follow
+  within the hour (from July with two-decimal levels equal to the vintage).
+  Release days: 13 Jan, 10 Feb, 8 Apr, 12 May, 10 Jun (with the Economic
+  Outlook, 11:01 Istanbul time), 9 Jul, 10 Aug, 8 Sep, 8 Oct, 9 Nov, 8 Dec.
+  Checks use China (January), the OECD area (February, April, July, October,
+  December), Türkiye (May: 79.3, −20.75% m/m, −18.94% y/y), the euro area
+  (June), the US (August) and Germany (September, November), avoiding values
+  on rounding boundaries. The Foreks flashes' "previous" values in August,
+  September and November are the earlier edition's unrevised figures; no check
+  uses them. Only 2020-01-05 uses the December 2019 edition.
+- **Percent content checks.** A register `content_check` may now give
+  `reported_mom_pct` / `reported_yoy_pct` (compared at the report's own
+  precision, one unit of tolerance) and `level_dp` (how the reported level is
+  printed): with Türkiye's CLI at 79, index-point and percent changes diverge.
+  Earlier entries are checked and printed exactly as before.
+- **Cancelled March release.** `NO_CLI_EDITIONS` gains 202003: the OECD
+  "cancelled its scheduled monthly release of composite leading indicators
+  (CLI), because of the rapid spread of the coronavirus outbreak" (Argus Media,
+  9 Mar 2020; OECD notice reposted by Scoop). 2020-03-15 and 2020-03-29 keep the
+  February release (through December 2019) and cite the notice
+  (`NO_CLI_NOTICES`, new). The April release (8 Apr) already covered March:
+  from then on the latest reference month is one month before the release, not
+  two.
+- **Economies left out of a release** (`CLI_ABSENT_FALLBACK_FROM`, new; 2020
+  editions only, so earlier pages rebuild unchanged). The April edition carries
+  no CLI for Switzerland, Mexico, Norway or New Zealand, the May edition none
+  for South Africa, and no edition from April on one for New Zealand. Such an
+  area takes the newest earlier eligible edition carrying it, at most three
+  editions back (`CLI_ABSENT_DEPTH`), capped at that release's reference month,
+  and the data notes say so; beyond that it has no growth input (New Zealand
+  from 2020-06-21: 20 growth inputs). `retro_audit.py` accepts the older
+  edition only for an area absent from the eligible edition's own bytes.
+  Mexico's CLI stops at May 2020 and Australia's at March 2020 in several
+  editions; both are used as published.
+- **Caution note.** April–July pages cite the OECD's warning that the CLI's
+  predictive power was for the moment limited and that the size of its fall
+  did not measure the depth of the contraction (dpa-AFX, 8 Apr 2020);
+  August–December pages its repeated caution (Dow Jones, 10 Aug 2020). No 2020
+  edition re-estimates the CLI history (OECD-area revisions to 2000–2016
+  values at or below 0.37, August; country components up to 1.88, India,
+  October), so no method note applies.
+- **Policy.** US labels follow the emergency cuts effective 4 Mar (1.00–1.25%)
+  and 16 Mar 2020 (0–0.25%; FOMC statements of 3 and 15 Mar; the second came
+  after the 2020-03-15 cutoff). `DAILY_ERRATA` (new): Thailand's BIS daily
+  series shows 0.50% on 6 May 2020 only, between 0.75% on 5 and 7 May (the MPC
+  cut to 0.50% on 20 May); the day is read at 0.75% and the page says so. No
+  other 2020 move needed a correction or an instrument splice.
+- **Türkiye's funding rate** (`data/retro/policy_context.json`). The four 2019
+  auction items now carry `until` 2019-12-31 (shown in 2019 editions only). From
+  7 Aug 2020 the CBRT suspended one-week repo auctions (first documented by
+  Anadolu Agency via Hürriyet Daily News on 7 Aug; confirmed by the CBRT's MPC
+  summary of 27 Aug), cut primary-dealer limits to zero (11 Aug), halved
+  (18 Aug) and later zeroed (2 Nov) banks' overnight borrowing limits and
+  raised the corridor (24 Sep, ING; late liquidity window 13.25% → 14.75% on
+  22 Oct, Reuters via Arab News, average funding cost 12.52% against a 10.25%
+  policy rate). These items carry `until` 2020-11-19; the 19 Nov decision
+  (15%, all funding via one-week repo auctions from 20 Nov) is shown from its
+  date, and the instrument label follows. Disclosures, not model inputs.
+- **Benchmarks** (`data/retro/benchmarks_2020.json`): current-year targets
+  Brazil 4.00 ±1.5 (CMN Res. 4,582, art. 1 II), Indonesia 3 ±1 (PMK
+  124/PMK.010/2017), Thailand 2.0, the midpoint of the 1–3% headline range
+  (Cabinet, 24 Dec 2019; BoT MPC announcement No. 3/2562), Türkiye 5 (CBRT
+  Monetary and Exchange Rate Policy for 2020, 5 Dec 2019; its "interim targets"
+  sentence is recorded in the wording, the agreed 5% is used), Colombia 3
+  (2–4%, Board of 25 Nov 2019); Korea 2 and India 4 carried. Changes announced
+  during 2020: Chile's updated framework document (11 Feb, reported 12 Feb;
+  value unchanged, wording replaced), China ~3 → ~3.5% from the Report on the
+  Work of the Government of 22 May (applies from 2020-05-24), the FOMC's
+  amended statement of 27 Aug ("inflation that averages 2 percent over time";
+  value unchanged, cited from the dated press release). Value-unchanged
+  reaffirmations (UK remit of 11 Mar 2020) are not recorded; no wording names a
+  later year.
+
 `retro_scorecard.py` (ex-post, deliberately using later data; never an edition input)
 scores the published calls: the top three FX crosses held 3 months (BIS daily spot
 plus the stated policy-rate differential) and the ★★/★★★ curve calls (3-month change
 of 10y minus policy). For the 2019 editions: top cross 62% hit, +1.2% per 3 months
 (+2.2% through the 2019-11-10 edition; the 2019-12-08 and 12-22 holds ran into the
 February–March 2020 sell-off, MXN/JPY −6% and −21%); ★★★ curve calls 13/15 right,
-★★ calls a coin flip (44%).
+★★ calls a coin flip (44%). For the 2020 editions: the four January–February
+top crosses (long MXN/JPY) lost 23–26% each into the March 2020 crash, a supply
+shock the endogenous cycle cannot see (all-cross mean −2.3%, top cross 62% hit
+but −0.8%); from 2020-03-15 on, 16 of 21 top crosses gained (+3.8% per 3 months,
+every August–September edition positive). Curve calls: 279 ★★/★★★, all but one
+steepeners, 68% right (+0.19pp); ★★ 70%, ★★★ only 10/19.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

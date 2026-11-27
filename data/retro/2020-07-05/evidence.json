@@ -9,9 +9,9 @@
    "sha256": "9193188da8534cc9694f46b82e9e52b3aaa23669197e0c70ef25538bd2e68475",
    "nbytes": 1123121,
    "retrieved_at": "2026-11-27T08:30:10Z",
-   "available_by": "2020-06-30 (edition month end (conservative rule))",
+   "available_by": "2020-06-10 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, June 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, June 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2020-07-03": {
@@ -2670,10 +2670,46 @@
   "cli": {
    "edition": "202006",
    "label": "June 2020",
-   "public_by": "2020-06-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2020-06-10",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202006",
+    "area": "EA19",
+    "month": "2020-05",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 95.0,
+      "edition": 95.03,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 1.5,
+      "edition": 1.53,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE MAYIS'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 95,7 (\u00d6NCEK\u0130 94,2)', 10 Jun 2020 (11:01 +03:00): OECD area 95.7 in May, previous 94.2 (same-minute country flashes, labelled January by the wire but carrying the May values: euro area 95.0 from 93.5, US 94.8 from 93.9, China 96.2 from 96.1)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-mayista-oncu-gostergeler-endeksi-95-7-onceki-94-2/1599769/",
+     "date": "2020-06-10"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator zeigt starke Abschw\u00e4chung bei zarter Erholung', 10 Jun 2020 (12:16 CEST): OECD area 95.7 in May from 94.2; euro area 95.0 (93.5), Germany 93.6 (92.2), US 94.8 (93.9), Japan 97.6 (98.4)",
+     "url": "https://www.finanznachrichten.de/nachrichten-2020-06/49883751-oecd-fruehindikator-zeigt-starke-abschwaechung-bei-zarter-erholung-015.htm",
+     "date": "2020-06-10"
+    }
+   ],
+   "method_note": {
+    "text": "With the April 2020 release the OECD advised caution in reading the CLI during the COVID-19 pandemic: its ability to anticipate turning points was for the moment limited, and the size of the change could not be read as the depth of the contraction, only as a clear signal that many economies were shrinking. Growth z-scores built on these vintages carry the indicator's unprecedented swings.",
+    "url": "https://www.finanznachrichten.de/nachrichten-2020-04/49333496-virus-oecd-fruehindikator-bricht-in-rekordtempo-ein-016.htm",
+    "label": "finanznachrichten.de (dpa-AFX, in German), 'VIRUS: OECD-Fr\u00fchindikator bricht in Rekordtempo ein', 8 Apr 2020: 'Zum einen sei die Prognosekraft des Indikators aktuell begrenzt. Zum anderen k\u00f6nne vom Ausma\u00df der Ver\u00e4nderung des CLI nicht auf die konkrete St\u00e4rke des wirtschaftlichen Einbruchs geschlossen werden'",
+    "date": "2020-04-08"
+   },
    "absent": {
     "NZL": null
    },

@@ -9,9 +9,9 @@
    "sha256": "8fa86cd644ba9da36761de5f3474326612616c550775347574561aa329390a15",
    "nbytes": 945619,
    "retrieved_at": "2026-11-27T08:25:41Z",
-   "available_by": "2020-04-30 (edition month end (conservative rule))",
+   "available_by": "2020-04-08 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, April 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, April 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "oecd-rt-liaa-202002": {
@@ -20,9 +20,9 @@
    "sha256": "5cab78705325bc4a75004858ba18e17b5ec89e49c8b965ea8e8e2d8e2f6396b2",
    "nbytes": 1158051,
    "retrieved_at": "2026-11-27T08:12:30Z",
-   "available_by": "2020-02-29 (edition month end (conservative rule))",
+   "available_by": "2020-02-10 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2020-05-08": {
@@ -404,7 +404,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.TR?format=csv&startPeriod=1994-01&endPeriod=2020-03",
    "sha256": "95d2e225c4588e92cf54dc46446218cf9c0209c0ad0625d5a3388c8159c6e25e",
    "nbytes": 23077,
-   "retrieved_at": "2026-11-27T08:26:08Z",
+   "retrieved_at": "2026-11-27T08:26:09Z",
    "available_by": "reference months through 2020-03 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.TR: present-day BIS history requested with endPeriod=2020-03, so the retained bytes stop at 2020-03. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -492,7 +492,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.KR?format=csv&startPeriod=1994-01&endPeriod=2020-03",
    "sha256": "c26324301552b04038084e48883922577881ac5423dc8c3182554e2d4d685493",
    "nbytes": 22667,
-   "retrieved_at": "2026-11-27T08:26:13Z",
+   "retrieved_at": "2026-11-27T08:26:15Z",
    "available_by": "reference months through 2020-03 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.KR: present-day BIS history requested with endPeriod=2020-03, so the retained bytes stop at 2020-03. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -514,7 +514,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_EER/1.0/M.R.B.CL?format=csv&startPeriod=1994-01&endPeriod=2020-03",
    "sha256": "d64473a8f3bbdb5d0a2c6c34f67863f17d3ab9ebcd425c53b669455d1d3c8264",
    "nbytes": 22781,
-   "retrieved_at": "2026-11-27T08:26:15Z",
+   "retrieved_at": "2026-11-27T08:26:16Z",
    "available_by": "reference months through 2020-03 (one-full-month publication-lag gate)",
    "kind": "present-day-gated",
    "note": "BIS broad real effective exchange rate M.R.B.CL: present-day BIS history requested with endPeriod=2020-03, so the retained bytes stop at 2020-03. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -580,7 +580,7 @@
    "url": "https://stats.bis.org/api/v2/data/dataflow/BIS/WS_CBPOL/1.0/M.XM?format=csv&startPeriod=1985-01&endPeriod=2020-04",
    "sha256": "abd6499b817217442b9761a8adac99b2654a25628b787536a2903d36385f6cdc",
    "nbytes": 148720,
-   "retrieved_at": "2026-11-27T08:26:23Z",
+   "retrieved_at": "2026-11-27T08:26:24Z",
    "available_by": "reference months through 2020-04 (completed months)",
    "kind": "present-day-gated",
    "note": "BIS central bank policy rate M.XM (end of period): present-day BIS history requested with endPeriod=2020-04, so the retained bytes stop at 2020-04. No historical vintage of this series is retrievable; later revisions to these reference months are not removed.",
@@ -2638,10 +2638,46 @@
   "cli": {
    "edition": "202004",
    "label": "April 2020",
-   "public_by": "2020-04-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2020-04-08",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202004",
+    "area": "OECD",
+    "month": "2020-03",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 98.8,
+      "edition": 98.77,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": -0.8,
+      "edition": -0.8,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Milliyet; Foreks wire, in Turkish), 'OECD B\u00f6lgesi'nde \u00d6nc\u00fc g\u00f6stergeler d\u00fc\u015f\u00fc\u015f g\u00f6sterdi', 8 Apr 2020 (13:00 +03:00): March OECD area 98.8 from 99.6; euro area 98.2 (99.4), Germany 97.5 (99.4), UK 98.2 (100.1), US 98.9 (99.5), China 98.8 (99.1), Japan 98.4 (98.9); T\u00fcrkiye 100.8 from 101.3, \u22120.55% on the month, +4.18% on the year",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-bolgesinde-oncu-gostergeler-dusus-gosterdi/1556379/",
+     "date": "2020-04-08"
+    },
+    {
+     "label": "finanznachrichten.de (dpa-AFX, in German), 'VIRUS: OECD-Fr\u00fchindikator bricht in Rekordtempo ein', 8 Apr 2020 (12:05 CEST): the CLI fell in March more sharply than ever, from 99.6 to 98.8 for the OECD area",
+     "url": "https://www.finanznachrichten.de/nachrichten-2020-04/49333496-virus-oecd-fruehindikator-bricht-in-rekordtempo-ein-016.htm",
+     "date": "2020-04-08"
+    }
+   ],
+   "method_note": {
+    "text": "With the April 2020 release the OECD advised caution in reading the CLI during the COVID-19 pandemic: its ability to anticipate turning points was for the moment limited, and the size of the change could not be read as the depth of the contraction, only as a clear signal that many economies were shrinking. Growth z-scores built on these vintages carry the indicator's unprecedented swings.",
+    "url": "https://www.finanznachrichten.de/nachrichten-2020-04/49333496-virus-oecd-fruehindikator-bricht-in-rekordtempo-ein-016.htm",
+    "label": "finanznachrichten.de (dpa-AFX, in German), 'VIRUS: OECD-Fr\u00fchindikator bricht in Rekordtempo ein', 8 Apr 2020: 'Zum einen sei die Prognosekraft des Indikators aktuell begrenzt. Zum anderen k\u00f6nne vom Ausma\u00df der Ver\u00e4nderung des CLI nicht auf die konkrete St\u00e4rke des wirtschaftlichen Einbruchs geschlossen werden'",
+    "date": "2020-04-08"
+   },
    "absent": {
     "CHE": "202002",
     "NOR": "202002",

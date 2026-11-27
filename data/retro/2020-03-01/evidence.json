@@ -9,9 +9,9 @@
    "sha256": "5cab78705325bc4a75004858ba18e17b5ec89e49c8b965ea8e8e2d8e2f6396b2",
    "nbytes": 1158051,
    "retrieved_at": "2026-11-27T08:12:30Z",
-   "available_by": "2020-02-29 (edition month end (conservative rule))",
+   "available_by": "2020-02-10 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, February 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, February 2020 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2020-02-28": {
@@ -2507,10 +2507,40 @@
   "cli": {
    "edition": "202002",
    "label": "February 2020",
-   "public_by": "2020-02-29",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2020-02-10",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202002",
+    "area": "OECD",
+    "month": "2019-12",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.4,
+      "edition": 99.43,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.1,
+      "edition": 0.11,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE ARALIK'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 99,4 (\u00d6NCEK\u0130 99,3)', 10 Feb 2020 (14:00 +03:00): OECD area 99.4 in December, previous 99.3 (same-minute flashes: euro area 99.3 from 99.2, China 99.8 from 99.7)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-aralikta-oncu-gostergeler-endeksi-99-4-onceki-99-3/1507854/",
+     "date": "2020-02-10"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator deutet auf Wachstum unter dem Trend', 10 Feb 2020 (12:46 CET): the leading indicator for the whole OECD area rose 0.1 to 99.4 in December",
+     "url": "https://www.finanznachrichten.de/nachrichten-2020-02/48811019-oecd-fruehindikator-deutet-auf-wachstum-unter-dem-trend-015.htm",
+     "date": "2020-02-10"
+    }
+   ],
    "ref": "2019-12"
   },
   "cpi": {

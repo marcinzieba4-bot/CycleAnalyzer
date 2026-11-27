@@ -116,6 +116,60 @@ def _apply_monthly_errata(cc: str, m: pd.Series, last_day: date, ev) -> pd.Serie
     return m
 
 
+# Some 2026 DBnomics commits of the OECD datasets carry only the newest observations
+# of a series (a partial conversion): e.g. UK CPI with December 2025 alone. A monthly
+# model series is "truncated" when fewer than half of the 120 months up to its own
+# last observation are present. Its earlier history is then taken from the newest
+# earlier commit (also before the cutoff) that carries it in full, and the newer
+# commit's observations are kept wherever it has them; the data notes say so.
+BACKFILL_SUFFIXES = (".M.N.CPI.PA._T.N.GY", ".M.HICP.CPI.PA._T.N.GY", ".M.CP.GR._Z._Z.GY",
+                     ".M.LI.IX._T.AA._Z", ".M.BCICP.PB.C.Y._Z._Z.N")
+BACKFILL_MAX_STEPS = 8
+
+
+def _truncated(rows: list) -> bool:
+    if not rows:
+        return False
+    s = _monthly(rows)
+    return int((s.index > s.index.max() - 120).sum()) < 60
+
+
+def _backfill_truncated(project, path, series: dict, e_new, ledger_id, note, ev, cut) -> None:
+    todo = {k for k, rows in series.items() if k.endswith(BACKFILL_SUFFIXES) and _truncated(rows)}
+    if not todo:
+        return
+    c = {"id": e_new.id.rsplit("-", 1)[-1], "created_at": None, "committed_date": None}
+    # recover the commit's timestamps from the ledger entry (commit time is available_by)
+    c["created_at"] = c["committed_date"] = e_new.available_by
+    for _ in range(BACKFILL_MAX_STEPS):
+        b, e_prev, prev = S.dbnomics_file_before_commit(project, path, c, ledger_id, note)
+        old = S.read_jsonl_series(b, codes=todo)
+        used, new_series = [], []
+        for k in sorted(todo):
+            rows = old.get(k, [])
+            if len(rows) <= len(series[k]) and _truncated(rows):
+                new_series.append(k)      # no longer anywhere earlier: a genuinely new series
+                continue
+            if rows and not _truncated(rows):
+                newer = dict(series[k])
+                first_new = min(pd.Period(p, freq="M") for p in newer)
+                merged = {p: v for p, v in rows if pd.Period(p, freq="M") < first_new}
+                merged.update(newer)
+                series[k] = sorted(merged.items())
+                used.append(k)
+                ev.notes.append(
+                    f"archive: {k} in DBnomics commit {e_new.id.rsplit('-', 1)[-1]} carries "
+                    f"only {len(newer)} observation(s) from {first_new}; its earlier history "
+                    f"is taken from the previous full commit {prev['id'][:12]} (committed "
+                    f"{prev['committed_date'][:10]}, before the cutoff).")
+        if used:
+            ev.add(e_prev)
+        todo -= set(used) | set(new_series)
+        if not todo:
+            return
+        c = prev
+
+
 def _stale(e: S.LedgerEntry, ed: Edition) -> bool:
     t = datetime.fromisoformat(e.available_by.replace("Z", "+00:00"))
     return (ed.cutoff_utc - t).days > STALE_DAYS
@@ -235,6 +289,11 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
     kei = S.read_jsonl_series(kei_b)
     bts = S.read_jsonl_series(bts_b)
     prices = S.read_jsonl_series(pr_b)
+    for proj, path, ser, e, lid, nt in (
+            (S.OECD_PROJECT, KEI_PATH, kei, kei_e, "dbnomics-oecd-kei", "OECD Key Economic Indicators."),
+            (S.OECD_PROJECT, BTS_PATH, bts, bts_e, "dbnomics-oecd-bts", "OECD business tendency surveys."),
+            (S.OECD_PROJECT, PRICES_PATH, prices, pr_e, "dbnomics-oecd-prices", "OECD consumer prices.")):
+        _backfill_truncated(proj, path, ser, e, lid, nt, ev, cut)
     bcpi = S.read_jsonl_series(bcpi_b)
     bpol = S.read_jsonl_series(bpol_b)
 

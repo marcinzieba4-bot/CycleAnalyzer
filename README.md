@@ -150,10 +150,11 @@ python scripts/retro_build.py 2025-01-05 ... --deploy   # archive only; latest.h
 
 Editions built so far (biweekly Sundays): 2025-01-05 … 2025-02-16,
 2025-03-02, 03-16, 03-30, 04-13, 04-27, 05-11, 05-25, and 2025-06-08,
-06-22, 07-06, 07-20, 08-03, 08-17, 08-31, 09-14, 09-28; plus 2026-09-13
-(the gap between the 2026-08-30 and 2026-09-27 archive pages). Pass edition
-dates explicitly (or a `--range` whose start *is* a grid Sunday): `--range`
-steps from the first Sunday on/after its start.
+06-22, 07-06, 07-20, 08-03, 08-17, 08-31, 09-14, 09-28; 2025-10-12 …
+2026-08-30 (24 editions, below); and 2026-09-13. The repository now holds every
+grid edition from 2008-01-06 to 2026-09-13; the live weekly pipeline publishes
+from 2026-09-27. Pass edition dates explicitly (or a `--range` whose start *is* a
+grid Sunday): `--range` steps from the first Sunday on/after its start.
 
 DBnomics' BIS mirror has not updated since 2025-07-10, so from mid-July 2025
 the archived BIS CPI and policy files are frozen. Policy stays current
@@ -161,6 +162,57 @@ through the cited decision history; CPI comes from the OECD archives, and for
 the economies they do not cover (Japan, Canada, Mexico, South Africa, Chile,
 Thailand, India) from verified original national releases. Editions after
 mid-2026 need a citation for every decision since July 2025.
+
+### 2025-10-12 … 2026-08-30 editions
+
+Biweekly grid: 2025-10-12, 10-26, 11-09, 11-23, 12-07, 12-21, 2026-01-04, 01-18,
+02-01, 02-15, 03-01, 03-15, 03-29, 04-12, 04-26, 05-10, 05-24, 06-07, 06-21,
+07-05, 07-19, 08-02, 08-16, 08-30 (`python scripts/retro_build.py 2025-10-12 …`),
+built 2026-11-27 with the archive-era method and audited (look-ahead audit
+0 failed). The site archive already carried pages for these dates built outside
+this repository (different templates, no retained inputs); they were not replaced.
+
+- **Policy.** Every decision effective after the frozen BIS archive is cited from
+  the central bank's own announcement (46 new entries in
+  `data/retro/announcement_sources.json`, Sep 2025 – Jul 2026); where a bank's site
+  blocks automated fetching (RBNZ, NBP, BCCh) the label says so and a second
+  official source (rate table, BIS daily) corroborates it. The global turn shows in
+  the decisions: cuts through early 2026 (Fed, BoC, BoE, NBP, Banxico, SARB, RBI, BoT,
+  BCB), then hikes from February 2026 (RBA ×3, BanRep ×3, BI ×3 incl. an off-cycle
+  hike on 9 Jun, BoJ, ECB, Norges Bank, CNB, SARB, RBNZ, BoK).
+- **BIS daily errata** (`DAILY_ERRATA` in `panels.py`, new for the archive era). The
+  MNB cut its base rate to 6.00% from 24 Jun 2026 (Decree 17/2026 (VI. 23.)); the BIS
+  daily series shows 6.25% again on 25–30 Jun and 6.00% from 1 Jul with no decision
+  in between. Those days, and a repository snapshot's June month-end carrying the same
+  error, are read at 6.00%, and the page says so. The 2026-08-30 and 2026-09-13
+  editions (repository snapshot of 2026-08-28) carry the corrected June value.
+- **CPI first releases** (`data/retro/original_releases.json`, 154 new entries). The
+  DBnomics OECD prices archive stops at 2025-12 for the euro area, CH, SE, NO, TR, PL,
+  HU and CZ and at 2026-04/05 for most others (frozen from June 2026), so headline CPI
+  is appended as first printed: JP, TH, IN, CA, MX, CL, ZA 2025-09 … 2026-07; XM
+  (Eurostat flash), CH, SE (SCB's Snabb-KPI flash, then the regular release), NO, TR,
+  PL (flash; first full release for Jan–Feb 2026, when GUS published no flash), HU, CZ
+  (preliminary) 2026-01 … 07; GB, BR, CO, CN, ID, KR for the last two or three months.
+  Each entry records the fetched document's sha256 and fetch time. Where a statistics
+  office blocks automated access the label names the official mirror or release-day
+  report used (TurkStat via the Treasury's bulletins or Anadolu Agency; KSH via the
+  MNB's same-day flash analysis; BPS via ANTARA). Base changes named in the labels:
+  JP 2025=100 (from July 2026 data), IN 2024=100 (from January 2026), CN 2025, TR
+  2025=100, CH December 2025=100, COICOP 2018 across Europe. Every value agrees with
+  today's BIS history within 0.3pp except Thailand March 2026 (−0.08% as published by
+  the TPSO; BIS now shows −0.68%).
+- **Truncated archive commits** (`_backfill_truncated` in `panels.py`). A few 2026
+  DBnomics commits carry only the newest observations of a series (UK CPI with
+  December 2025 alone in the 2026-02-01 edition's archive; Canada's CPI in April–May
+  2026; the EA20 confidence balance in March–April 2026). Such a series' earlier
+  history is taken from the newest earlier, still pre-cutoff commit that carries it in
+  full, the newer commit's values kept wherever it has them; the data notes name both
+  commits. Genuinely new series (Australia's monthly CPI) are left alone. No earlier
+  edition is affected.
+- **Neighbours.** A rebuilt 2025-09-28 has byte-identical model inputs. The rebuilt
+  2026-09-13 differs in two inputs only: South Africa's July 2026 CPI (4.3%, Stats SA
+  19 Aug 2026, before the cutoff; missing before) and Hungary's June 2026 rate (6.00%);
+  its crosses, curve calls and plays are unchanged.
 
 ### Pre-archive editions (Q1 2008): real-time vintages
 

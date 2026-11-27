@@ -115,6 +115,22 @@ def latest_commit_before(project: int, path: str, cutoff_utc: str) -> dict:
 def dbnomics_file(project: int, path: str, cutoff_utc: str, ledger_id: str,
                   note: str) -> tuple[bytes, LedgerEntry]:
     c = latest_commit_before(project, path, cutoff_utc)
+    return dbnomics_file_at(project, path, c, ledger_id, note)
+
+
+def dbnomics_file_before_commit(project: int, path: str, c: dict, ledger_id: str,
+                                note: str) -> tuple[bytes, LedgerEntry, dict]:
+    """The newest commit touching ``path`` strictly before commit ``c`` (both of its
+    timestamps), i.e. the archive's previous state."""
+    t = min(datetime.fromisoformat(c[k]) for k in ("created_at", "committed_date"))
+    prev = latest_commit_before(project, path, t.astimezone(timezone.utc)
+                                .strftime("%Y-%m-%dT%H:%M:%SZ"))
+    b, e = dbnomics_file_at(project, path, prev, ledger_id, note)
+    return b, e, prev
+
+
+def dbnomics_file_at(project: int, path: str, c: dict, ledger_id: str,
+                     note: str) -> tuple[bytes, LedgerEntry]:
     sha_commit = c["id"]
     url = f"{GITLAB}/{project}/repository/files/{_q(path)}/raw?ref={sha_commit}"
     b, sha, got = cached_get(url)

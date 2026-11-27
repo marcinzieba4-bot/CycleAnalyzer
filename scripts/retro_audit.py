@@ -99,11 +99,21 @@ def audit(d: date) -> list[str]:
                 # release withheld, before that edition's month has ended
                 wh = RT.register().get(want[0], {}).get("withheld", {})
                 el = RT.eligible_cli(ed, edition)
-                check(bool(wh) and edition < want[0]
-                      and RT._month_end(want[0]) > ed.last_eligible_day
+                withheld_ok = bool(wh) and RT._month_end(want[0]) > ed.last_eligible_day
+                # ... or for an area the eligible edition does not carry at all
+                absent = ev.get("rt", {}).get("cli", {}).get("absent", {})
+                areas = [a for a, v in absent.items() if v == edition]
+                absent_ok = False
+                main = [x for x in ev["ledger"].values() if x["kind"] == "oecd-rt"
+                        and "..LI_AA..." in x["url"] and f"...{want[0]}?" in x["url"]]
+                if areas and main:
+                    mraw, _, _ = S.cached_get(main[0]["url"])
+                    carried = {a for a, _f in RT.parse_rt(mraw)}
+                    absent_ok = not any(a in carried for a in areas)
+                check((withheld_ok or absent_ok) and edition < want[0]
                       and el is not None and el[0] == pub.isoformat(),
                       f"{k}: edition {edition}/{pub} is neither the eligible {want[0]} nor a "
-                      "fallback for a withheld area")
+                      "fallback for a withheld or absent area")
             elif measure == "LI_AA":
                 check(edition == want[0] and pub.isoformat() == want[1],
                       f"{k}: edition {edition}/{pub} != eligible {want[0]}/{want[1]}")

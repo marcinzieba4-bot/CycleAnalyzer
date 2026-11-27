@@ -39,6 +39,17 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "US" and ed.last_eligible_day >= date(2020, 3, 16):
+        # FOMC statement of 15 Mar 2020: "the Committee decided to lower the target
+        # range for the federal funds rate to 0 to 1/4 percent"; effective 16 Mar
+        return ("Federal funds target range midpoint (0–0.25% range from 16 Mar 2020, "
+                "after 1.00–1.25% from 4 Mar 2020)")
+    if cc == "US" and ed.last_eligible_day >= date(2020, 3, 4):
+        # FOMC statement of 3 Mar 2020: "the Federal Open Market Committee decided today
+        # to lower the target range for the federal funds rate by 1/2 percentage point,
+        # to 1 to 1-1/4 percent"; effective 4 Mar
+        return ("Federal funds target range midpoint (1.00–1.25% range from 4 Mar 2020, "
+                "after 1.50–1.75% from 31 Oct 2019)")
     if cc == "US" and ed.last_eligible_day >= date(2019, 10, 31):
         # FOMC statement of 30 Oct 2019: "the Committee decided to lower the target
         # range for the federal funds rate to 1-1/2 to 1-3/4 percent"; effective 31 Oct

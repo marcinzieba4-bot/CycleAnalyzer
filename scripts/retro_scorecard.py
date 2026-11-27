@@ -37,9 +37,14 @@ def get(url, name):
     return f.read_text()
 
 
-def bis(flow, key, start="2018-06-01", end="2020-06-30"):
+# Data window, set in main() from the edition dates (entry month - 6 to exit + 3 months).
+WIN = {"start": "2018-06-01", "end": "2020-06-30"}
+
+
+def bis(flow, key):
+    start, end = WIN["start"], WIN["end"]
     t = get(f"https://stats.bis.org/api/v2/data/dataflow/BIS/{flow}/1.0/{key}?format=csv"
-            f"&startPeriod={start}&endPeriod={end}", f"{flow}_{key}.csv")
+            f"&startPeriod={start}&endPeriod={end}", f"{flow}_{key}_{start}_{end}.csv")
     rows = [r for r in csv.DictReader(io.StringIO(t)) if r.get("OBS_VALUE")]
     return pd.Series({r["TIME_PERIOD"]: float(r["OBS_VALUE"]) for r in rows}).sort_index()
 
@@ -85,6 +90,9 @@ def curves(s):
 
 
 def main(dates):
+    ds = sorted(date.fromisoformat(d) for d in dates)
+    WIN["start"] = (pd.Period(ds[0], freq="M") - 6).start_time.date().isoformat()
+    WIN["end"] = (pd.Period(ds[-1] + timedelta(days=91), freq="M") + 3).end_time.date().isoformat()
     pol, y10 = {}, {}
     rows_fx, rows_cv = [], []
     for d in dates:
@@ -108,7 +116,9 @@ def main(dates):
             if cc not in pol:
                 pol[cc] = bis("WS_CBPOL", f"M.{cc}")
                 fid = COUNTRIES[cc].fred_10y
-                t = get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={fid}&cosd=2018-06-01&coed=2020-06-01", f"{fid}.csv")
+                t = get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={fid}"
+                        f"&cosd={WIN['start']}&coed={WIN['end'][:8]}01",
+                        f"{fid}_{WIN['start']}_{WIN['end']}.csv")
                 r = [l.split(",") for l in t.strip().splitlines()[1:]]
                 y10[cc] = pd.Series({k[:7]: float(v) for k, v in r if v not in ("", ".")})
             m0 = pd.Period(D, freq="M"); m3 = m0 + 3

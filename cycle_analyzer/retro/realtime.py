@@ -149,6 +149,15 @@ DAILY_BRIDGE = {
     "JP": [{"effective": date(2016, 2, 16), "until": date(2016, 9, 20), "value": -0.1,
             "announced": "2016-01-29", "what": "rate applied to Policy-Rate Balances"}],
 }
+# Single days on which the BIS daily history shows a level that reverts on the next
+# business day without any announced decision (data errors, not policy moves). Such a
+# day is read at the level of the days around it, once the reversal itself is before
+# the cutoff; the page says so. Thailand: 0.50% on 6 May 2020 only, between 0.75% on
+# 5 and 7 May; the MPC's next scheduled meeting after the special meeting of 20 Mar
+# was 20 May 2020, when it cut the policy rate from 0.75% to 0.50%.
+DAILY_ERRATA = {
+    "TH": [{"day": date(2020, 5, 6), "bis": 0.5}],
+}
 # Editions of the revisions database that carry no CLI (LI_AA) at all: the July
 # and August 2016 editions hold CP and the other MEI measures but no leading
 # indicator (the query returns no records). They are never eligible as growth
@@ -156,8 +165,19 @@ DAILY_BRIDGE = {
 # CLI publication over the summer of 2016 and on 8 Sep 2016 "released three months'
 # worth of data" - Simon Ward, Money Moves Markets, 8 Sep 2016. That source is
 # dated after the affected editions, so it is cited here, not on their pages.)
-NO_CLI_EDITIONS = {"201607", "201608"}
-ERA_LAST_DAY = date(2019, 12, 31)          # editions on or before use this builder
+# The March 2020 edition carries no CLI either: the OECD cancelled its March 2020
+# release (CLI sub-components could not yet capture the spread of COVID-19) and the
+# April 2020 release, on 8 Apr 2020, covered data through March 2020.
+NO_CLI_EDITIONS = {"201607", "201608", "202003"}
+ERA_LAST_DAY = date(2020, 12, 31)          # editions on or before use this builder
+# An area the chosen CLI edition does not carry at all (from the April 2020 release
+# the OECD stopped computing some economies' CLIs, e.g. New Zealand, and left others
+# out of single releases) takes the newest earlier eligible edition carrying it, at
+# most CLI_ABSENT_DEPTH editions back, capped at that release's reference month;
+# beyond that the economy has no growth input. Only for editions from the given date
+# (earlier editions are built exactly as published).
+CLI_ABSENT_FALLBACK_FROM = date(2020, 1, 1)
+CLI_ABSENT_DEPTH = 3
 # Operational policy facts that the BIS series does not show (e.g. Turkiye in 2017: the
 # CBRT kept the one-week repo rate at 8% but funded the market at the late liquidity
 # window rate). Disclosed on the page with their sources, never model inputs; an item is
@@ -170,7 +190,8 @@ def policy_context(ed: Edition) -> list[dict]:
         return []
     reg = json.loads(POLICY_CONTEXT_FILE.read_text())
     # "until": the last day the described arrangement applied (a later item records
-    # what replaced it); the item is not shown in editions after that day.
+    # what replaced it), or the last day a long-finished episode is shown (the 2019
+    # auction suspensions); the item is not shown in editions after that day.
     led = ed.last_eligible_day
     return [{"cc": cc, **{k: v for k, v in x.items() if k != "until"}}
             for cc, xs in reg.items() if not cc.startswith("_")
@@ -487,6 +508,30 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             record("cli", cc, s)
             continue
         s = _cap(_monthly(cli.get((area, "M"), [])), ed)
+        if not len(s) and ed.date >= CLI_ABSENT_FALLBACK_FROM:
+            src_ed, rows, e_prev = _withheld_fallback(ed, cli_ed, area, CLI_ABSENT_DEPTH)
+            s = _cap(_monthly(rows), ed)
+            ev.rt["cli"].setdefault("absent", {})[area] = src_ed if e_prev is not None else None
+            if e_prev is None:
+                ev.notes.append(
+                    f"cli/{cc}: the {edition_label(cli_ed)} edition carries no {area} leading "
+                    f"indicator, nor does any of the previous {CLI_ABSENT_DEPTH} eligible "
+                    "editions; no growth input.")
+                continue
+            ev.add(e_prev)
+            ev.notes.append(
+                f"cli/{cc}: the {edition_label(cli_ed)} edition carries no {area} leading "
+                f"indicator; the newest earlier eligible edition carrying it "
+                f"({edition_label(src_ed)}, through {s.index.max() if len(s) else 'n/a'}) is used.")
+            if not len(s) or not fresh("cli", cc, s, f"the {edition_label(src_ed)} CLI edition"):
+                continue
+            panels["cli"][cc] = s
+            ev.growth_def[cc] = (f"OECD composite leading indicator, amplitude adjusted, as "
+                                 f"published in the {edition_label(src_ed)} edition (real-time "
+                                 f"database, LI_AA {area}; not carried by the "
+                                 f"{edition_label(cli_ed)} edition)")
+            record("cli", cc, s)
+            continue
         if ref_cap is not None and len(s) and s.index.max() > ref_cap:
             ev.notes.append(
                 f"cli/{cc}: the {edition_label(cli_ed)} edition carries {s.index.max()}, beyond "
@@ -667,6 +712,20 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             continue
         ev.add(me)
         ev.add(de)
+        for er in DAILY_ERRATA.get(cc, []):
+            t = pd.Timestamp(er["day"])
+            nb = d[d.index > t]
+            pv = d[d.index < t]
+            if (t in d.index and len(nb) and len(pv) and abs(float(d.loc[t]) - er["bis"]) < LEVEL_EPS
+                    and abs(float(nb.iloc[0]) - float(pv.iloc[-1])) < LEVEL_EPS):
+                d = d.copy()
+                d.loc[t] = float(pv.iloc[-1])
+                ev.notes.append(
+                    f"policy/{cc}: the BIS daily series shows {er['bis']:.2f}% on "
+                    f"{er['day'].isoformat()} only, between {float(pv.iloc[-1]):.2f}% on "
+                    f"{pv.index[-1].date().isoformat()} and {nb.index[0].date().isoformat()}; no "
+                    "decision was announced, so that day is read at "
+                    f"{float(pv.iloc[-1]):.2f}% (a one-day data error, not a policy move).")
         bridged: set = set()
         for br in DAILY_BRIDGE.get(cc, []):
             if led < br["effective"]:

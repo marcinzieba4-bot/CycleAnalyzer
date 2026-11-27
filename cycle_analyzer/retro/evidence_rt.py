@@ -204,13 +204,21 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
     chk = cli.get("content_check")
     chk_txt = ""
     if chk:
+        def _rep(x):
+            if x["what"] in ("mom_pct", "yoy_pct"):
+                return f"{x['what'][:3].replace('mom', 'm/m').replace('yoy', 'y/y')} {x['reported']:+.{x['dp']}f}%"
+            if x["what"] == "level":     # as printed by the report (register "level_dp")
+                return f"level {x['reported']:.{x.get('dp', 1)}f}"
+            return f"{x['what']} {x['reported']:+.1f}"
+
+        def _got(x):
+            if x["what"] in ("mom_pct", "yoy_pct"):
+                return f"{x['what'][:3].replace('mom', 'm/m').replace('yoy', 'y/y')} {x['edition']:+.2f}%"
+            return (f"{x['what']} {x['edition']:+.2f}" if x["what"] != "level"
+                    else f"level {x['edition']:.2f}")
         chk_txt = (" Content check: the edition’s " + _e(chk["area"]) + " aggregate for "
-                   + _e(chk["month"]) + " gives " + ", ".join(
-                       f"{x['what']} {x['edition']:+.2f}" if x["what"] != "level"
-                       else f"level {x['edition']:.2f}" for x in chk["items"])
-                   + ", matching the published " + ", ".join(
-                       f"{x['what']} {x['reported']:+.1f}" if x["what"] != "level"
-                       else f"level {x['reported']:.1f}" for x in chk["items"]) + ".")
+                   + _e(chk["month"]) + " gives " + ", ".join(_got(x) for x in chk["items"])
+                   + ", matching the published " + ", ".join(_rep(x) for x in chk["items"]) + ".")
     add(f'<p class="sub"><b>Growth.</b> {n_cli} growth inputs are OECD composite leading '
         f"indicators, amplitude adjusted, exactly as published in the {_e(cli['label'])} "
         "edition of the OECD real-time revisions database (Main Economic Indicators vintages, "

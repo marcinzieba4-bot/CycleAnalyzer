@@ -169,6 +169,17 @@ DAILY_ERRATA = {
 # release (CLI sub-components could not yet capture the spread of COVID-19) and the
 # April 2020 release, on 8 Apr 2020, covered data through March 2020.
 NO_CLI_EDITIONS = {"201607", "201608", "202003"}
+# Dated public notices of a cancelled release: shown, from their date, on pages that
+# still rely on an older edition because of it.
+NO_CLI_NOTICES = {
+    "202003": {"date": date(2020, 3, 9), "month": "March 2020",
+               "text": ("'The OECD has cancelled its scheduled monthly release of composite "
+                        "leading indicators (CLI), because of the rapid spread of the coronavirus "
+                        "outbreak. ... The OECD will release its next CLI survey in April' (Argus "
+                        "Media, 'OECD cancels CLI release', 9 Mar 2020; OECD notice reposted by "
+                        "Scoop, 10 Mar 2020: 'originally scheduled for 9 March 2020, has been "
+                        "cancelled')")},
+}
 ERA_LAST_DAY = date(2020, 12, 31)          # editions on or before use this builder
 # An area the chosen CLI edition does not carry at all (from the April 2020 release
 # the OECD stopped computing some economies' CLIs, e.g. New Zealand, and left others
@@ -412,7 +423,24 @@ def _content_check(ed: str, rows: list[tuple[str, float]]) -> dict | None:
         if rep is None:
             continue
         ok = abs(round(got[k], 1) - rep) <= chk["tol"] + 1e-9
-        res["items"].append({"what": k, "reported": rep, "edition": round(got[k], 2), "ok": ok})
+        item = {"what": k, "reported": rep, "edition": round(got[k], 2), "ok": ok}
+        if k == "level" and chk.get("level_dp"):
+            item["dp"] = chk["level_dp"]
+        res["items"].append(item)
+        res["ok"] &= ok
+    # percent changes as a report states them (e.g. "+1.54%"), compared at the
+    # report's own precision with one unit of tolerance: needed once levels are far
+    # from 100 (Turkiye's April 2020 CLI at 79), where points and percent diverge
+    pct = {"mom_pct": 100.0 * (float(s.loc[m]) / float(s.loc[m - 1]) - 1.0),
+           "yoy_pct": 100.0 * (float(s.loc[m]) / float(s.loc[m - 12]) - 1.0)}
+    for k, g in pct.items():
+        rep = chk.get(f"reported_{k}")
+        if rep is None:
+            continue
+        dp = len(repr(float(rep)).split(".")[1])
+        ok = abs(round(g, dp) - rep) <= 10 ** -dp + 1e-9
+        res["items"].append({"what": k, "reported": rep, "edition": round(g, 2), "ok": ok,
+                             "dp": dp})
         res["ok"] &= ok
     if not res["ok"]:
         raise RuntimeError(f"edition {ed} CLI does not match the dated public report: {res}")
@@ -456,6 +484,11 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             + " of the real-time database " + ("carry" if len(skipped) > 1 else "carries")
             + " no composite leading indicator (no records for any area); the newest edition "
             f"with one ({edition_label(cli_ed)}) is used.")
+    for e_no, nt in sorted(NO_CLI_NOTICES.items()):
+        if cli_ed < e_no and nt["date"] <= led and e_no not in skipped:
+            ev.notes.append(
+                f"cli: the OECD cancelled its {nt['month']} CLI release, {nt['text']}; the "
+                f"{edition_label(cli_ed)} edition remains the newest public one.")
     b, e = oecd_rt("LI_AA", cli_ed, cli_pub, cli_basis)
     ev.add(e)
     cli = parse_rt(b)

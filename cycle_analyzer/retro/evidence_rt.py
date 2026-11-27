@@ -39,12 +39,61 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "HU" and ed.last_eligible_day >= date(2022, 10, 14):
+        # MNB press release, effective 8:45 a.m. 14 Oct 2022: O/N collateralised lending
+        # rate 25%, daily O/N deposit quick tenders; 18% announced by deputy governor Virág
+        # (Budapest Business Journal / MTI, 14 Oct 2022); one-week deposit tenders no longer
+        # held from 17 Oct (Portfolio, 19 Oct 2022)
+        return ("MNB base rate (unchanged since 28 Sep 2022; from 14 Oct 2022 the MNB's "
+                "effective marginal rate is the overnight deposit quick tender, set above the "
+                "base rate; see the operational context below the policy decisions)")
+    if cc == "HU" and ed.last_eligible_day >= date(2022, 6, 30):
+        # MNB press release of 28 Jun 2022 (one-week deposit rate to be raised to the base
+        # rate at the next tender); tender of 30 Jun 2022 at 7.75%
+        return ("MNB base rate (the one-week deposit rate, set at weekly tenders above the base "
+                "rate from the tender of 18 Nov 2021, was raised to the base rate at the tender "
+                "of 30 Jun 2022; see the operational context below the policy decisions)")
     if cc == "HU" and ed.last_eligible_day >= date(2021, 11, 19):
         # tender of 18 Nov 2021 (Budapest Business Journal / MTI, 19 Nov 2021): one-week
         # deposit at 2.5%, 40 bp over the base rate; MNB press release of 16 Nov 2021
         return ("MNB base rate (from the tender of 18 Nov 2021 the one-week deposit rate, set "
                 "at weekly tenders, stands above it; see the operational context below the "
                 "policy decisions)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 12, 15):
+        # FOMC statement of 14 Dec 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 4-1/4 to 4-1/2 percent"; effective 15 Dec
+        return ("Federal funds target range midpoint (4.25–4.50% range from 15 Dec 2022, "
+                "after 3.75–4.00% from 3 Nov 2022)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 11, 3):
+        # FOMC statement of 2 Nov 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 3-3/4 to 4 percent"; effective 3 Nov
+        return ("Federal funds target range midpoint (3.75–4.00% range from 3 Nov 2022, "
+                "after 3.00–3.25% from 22 Sep 2022)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 9, 22):
+        # FOMC statement of 21 Sep 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 3 to 3-1/4 percent"; effective 22 Sep
+        return ("Federal funds target range midpoint (3.00–3.25% range from 22 Sep 2022, "
+                "after 2.25–2.50% from 28 Jul 2022)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 7, 28):
+        # FOMC statement of 27 Jul 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 2-1/4 to 2-1/2 percent"; effective 28 Jul
+        return ("Federal funds target range midpoint (2.25–2.50% range from 28 Jul 2022, "
+                "after 1.50–1.75% from 16 Jun 2022)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 6, 16):
+        # FOMC statement of 15 Jun 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 1-1/2 to 1-3/4 percent"; effective 16 Jun
+        return ("Federal funds target range midpoint (1.50–1.75% range from 16 Jun 2022, "
+                "after 0.75–1.00% from 5 May 2022)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 5, 5):
+        # FOMC statement of 4 May 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 3/4 to 1 percent"; effective 5 May
+        return ("Federal funds target range midpoint (0.75–1.00% range from 5 May 2022, "
+                "after 0.25–0.50% from 17 Mar 2022)")
+    if cc == "US" and ed.last_eligible_day >= date(2022, 3, 17):
+        # FOMC statement of 16 Mar 2022: "the Committee decided to raise the target
+        # range for the federal funds rate to 1/4 to 1/2 percent"; effective 17 Mar
+        return ("Federal funds target range midpoint (0.25–0.50% range from 17 Mar 2022, "
+                "after 0–0.25% from 16 Mar 2020)")
     if cc == "US" and ed.last_eligible_day >= date(2020, 3, 16):
         # FOMC statement of 15 Mar 2020: "the Committee decided to lower the target
         # range for the federal funds rate to 0 to 1/4 percent"; effective 16 Mar
@@ -245,6 +294,8 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                if v.get("kind") == "bis_gated" and v.get("reason") == "definition"]
     fixed_bis = [c for c, v in ev.cpi_choice.items()
                  if v.get("kind") == "bis_gated" and v.get("reason") == "fixed-base"]
+    trunc_bis = [c for c, v in ev.cpi_choice.items()
+                 if v.get("kind") == "bis_gated" and v.get("reason") == "truncated"]
     cn_ed = (ev.cpi_choice.get("CN") or {}).get("chosen", "")
     if (R.stored_as_yoy("CN", cpi["edition"])
             or (ev.cpi_choice.get("CN") or {}).get("reason") != "fixed-base"):
@@ -271,11 +322,13 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                    for c in fixed_bis))
         + ("".join(f", and {_e(C[c].name)} (its vintage series is the CPI for Industrial "
                    "Workers, not the Combined CPI the RBI targets)" for c in def_bis))
+        + ("".join(f", and {_e(C[c].name)} (its vintage index stops at "
+                   f"{_e(R.CPI_TRUNCATED_BIS[c]['ends'])})" for c in trunc_bis))
         + " use the present-day BIS CPI "
         f"history requested only through {lag1}: a reference month is admitted once the whole "
         "following month has passed, although these offices publish within about ten days. "
         + ("Headline CPI y/y is rarely revised, but those three histories are not vintages. "
-           if not (extra_bis or fixed_bis or def_bis) else
+           if not (extra_bis or fixed_bis or def_bis or trunc_bis) else
            "Headline CPI y/y is rarely revised, but those histories are not vintages. ")
         + 
         "Newer national releases that were public before the cutoff but are absent from the "

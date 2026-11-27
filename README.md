@@ -160,7 +160,7 @@ mid-2026 need a citation for every decision since July 2025.
 ### Pre-archive editions (Q1 2008): real-time vintages
 
 No DBnomics archive or ALFRED vintage of the REER, CLI or long-rate series
-reaches back to 2008, so editions dated on or before 2021-12-31 are built by
+reaches back to 2008, so editions dated on or before 2022-12-31 are built by
 `cycle_analyzer/retro/realtime.py` instead:
 
 | Input | Point-in-time source |

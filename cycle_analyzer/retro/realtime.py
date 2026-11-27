@@ -94,6 +94,20 @@ def bis_for_definition(cc: str, ed: Edition) -> bool:
     return d is not None and ed.date >= d["from"]
 
 
+# Series the real-time database stops updating from a given edition. Japan's CP index
+# (2015 = 100) runs to 2022-04 in the June 2022 edition but ends at 2021-06 in every
+# edition from July 2022 on, which would freeze Japan's inflation at mid-2021 and drop it
+# once stale. From that edition the present-day BIS history behind the one-full-month gate
+# is used instead; the vintage index is shown as a considered candidate. Earlier editions
+# are built exactly as published.
+CPI_TRUNCATED_BIS = {"JP": {"from_edition": "202207", "ends": "2021-06"}}
+
+
+def truncated_in_vintage(cc: str, edition: str) -> bool:
+    t = CPI_TRUNCATED_BIS.get(cc)
+    return t is not None and edition >= t["from_edition"]
+
+
 def stored_as_yoy(cc: str, edition: str) -> bool:
     return cc in YOY_INDEX and edition <= YOY_INDEX[cc]
 QUARTERLY_CPI = {"AU", "NZ"}
@@ -158,6 +172,19 @@ DAILY_BRIDGE = {
 DAILY_ERRATA = {
     "TH": [{"day": date(2020, 5, 6), "bis": 0.5}],
 }
+# Days on which the BIS daily history already carries a new level although the decision
+# was published only on a later day (a fixing due on a weekend is carried from the
+# weekend). The days before publication are read at the previous level, so the change is
+# dated when it was made public; the page says so. China: the one-year LPR of 3.65% is
+# carried from Saturday 20 Aug 2022, but the National Interbank Funding Center published
+# that fixing on Monday 22 Aug 2022 (Xinhua, 22 Aug 2022).
+DAILY_DATE_FIX = {
+    "CN": [{"bis_from": date(2022, 8, 20), "published": date(2022, 8, 22),
+            "source": ("Xinhua via gov.cn, 'China cuts benchmark lending rate LPR', 22 Aug 2022: "
+                       "'The one-year loan prime rate (LPR) came in at 3.65 percent on Aug 22, "
+                       "down from 3.7 percent, according to the National Interbank Funding "
+                       "Center'")}],
+}
 # Editions of the revisions database that carry no CLI (LI_AA) at all: the July
 # and August 2016 editions hold CP and the other MEI measures but no leading
 # indicator (the query returns no records). They are never eligible as growth
@@ -180,7 +207,7 @@ NO_CLI_NOTICES = {
                         "Scoop, 10 Mar 2020: 'originally scheduled for 9 March 2020, has been "
                         "cancelled')")},
 }
-ERA_LAST_DAY = date(2021, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2022, 12, 31)          # editions on or before use this builder
 # An area the chosen CLI edition does not carry at all (from the April 2020 release
 # the OECD stopped computing some economies' CLIs, e.g. New Zealand, and left others
 # out of single releases) takes the newest earlier eligible edition carrying it, at
@@ -619,6 +646,18 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                           f"BIS WS_LONG_CPI M.{cc}.771 (all-India Combined CPI), present-day "
                           f"history gated at {lag1}"))
             missing_note = ("definition", None)
+        elif cc in RT_AREA and truncated_in_vintage(cc, cpi_ed):
+            s, lbl = _rt_cpi(cc, cp, cpi_ed)
+            shown_only.append((s, lbl.replace(
+                f"OECD real-time CPI index {rt_areas(cpi_ed)[cc]}",
+                f"OECD real-time CPI index {rt_areas(cpi_ed)[cc]} (stops at "
+                f"{CPI_TRUNCATED_BIS[cc]['ends']}; not used: no longer updated in this edition)", 1)))
+            bb, be = bis_gated("WS_LONG_CPI", f"M.{cc}.771", lag1, "1985-01",
+                               f"BIS WS_LONG_CPI M.{cc}.771 (CPI y/y)",
+                               "one-full-month publication-lag gate")
+            cands.append(("bis_gated", _monthly(S.parse_bis_csv(bb)), be,
+                          f"BIS WS_LONG_CPI M.{cc}.771, present-day history gated at {lag1}"))
+            missing_note = ("truncated", None)
         elif cc in RT_AREA:
             s, lbl = _rt_cpi(cc, cp, cpi_ed)
             e_rt = cpi_e
@@ -680,6 +719,13 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                 f"cpi/{cc}: {CPI_DEFINITION_BIS[cc]['why']}; the present-day BIS Combined CPI "
                 f"history behind the one-full-month publication gate (latest {s.index.max()}) "
                 f"is used, not the {edition_label(cpi_ed)} vintage index.")
+        elif missing_note and missing_note[0] == "truncated":
+            ev.notes.append(
+                f"cpi/{cc}: the {edition_label(cpi_ed)} CPI edition carries the "
+                f"{rt_areas(cpi_ed)[cc]} index only through {CPI_TRUNCATED_BIS[cc]['ends']} "
+                "(earlier 2022 editions ran to within two months of their edition month); the "
+                "present-day BIS history behind the one-full-month publication gate (latest "
+                f"{s.index.max()}) is used instead.")
         elif missing_note and missing_note[0] == "fixed-base":
             ev.notes.append(
                 f"cpi/{cc}: the {edition_label(cpi_ed)} CPI edition stores a fixed-base index "
@@ -711,6 +757,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                                         missing_note[0] == "fixed-base" else
                                         "definition" if missing_note and
                                         missing_note[0] == "definition" else
+                                        "truncated" if missing_note and
+                                        missing_note[0] == "truncated" else
                                         "absent" if missing_note else "")}
         record("cpi", cc, s)
     if used_cpi_rt:
@@ -764,6 +812,22 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                     f"{pv.index[-1].date().isoformat()} and {nb.index[0].date().isoformat()}; no "
                     "decision was announced, so that day is read at "
                     f"{float(pv.iloc[-1]):.2f}% (a one-day data error, not a policy move).")
+        for fx in DAILY_DATE_FIX.get(cc, []):
+            t0, t1 = pd.Timestamp(fx["bis_from"]), pd.Timestamp(fx["published"])
+            pv = d[d.index < t0]
+            early = d[(d.index >= t0) & (d.index < t1)]
+            if not len(early) or not len(pv):
+                continue
+            d = d.copy()
+            d.loc[early.index] = float(pv.iloc[-1])
+            if led < fx["published"]:       # not yet published: nothing to say on the page
+                continue
+            ev.notes.append(
+                f"policy/{cc}: the BIS daily series carries {float(early.iloc[0]):.2f}% from "
+                f"{fx['bis_from'].isoformat()} ({fx['bis_from']:%A}), but the new level was "
+                f"published on {fx['published'].isoformat()} ({fx['source']}); the days before "
+                f"are read at {float(pv.iloc[-1]):.2f}%, so the change is dated when it was "
+                "made public.")
         bridged: set = set()
         for br in DAILY_BRIDGE.get(cc, []):
             if led < br["effective"]:

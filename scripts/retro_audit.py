@@ -26,7 +26,7 @@ import json
 import re
 import subprocess
 import sys
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -152,6 +152,35 @@ def audit(d: date) -> list[str]:
                     check(ts[1].astimezone(RT_WARSAW).date() == pub,
                           f"{k}: evidence commit's Warsaw date {ts[1].astimezone(RT_WARSAW).date()} "
                           f"!= public-by {pub}")
+                achk = RT.register().get(edition, {}).get("alfred_check")
+                if achk and pub.isoformat() != RT._month_end(edition).isoformat():
+                    # admitted by a dated ALFRED vintage: every listed CLI copy in it must equal
+                    # the edition, be served as that day's vintage and be the first to carry the
+                    # edition's month; public-by is the following day (US Central vintage dates)
+                    try:
+                        RT._alfred_check(edition, raw)
+                        ok += 1
+                    except RuntimeError as err:
+                        fails.append(f"{k}: {err}")
+                    vd = date.fromisoformat(achk["vintage"])
+                    check((vd + timedelta(days=1)) == pub,
+                          f"{k}: ALFRED vintage {vd} + 1 day != public-by {pub}")
+                    check(vd < ed.last_eligible_day,
+                          f"{k}: ALFRED vintage {vd} not before the last eligible day")
+        elif e["kind"] == "present-day-gated" and "DF_BTS" in e["url"]:
+            # OECD business confidence behind the one-full-month gate (quarterly surveys:
+            # the last quarter whose final month is within it)
+            end = re.search(r"endPeriod=([0-9Q-]+)&", e["url"]).group(1)
+            rule = RT.gate_lag1(ed)
+            gate = (pd.Period(end.replace("-Q", "Q"), freq="Q").asfreq("M", "e") if "Q" in end
+                    else pd.Period(end, freq="M"))
+            check(gate <= rule, f"{k}: gate {end} later than the rule gate {rule}")
+            raw, _, _ = S.cached_get(e["url"])
+            check(hashlib.sha256(raw).hexdigest() == e["sha256"], f"{k}: retained bytes changed")
+            per = [r["TIME_PERIOD"] for r in csv.DictReader(io.StringIO(raw.decode()))]
+            last = max((pd.Period(x.replace("-Q", "Q"), freq="Q").asfreq("M", "e") if "Q" in x
+                        else pd.Period(x, freq="M")) for x in per) if per else None
+            check(last is None or last <= gate, f"{k}: retained bytes reach {last}, after {end}")
         elif e["kind"] == "present-day-gated":
             m = re.search(r"(?:endPeriod=|coed=)(\d{4}-\d{2})", e["url"])
             gate = pd.Period(m.group(1), freq="M")

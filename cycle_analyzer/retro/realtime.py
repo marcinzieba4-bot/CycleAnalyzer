@@ -105,7 +105,14 @@ def bis_for_definition(cc: str, ed: Edition) -> bool:
 # once stale. From that edition the present-day BIS history behind the one-full-month gate
 # is used instead; the vintage index is shown as a considered candidate. Earlier editions
 # are built exactly as published.
-CPI_TRUNCATED_BIS = {"JP": {"from_edition": "202207", "ends": "2021-06"}}
+CPI_TRUNCATED_BIS = {
+    "JP": {"from_edition": "202207", "ends": "2021-06",
+           "earlier": "earlier 2022 editions ran to within two months of their edition month"},
+    # Mexico's CP index runs to 2024-07 in the September 2024 edition and stops there in
+    # every later 2024 edition (October: 2024-07 instead of 2024-08).
+    "MX": {"from_edition": "202410", "ends": "2024-07",
+           "earlier": "earlier editions ran to within two months of their edition month"},
+}
 
 
 def truncated_in_vintage(cc: str, edition: str) -> bool:
@@ -156,6 +163,21 @@ INSTRUMENT_SWITCH = {
                       "('各银行应在新发放的贷款中主要参考贷款市场报价利率定价'); the PBoC's Q&A of the "
                       "same day: 'the benchmark deposit and lending rates are retained'; first new "
                       "one-year LPR, 20 Aug 2019: 4.25%")},
+    # The BIS euro-area series is the MRO fixed rate until 17 Sep 2024 and the deposit
+    # facility rate (DFR) from 18 Sep 2024, the day the ECB's narrower 15bp MRO-DFR spread
+    # took effect together with a 25bp DFR cut. The switch day therefore carries a decision:
+    # the splice uses the DFR in force before it ("new_before"), not the switch-day jump.
+    "XM": {"date": date(2024, 9, 18), "old": "main refinancing operations (MRO) fixed rate",
+           "new": "deposit facility rate (DFR)", "new_before": 3.75,
+           "decision": ("the switch day also carries the decision of 12 Sep 2024 to lower the "
+                        "DFR by 25bp, from 3.75% to 3.50% (MRO 4.25% to 3.65%), effective "
+                        "18 Sep 2024, which is kept as a policy move"),
+           "source": ("ECB press release, 'ECB announces changes to the operational framework for "
+                      "implementing monetary policy', 13 Mar 2024: the Governing Council 'will "
+                      "continue to steer the monetary policy stance through the deposit facility "
+                      "rate' and the spread between the MRO rate and the DFR is set at 15 basis "
+                      "points from 18 Sep 2024; BIS series note: 'From 18 Sep 2024 onwards: "
+                      "official central bank steering rate is the deposit facility rate'")},
 }
 # Levels the BIS daily history leaves blank although they were announced and in
 # force. Japan's series is empty from 4 Apr 2013 (QQE made the monetary base the
@@ -206,7 +228,10 @@ DAILY_DATE_FIX = {
 # The March 2020 edition carries no CLI either: the OECD cancelled its March 2020
 # release (CLI sub-components could not yet capture the spread of COVID-19) and the
 # April 2020 release, on 8 Apr 2020, covered data through March 2020.
-NO_CLI_EDITIONS = {"201607", "201608", "202003"}
+# The August 2024 edition carries no CLI either (the query returns no records for any
+# area; the September 2024 edition runs through August 2024, and no ALFRED vintage of the
+# OECD CLI series ever carried a July 2024 value as its newest observation).
+NO_CLI_EDITIONS = {"201607", "201608", "202003", "202408"}
 # Dated public notices of a cancelled release: shown, from their date, on pages that
 # still rely on an older edition because of it.
 NO_CLI_NOTICES = {
@@ -218,7 +243,7 @@ NO_CLI_NOTICES = {
                         "Scoop, 10 Mar 2020: 'originally scheduled for 9 March 2020, has been "
                         "cancelled')")},
 }
-ERA_LAST_DAY = date(2023, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2024, 12, 31)          # editions on or before use this builder
 # From the January 2023 edition the real-time database carries the CLI only for the 13
 # economies the OECD still estimates (its release of 8 Dec 2022: "The CLIs will continue to
 # be estimated for a reduced set of countries"); the euro area, Switzerland, Sweden, Norway,
@@ -232,6 +257,24 @@ BCI_FROM_CLI_EDITION = "202301"
 BCI_AREAS = {"XM": "EA19", "CH": "CHE", "SE": "SWE", "NO": "NOR", "NZ": "NZL", "PL": "POL",
              "HU": "HUN", "CZ": "CZE", "CL": "CHL", "CO": "COL"}
 MEI_CLI_PATH = "MEI_CLI/series.jsonl"
+# DBnomics' OECD MEI_CLI dataset was last converted on 2024-01-13 (no commit until the
+# archive's end), so in 2024 its business confidence histories stop at end-2023. For
+# editions from BCI_GATED_FROM, a second candidate competes for each of the ten economies:
+# the OECD business-tendency-survey composite confidence balance for manufacturing
+# (DSD_STES@DF_BTS, percent balance), present-day history requested only through the
+# one-full-month publication gate and normalized to 100 + its deviation from its own
+# pre-cutoff average, exactly as the archive-era builder does (the model scales the
+# deviation from 100 by its own trailing dispersion, so only the centring matters, and it
+# uses nothing after the gate). The fresher candidate is used, the dated archive on a tie.
+BCI_GATED_FROM = date(2024, 1, 1)
+OECD_BTS = "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES@DF_BTS,4.0"
+BTS_AREAS = {"XM": "EA20", "CH": "CHE", "SE": "SWE", "NO": "NOR", "NZ": "NZL", "PL": "POL",
+             "HU": "HUN", "CZ": "CZE", "CL": "CHL", "CO": "COL"}
+BTS_QUARTERLY = {"NO", "NZ"}
+# From the 2024 editions the 24 REER histories are ALFRED vintages of FRED's copies of the
+# BIS broad real effective exchange rates (RB<cc>BIS), the Friday before the cutoff, as in
+# the archive-era builder; the gated present-day BIS history remains the fallback.
+REER_ALFRED_FROM = date(2024, 1, 1)
 REDUCED_SET_SOURCE = {
     "url": "https://www.miragenews.com/composite-leading-indicators-oecd-december-2022-911632/",
     "label": ("Mirage News (OECD release reprinted), 'Composite Leading Indicators, OECD, "
@@ -431,6 +474,39 @@ def fred_gated(series_id: str, gate: pd.Period, what: str, rule: str) -> tuple[b
     return b, e
 
 
+def bts_gated(cc: str, gate: pd.Period) -> tuple[pd.Series, str, S.LedgerEntry]:
+    """OECD composite business confidence (manufacturing, percent balance), present-day
+    history requested only through the gate (quarterly surveys: the last quarter whose
+    final month is within the gate). Returns the raw monthly series (quarters repeated
+    across their months), the series key and the ledger entry."""
+    q = cc in BTS_QUARTERLY
+    area = BTS_AREAS[cc]
+    key = f"{area}.{'Q' if q else 'M'}.BCICP.PB.C.Y._Z._Z.N"
+    end = (f"{(gate + 1).asfreq('Q') - 1}".replace("Q", "-Q") if q else str(gate))
+    url = f"{OECD_BTS}/{key}?endPeriod={end}&format=csvfile"
+    b, sha, got = S.cached_get(url)
+    rows = []
+    for r in csv.DictReader(io.StringIO(b.decode("utf-8"))):
+        v = r.get("OBS_VALUE")
+        if v not in (None, "", "NaN"):
+            rows.append((r["TIME_PERIOD"], float(v)))
+    rows.sort()
+    s = _quarterly_to_monthly(rows) if q else _monthly(rows)
+    e = S.LedgerEntry(
+        id=f"oecd-bts-{area.lower()}-to-{end.lower()}", url=url, sha256=sha, nbytes=len(b),
+        retrieved_at=got,
+        available_by=f"reference {'quarters' if q else 'months'} through {end} (one-full-month "
+                     "publication-lag gate)", kind="present-day-gated",
+        note=(f"OECD business tendency surveys, composite business confidence, manufacturing "
+              f"({key}, percent balance): present-day OECD history requested with "
+              f"endPeriod={end}, so the retained bytes stop there. No pre-cutoff vintage of "
+              "this series is retrievable; survey balances are revised only through seasonal "
+              "adjustment, which is not removed."),
+        proof_url=("https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&"
+                   "df[id]=DSD_STES%40DF_BTS&df[ag]=OECD.SDD.STES"))
+    return s, key, e
+
+
 def _yoy_monthly(idx: pd.Series) -> pd.Series:
     if idx.empty:
         return idx
@@ -542,6 +618,60 @@ def _dbnomics_check(ed: str, rt_bytes: bytes) -> dict | None:
             "sha256": sha, "url": url, "ok": True}
 
 
+ALFRED_CLI = "{area}LOLITOAASTSAM"        # FRED copies of the OECD amplitude-adjusted CLI
+
+
+def alfred_served_vintage(b: bytes) -> date | None:
+    """The vintage ALFRED actually served (its CSV header names it, e.g.
+    ``USALOLITOAASTSAM_20240410``), which can be earlier than the requested date."""
+    import re
+    m = re.search(r"_(\d{8})", b.decode("utf-8").splitlines()[0])
+    return date(int(m.group(1)[:4]), int(m.group(1)[4:6]), int(m.group(1)[6:])) if m else None
+
+
+def _alfred_check(ed: str, rt_bytes: bytes) -> dict | None:
+    """For a CLI edition admitted by a dated ALFRED vintage (register ``alfred_check``):
+    the vintage of every listed area's FRED copy of the OECD amplitude-adjusted CLI must
+    carry the same latest reference month as the edition, every overlapping value within
+    rounding (the database prints two decimals), and must have been served as the
+    vintage of that very day. The day before, no listed area may yet carry that month
+    (the vintage is the first to carry the edition). Raises otherwise."""
+    chk = register().get(ed, {}).get("alfred_check")
+    if not chk:
+        return None
+    v = date.fromisoformat(chk["vintage"])
+    rt = parse_rt(rt_bytes)
+    n, mx, bad, shas = 0, 0.0, [], []
+    for a in chk["areas"]:
+        sid = ALFRED_CLI.format(area=a)
+        b, e = S.alfred(sid, v.isoformat())
+        if alfred_served_vintage(b) != v:
+            bad.append(f"{a}: ALFRED served vintage {alfred_served_vintage(b)}, not {v}")
+        al = {p[:7]: x for p, x in S.parse_alfred_csv(b)}
+        rows = dict(rt.get((a, "M"), []))
+        if not rows or not al or max(rows) != max(al):
+            bad.append(f"{a}: latest month {max(rows) if rows else None} in the edition, "
+                       f"{max(al) if al else None} in the vintage")
+            continue
+        pb, _ = S.alfred(sid, (v - pd.Timedelta(days=1)).isoformat())
+        prev = S.parse_alfred_csv(pb)
+        if prev and prev[-1][0][:7] >= max(rows):
+            bad.append(f"{a}: the vintage of the previous day already carries {prev[-1][0][:7]}")
+        for p, x in rows.items():
+            if p in al:
+                n += 1
+                d = abs(al[p] - x)
+                mx = max(mx, d)
+                if d > DBN_CHECK_TOL + 1e-6:
+                    bad.append(f"{a} {p}: {x} in the edition, {al[p]} in the vintage")
+        shas.append({"series": sid, "sha256": e.sha256, "url": e.url})
+    if bad:
+        raise RuntimeError(f"edition {ed} CLI does not match the ALFRED {v} vintage: "
+                           + "; ".join(bad[:5]))
+    return {"edition": ed, "vintage": v.isoformat(), "areas": len(chk["areas"]), "values": n,
+            "max_abs_diff": round(mx, 4), "series": shas, "ok": True}
+
+
 # ------------------------------------------------------------------- build
 
 def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], Evidence]:
@@ -597,6 +727,9 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         dchk = _dbnomics_check(cli_ed, b)
         if dchk:
             ev.rt["cli"]["dbnomics_check"] = dchk
+        achk = _alfred_check(cli_ed, b)
+        if achk:
+            ev.rt["cli"]["alfred_check"] = achk
     bci_era = cli_ed >= BCI_FROM_CLI_EDITION
     mn = register().get(cli_ed, {}).get("method_note")
     if mn and date.fromisoformat(mn["date"]) <= led:
@@ -699,12 +832,38 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         ser = S.read_jsonl_series(bb, {f"BSCICP03.{i3}.M" for i3 in BCI_AREAS.values()})
         sha12 = be.proof_url.rsplit("/", 1)[-1][:12]
         n_li = len(panels["cli"])
-        used = []
+        used, gated = [], []
+        bts_gate = gate_lag1(ed)
         for cc, i3 in BCI_AREAS.items():
             if cc in panels["cli"]:
                 continue
             code = f"BSCICP03.{i3}.M"
             s = _cap(_monthly(ser.get(code, [])), ed)
+            if ed.date >= BCI_GATED_FROM:
+                # the present-day survey balance behind the gate competes with the dated
+                # archive; the fresher one is used, the archive on a tie
+                gs, gkey, ge = bts_gated(cc, bts_gate)
+                gs = _cap(gs.dropna(), ed)
+                if len(gs) and (not len(s) or gs.index.max() > s.index.max()):
+                    if not fresh("cli", cc, gs, f"the business confidence balance {gkey}"):
+                        continue
+                    gs = 100.0 + (gs - gs.mean())
+                    panels["cli"][cc] = gs
+                    ev.add(ge)
+                    ev.growth_def[cc] = (
+                        f"OECD composite business confidence, manufacturing ({gkey}, percent "
+                        f"balance), present-day history requested only through "
+                        f"{ge.available_by.split(' through ')[1].split(' ')[0]}, normalized to "
+                        "100 + its deviation from its own pre-cutoff average: a survey-based "
+                        "proxy, not a CLI"
+                        + ("; quarterly survey repeated across its three reference months"
+                           if cc in BTS_QUARTERLY else "")
+                        + ("; EA20 aggregate as the euro-area proxy" if cc == "XM" else "")
+                        + (f"; fresher than BSCICP03 in DBnomics MEI_CLI commit {sha12} "
+                           f"(through {s.index.max()})" if len(s) else ""))
+                    record("cli", cc, gs)
+                    gated.append(cc)
+                    continue
             if not len(s) or not fresh("cli", cc, s, f"the business confidence indicator {code}"):
                 continue
             panels["cli"][cc] = s
@@ -719,17 +878,44 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             ev.add(be)
         ev.rt["cli"]["bci"] = {"commit": sha12, "committed": be.available_by, "ledger": be.id,
                                "url": be.proof_url, "areas": used, "n_cli": n_li}
-        ev.notes.append(
-            f"cli: from the {edition_label(BCI_FROM_CLI_EDITION)} edition the real-time "
-            f"database carries the leading indicator only for the {n_li} economies the OECD "
-            "still estimates (its release of 2022-12-08 announced that the CLIs would continue "
-            "to be estimated for a reduced set of countries); the economies without one ("
-            + ", ".join(COUNTRIES[c].name for c in used) + ") take the OECD "
-            "business confidence indicator BSCICP03 (amplitude adjusted, long-term average 100) "
-            f"as served in DBnomics git commit {sha12} of the OECD MEI_CLI dataset, committed "
-            f"{be.available_by[:16].replace('T', ' ')} UTC, before the cutoff. It is the live "
-            "pipeline's fallback: a survey-based proxy on the CLI's scale, not a leading "
-            "indicator.")
+        if gated:
+            ev.rt["cli"]["bci"]["gated"] = gated
+            ev.rt["cli"]["bci"]["gate"] = str(bts_gate)
+        if ed.date < BCI_GATED_FROM:
+            ev.notes.append(
+                f"cli: from the {edition_label(BCI_FROM_CLI_EDITION)} edition the real-time "
+                f"database carries the leading indicator only for the {n_li} economies the OECD "
+                "still estimates (its release of 2022-12-08 announced that the CLIs would continue "
+                "to be estimated for a reduced set of countries); the economies without one ("
+                + ", ".join(COUNTRIES[c].name for c in used) + ") take the OECD "
+                "business confidence indicator BSCICP03 (amplitude adjusted, long-term average 100) "
+                f"as served in DBnomics git commit {sha12} of the OECD MEI_CLI dataset, committed "
+                f"{be.available_by[:16].replace('T', ' ')} UTC, before the cutoff. It is the live "
+                "pipeline's fallback: a survey-based proxy on the CLI's scale, not a leading "
+                "indicator.")
+        else:
+            parts = []
+            if used:
+                parts.append(
+                    "the OECD business confidence indicator BSCICP03 (amplitude adjusted, long-term "
+                    f"average 100) as served in DBnomics git commit {sha12} of the OECD MEI_CLI "
+                    f"dataset, committed {be.available_by[:16].replace('T', ' ')} UTC, before the "
+                    "cutoff, for " + ", ".join(COUNTRIES[c].name for c in used))
+            if gated:
+                parts.append(
+                    "the OECD business-tendency-survey composite confidence balance for "
+                    "manufacturing, present-day history requested only through "
+                    f"{bts_gate} (one full month after each reference month) and normalized to "
+                    "100 + its deviation from its own pre-cutoff average, for "
+                    + ", ".join(COUNTRIES[c].name for c in gated)
+                    + f" (fresher than that archive, whose newest pre-cutoff commit is of "
+                    f"{be.available_by[:10]})")
+            ev.notes.append(
+                f"cli: the real-time database carries the leading indicator only for the {n_li} "
+                "economies the OECD still estimates (its release of 2022-12-08 announced that the "
+                "CLIs would continue to be estimated for a reduced set of countries); the economies "
+                "without one take " + "; and ".join(parts) + ". Both are survey-based proxies, not "
+                "leading indicators.")
 
     # ---- inflation --------------------------------------------------------
     cpi_ed, cpi_pub, cpi_basis = cpi_edition(ed)
@@ -848,7 +1034,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             ev.notes.append(
                 f"cpi/{cc}: the {edition_label(cpi_ed)} CPI edition carries the "
                 f"{rt_areas(cpi_ed)[cc]} index only through {CPI_TRUNCATED_BIS[cc]['ends']} "
-                "(earlier 2022 editions ran to within two months of their edition month); the "
+                f"({CPI_TRUNCATED_BIS[cc]['earlier']}); the "
                 "present-day BIS history behind the one-full-month publication gate (latest "
                 f"{s.index.max()}) is used instead.")
         elif missing_note and missing_note[0] == "fixed-base":
@@ -891,13 +1077,23 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
 
     # ---- REER + 10y ---------------------------------------------------------
     log(f"REER: BIS broad, gated at {lag1}; 10y yields: completed months to {ed.anchor}")
+    reer_alfred = []
     for cc, c in COUNTRIES.items():
-        bb, be = bis_gated("WS_EER", f"M.R.B.{cc}", lag1, "1994-01",
-                           f"BIS broad real effective exchange rate M.R.B.{cc}",
-                           "one-full-month publication-lag gate")
-        s = _cap(_monthly(S.parse_bis_csv(bb)), ed)
+        s = pd.Series(dtype=float)
+        if ed.date >= REER_ALFRED_FROM:
+            ab, ae = S.alfred(f"RB{cc}BIS", ed.alfred_vintage.isoformat())
+            s = _cap(_monthly([(p[:7], v) for p, v in S.parse_alfred_csv(ab)]), ed)
+            if len(s):
+                ev.add(ae)
+                reer_alfred.append(cc)
+        if not len(s):
+            bb, be = bis_gated("WS_EER", f"M.R.B.{cc}", lag1, "1994-01",
+                               f"BIS broad real effective exchange rate M.R.B.{cc}",
+                               "one-full-month publication-lag gate")
+            s = _cap(_monthly(S.parse_bis_csv(bb)), ed)
+            if len(s):
+                ev.add(be)
         if len(s):
-            ev.add(be)
             panels["reer"][cc] = s
             record("reer", cc, s)
         if c.fred_10y:
@@ -982,19 +1178,32 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             t = pd.Timestamp(sw["date"])
             pre, post = d[d.index < t], d[d.index >= t]
             if len(pre) and len(post):
-                jump = round(float(post.iloc[0]) - float(pre.iloc[-1]), 3)
+                # the splice: the new instrument's level before the switch when the switch
+                # day also carries a decision, else the switch-day jump itself
+                base = sw.get("new_before", float(post.iloc[0]))
+                jump = round(base - float(pre.iloc[-1]), 3)
                 d = d.copy()
                 d[d.index < t] = d[d.index < t] + jump
                 months = [q for q in m.index if q.end_time < t]
                 m.loc[months] = m.loc[months] + jump
-                ev.notes.append(
-                    f"policy/{cc}: the {sw['new']} became the policy rate on "
-                    f"{sw['date'].isoformat()} (the BIS series switches from the {sw['old']}, "
-                    f"{float(pre.iloc[-1]):.2f}% → {float(post.iloc[0]):.2f}%). "
-                    + (f"{sw['not_change']} ({sw['source']})" if sw.get("not_change") else
-                       f"The switch is not a rate change ({sw['source']})")
-                    + f": earlier history is spliced by {jump:+.2f}pp so "
-                    "that policy changes are measured on the new instrument.")
+                if "new_before" in sw:
+                    ev.notes.append(
+                        f"policy/{cc}: the BIS series switches from the {sw['old']} to the "
+                        f"{sw['new']} on {sw['date'].isoformat()} ({float(pre.iloc[-1]):.2f}% → "
+                        f"{float(post.iloc[0]):.2f}%; {sw['source']}). The {sw['new']} stood at "
+                        f"{base:.2f}% before that day, so earlier history is spliced by "
+                        f"{jump:+.2f}pp, the spread between the two rates then in force (exact "
+                        "for the five years before the switch; earlier spreads differed), and "
+                        f"{sw['decision']}.")
+                else:
+                    ev.notes.append(
+                        f"policy/{cc}: the {sw['new']} became the policy rate on "
+                        f"{sw['date'].isoformat()} (the BIS series switches from the {sw['old']}, "
+                        f"{float(pre.iloc[-1]):.2f}% → {float(post.iloc[0]):.2f}%). "
+                        + (f"{sw['not_change']} ({sw['source']})" if sw.get("not_change") else
+                           f"The switch is not a rate change ({sw['source']})")
+                        + f": earlier history is spliced by {jump:+.2f}pp so "
+                        "that policy changes are measured on the new instrument.")
         # month-ends inside the daily window must agree with the monthly rows
         bad = [str(q) for q in m.index if q.start_time >= pd.Timestamp(DAILY_START)
                and (v := _value_on(d, q.end_time.date())) is not None
@@ -1069,6 +1278,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             current=float(cur), effective_since=since, archive_daily_end=led.isoformat(),
             source=me.id)
 
+    if reer_alfred:
+        ev.rt["reer_alfred"] = reer_alfred
     pc = policy_context(ed)
     if pc:
         ev.rt["policy_context"] = pc

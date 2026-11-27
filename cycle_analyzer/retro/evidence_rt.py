@@ -73,6 +73,40 @@ def instrument(cc: str, ed: Edition) -> str:
         return ("MNB base rate (from the tender of 18 Nov 2021 the one-week deposit rate, set "
                 "at weekly tenders, stands above it; see the operational context below the "
                 "policy decisions)")
+    if cc == "US" and ed.last_eligible_day >= date(2024, 12, 19):
+        # FOMC statement of 18 Dec 2024: "the Committee decided to lower the target range for
+        # the federal funds rate by 1/4 percentage point to 4-1/4 to 4-1/2 percent"
+        return ("Federal funds target range midpoint (4.25–4.50% range from 19 Dec 2024, "
+                "after 4.50–4.75% from 8 Nov 2024)")
+    if cc == "US" and ed.last_eligible_day >= date(2024, 11, 8):
+        # FOMC statement of 7 Nov 2024: "... lower the target range for the federal funds
+        # rate by 1/4 percentage point to 4-1/2 to 4-3/4 percent"
+        return ("Federal funds target range midpoint (4.50–4.75% range from 8 Nov 2024, "
+                "after 4.75–5.00% from 19 Sep 2024)")
+    if cc == "US" and ed.last_eligible_day >= date(2024, 9, 19):
+        # FOMC statement of 18 Sep 2024: "... lower the target range for the federal funds
+        # rate by 1/2 percentage point to 4-3/4 to 5 percent"
+        return ("Federal funds target range midpoint (4.75–5.00% range from 19 Sep 2024, "
+                "after 5.25–5.50% from 27 Jul 2023)")
+    if cc == "XM" and ed.last_eligible_day >= date(2024, 9, 18):
+        # ECB, 13 Mar 2024 (operational framework) and 12 Sep 2024 (decisions effective 18 Sep)
+        return ("ECB deposit facility rate, the rate through which the ECB steers its stance "
+                "(the BIS series switches to it from the main refinancing operations rate on "
+                "18 Sep 2024; earlier history spliced by −0.50pp, the spread between the two "
+                "rates before the switch; see the data notes)")
+    if cc == "JP" and ed.last_eligible_day >= date(2024, 8, 1):
+        # BoJ, 'Change in the Guideline for Market Operations', 31 Jul 2024: the uncollateralized
+        # overnight call rate to remain at around 0.25 percent, from 1 Aug 2024
+        return ("Uncollateralized overnight call rate, the short-term policy interest rate, "
+                "guided at around 0.25% from 1 Aug 2024 (around 0–0.1%, midpoint 0.05%, from "
+                "21 Mar 2024, when the −0.1% rate on Policy-Rate Balances ended)")
+    if cc == "JP" and ed.last_eligible_day >= date(2024, 3, 21):
+        # BoJ, 'Changes in the Monetary Policy Framework', 19 Mar 2024: the uncollateralized
+        # overnight call rate to remain at around 0 to 0.1 percent (from 21 Mar 2024)
+        return ("Uncollateralized overnight call rate, the short-term policy interest rate, "
+                "guided at around 0–0.1% from 21 Mar 2024 (BIS series: the 0.05% midpoint), "
+                "replacing the −0.1% rate applied to Policy-Rate Balances under QQE with Yield "
+                "Curve Control")
     if cc == "US" and ed.last_eligible_day >= date(2023, 7, 27):
         # FOMC statement of 26 Jul 2023: "the Committee decided to raise the target
         # range for the federal funds rate to 5-1/4 to 5-1/2 percent"; effective 27 Jul
@@ -314,6 +348,13 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                     f"{dchk['areas']} economies equal the edition’s within rounding (largest "
                     f"difference {dchk['max_abs_diff']:.3f}; the database prints two decimals, "
                     "DBnomics five), with the same latest reference month.")
+    achk = cli.get("alfred_check")
+    if achk:
+        chk_txt += (f" Content check: all {achk['values']:,} values the {achk['vintage']} ALFRED "
+                    f"vintage carries for the {achk['areas']} economies equal the edition’s within "
+                    f"rounding (largest difference {achk['max_abs_diff']:.3f}; the database prints "
+                    "two decimals), with the same latest reference month, which the vintage of "
+                    "the previous day did not yet carry.")
     bci = cli.get("bci")
     if bci:
         add(f'<p class="sub"><b>Growth.</b> {bci["n_cli"]} growth inputs are OECD composite leading '
@@ -327,14 +368,27 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
                if cli.get("method_note") else "")
             + f"From the {_e(R.edition_label(R.BCI_FROM_CLI_EDITION))} edition the OECD estimates "
             f"the CLI only for a reduced set of countries ({_links([R.REDUCED_SET_SOURCE])}). The "
-            f"other {len(bci['areas'])} growth inputs ("
-            + _e(", ".join(C[c].name for c in bci["areas"]))
-            + ") are therefore the OECD business confidence indicator (BSCICP03, amplitude "
-            "adjusted, long-term average 100 — the CLI’s own scale), as served in "
-            f'<a href="{_e(bci["url"])}">DBnomics git commit {_e(bci["commit"])}</a> of the OECD '
-            f"MEI_CLI dataset, committed {_e(bci['committed'][:16].replace('T', ' '))} UTC, the "
-            "newest before the cutoff: the live pipeline’s own fallback, a survey-based proxy, "
-            "not a leading indicator. Thailand has no growth input; an input whose latest "
+            + (f"other {len(bci['areas'])} growth inputs ("
+               + _e(", ".join(C[c].name for c in bci["areas"]))
+               + ") are therefore the OECD business confidence indicator (BSCICP03, amplitude "
+               "adjusted, long-term average 100 — the CLI’s own scale), as served in "
+               f'<a href="{_e(bci["url"])}">DBnomics git commit {_e(bci["commit"])}</a> of the OECD '
+               f"MEI_CLI dataset, committed {_e(bci['committed'][:16].replace('T', ' '))} UTC, the "
+               "newest before the cutoff: the live pipeline’s own fallback, a survey-based proxy, "
+               "not a leading indicator. " if bci["areas"] else "")
+            + ((f"other {len(bci['gated'])} growth inputs ("
+                if not bci["areas"] else f"For the other {len(bci['gated'])} ("
+                ) + _e(", ".join(C[c].name for c in bci["gated"]))
+               + (") are therefore " if not bci["areas"] else ") the growth input is ")
+               + "the OECD business-tendency-survey composite confidence balance for "
+               "manufacturing (percent balance), present-day history requested only through "
+               f"{_e(bci['gate'])} — one full month after each reference month — and normalized "
+               "to 100 plus its deviation from its own pre-cutoff average, as in the archive-era "
+               "editions; it is fresher than BSCICP03 in the newest pre-cutoff DBnomics MEI_CLI "
+               f"commit (committed {_e(bci['committed'][:10])}). Survey balances are revised only "
+               "through seasonal adjustment, which is not removed; a survey-based proxy, not a "
+               "leading indicator. " if bci.get("gated") else "")
+            + "Thailand has no growth input; an input whose latest "
             f"observation is more than {R.STALE_MONTHS} months older than the anchor month is "
             "not used (data notes below).</p>")
     else:
@@ -398,12 +452,24 @@ def render(ed: Edition, ev: Evidence, res, reconstructed: str) -> str:
         "Newer national releases that were public before the cutoff but are absent from the "
         "eligible vintage are not inserted, so an older observation date does not mean no "
         "newer release existed.</p>")
-    add(f'<p class="sub"><b>Exchange rates and yields.</b> No vintage of the BIS broad real '
-        f"effective exchange rates for {ed.date.year} is retrievable. All 24 REER histories "
-        f"are present-day BIS broad indices requested only through {lag1} (one full month "
-        "after each reference month, against BIS publication around mid-month). Their later "
-        "revisions — updated trade weights, revised consumer prices, a wider basket — are "
-        "not removed; REER enters the model only through the valuation leg of the FX score. "
+    ra = ev.rt.get("reer_alfred", [])
+    if ra:
+        rest = [c for c in C if c not in ra and c in ev.obs and ev.obs[c].get("reer")]
+        reer_txt = (f"The {len(ra)} REER histories are FRED’s copies of the BIS broad real "
+                    f"effective exchange rates (the RB…BIS series, e.g. RBUSBIS) in the ALFRED "
+                    f"{ed.alfred_vintage.isoformat()} (Friday) vintage, as they stood before the "
+                    "cutoff; REER enters the model only through the valuation leg of the FX score. "
+                    + (_e(", ".join(C[c].name for c in rest)) + ": present-day BIS broad index "
+                       f"requested only through {lag1}. " if rest else ""))
+    else:
+        reer_txt = (f"No vintage of the BIS broad real effective exchange rates for "
+                    f"{ed.date.year} is retrievable. All 24 REER histories are present-day BIS "
+                    f"broad indices requested only through {lag1} (one full month after each "
+                    "reference month, against BIS publication around mid-month). Their later "
+                    "revisions — updated trade weights, revised consumer prices, a wider basket — "
+                    "are not removed; REER enters the model only through the valuation leg of "
+                    "the FX score. ")
+    add('<p class="sub"><b>Exchange rates and yields.</b> ' + reer_txt +
         f"The 17 ten-year government yields are monthly market averages through {anc}, the "
         "last completed month; market yields were observable as the month ended and are not "
         "revised.</p>")

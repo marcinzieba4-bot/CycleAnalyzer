@@ -1,5 +1,5 @@
 {
- "_doc": "OECD Short-term economic statistics revisions database (DSD_STES_REVISIONS@DF_STES_REVISIONS; successor of the MEI Original Release Data and Revisions Database). Each EDITION holds the data as published in that month's Main Economic Indicators edition. CLI (LI_AA) of an edition is eligible from 'cli_public_by', the date of the earliest dated public report of that edition's CLI figures (an upper bound on the release date); where none is verified the edition month end applies. CPI (CP) of an edition is eligible only after its edition month has ended (conservative; no MEI print date is claimed). Each evidence item carries its own publication 'date'; a page lists only items published on or before its last eligible day. From the January 2023 edition the OECD no longer issues CLI news releases (its release of 8 Dec 2022 was the final one in that format) and the database carries the CLI only for the 13 economies it still estimates. These editions are admitted from the date, in Europe/Warsaw time, of the earliest DBnomics git commit of the OECD MEI_CLI dataset that carries the same CLIs (basis 'dated DBnomics git commit carrying this edition's figures'): 'dbnomics_check' names the commit, and the builder and the audit re-check that, for all 13 economies, the commit's latest reference month equals the edition's and every overlapping value agrees within rounding (the database prints two decimals, DBnomics five; largest difference 0.005).",
+ "_doc": "OECD Short-term economic statistics revisions database (DSD_STES_REVISIONS@DF_STES_REVISIONS; successor of the MEI Original Release Data and Revisions Database). Each EDITION holds the data as published in that month's Main Economic Indicators edition. CLI (LI_AA) of an edition is eligible from 'cli_public_by', the date of the earliest dated public report of that edition's CLI figures (an upper bound on the release date); where none is verified the edition month end applies. CPI (CP) of an edition is eligible only after its edition month has ended (conservative; no MEI print date is claimed). Each evidence item carries its own publication 'date'; a page lists only items published on or before its last eligible day. From the January 2023 edition the OECD no longer issues CLI news releases (its release of 8 Dec 2022 was the final one in that format) and the database carries the CLI only for the 13 economies it still estimates. These editions are admitted from the date, in Europe/Warsaw time, of the earliest DBnomics git commit of the OECD MEI_CLI dataset that carries the same CLIs (basis 'dated DBnomics git commit carrying this edition's figures'): 'dbnomics_check' names the commit, and the builder and the audit re-check that, for all 13 economies, the commit's latest reference month equals the edition's and every overlapping value agrees within rounding (the database prints two decimals, DBnomics five; largest difference 0.005). From the 2024 editions no OECD news release or DBnomics conversion dates the releases (DBnomics' OECD archive has no commit between 2024-01-13 and 2024-10-27): an edition is registered from the first ALFRED vintage of FRED's copies of the 13 CLIs that carries its latest reference month, with every overlapping value equal to the edition's within rounding (alfred_check); its public-by date is the day after the vintage date (US Central time). The February, March and July 2024 releases never appear as an ALFRED vintage (FRED updated the series next with the following release), so those editions keep the edition-month-end rule; the August 2024 edition carries no CLI.",
  "200712": {
   "cli_ref_month": "2007-10",
   "cli_public_by": "2007-12-31",
@@ -4467,6 +4467,246 @@
    "commit": "dd34bcfec6471f81e60fc6dc493065bb601ac015",
    "path": "MEI_CLI/series.jsonl",
    "committed": "2023-12-07T20:03:48Z",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202401": {
+  "cli_ref_month": "2023-12",
+  "cli_public_by": "2024-01-12",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 11 Jan 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through December 2023, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-01-11"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-01-11",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202404": {
+  "cli_ref_month": "2024-03",
+  "cli_public_by": "2024-04-11",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 10 Apr 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through March 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-04-10"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-04-10",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202405": {
+  "cli_ref_month": "2024-04",
+  "cli_public_by": "2024-05-16",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 15 May 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through April 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-05-15"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-05-15",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202406": {
+  "cli_ref_month": "2024-05",
+  "cli_public_by": "2024-06-18",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 17 Jun 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through May 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-06-17"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-06-17",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202409": {
+  "cli_ref_month": "2024-08",
+  "cli_public_by": "2024-09-17",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 16 Sep 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through August 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-09-16"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-09-16",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202410": {
+  "cli_ref_month": "2024-09",
+  "cli_public_by": "2024-10-16",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 15 Oct 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through September 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-10-15"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-10-15",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202411": {
+  "cli_ref_month": "2024-10",
+  "cli_public_by": "2024-11-16",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 15 Nov 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through October 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-11-15"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-11-15",
+   "areas": [
+    "USA",
+    "JPN",
+    "GBR",
+    "CAN",
+    "AUS",
+    "CHN",
+    "IND",
+    "BRA",
+    "MEX",
+    "ZAF",
+    "TUR",
+    "IDN",
+    "KOR"
+   ]
+  }
+ },
+ "202412": {
+  "cli_ref_month": "2024-11",
+  "cli_public_by": "2024-12-17",
+  "basis": "dated ALFRED vintage carrying this edition's figures",
+  "evidence": [
+   {
+    "label": "ALFRED (Federal Reserve Bank of St. Louis, archival FRED), vintage of 16 Dec 2024 of FRED's copies of the OECD amplitude-adjusted composite leading indicators (USALOLITOAASTSAM and the 12 other economies' LOLITOAASTSAM series): the first vintage carrying the 13 economies' CLIs through November 2024, equal to this edition's values within rounding (an archived, dated copy of the OECD's published data; ALFRED vintage dates are US Central time, so the figures were public by the next day in Warsaw, an upper bound on the release)",
+    "url": "https://alfred.stlouisfed.org/series?seid=USALOLITOAASTSAM",
+    "date": "2024-12-16"
+   }
+  ],
+  "alfred_check": {
+   "vintage": "2024-12-16",
    "areas": [
     "USA",
     "JPN",

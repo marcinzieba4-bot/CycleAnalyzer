@@ -839,8 +839,8 @@ Biweekly grid continued: 2021-01-03, 01-17, 01-31, 02-14, 02-28, 03-14,
 03-28, 04-11, 04-25, 05-09, 05-23, 06-06, 06-20, 07-04, 07-18, 08-01, 08-15,
 08-29, 09-12, 09-26, 10-10, 10-24, 11-07, 11-21, 12-05, 12-19
 (`python scripts/retro_build.py --range 2021-01-03 2021-12-31 --every 14`),
-published to the site archive on 2026-11-27 (26 pages; 33,604 audit checks,
-0 failed). A rebuilt 2020-12-20 page is byte-identical to the published one,
+published to the site archive on 2026-11-27 (all 26 pages verified
+byte-identical live; 33,604 audit checks, 0 failed). A rebuilt 2020-12-20 page is byte-identical to the published one,
 and rebuilt 2021 pages are byte-identical to the first build.
 
 - **Real-time era extended.** `ERA_LAST_DAY` is now 2021-12-31. Every 2021

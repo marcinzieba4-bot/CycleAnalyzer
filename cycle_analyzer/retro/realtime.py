@@ -170,14 +170,19 @@ INSTRUMENT_SWITCH = {
     "XM": {"date": date(2024, 9, 18), "old": "main refinancing operations (MRO) fixed rate",
            "new": "deposit facility rate (DFR)", "new_before": 3.75,
            "decision": ("the switch day also carries the decision of 12 Sep 2024 to lower the "
-                        "DFR by 25bp, from 3.75% to 3.50% (MRO 4.25% to 3.65%), effective "
-                        "18 Sep 2024, which is kept as a policy move"),
-           "source": ("ECB press release, 'ECB announces changes to the operational framework for "
-                      "implementing monetary policy', 13 Mar 2024: the Governing Council 'will "
-                      "continue to steer the monetary policy stance through the deposit facility "
-                      "rate' and the spread between the MRO rate and the DFR is set at 15 basis "
-                      "points from 18 Sep 2024; BIS series note: 'From 18 Sep 2024 onwards: "
-                      "official central bank steering rate is the deposit facility rate'")},
+                        "DFR by 25bp, from 3.75% to 3.50%, effective 18 Sep 2024, which is kept "
+                        "as a policy move"),
+           "source": ("ECB, Statement by the Governing Council, 'Changes to the operational "
+                      "framework for implementing monetary policy', 13 Mar 2024: 'The Governing "
+                      "Council will continue to steer the monetary policy stance through the DFR'; "
+                      "the spread between the MRO rate and the DFR 'will be reduced to 15 basis "
+                      "points from the current spread of 50 basis points', from the maintenance "
+                      "period beginning 18 Sep 2024; ECB monetary policy decisions, 12 Sep 2024: "
+                      "'the deposit facility rate will be decreased to 3.50%. The interest rates on "
+                      "the main refinancing operations and the marginal lending facility will be "
+                      "decreased to 3.65% and 3.90% respectively. The changes will take effect from "
+                      "18 September 2024'; BIS series note: 'From 18 Sep 2024 onwards: official "
+                      "central bank steering rate is the deposit facility rate'")},
 }
 # Levels the BIS daily history leaves blank although they were announced and in
 # force. Japan's series is empty from 4 Apr 2013 (QQE made the monetary base the

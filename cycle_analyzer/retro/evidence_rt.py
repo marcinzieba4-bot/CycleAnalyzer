@@ -97,16 +97,17 @@ def instrument(cc: str, ed: Edition) -> str:
     if cc == "JP" and ed.last_eligible_day >= date(2024, 8, 1):
         # BoJ, 'Change in the Guideline for Market Operations', 31 Jul 2024: the uncollateralized
         # overnight call rate to remain at around 0.25 percent, from 1 Aug 2024
-        return ("Uncollateralized overnight call rate, the short-term policy interest rate, "
-                "guided at around 0.25% from 1 Aug 2024 (around 0–0.1%, midpoint 0.05%, from "
-                "21 Mar 2024, when the −0.1% rate on Policy-Rate Balances ended)")
+        return ("Uncollateralized overnight call rate, which the BoJ encourages to remain at "
+                "around 0.25% from 1 Aug 2024 (around 0–0.1%, BIS midpoint 0.05%, from 21 Mar "
+                "2024, when the −0.1% rate on Policy-Rate Balances ended and the BoJ began "
+                "guiding the short-term interest rate as its primary policy tool)")
     if cc == "JP" and ed.last_eligible_day >= date(2024, 3, 21):
         # BoJ, 'Changes in the Monetary Policy Framework', 19 Mar 2024: the uncollateralized
         # overnight call rate to remain at around 0 to 0.1 percent (from 21 Mar 2024)
-        return ("Uncollateralized overnight call rate, the short-term policy interest rate, "
-                "guided at around 0–0.1% from 21 Mar 2024 (BIS series: the 0.05% midpoint), "
-                "replacing the −0.1% rate applied to Policy-Rate Balances under QQE with Yield "
-                "Curve Control")
+        return ("Uncollateralized overnight call rate, which the BoJ encourages to remain at "
+                "around 0–0.1% from 21 Mar 2024 (BIS series: the 0.05% midpoint), guiding the "
+                "short-term interest rate as its primary policy tool in place of the −0.1% rate "
+                "applied to Policy-Rate Balances under QQE with Yield Curve Control")
     if cc == "US" and ed.last_eligible_day >= date(2023, 7, 27):
         # FOMC statement of 26 Jul 2023: "the Committee decided to raise the target
         # range for the federal funds rate to 5-1/4 to 5-1/2 percent"; effective 27 Jul

@@ -39,6 +39,12 @@ POLICY_INSTRUMENT_RT = {
 
 def instrument(cc: str, ed: Edition) -> str:
     """Instrument label as of the edition (no later regime is named)."""
+    if cc == "HU" and ed.last_eligible_day >= date(2021, 11, 19):
+        # tender of 18 Nov 2021 (Budapest Business Journal / MTI, 19 Nov 2021): one-week
+        # deposit at 2.5%, 40 bp over the base rate; MNB press release of 16 Nov 2021
+        return ("MNB base rate (from the tender of 18 Nov 2021 the one-week deposit rate, set "
+                "at weekly tenders, stands above it; see the operational context below the "
+                "policy decisions)")
     if cc == "US" and ed.last_eligible_day >= date(2020, 3, 16):
         # FOMC statement of 15 Mar 2020: "the Committee decided to lower the target
         # range for the federal funds rate to 0 to 1/4 percent"; effective 16 Mar

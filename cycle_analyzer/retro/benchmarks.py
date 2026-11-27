@@ -39,7 +39,13 @@ def era_benchmarks(ed: Edition) -> dict | None:
                     applied.append(cc)
         for r in rows.values():          # cite only sources already published
             r["urls"] = [u for u in r.get("urls", []) if date.fromisoformat(u["date"]) <= led]
-        return {"note": reg.get("note", ""), "rows": rows, "applied": applied, "file": f.name}
+        # a register may restate its general note from a date (e.g. the euro area's
+        # 1.9% convention, which ends with the ECB's symmetric 2% target of 2021)
+        note = reg.get("note", "")
+        for nc in sorted(reg.get("note_changes", []), key=lambda x: x["from"]):
+            if date.fromisoformat(nc["from"]) <= led:
+                note = nc["note"]
+        return {"note": note, "rows": rows, "applied": applied, "file": f.name}
     return None
 
 # Benchmark changes announced after the universe benchmark was set.

@@ -9,9 +9,9 @@
    "sha256": "ba27e81e41ab03188a9d33f717f35b68731c5e5f0cb1fb9b87fd204a07c6e8f0",
    "nbytes": 1142312,
    "retrieved_at": "2026-11-27T10:06:50Z",
-   "available_by": "2021-03-31 (edition month end (conservative rule))",
+   "available_by": "2021-03-09 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, March 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, March 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2021-04-09": {
@@ -2372,10 +2372,48 @@
   "cli": {
    "edition": "202103",
    "label": "March 2021",
-   "public_by": "2021-03-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2021-03-09",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202103",
+    "area": "OECD",
+    "month": "2021-02",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.8,
+      "edition": 99.8,
+      "ok": true,
+      "dp": 2
+     },
+     {
+      "what": "mom_pct",
+      "reported": 0.14,
+      "edition": 0.14,
+      "ok": true,
+      "dp": 2
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE \u015eUBAT'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 99,8 (\u00d6NCEK\u0130 99,7)', 9 Mar 2021 (14:00 +03:00): OECD area 99.8 in February, previous 99.7 (same-minute flashes: euro area 99.1 from 99.0, US 99.8 from 99.6, China 101.5 from 101.3)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-subatta-oncu-gostergeler-endeksi-99-8-onceki-99-7/1803287/",
+     "date": "2021-03-09"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator weist auf Konjunkturholung hin', 9 Mar 2021 (14:01 CET): the OECD-area indicator rose 0.14% to 99.80 in February; euro area +0.11% to 99.1, Germany +0.11% to 100.4, US +0.22% to 99.8, China +0.13% to 101.5",
+     "url": "https://www.finanznachrichten.de/nachrichten-2021-03/52238276-oecd-fruehindikator-weist-auf-konjunkturholung-hin-015.htm",
+     "date": "2021-03-09"
+    }
+   ],
+   "method_note": {
+    "text": "With the February 2021 release the OECD advised that the CLIs should continue to be interpreted with care, as fluctuations in the underlying components were likely influenced by the changing measures to contain Covid-19 and the progress of vaccination campaigns. Growth z-scores built on these vintages carry the indicator's pandemic swings.",
+    "url": "https://www.scoop.co.nz/stories/WO2102/S00124/clis-point-to-stable-growth-in-most-large-oecd-economies.htm",
+    "label": "Scoop (OECD release reprinted), 'CLIs Point To Stable Growth In Most Large OECD Economies', 10 Feb 2021: 'The CLIs should continue to be interpreted with care as fluctuations in the underlying components are likely influenced by the changing measures to contain Covid-19 and the progress of vaccination campaigns'",
+    "date": "2021-02-10"
+   },
    "absent": {
     "NZL": null
    },

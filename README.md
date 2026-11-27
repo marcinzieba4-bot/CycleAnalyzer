@@ -7,6 +7,11 @@ the reading into **FX and yield-curve trade ideas**.
 The latest generated report lives in
 [`reports/cycle_monitor.md`](reports/cycle_monitor.md).
 
+**Trading rulebook:** [`reports/strategy/STRATEGY.md`](reports/strategy/STRATEGY.md) covers how to
+trade the editions' ideas, how long to hold, and which stops to use. It was backtested on all
+465 point-in-time editions 2008–2026 (`scripts/strategy_*.py`; designed on 2008–18, checked on
+2019–26). Daily signals: `python scripts/strategy_backtest.py --live`.
+
 ## The idea
 
 A business cycle is treated as a rotation in a two-dimensional phase space:

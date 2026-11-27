@@ -123,6 +123,21 @@ def instrument(cc: str, ed: Edition) -> str:
                 "after 0–0.25% from 16 Dec 2008)")
     if cc == "US" and ed.last_eligible_day >= date(2008, 12, 16):
         return "Federal funds target range midpoint (0–0.25% range from 16 Dec 2008)"
+    if cc == "TR" and ed.last_eligible_day >= date(2020, 11, 20):
+        # CBRT press release 2020-69 of 19 Nov 2020: all funding via one-week quantity
+        # repo auctions from 20 Nov 2020
+        return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
+                "spliced from the overnight borrowing rate; the CBRT's funding rate from "
+                "1 Jun 2018 and, after one-week repo funding was suspended from 7 Aug 2020, "
+                "again its only funding rate from 20 Nov 2020; see the operational context "
+                "below the policy decisions)")
+    if cc == "TR" and ed.last_eligible_day >= date(2020, 8, 7):
+        # one-week repo auctions suspended from 7 Aug 2020 (Anadolu Agency, 7 Aug 2020;
+        # CBRT MPC summary of 27 Aug 2020)
+        return ("CBRT one-week repo rate (policy rate from 20 May 2010; earlier history "
+                "spliced from the overnight borrowing rate; the CBRT's funding rate from "
+                "1 Jun 2018, but with one-week repo auctions suspended from 7 Aug 2020 banks "
+                "fund above it; see the operational context below the policy decisions)")
     if cc == "TR" and ed.last_eligible_day >= date(2018, 6, 1):
         # CBRT press release of 28 May 2018 on the simplification of the operational
         # framework: from 1 Jun 2018 the one-week repo rate is the policy (funding) rate

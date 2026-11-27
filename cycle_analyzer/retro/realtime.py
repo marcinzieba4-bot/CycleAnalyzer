@@ -180,7 +180,7 @@ NO_CLI_NOTICES = {
                         "Scoop, 10 Mar 2020: 'originally scheduled for 9 March 2020, has been "
                         "cancelled')")},
 }
-ERA_LAST_DAY = date(2020, 12, 31)          # editions on or before use this builder
+ERA_LAST_DAY = date(2021, 12, 31)          # editions on or before use this builder
 # An area the chosen CLI edition does not carry at all (from the April 2020 release
 # the OECD stopped computing some economies' CLIs, e.g. New Zealand, and left others
 # out of single releases) takes the newest earlier eligible edition carrying it, at
@@ -579,8 +579,13 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
                              + (f"euro-area aggregate as published, database code {area}" if cc == "XM"
                               else f"LI_AA {area}") + ")")
         record("cli", cc, s)
+        # A single area whose history this edition re-estimates (e.g. Mexico in April
+        # 2021, returning after a gap): the page says so; the series is used as published.
+        an = register().get(cli_ed, {}).get("area_notes", {}).get(area)
+        if an:
+            ev.notes.append(f"cli/{cc}: {an}")
 
-    ev.rt["cli"]["ref"] = max(ev.obs[cc]["cli"] for cc in panels["cli"]) if panels["cli"] else ""
+    ev.rt["cli"]["ref"] =max(ev.obs[cc]["cli"] for cc in panels["cli"]) if panels["cli"] else ""
 
     # ---- inflation --------------------------------------------------------
     cpi_ed, cpi_pub, cpi_basis = cpi_edition(ed)

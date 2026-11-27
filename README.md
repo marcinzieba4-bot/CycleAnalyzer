@@ -1006,7 +1006,8 @@ Biweekly grid continued: 2023-01-01, 01-15, 01-29, 02-12, 02-26, 03-12,
 03-26, 04-09, 04-23, 05-07, 05-21, 06-04, 06-18, 07-02, 07-16, 07-30, 08-13,
 08-27, 09-10, 09-24, 10-08, 10-22, 11-05, 11-19, 12-03, 12-17, 12-31
 (`python scripts/retro_build.py --range 2023-01-01 2023-12-31 --every 14`),
-published to the site archive on 2026-11-27 (27 pages; 37,985 audit checks,
+published to the site archive on 2026-11-27 (all 27 pages verified
+byte-identical live; index 467 archived reports; 37,985 audit checks,
 0 failed, and no abbreviated date such as "27 Sep 2023" after any cutoff).
 Rebuilt 2022-12-04 and 2022-12-18 pages are byte-identical to the published ones.
 2023-01-01 still uses the December 2022 CLI edition (20 clocks); every later

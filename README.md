@@ -201,14 +201,21 @@ this repository (different templates, no retained inputs); they were not replace
   2025=100, CH December 2025=100, COICOP 2018 across Europe. Every value agrees with
   today's BIS history within 0.3pp except Thailand March 2026 (−0.08% as published by
   the TPSO; BIS now shows −0.68%).
-- **Truncated archive commits** (`_backfill_truncated` in `panels.py`). A few 2026
-  DBnomics commits carry only the newest observations of a series (UK CPI with
-  December 2025 alone in the 2026-02-01 edition's archive; Canada's CPI in April–May
-  2026; the EA20 confidence balance in March–April 2026). Such a series' earlier
-  history is taken from the newest earlier, still pre-cutoff commit that carries it in
-  full, the newer commit's values kept wherever it has them; the data notes name both
-  commits. Genuinely new series (Australia's monthly CPI) are left alone. No earlier
-  edition is affected.
+- **Partial archive commits** (`_backfill_truncated` in `panels.py`). Several 2026
+  DBnomics commits of the OECD datasets carry a partial conversion of a model series:
+  only its newest observation (UK CPI with December 2025 alone in the 2026-02-01
+  edition's archive), no recent observations (the confidence balances of Norway, New
+  Zealand, Chile and others ending in 2023 in the 2026-04-12 archive), or no series at
+  all (Canada's CPI in March 2026). Each model series of the newest pre-cutoff commit
+  is compared with the predecessors committed within the previous 62 days (all before
+  the cutoff); missing or later observations are filled from them, the newer commit's
+  values kept wherever it has them, and one data note per archive lists every filled
+  series with the commit it came from. A candidate series with too short a history (fewer
+  than half of the 120 months to its last observation) is never preferred to a complete
+  one — Canada's new one-observation CPI code of April 2026, Australia's new monthly
+  CPI — and the euro-area confidence proxy switches to EA20 only once that aggregate has
+  a full history. Without these rules four editions would have lost a clock and three
+  would have used inputs 10–30 months stale.
 - **Neighbours.** A rebuilt 2025-09-28 has byte-identical model inputs. The rebuilt
   2026-09-13 differs in two inputs only: South Africa's July 2026 CPI (4.3%, Stats SA
   19 Aug 2026, before the cutoff; missing before) and Hungary's June 2026 rate (6.00%);

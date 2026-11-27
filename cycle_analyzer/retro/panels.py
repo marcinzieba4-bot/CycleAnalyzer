@@ -116,58 +116,89 @@ def _apply_monthly_errata(cc: str, m: pd.Series, last_day: date, ev) -> pd.Serie
     return m
 
 
-# Some 2026 DBnomics commits of the OECD datasets carry only the newest observations
-# of a series (a partial conversion): e.g. UK CPI with December 2025 alone. A monthly
-# model series is "truncated" when fewer than half of the 120 months up to its own
-# last observation are present. Its earlier history is then taken from the newest
-# earlier commit (also before the cutoff) that carries it in full, and the newer
-# commit's observations are kept wherever it has them; the data notes say so.
-BACKFILL_SUFFIXES = (".M.N.CPI.PA._T.N.GY", ".M.HICP.CPI.PA._T.N.GY", ".M.CP.GR._Z._Z.GY",
-                     ".M.LI.IX._T.AA._Z", ".M.BCICP.PB.C.Y._Z._Z.N")
-BACKFILL_MAX_STEPS = 8
+# Some 2026 DBnomics commits of the OECD datasets carry a partial conversion of a
+# series: only its newest observations (UK CPI with December 2025 alone), no recent
+# observations (Norway's confidence balance ending in 2023 in an April 2026 commit), or
+# no series at all (Canada's CPI in one March 2026 commit). For each model series the
+# newest pre-cutoff commit is compared with the commit before it (also pre-cutoff).
+# Where the newest commit lacks the series, ends earlier, or is "truncated" (fewer than
+# half of the 120 months up to its last observation present) while its predecessor is
+# not, the two are combined, the newer commit's values kept wherever it has them. A
+# series that is short in its predecessor too is genuinely new (Australia's monthly CPI)
+# and left alone; a truncated candidate is never preferred to a complete one (below).
+# The data notes name both commits.
+BACKFILL_SUFFIXES = (".M.N.CPI.PA._T.N.GY", ".M.HICP.CPI.PA._T.N.GY", ".Q.N.CPI.PA._T.N.GY",
+                     ".M.CP.GR._Z._Z.GY", ".Q.CP.GR._Z._Z.GY", ".M.LI.IX._T.AA._Z",
+                     ".M.BCICP.PB.C.Y._Z._Z.N", ".Q.BCICP.PB.C.Y._Z._Z.N")
+BACKFILL_AREAS = {c.iso3 for c in COUNTRIES.values()} | {"EA19", "EA20"}
+BACKFILL_DAYS = 62          # look back over predecessors committed within this window
+BACKFILL_MAX_STEPS = 10
 
 
-def _truncated(rows: list) -> bool:
+def _model_code(k: str) -> bool:
+    return k.endswith(BACKFILL_SUFFIXES) and k.split(".", 1)[0] in BACKFILL_AREAS
+
+
+def _per(code: str, p: str) -> pd.Period:
+    return pd.Period(p, freq="Q" if ".Q." in code else "M")
+
+
+def _truncated(rows: list, code: str = ".M.") -> bool:
     if not rows:
         return False
-    s = _monthly(rows)
-    return int((s.index > s.index.max() - 120).sum()) < 60
+    q = ".Q." in code
+    idx = pd.PeriodIndex([_per(code, p) for p, _ in rows])
+    win, need = (40, 20) if q else (120, 60)
+    return int((idx > idx.max() - win).sum()) < need
+
+
+def _last(code: str, rows: list):
+    return max(_per(code, p) for p, _ in rows) if rows else None
+
+
+def _merge(code: str, old: list, newer: list) -> list:
+    m = dict(old)
+    m.update(dict(newer))
+    return sorted(m.items(), key=lambda kv: _per(code, kv[0]))
 
 
 def _backfill_truncated(project, path, series: dict, e_new, ledger_id, note, ev, cut) -> None:
-    todo = {k for k, rows in series.items() if k.endswith(BACKFILL_SUFFIXES) and _truncated(rows)}
-    if not todo:
-        return
-    c = {"id": e_new.id.rsplit("-", 1)[-1], "created_at": None, "committed_date": None}
-    # recover the commit's timestamps from the ledger entry (commit time is available_by)
-    c["created_at"] = c["committed_date"] = e_new.available_by
+    sha_new = e_new.id.rsplit("-", 1)[-1]
+    t_new = datetime.fromisoformat(e_new.available_by.replace("Z", "+00:00"))
+    c = {"created_at": e_new.available_by, "committed_date": e_new.available_by}
+    filled: dict[str, tuple[str, str]] = {}
     for _ in range(BACKFILL_MAX_STEPS):
         b, e_prev, prev = S.dbnomics_file_before_commit(project, path, c, ledger_id, note)
-        old = S.read_jsonl_series(b, codes=todo)
-        used, new_series = [], []
-        for k in sorted(todo):
-            rows = old.get(k, [])
-            if len(rows) <= len(series[k]) and _truncated(rows):
-                new_series.append(k)      # no longer anywhere earlier: a genuinely new series
+        t_prev = datetime.fromisoformat(prev["committed_date"])
+        if (t_new - t_prev).days > BACKFILL_DAYS:
+            break
+        old = {k: v for k, v in S.read_jsonl_series(b).items() if _model_code(k)}
+        used = False
+        for k in sorted(set(old) | {k for k in series if _model_code(k)}):
+            cur, o = series.get(k, []), old.get(k, [])
+            if not o:
                 continue
-            if rows and not _truncated(rows):
-                newer = dict(series[k])
-                first_new = min(pd.Period(p, freq="M") for p in newer)
-                merged = {p: v for p, v in rows if pd.Period(p, freq="M") < first_new}
-                merged.update(newer)
-                series[k] = sorted(merged.items())
-                used.append(k)
-                ev.notes.append(
-                    f"archive: {k} in DBnomics commit {e_new.id.rsplit('-', 1)[-1]} carries "
-                    f"only {len(newer)} observation(s) from {first_new}; its earlier history "
-                    f"is taken from the previous full commit {prev['id'][:12]} (committed "
-                    f"{prev['committed_date'][:10]}, before the cutoff).")
+            why = None
+            if not cur:
+                why = "absent"
+            elif _last(k, o) > _last(k, cur):
+                why = f"ends at {_last(k, cur)}"
+            elif _truncated(cur, k) and not _truncated(o, k):
+                why = f"only {len(cur)} observation(s)"
+            if why is None:
+                continue
+            series[k] = _merge(k, o, cur)
+            filled.setdefault(k, (why, prev["id"][:12]))
+            used = True
         if used:
             ev.add(e_prev)
-        todo -= set(used) | set(new_series)
-        if not todo:
-            return
         c = prev
+    if filled:
+        items = "; ".join(f"{k} ({why}; from {sha})" for k, (why, sha) in sorted(filled.items()))
+        ev.notes.append(f"archive: DBnomics commit {sha_new} carries a partial conversion of some "
+                        f"model series; their missing observations come from the newest earlier "
+                        f"pre-cutoff commits that carry them, the newer values kept wherever they "
+                        f"exist: {items}.")
 
 
 def _stale(e: S.LedgerEntry, ed: Edition) -> bool:
@@ -342,7 +373,7 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             # EA19 is the established proxy; switch to the EA20 aggregate only
             # once EA19 has stopped (EA20 at least three months fresher)
             alt = bts.get("EA20.M.BCICP.PB.C.Y._Z._Z.N", [])
-            if alt and (not rows or pd.Period(alt[-1][0], freq="M")
+            if alt and not _truncated(alt, "EA20.M.") and (not rows or pd.Period(alt[-1][0], freq="M")
                         - pd.Period(rows[-1][0], freq="M")).n >= 3:
                 code, rows, ea20 = "EA20.M.BCICP.PB.C.Y._Z._Z.N", alt, True
         if not rows:
@@ -411,14 +442,21 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
         if cpi_frozen:
             order.insert(order.index("bis") + 1, "repo_bis")
         best, best_last = None, None
-        considered = []
+        considered, pool = [], []
         for k in order:
             s, e, lbl = cands[k]
             s = _cap(s.dropna(), ed)
             if s.empty:
                 continue
-            considered.append({"candidate": lbl, "last": str(s.index.max()),
-                               "last_value": round(float(s.iloc[-1]), 3)})
+            c = {"candidate": lbl, "last": str(s.index.max()),
+                 "last_value": round(float(s.iloc[-1]), 3)}
+            trunc = k not in ("oecd_q", "kei_q") and int((s.index > s.index.max() - 120).sum()) < 60
+            if trunc:
+                c["truncated"] = True     # history too short to fit: never preferred
+            considered.append(c)
+            pool.append((trunc, k, s, e, lbl))
+        full = [x for x in pool if not x[0]] or pool
+        for _, k, s, e, lbl in full:
             if best is None or s.index.max() > best_last:
                 best, best_last = (k, s, e, lbl), s.index.max()
         if best is None:

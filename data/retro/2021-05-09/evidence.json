@@ -9,9 +9,9 @@
    "sha256": "e32ae855f18e0b5a988eb47843d305d26c2b2715cfba0ff8ef9fadc0c7b8a91c",
    "nbytes": 1145594,
    "retrieved_at": "2026-11-27T10:06:48Z",
-   "available_by": "2021-04-30 (edition month end (conservative rule))",
+   "available_by": "2021-04-13 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, April 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, April 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2021-05-07": {
@@ -2309,6 +2309,7 @@
  "notes": [
   "cli/XM, cpi/XM: from the February 2015 edition the real-time database carries the euro-area aggregate as EA19 (Lithuania joined the euro area on 1 January 2015) instead of EA18; the aggregate is used as published.",
   "cli/NZ: the April 2021 edition carries no NZL leading indicator, nor does any eligible edition among the 3 before it; no growth input.",
+  "cli/MX: the April 2021 edition carries Mexico's leading indicator through 2021-03 again, after the August 2020 to March 2021 editions had stopped at 2020-05, and re-estimates its whole history (against the March 2021 edition, values for 2007 are revised by 4.3 points on average and the April 2020 value from 98.4 to 86.4), so its levels are not comparable with those earlier editions; the series is used as published, scaled by its own dispersion within the vintage.",
   "cpi/CN: the April 2021 CPI edition stores a fixed-base index (y/y = 12-month ratio inside the vintage); the published y/y behind the one-full-month publication gate competes, and the published y/y (latest 2021-03) is used as the fresher series.",
   "cpi/IN: the real-time database's India series is the CPI for Industrial Workers, while the RBI's 4% objective refers to the all-India Combined CPI; the present-day BIS Combined CPI history behind the one-full-month publication gate (latest 2021-03) is used, not the April 2021 vintage index.",
   "policy/JP: the BIS daily series is blank from 2013-04-04 to 2016-09-20; months without a BIS row carry the last BIS level as a proxy. From 2016-02-16 the rate applied to Policy-Rate Balances, -0.10% (announced 2016-01-29; source below the policy decisions), fills the blank days; the BIS series resumes at the same level on 2016-09-21.",
@@ -2379,10 +2380,47 @@
   "cli": {
    "edition": "202104",
    "label": "April 2021",
-   "public_by": "2021-04-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2021-04-13",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202104",
+    "area": "EA19",
+    "month": "2021-03",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.3,
+      "edition": 99.32,
+      "ok": true
+     },
+     {
+      "what": "mom_pct",
+      "reported": 0.22,
+      "edition": 0.22,
+      "ok": true,
+      "dp": 2
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: EURO B\u00d6LGES\u0130'NDE MART'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 99,3 (\u00d6NCEK\u0130 99,1)', 13 Apr 2021 (13:00 +03:00): euro area 99.3 in March, previous 99.1 (same-minute flashes: OECD area 100.0 from 99.8, Germany 100.7 from 100.4, US 100.2 from 99.8, China 102.5 from 102.1)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-euro-bolgesinde-martta-oncu-gostergeler-endeksi-99-3-onceki-99-1/1857963/",
+     "date": "2021-04-13"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator deutet im M\u00e4rz auf stabiles Wachstum', 13 Apr 2021 (12:49 CEST): the OECD-area indicator rose 0.22% to 100.0 in March; euro area +0.22% to 99.3, Germany +0.22% to 100.7, US +0.32% to 100.2, China +0.36% to 102.5",
+     "url": "https://www.finanznachrichten.de/nachrichten-2021-04/52558532-oecd-fruehindikator-deutet-im-maerz-auf-stabiles-wachstum-015.htm",
+     "date": "2021-04-13"
+    }
+   ],
+   "method_note": {
+    "text": "With the April 2021 release the OECD advised that the CLIs should continue to be interpreted with care, as the changing containment measures and the progress of vaccination campaigns were likely to cause higher than usual fluctuations in the components and possible revisions, and that the magnitude of the CLI indicates the strength of the signal, not the degree of growth in activity. Growth z-scores built on these vintages carry the indicator's pandemic swings.",
+    "url": "https://www.scoop.co.nz/stories/WO2104/S00141/clis-continue-to-strengthen-in-most-major-economies.htm",
+    "label": "Scoop (OECD release reprinted), 'CLIs Continue To Strengthen In Most Major Economies', 14 Apr 2021: 'The CLIs should continue to be interpreted with care \u2026 As always, the magnitude of CLI should be regarded as an indication of the strength of the signal rather than as a measure of the degree of growth in economic activity'",
+    "date": "2021-04-14"
+   },
    "absent": {
     "NZL": null
    },

@@ -5,13 +5,13 @@
  "ledger": {
   "oecd-rt-liaa-202105": {
    "id": "oecd-rt-liaa-202105",
-   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+EA19+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..LI_AA...202105?format=csvfile",
-   "sha256": "37f6426ba2625f956e7eb287ff909ffdb9aabb8f0402112ca2582f80594d6c69",
-   "nbytes": 1145355,
-   "retrieved_at": "2026-11-27T10:06:50Z",
-   "available_by": "2021-05-31 (edition month end (conservative rule))",
+   "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.STES,DSD_STES_REVISIONS@DF_STES_REVISIONS,4.0/AUS+BRA+CAN+CHE+CHN+CZE+DEU+EA19+GBR+HUN+IDN+IND+JPN+KOR+MEX+NOR+NZL+OECD+POL+SWE+TUR+USA+ZAF..LI_AA...202105?format=csvfile",
+   "sha256": "e55c887b783fdbd51fa087c4df12c7b5a167cb327815e003cba9acd1585db4d8",
+   "nbytes": 1220218,
+   "retrieved_at": "2026-11-27T10:58:24Z",
+   "available_by": "2021-05-11 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, May 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, May 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2021-06-04": {
@@ -2361,10 +2361,47 @@
   "cli": {
    "edition": "202105",
    "label": "May 2021",
-   "public_by": "2021-05-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2021-05-11",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202105",
+    "area": "DEU",
+    "month": "2021-04",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 101.1,
+      "edition": 101.14,
+      "ok": true
+     },
+     {
+      "what": "mom_pct",
+      "reported": 0.33,
+      "edition": 0.33,
+      "ok": true,
+      "dp": 2
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE N\u0130SAN'DA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 100,3 (\u00d6NCEK\u0130 100,0)', 11 May 2021 (13:00 +03:00): OECD area 100.3 in April, previous 100.0 (same-minute flashes: US 100.5 from 100.2, T\u00fcrkiye 101.25 from 101.22)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-nisanda-oncu-gostergeler-endeksi-100-3-onceki-100-0/1908600/",
+     "date": "2021-05-11"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator weist auf stetige Konjunkturerholung hin', 11 May 2021 (12:31 CEST): the OECD-area indicator rose 0.24% to 100.3 in April; euro area +0.31% to 99.7, Germany +0.33% to 101.1, US +0.28% to 100.5, Japan +0.11% to 100.4",
+     "url": "https://www.finanznachrichten.de/nachrichten-2021-05/52838836-oecd-fruehindikator-weist-auf-stetige-konjunkturerholung-hin-015.htm",
+     "date": "2021-05-11"
+    }
+   ],
+   "method_note": {
+    "text": "With the May 2021 release the OECD again advised that persisting uncertainties might result in higher than usual fluctuations in the CLI and its components, so the CLIs should be interpreted with care and their magnitude read as the strength of the signal rather than the degree of growth in activity. Growth z-scores built on these vintages carry the indicator's pandemic swings.",
+    "url": "https://www.scoop.co.nz/stories/WO2105/S00144/clis-increase-at-a-steady-pace-in-most-major-economies.htm",
+    "label": "Scoop (OECD release reprinted), 'CLIs Increase At A Steady Pace In Most Major Economies', 12 May 2021: 'As such, the CLIs should be interpreted with care and their magnitude should be regarded as an indication of the strength of the signal rather than as a measure of the degree of growth in economic activity'",
+    "date": "2021-05-12"
+   },
    "absent": {
     "NZL": null
    },

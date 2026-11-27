@@ -833,6 +833,86 @@ to the published one.
   reaffirmations (UK remit of 11 Mar 2020) are not recorded; no wording names a
   later year.
 
+### 2021 editions
+
+Biweekly grid continued: 2021-01-03, 01-17, 01-31, 02-14, 02-28, 03-14,
+03-28, 04-11, 04-25, 05-09, 05-23, 06-06, 06-20, 07-04, 07-18, 08-01, 08-15,
+08-29, 09-12, 09-26, 10-10, 10-24, 11-07, 11-21, 12-05, 12-19
+(`python scripts/retro_build.py --range 2021-01-03 2021-12-31 --every 14`),
+published to the site archive on 2026-11-27 (26 pages; 33,604 audit checks,
+0 failed). A rebuilt 2020-12-20 page is byte-identical to the published one,
+and rebuilt 2021 pages are byte-identical to the first build.
+
+- **Real-time era extended.** `ERA_LAST_DAY` is now 2021-12-31. Every 2021
+  edition of the revisions database carries CP for all 21 economies and the
+  CLI for all of them except New Zealand (absent since April 2020: no growth
+  input, 20 growth inputs).
+- **CLI editions** January–December 2021 are registered from dated public
+  reports, each page fetched and content-checked against the vintage: the
+  Foreks flashes on Uzmanpara/Milliyet (stamped the release minute, 12:00
+  Paris time) and Dow Jones Newswires in German via finanznachrichten.de
+  within the hour. Release days: 14 Jan, 9 Feb, 9 Mar, 13 Apr, 11 May, 9 Jun,
+  12 Jul, 10 Aug, 14 Sep (not the 8th), 12 Oct, 10 Nov, 9 Dec. Checks use
+  China (January, September), the OECD area (February, March, July, August,
+  October), the euro area (April, June), Germany (May, December) and the US
+  (November), each with the reported percent change and away from rounding
+  boundaries (the OECD area's December 2020 level is 99.45). No check uses a
+  figure the reports misprint: the Foreks month labels in January (October)
+  and August (June), and Dow Jones' Japan 99.0 (February), China 103.30 (May),
+  euro area 100.4 (October) and OECD area 110.7 (December). Only 2021-01-03
+  uses the December 2020 edition.
+- **Caution notes.** January–August pages cite the OECD's own release text
+  as reprinted by Scoop (dated the next day, New Zealand time): the CLIs
+  "should be interpreted with care" and their magnitude read as the strength
+  of the signal. No later statement was retrieved, so September–December
+  pages say that the January–August releases advised caution.
+- **Per-area CLI notes** (`area_notes` in the register, new; only the April
+  2021 entry carries one, so earlier pages rebuild unchanged). Mexico's CLI
+  stops at 2020-05 in the August 2020 to March 2021 editions: it is used
+  until it is more than 9 months older than the anchor month, so the
+  2021-04-11 page has 19 clocks. The April 2021 edition carries it through
+  2021-03 again with its whole history re-estimated (2007 values revised by
+  4.3 points on average, April 2020 from 98.4 to 86.4); pages using that
+  edition say so. Otherwise no 2021 edition re-estimates the CLI history
+  (OECD-area revisions to 2000–2017 values at or below 0.19, April).
+- **Policy.** No BIS daily errata, bridges or instrument splices were needed:
+  every 2021 move in the daily histories is an announced decision (Brazil's
+  seven hikes from 17 Mar; Türkiye's hike to 19% on 18 Mar and cuts from
+  23 Sep; Hungary, Czechia, Poland, Chile, Colombia, Mexico, Korea, Norway,
+  New Zealand, South Africa and the UK hiking from mid-year; the cuts of
+  Mexico, effective 12 Feb, and Indonesia, 18 Feb). US labels stay at the 0–0.25% range. China's 5bp LPR cut of
+  20 Dec 2021 falls after the last edition.
+- **Hungary's one-week deposit rate** (`data/retro/policy_context.json`;
+  disclosures, not model inputs). The BIS series is the MNB base rate; from
+  the tender of 18 Nov 2021 the MNB set its one-week deposit rate above it
+  (2.5%, then 2.9%, 3.1%, 3.3% and 3.6%, 40–120bp over the base rate). Shown
+  from each source's own date: the Monetary Council press releases of 16 Nov,
+  30 Nov and 14 Dec ("Changes to the one-week central bank deposit rate will
+  feed into the MNB's tightening cycle for a sustained period") and the dated
+  Budapest Business Journal (MTI) tender reports. The instrument label names
+  it from the 2021-11-21 page. The smaller spread of September 2020–June 2021
+  (0.75% against 0.60%) is not disclosed: no dated public source for that level
+  was retrieved. Türkiye's 19 Nov 2020 item still applies (one-week repo
+  funding throughout 2021).
+- **Benchmarks** (`data/retro/benchmarks_2021.json`): current-year targets
+  Brazil 3.75 ±1.5 (CMN Res. 4,671 of 26 Jun 2018), Indonesia 3 ±1 (PMK
+  124/PMK.010/2017, Art. 2(3)(c)), Thailand 2.0, the midpoint of the 1–3%
+  range (Cabinet, 22 Dec 2020; the BoT's PDF is cited only from its 1 Feb 2021
+  modification), Türkiye 5, now the "medium-term" target (CBRT Monetary and
+  Exchange Rate Policy for 2021, 16 Dec 2020, Turkish PDF; the English PDF from
+  its 14 Jan 2021 creation), Colombia 3 (2–4%, Board of 27 Nov 2020, cited from
+  same-day reports: banrep.gov.co sits behind a bot check). Changes announced
+  during 2021: New Zealand's replacement remit (Gazette, 25 Feb; value
+  unchanged, wording replaced), China ~3.5 → ~3% (Report on the Work of the
+  Government, 5 Mar; applies from 2021-03-14), India's re-notified 4% ±2
+  target (31 Mar; value unchanged), the euro area 1.9 → 2.0 from the ECB's
+  symmetric target of 8 Jul (applies from 2021-07-11; the register's general
+  note may now be restated from a date, `note_changes`, so the 1.9%
+  convention is described only on earlier pages). Value-unchanged
+  reaffirmations (FOMC 26 Jan, UK remits of 3 Mar and 27 Oct) and targets set
+  for later years (Canada's renewal of 13 Dec, Colombia's Board of 26 Nov) are
+  not recorded; no wording names a later year.
+
 `retro_scorecard.py` (ex-post, deliberately using later data; never an edition input)
 scores the published calls: the top three FX crosses held 3 months (BIS daily spot
 plus the stated policy-rate differential) and the ★★/★★★ curve calls (3-month change
@@ -844,7 +924,14 @@ top crosses (long MXN/JPY) lost 23–26% each into the March 2020 crash, a suppl
 shock the endogenous cycle cannot see (all-cross mean −2.3%, top cross 62% hit
 but −0.8%); from 2020-03-15 on, 16 of 21 top crosses gained (+3.8% per 3 months,
 every August–September edition positive). Curve calls: 279 ★★/★★★, all but one
-steepeners, 68% right (+0.19pp); ★★ 70%, ★★★ only 10/19.
+steepeners, 68% right (+0.19pp); ★★ 70%, ★★★ only 10/19. For the 2021 editions:
+78 crosses, 69% hit, +2.2% per 3 months; the top cross gained in 20 of 26 editions
+(+1.9%): long CNY/AUD through February, BRL or CNY against GBP in spring and summer,
+long MXN/GBP from August (8 of 10 positive), the best BRL/HUF from 2021-03-28
+(+10.8%) and the worst CNY/HUF from 2021-03-14 (−4.7%). Curve calls were a coin flip:
+231 ★★/★★★, 45% right (+0.01pp); the 142 flatteners, mostly in the second half as
+hiking cycles began, were right only 35% of the time (−0.10pp), the 89 steepeners 61%
+(+0.18pp); ★★★ 4 of 8.
 
 `retro_audit.py` re-checks every edition for look-ahead (source availability,
 observation months, policy effective dates, dates mentioned in the page).

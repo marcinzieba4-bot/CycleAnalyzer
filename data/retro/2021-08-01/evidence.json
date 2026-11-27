@@ -9,9 +9,9 @@
    "sha256": "f098a7ebb654c4c8d7f7c9293aadb9dbaf9625d6ab9f52283fe89e55d0a1f2bf",
    "nbytes": 1149765,
    "retrieved_at": "2026-11-27T10:06:48Z",
-   "available_by": "2021-07-31 (edition month end (conservative rule))",
+   "available_by": "2021-07-12 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, July 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, July 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2021-07-30": {
@@ -2392,10 +2392,47 @@
   "cli": {
    "edition": "202107",
    "label": "July 2021",
-   "public_by": "2021-07-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2021-07-12",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202107",
+    "area": "OECD",
+    "month": "2021-06",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.8,
+      "edition": 100.77,
+      "ok": true
+     },
+     {
+      "what": "mom_pct",
+      "reported": 0.25,
+      "edition": 0.25,
+      "ok": true,
+      "dp": 2
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: EURO B\u00d6LGES\u0130'NDE HAZ\u0130RAN'DA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 100,6 (\u00d6NCEK\u0130 100,3)', 12 Jul 2021 (13:00 +03:00): euro area 100.6 in June, previous 100.3 (same-minute flashes: Germany 101.6 from 101.3, US 100.7 from 100.4, China 102.3 from 102.1)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-euro-bolgesinde-haziranda-oncu-gostergeler-endeksi-100-6-onceki-100-3/2008363/",
+     "date": "2021-07-12"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator weist auf stetiges Wachstum', 12 Jul 2021 (12:52 CEST): the OECD-area indicator rose 0.25% to 100.8 in June; euro area +0.32% to 100.6, Germany +0.29% to 101.6, US +0.24% to 100.7",
+     "url": "https://www.finanznachrichten.de/nachrichten-2021-07/53383982-oecd-fruehindikator-weist-auf-stetiges-wachstum-015.htm",
+     "date": "2021-07-12"
+    }
+   ],
+   "method_note": {
+    "text": "With the July 2021 release the OECD again advised that persisting uncertainties might result in higher than usual fluctuations in the CLI and its components, so the CLIs should be interpreted with care and their magnitude read as the strength of the signal rather than the degree of growth in activity. Growth z-scores built on these vintages carry the indicator's pandemic swings.",
+    "url": "https://www.scoop.co.nz/stories/WO2107/S00133/clis-continue-to-expand-steadily.htm",
+    "label": "Scoop (OECD release reprinted), 'CLIs Continue To Expand Steadily', 13 Jul 2021: 'As such, the CLIs should be interpreted with care and their magnitude should be regarded as an indication of the strength of the signal rather than as a measure of the degree of growth in economic activity'",
+    "date": "2021-07-13"
+   },
    "absent": {
     "NZL": null
    },

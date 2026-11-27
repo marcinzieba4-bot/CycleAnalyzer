@@ -9,9 +9,9 @@
    "sha256": "134072b852250563e10bd8ef9f09892541ec5fe49d25ca1da2c7bc09829023ba",
    "nbytes": 1156234,
    "retrieved_at": "2026-11-27T10:10:30Z",
-   "available_by": "2021-10-31 (edition month end (conservative rule))",
+   "available_by": "2021-10-12 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, October 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, October 2021 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2021-11-05": {
@@ -2501,10 +2501,46 @@
   "cli": {
    "edition": "202110",
    "label": "October 2021",
-   "public_by": "2021-10-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2021-10-12",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202110",
+    "area": "OECD",
+    "month": "2021-09",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.9,
+      "edition": 100.93,
+      "ok": true
+     },
+     {
+      "what": "mom",
+      "reported": 0.0,
+      "edition": 0.01,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE EYL\u00dcL'DE \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 100,9 (\u00d6NCEK\u0130 100,9)', 12 Oct 2021 (13:00 +03:00): OECD area 100.9 in September, previous 100.9 (same-minute flashes: euro area 101.1, Germany 102.0, US 100.5, China 101.7, T\u00fcrkiye 102.2)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-eylulde-oncu-gostergeler-endeksi-100-9-onceki-100-9/2148215/",
+     "date": "2021-10-12"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator September deutet auf schw\u00e4cheren Aufschwung', 12 Oct 2021 (12:31 CEST): the OECD-area indicator for September stays at 100.9 and the US index at 100.5; according to the OECD the continued rise in consumer prices driven by sharply higher energy prices is one factor weighing on the indicators",
+     "url": "https://www.finanznachrichten.de/nachrichten-2021-10/54176669-oecd-fruehindikator-september-deutet-auf-schwaecheren-aufschwung-015.htm",
+     "date": "2021-10-12"
+    }
+   ],
+   "method_note": {
+    "text": "In its releases from January to August 2021 the OECD advised that the CLIs be interpreted with care, their magnitude indicating the strength of the signal rather than the degree of growth in activity; no later release statement on this was retrieved. Growth z-scores built on these vintages carry the indicator's pandemic swings.",
+    "url": "https://www.scoop.co.nz/stories/WO2108/S00098/signs-of-moderating-growth-in-most-major-economies.htm",
+    "label": "Scoop (OECD release reprinted), 'Signs Of Moderating Growth In Most Major Economies', 11 Aug 2021: 'As such, the CLIs should be interpreted with care and their magnitude should be regarded as an indication of the strength of the signal rather than as a measure of the degree of growth in economic activity'",
+    "date": "2021-08-11"
+   },
    "absent": {
     "NZL": null
    },

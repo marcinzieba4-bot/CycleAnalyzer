@@ -9,9 +9,9 @@
    "sha256": "4a22c6cca5af32d39b1e0dc4ae74eefacc8a4c90dfdca6103d5fed2a1f1e1189",
    "nbytes": 1180145,
    "retrieved_at": "2026-11-27T13:18:52Z",
-   "available_by": "2022-09-30 (edition month end (conservative rule))",
+   "available_by": "2022-09-12 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, September 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, September 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2022-10-07": {
@@ -2833,10 +2833,40 @@
   "cli": {
    "edition": "202209",
    "label": "September 2022",
-   "public_by": "2022-09-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2022-09-12",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202209",
+    "area": "OECD",
+    "month": "2022-08",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 98.9,
+      "edition": 98.9,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE A\u011eUSTOS'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 98,9 (\u00d6NCEK\u0130 99,1)', 12 Sep 2022 (13:00 +03:00): OECD area 98.9 in August, previous 99.1 (same-minute flashes: US 98.8 from 98.9, euro area 98.6 from 98.9, China 98.0 from 98.2, T\u00fcrkiye 99.3 from 99.4)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-agustosta-oncu-gostergeler-endeksi-98-9-onceki-99-1-fnc-news/2672284/",
+     "date": "2022-09-12"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator signalisiert konjunkturelle Verlangsamung', 12 Sep 2022 (12:31 CEST; wire 06:00 ET): levels for August, OECD area 98.9 (July 99.1), US 98.8, euro area 98.6, Germany 98.5 (no percent changes quoted)",
+     "url": "https://www.finanznachrichten.de/nachrichten-2022-09/57032014-oecd-fruehindikator-signalisiert-konjunkturelle-verlangsamung-015.htm",
+     "date": "2022-09-12"
+    }
+   ],
+   "method_note": {
+    "text": "The OECD's release advised that, with larger-than-usual fluctuations in the CLI components, the indicators be interpreted with care, their magnitude indicating the strength of the signal rather than a measure of growth in economic activity. Growth z-scores built on this vintage carry those fluctuations.",
+    "url": "https://www.miragenews.com/composite-leading-indicators-oecd-september-2022-853142/",
+    "label": "Mirage News (OECD release reprinted), 'Composite Leading Indicators, OECD, September 2022', 12 Sep 2022: 'In the face of persisting uncertainties related to the war in Ukraine, renewed COVID-19 threats, and the impact of high inflation on real household income, the CLI components might be subject to larger-than-usual fluctuations. As a result, the indicators should be interpreted with care'",
+    "date": "2022-09-12"
+   },
    "absent": {
     "NZL": null
    },

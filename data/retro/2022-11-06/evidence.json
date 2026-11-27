@@ -9,9 +9,9 @@
    "sha256": "a45a2bfa87b450399576d57da39d32971411e94961a38dee5bd8dc92aae0ad32",
    "nbytes": 1182379,
    "retrieved_at": "2026-11-27T13:31:06Z",
-   "available_by": "2022-10-31 (edition month end (conservative rule))",
+   "available_by": "2022-10-11 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, October 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, October 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2022-11-04": {
@@ -2857,10 +2857,47 @@
   "cli": {
    "edition": "202210",
    "label": "October 2022",
-   "public_by": "2022-10-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2022-10-11",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202210",
+    "area": "EA19",
+    "month": "2022-09",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 98.3,
+      "edition": 98.32,
+      "ok": true
+     },
+     {
+      "what": "mom_pct",
+      "reported": -0.28,
+      "edition": -0.28,
+      "ok": true,
+      "dp": 2
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: EURO B\u00d6LGES\u0130'NDE EYL\u00dcL'DE \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 98,3 (\u00d6NCEK\u0130 98,6)', 11 Oct 2022 (13:00 +03:00): euro area 98.3 in September, previous 98.6 (same-minute flashes: OECD area 98.6 from 98.8, US 98.5 from 98.6, Germany 98.1 from 98.6, T\u00fcrkiye 99.1 from 99.3)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-euro-bolgesinde-eylulde-oncu-gostergeler-endeksi-98-3-onceki-98-6-fnc-news/2720287/",
+     "date": "2022-10-11"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator deutet weiter auf schw\u00e4chere Dynamik', 11 Oct 2022 (12:31 CEST; wire 06:00 ET): the OECD-area indicator fell 0.20% to 98.6 in September; euro area \u22120.28% to 98.3, Germany \u22120.46% to 98.1, US \u22120.17% to 98.5, Japan \u22120.01% to 100.5, China \u22120.11% to 98.5",
+     "url": "https://www.finanznachrichten.de/nachrichten-2022-10/57270327-oecd-fruehindikator-deutet-weiter-auf-schwaechere-dynamik-015.htm",
+     "date": "2022-10-11"
+    }
+   ],
+   "method_note": {
+    "text": "The OECD's release advised that, with larger-than-usual fluctuations in the CLI components, the indicators be interpreted with care, their magnitude indicating the strength of the signal rather than a measure of growth in economic activity. Growth z-scores built on this vintage carry those fluctuations.",
+    "url": "https://www.miragenews.com/composite-leading-indicators-oecd-october-2022-872070/",
+    "label": "Mirage News (OECD release reprinted), 'Composite Leading Indicators, OECD, October 2022', 11 Oct 2022: 'In the face of persistent uncertainties related to the impact of the war in Ukraine, especially in energy markets, and ongoing COVID-19 threats, the CLI components might be subject to larger-than-usual fluctuations. As a result, the indicators should be interpreted with care'",
+    "date": "2022-10-11"
+   },
    "absent": {
     "NZL": null
    },

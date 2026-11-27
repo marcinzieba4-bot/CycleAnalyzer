@@ -9,9 +9,9 @@
    "sha256": "4868892cea7a78b40a9bc568f3c70e83c5603cf588c6f6efa9f67a3649ea73f6",
    "nbytes": 1167112,
    "retrieved_at": "2026-11-27T13:18:52Z",
-   "available_by": "2022-03-31 (edition month end (conservative rule))",
+   "available_by": "2022-03-09 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, March 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, March 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2022-04-08": {
@@ -2658,10 +2658,40 @@
   "cli": {
    "edition": "202203",
    "label": "March 2022",
-   "public_by": "2022-03-31",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2022-03-09",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202203",
+    "area": "OECD",
+    "month": "2022-02",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 100.4,
+      "edition": 100.43,
+      "ok": true
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: OECD B\u00d6LGES\u0130'NDE \u015eUBAT'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 100,4 (\u00d6NCEK\u0130 100,5)', 9 Mar 2022 (14:00 +03:00): OECD area 100.4 in February, previous 100.5 (same-minute flashes: euro area 100.7 from 100.8, US 100.0 from 100.0, China 99.2 from 99.3, T\u00fcrkiye 101.6 from 101.6)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-oecd-bolgesinde-subatta-oncu-gostergeler-endeksi-100-4-onceki-100-5-fnc-news/2381147/",
+     "date": "2022-03-09"
+    },
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: \u00c7\u0130N'DE \u015eUBAT'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 99,2 (\u00d6NCEK\u0130 99,3)', 9 Mar 2022 (14:00 +03:00): China 99.2 in February, previous 99.3",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-cinde-subatta-oncu-gostergeler-endeksi-99-2-onceki-99-3-fnc-news/2381150/",
+     "date": "2022-03-09"
+    }
+   ],
+   "method_note": {
+    "text": "The OECD's January and February 2022 releases advised that, with uncertainties from the pandemic (notably the Omicron variant) causing higher than usual fluctuations, the CLIs be interpreted with care, their magnitude indicating the strength of the signal rather than a precise measure of anticipated growth; no same-day text of the March release was retrieved. Growth z-scores built on this vintage carry those fluctuations.",
+    "url": "https://img.lalr.co/cms/2022/02/09095245/composite-leading-indicators-cli-oecd-02-2022.pdf",
+    "label": "OECD Composite Leading Indicators news release, Paris, 9 February 2022 (copy hosted by La Rep\u00fablica, uploaded the same day): the CLIs 'should continue to be interpreted with care as uncertainties from the ongoing COVID-19 pandemic persist, notably due to the impact of the Omicron variant in recent months. Variability in underlying indicators may result in higher than usual fluctuations in the CLI. As usual, the magnitude of the CLI should be regarded as an indication of the strength of the signal, rather than a precise measure of anticipated growth in economic activity'",
+    "date": "2022-02-09"
+   },
    "absent": {
     "NZL": null
    },

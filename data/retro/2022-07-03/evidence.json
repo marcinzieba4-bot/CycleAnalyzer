@@ -9,9 +9,9 @@
    "sha256": "c29d6d06b0fed5663ee4518751918b032d6a48d5ba0b6e6c9630bb99d3fae9d8",
    "nbytes": 1173614,
    "retrieved_at": "2026-11-27T13:09:43Z",
-   "available_by": "2022-06-30 (edition month end (conservative rule))",
+   "available_by": "2022-06-13 (dated public report quoting this edition's figures)",
    "kind": "oecd-rt",
-   "note": "OECD real-time revisions database, June 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: edition month end (conservative rule).",
+   "note": "OECD real-time revisions database, June 2022 edition, composite leading indicator, amplitude adjusted (LI_AA): the values as published in that month's Main Economic Indicators edition, never revised afterwards. Eligibility: dated public report quoting this edition's figures.",
    "proof_url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_STES_REVISIONS%40DF_STES_REVISIONS&df[ag]=OECD.SDD.STES"
   },
   "alfred-cpiaucns-2022-07-01": {
@@ -2688,10 +2688,47 @@
   "cli": {
    "edition": "202206",
    "label": "June 2022",
-   "public_by": "2022-06-30",
-   "basis": "edition month end (conservative rule)",
-   "content_check": null,
-   "evidence": [],
+   "public_by": "2022-06-13",
+   "basis": "dated public report quoting this edition's figures",
+   "content_check": {
+    "edition": "202206",
+    "area": "USA",
+    "month": "2022-05",
+    "ok": true,
+    "items": [
+     {
+      "what": "level",
+      "reported": 99.8,
+      "edition": 99.81,
+      "ok": true
+     },
+     {
+      "what": "mom_pct",
+      "reported": -0.02,
+      "edition": -0.02,
+      "ok": true,
+      "dp": 2
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "label": "Uzmanpara (Foreks flash, in Turkish), '*OECD: ABD'DE MAYIS'TA \u00d6NC\u00dc G\u00d6STERGELER ENDEKS\u0130 99,8 (\u00d6NCEK\u0130 99,8)', 13 Jun 2022 (13:00 +03:00): US 99.8 in May, previous 99.8 (same-minute flashes: euro area 99.7 from 99.9, Germany 100.0 from 100.2, China 98.8 from 98.9, T\u00fcrkiye 100.4 from 100.6)",
+     "url": "https://uzmanpara.milliyet.com.tr/raporlar-analizler/oecd-abdde-mayista-oncu-gostergeler-endeksi-99-8-onceki-99-8-fnc-news/2528015/",
+     "date": "2022-06-13"
+    },
+    {
+     "label": "finanznachrichten.de (Dow Jones Newswires, in German), 'OECD-Fr\u00fchindikator deutet auf Schwungverlust', 13 Jun 2022 (12:31 CEST; wire 06:00 ET): the OECD-area indicator fell 0.11% to 99.9 in May; euro area \u22120.18% to 99.7, Germany \u22120.17% to 100.0, US \u22120.02% to 99.8, Japan +0.04% to 100.7, China \u22120.09% to 98.8",
+     "url": "https://www.finanznachrichten.de/nachrichten-2022-06/56292926-oecd-fruehindikator-deutet-auf-schwungverlust-015.htm",
+     "date": "2022-06-13"
+    }
+   ],
+   "method_note": {
+    "text": "The OECD's release advised that, with higher than usual fluctuations in the CLI components, the indicators be interpreted with care, their magnitude indicating the strength of the signal rather than a measure of growth in economic activity. Growth z-scores built on this vintage carry those fluctuations.",
+    "url": "https://www.miragenews.com/composite-leading-indicators-oecd-june-2022-799716/",
+    "label": "Mirage News (OECD release reprinted), 'Composite Leading Indicators, OECD, June 2022', 13 Jun 2022: 'Ongoing uncertainties related to the war in Ukraine and COVID-19 are resulting in higher than usual fluctuations in the CLI components. As a result, the indicators should be interpreted with care and their magnitude should be regarded as an indication of the strength of the signal rather than as a measure of growth in economic activity'",
+    "date": "2022-06-13"
+   },
    "absent": {
     "NZL": null
    },

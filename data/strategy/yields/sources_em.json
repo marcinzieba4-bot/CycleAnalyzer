@@ -1,0 +1,65 @@
+{
+  "PL": {
+    "source": "Ministry of Finance of Poland (debt office) - daily Treasury bond fixing (Treasury BondSpot Poland fixing) archive published on finanse.mf.gov.pl; constant-maturity 2Y/10Y interpolated from fixed-rate PLN bonds",
+    "y2_series": "Interpolated 2.0y yield: linear in residual maturity between the two fixed-rate bonds (OK zero-coupon, PS, DS, WS) bracketing 2.0y, using the MF-published fixing yield to maturity (Rent.Fix.)",
+    "y10_series": "Interpolated 10.0y yield: same method (DS/WS bonds bracketing 10.0y); when no fixed bond >= 10y is in the fixing (most days since 2024), the fixing yield of the longest DS benchmark (residual 8.8-10y) is used flat",
+    "urls": [
+      "https://www.finanse.mf.gov.pl/dlug-publiczny/bony-i-obligacje-hurtowe/fixingi",
+      "https://www.gov.pl/web/finanse/fixingi-bony",
+      "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/irt_lt_mcby_m?geo=PL (cross-check only)"
+    ],
+    "frequency": "daily",
+    "first": "2011-01-03",
+    "last": "2026-11-26",
+    "n_days": 3949,
+    "notes": "Debt-office source (MF fixing archive = Treasury BondSpot Poland daily 16:30 fixing, yields are the MF-published fixing YTMs). The archive on the MF site only starts in Jan 2011 (one isolated day in Oct 2010, dropped), so 2007-06..2010-12 is NOT covered (no NBP/MF daily archive found for that period). Construction: per day, fixed-rate PLN bonds only (OK zero-coupon, PS, DS, WS; floaters WZ and linkers IZ excluded), residual maturity from MF security metadata (exact maturity dates), linear interpolation to 2.0y and 10.0y between the bracketing bonds. 2y bracket width median 0.26y (max 1.26y), never extrapolated. 10y: interpolated on 2709 days (bracket width median ~1.1y); on 1240 days (31%, mostly late-2019..2026) no fixed bond with residual >=10y is in the fixing list, so y10 = fixing yield of the longest DS benchmark (residual 8.75-10.00y, median 9.63y), i.e. a benchmark-style 10y with slight downward maturity bias; 9 days (2022-01-25..2022-02-04) dropped because the longest bond was <8.75y. Checks: 3949 days 2011-01-03..2026-11-26; y10 monthly average vs Eurostat convergence 10y yield for PL: mean diff -0.00pp, sd 0.03pp, max abs 0.17pp; no one-day reverting spikes; units % p.a.; 2y slightly negative (min -0.03) on 25 days Oct 2020-Feb 2021 (plausible, NBP rate 0.1%); largest daily moves in 2022 (inflation shock). One fixing day (2016-04-07) returned an empty table and is missing."
+  },
+  "HU": {
+    "source": "AKK (Allamadossag Kezelo Kozpont, Hungarian Government Debt Management Agency) - daily zero-coupon government yield curve (zero-kupon hozamok), weekly maturity grid, via the AKK website data API",
+    "y2_series": "AKK zero-coupon yield at 2.0y (linear interpolation between the 728- and 735-day grid points)",
+    "y10_series": "AKK zero-coupon yield at 10.0y (linear interpolation between the 3647- and 3654-day grid points)",
+    "urls": [
+      "https://www.akk.hu/hu/statisztika/hozamok-indexek-forgalmi-adatok/zero-kupon-hozamok",
+      "https://www.akk.hu/api/data/xpose3-dwh/data?query=getZerocoupon&dateStart=2026-11-27&dateEnd=2026-11-27",
+      "https://www.akk.hu/hu/statisztika/hozamok-indexek-forgalmi-adatok/referenciahozamok (benchmark yields, cross-check)"
+    ],
+    "frequency": "daily",
+    "first": "2007-06-01",
+    "last": "2026-11-27",
+    "n_days": 4865,
+    "notes": "Both tenors from the same AKK fitted zero-coupon curve (published daily on a 7-day maturity grid out to ~25y); these are zero-coupon yields, not par/benchmark YTMs. AKK benchmark (reference) yields exist only for 3M/6M/12M/3Y/5Y/10Y/15Y/20Y (no 2Y), hence the zero curve. Checks: units are % p.a. (2007-06-01: 2y 7.10, 10y 6.42); 4,865 business days with both tenors, no gaps beyond year-end/holiday breaks (max 7 calendar days); y10 monthly average vs Eurostat convergence 10y yield for HU: mean diff 0.00pp, sd 0.17pp; spot checks vs AKK benchmark 12M/3Y/10Y on 2008-10-22, 2012-01-05, 2017-06-01, 2022-10-13, 2026-11-27 consistent (zero 2y lies between 12M and 3Y benchmarks; zero 10y within 0.0-0.6pp of the 10Y benchmark). Largest daily moves are in Oct-Nov 2008 and Oct 2022 (genuine stress episodes); one slightly negative 2y print (-0.01, 2019). Values rounded to 4 dp."
+  },
+  "MX": {
+    "source": "Banco de Mexico SIE, cuadro CF300 'Vector de precios de titulos gubernamentales (on the run)' (daily clean/dirty prices, coupon and days to maturity of on-the-run Cetes and Bonos M), exported via the public SIE web export (SIE REST API needs a token, not used); yields computed and interpolated to constant maturity",
+    "y2_series": "Constant-maturity 2.0y: linear interpolation in residual maturity between Cetes 364d (SF45425/SF45473, simple yield converted to Bono-equivalent 182-day compounding) and on-the-run Bono M 0-3y (SF45427/SF45448/SF45475); Bono M 0-3y/3-5y (SF45428/SF45450/SF45476) when the 0-3y bond is < 2y; Cetes 364/Bono 3-5y when the 0-3y bond is missing",
+    "y10_series": "Constant-maturity 10.0y: linear interpolation between on-the-run Bono M 7-10y (SF45430/SF45454/SF45478) and 10-20y (SF45431/SF45456/SF45479), or 3-5y and 7-10y when the 7-10y bond is > 10y",
+    "urls": [
+      "https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?accion=consultarCuadro&idCuadro=CF300&sector=18&locale=es",
+      "https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?accion=consultarSeries (POST export, formatoCSV)"
+    ],
+    "frequency": "daily",
+    "first": "2007-06-01",
+    "last": "2026-11-27",
+    "n_days": 4898,
+    "notes": "Official Banxico daily data, but the 2Y/10Y are DERIVED: Banxico publishes the on-the-run price vector (clean/dirty price, coupon, days to maturity) rather than yields for Bonos M. YTMs were computed with the standard Bono M convention (182-day coupons, coupon = 100*c*182/360, R = YTM*182/360) from the CLEAN price plus model accrued (dirty-clean in the vector matches coupon*days/360 on almost all days; around coupon dates the vector's dirty price is off by one settlement day, so clean is used). Cetes 364d simple yields converted to the same 182-day compounding before interpolating. Then linear interpolation to 2.0y and 10.0y (no extrapolation). Residual maturities of the on-the-run Bonos: 0-3y bucket 1.6-3.9y (median 2.8y), 7-10y bucket 7.6-10.9y (median 9.6y), so the interpolation weights are moderate. Checks: y10 minus raw on-the-run 10y Bono YTM: mean +0.02pp, sd 0.05; y2 minus Cetes 2-year (SF349889, converted, available only since 2022-10-13): mean +0.09pp, sd 0.13 (expected: coupon vs zero, interpolation). Cleaning: Cetes 364d yield reported as 0.000 on 2014-12-11..17 treated as missing (2y not computable on those 5 days, gap 2014-12-10 -> 2014-12-18); 2008-12-24 dropped (entire vector mispriced that day, all bonds jump ~+1pp and revert next day). Large genuine moves remain (Oct 2008, 2020-03-20 Banxico emergency cut). 4,898 days."
+  },
+  "CL": {
+    "source": "Banco Central de Chile, Base de Datos Estadisticos (BDE/Siete), cuadro TMS_15 'Tasas de interes mercado secundario, bonos, en pesos' (benchmark BCP/BTP peso bonds; sources: BCCh auctions, Bolsa de Comercio de Santiago, Bolsa Electronica de Chile); read from the public cuadro web view year by year (BDE REST API needs registration, not used)",
+    "y2_series": "F022.BCLP.TIS.AN02.NO.Z.D - Bonos en pesos a 2 anos (BCP, BTP), secondary market, %",
+    "y10_series": "F022.BCLP.TIS.AN10.NO.Z.D - Bonos en pesos a 10 anos (BCP, BTP), secondary market, %",
+    "urls": [
+      "https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_TASA_INTERES/MN_TASA_INTERES_09/TMS_15?cbFechaDiaria=2007&cbFrecuencia=DAILY&cbCalculo=NONE",
+      "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx (API, requires registered user/password)"
+    ],
+    "frequency": "daily",
+    "first": "2007-06-01",
+    "last": "2026-11-24",
+    "n_days": 3405,
+    "notes": "Both tenors are BCCh benchmark series of the same family (BCP/BTP peso bonds, secondary market). BCCh note: a missing value means there was no benchmark bond at that tenor on that day; when a bond approaches the tenor it becomes the benchmark, so each series is a representative bond at roughly the stated residual tenor (maturity drift and roll jumps, not a fitted curve). Rows kept only where both y2 and y10 are published: 3,405 days. Coverage is uneven because the 2y is often unpublished: days with both tenors per year ~175-250 in 2008-2021 (146 in 2020), 1 in 2022, 66 in 2023, 143 in 2024, 108 in 2025, 122 in 2026 (to 2026-11-24; 2y not published on 2026-11-25/26). No carry-forward or filling. Cleaning: 5 one-day 2y spikes that reverse the next published day (jump >0.4pp each way, net <0.2pp) were dropped: 2009-12-29, 2010-01-11, 2010-10-08, 2011-01-26, 2026-01-16 (e.g. 2026-01-16 5.52 between 4.50 and 4.55). The 2y remains noisy in 2009-2010 (benchmark switching at a steep front end). Checks: units % p.a. (2 dp as published); levels consistent with the policy-rate history (2y ~1.1-2.6% in 2009-10 at TPM 0.5%, 5.8-7.6% in 2023); y10 has no reverting spikes; largest y10 move 0.8pp on 2020-03-19."
+  },
+  "unresolved": {
+    "CZ": "Not covered. CNB computes daily 2/5/10-year government bond yields (ARAD), but the ARAD REST API (https://www.cnb.cz/aradb/api/v1/...) requires an api_key from a registered ARAD account, and the ARAD web application's rules explicitly forbid scraping it, so the web app's internal CSV endpoint was not used. Also tried: MF CR state-debt statistics (only monthly/auction data, no daily secondary-market yields found), ECB Data Portal FM dataset (no CZ series), Eurostat irt_lt_mcby_d daily (dataset no longer disseminated; monthly irt_lt_mcby_m has 10y only). To resolve: register for a free ARAD API key and pull the CNB daily 2Y and 10Y government bond yield indicators.",
+    "ZA": "Not covered (no official 2-year series). SARB web API (custom.resbank.co.za/SarbWebApi/WebIndicators/Shared/GetTimeseriesObservations/{code}/{from}/{to}, no key) only offers daily average yields by maturity bucket: CMJD002A 3-5 years (2007-01-02 .. 2023-02-28, then discontinued), CMJD003A 5-10 years and CMJD004A 10 years and longer (2007-01-02 .. 2026-11-26); there is no 0-3 year bucket (CMJD001A empty) and the individual-bond series (MMRD708A R2030 since 2023-02-28, MMRD709A R209 since 2025-12-09) keep no history of earlier benchmarks. Using bucket averages as 2y/10y would mislabel the tenors, so nothing was written. Raw SARB bucket downloads are kept in _work_em/dl/za/ if a proxy is acceptable (e.g. 10y+ bucket for the long end). JSE zero curves are licensed/paid.",
+    "KR": "Not covered. BoK ECOS Open API needs a (free) registered API key; the public 'sample' key only returns 10 rows per call and was used only to read metadata (table 817Y002 market rates, daily: 국고채(2년) item 010195000 starts only 2021-03-10; 국고채(1년) 010190000 and 국고채(3년) 010200000 from 2000/1998; 국고채(10년) 010210000 from 2000-12-18; 통안증권(2년) MSB 010400002 from 1999). KOFIA bond information service (kofiabond.or.kr, source of the final-quote yields) was unreachable from this environment (TLS connection reset, repeated); KRX data portal requires login; data.go.kr API needs a key. The ECOS web app's internal RPC was not reverse-engineered. To resolve: get an ECOS API key; note a true KTB 2y only exists from 2021-03 (before that, 2y would have to be the BoK MSB 2y or a 1y/3y KTB interpolation)."
+  }
+}

@@ -12,12 +12,13 @@ traded as a DV01-neutral 2s10s position on daily official yields (data/strategy/
   P&L     daily change of (10y - 2y) in the call's favour, plus carry of the DV01-neutral package
           funded at the policy rate: per unit of DV01, (y2 - f)/D2 - (y10 - f)/D10 a year for a
           steepener (long 2y / short 10y), the negative for a flattener (D2 = 1.9, D10 = 8.5);
-          2bp of spread per side; roll-down is not included
+          1bp of spread per side in G10, 3bp in HU / PL / MX / CL; roll-down is not included
   size    1 / (63-day vol of daily spread changes scaled to a month, floor 10bp) per call, 12 overlapping
-          tranches (two editions a month, 6-month hold), book at 10% vol like FX-A
+          tranches (two editions a month, 6-month hold); monthly book scaled to 10% vol by its
+          expanding-window volatility, as CV-A
 
 It prints, on the same calls, the model-slope result next to the real one (gains and losses
-separately), the real curve book, and the 50/50 mix with FX-A.
+separately), the real curve book, and its mixes with FX-A, among them the reliable 65/35 mix.
 """
 from __future__ import annotations
 
@@ -33,12 +34,18 @@ import strategy_backtest as B  # noqa: E402
 
 YD = B.D / "yields"
 D2, D10 = 1.9, 8.5
-HOLD, STOP, COST = 126, 0.75, 0.02
+HOLD, STOP = 126, 0.75
+# one-way cost in pp of spread: liquid G10 2s10s packages ~1bp, Central Europe / Latin America ~3bp
+COST_EM = {"HU": 0.03, "PL": 0.03, "MX": 0.03, "CL": 0.03, "CZ": 0.03, "ZA": 0.03, "KR": 0.03}
+COST_G10 = 0.01
+COST = COST_G10
 # Sweden's 2y/10y are benchmark-bond yields (Riksbank SWEA SEGVB2YC / SEGVB10YC): on these days the
 # 2y benchmark changed (2y jumps, 10y flat), which a held position would simply roll. The spread
 # change on such a day is not P&L.
 ROLL_DAYS = {"SE": ["2008-06-09", "2008-09-01", "2009-12-11", "2011-06-01", "2014-01-02", "2016-03-16",
                     "2017-12-15", "2022-10-10", "2023-12-21"]}
+# risk split of the reliable mix, chosen on 2008-18 only (Sharpe 0.85 / 0.86 / 0.85 at 60 / 65 / 70% FX)
+FX_WEIGHT = 0.65
 VOL_FLOOR = 0.10    # pp a month: a calm curve (Japan under yield-curve control) is sized as if at least 10bp
 
 
@@ -104,15 +111,16 @@ def book(trades, vol_target=0.10):
     for t in trades:
         w = 1.0 / t["vm"] / 12
         pnl[t["i0"] + 1:t["i0"] + 1 + len(t["dP"])] += w * t["dP"]
-        pnl[t["i0"] + 1] -= w * COST
-        pnl[min(t["i0"] + len(t["dP"]), B.LAST)] -= w * COST
+        c = COST_EM.get(t["cc"], COST_G10)
+        pnl[t["i0"] + 1] -= w * c
+        pnl[min(t["i0"] + len(t["dP"]), B.LAST)] -= w * c
     s = pd.Series(pnl, index=B.IDX)
-    rv = s.rolling(63, min_periods=21).std().shift(1) * np.sqrt(252)
-    lev = (vol_target / rv).clip(upper=4.0)
-    lv = pd.Series(np.nan, index=B.IDX)
-    for d in B.EDS:
-        lv.iloc[B.E0[d]] = lev.iloc[B.E0[d]]
-    return s * lv.ffill().fillna(0.0)
+    # monthly P&L scaled point-in-time to 10% a year by its expanding-window volatility, exactly as the
+    # model-slope curve book (CV-A) is, so the two compare like for like
+    m = s.groupby(s.index.to_period("M")).sum().loc["2008-02":]
+    rv = m.expanding(12).std().shift(1)
+    rv = rv.fillna(m.iloc[:12].std()) * np.sqrt(12)
+    return m * vol_target / rv
 
 
 def monthly_stats(m: pd.Series) -> dict:
@@ -151,8 +159,7 @@ def main():
     print("  worst real outcomes:", T.loc[big.index, ["edition", "cc", "call", "model_bp", "gain_bp", "exit"]].to_dict("records"))
     print("  by country (real bp, hit):", T.groupby("cc").gain_bp.agg(lambda s: f"{s.mean():+.0f} {int(100*(s>0).mean())}% n{len(s)}").to_dict())
     # books
-    real = book(tr)
-    rm = real.groupby(real.index.to_period("M")).sum().loc["2008-02":"2026-10"]
+    rm = book(tr).loc["2008-02":"2026-10"]
     # model-slope CV-A restricted to the same countries, for an apples-to-apples comparison
     cc_set = set(T.cc)
     model_same = B.curve_book(lambda c: B.SEL_FINAL(c) & c.cc.isin(cc_set))
@@ -161,6 +168,10 @@ def main():
     df = pd.DataFrame({"fx": fxm, "real_curves": rm, "model_curves_same": model_same.loc["2008-02":"2026-10"],
                        "model_curves_all": model_all}).fillna(0.0)
     df["mix_real"] = 0.5 * df.fx + 0.5 * df.real_curves
+    df["mix_reliable"] = FX_WEIGHT * df.fx + (1 - FX_WEIGHT) * df.real_curves
+    print("\nrisk split FX / real curves (Sharpe 2008-18 / 2019-26):", {f"{int(100*a)}/{int(100*(1-a))}":
+          tuple(monthly_stats(a * df.fx + (1 - a) * df.real_curves)[e]["sharpe"] for e in ("design", "oos"))
+          for a in (1.0, 0.8, 0.7, 0.6, 0.5, 0.4)})
     df["mix_model"] = 0.5 * df.fx + 0.5 * df.model_curves_all
     print("\ncorrelation FX-A vs real curve book:", round(df.fx.corr(df.real_curves), 2))
     rows = []
@@ -168,7 +179,8 @@ def main():
                    ("model_curves_same", f"Curve book, model slope, the {len(cc_set)} countries with real data"),
                    ("real_curves", f"Curve book, REAL 2s10s, {len(cc_set)} countries"),
                    ("fx", "FX-A"), ("mix_model", "50/50 mix with the model-slope curve book (as reported)"),
-                   ("mix_real", "50/50 mix with the REAL 2s10s curve book")]:
+                   ("mix_real", "50/50 mix with the REAL 2s10s curve book"),
+                   ("mix_reliable", f"RELIABLE MIX: {int(100*FX_WEIGHT)}% FX-A / {int(100*(1-FX_WEIGHT))}% real 2s10s curve book")]:
         st = monthly_stats(df[k])
         rows.append({"book": lab, **{f"{e}_{m}": v for e, d in st.items() for m, v in d.items()}})
     R = pd.DataFrame(rows).set_index("book")

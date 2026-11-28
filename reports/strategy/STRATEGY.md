@@ -12,17 +12,25 @@ advice.*
    - **Every ★★/★★★ curve call, held 3 months:** Sharpe 0.07.
    - The edge is there, but it is diluted and badly sized.
 2. **Two changes turn them into a strategy that works in both halves of the history.** Rules were
-   chosen on 2008–18 only; 2019–26 is the out-of-sample check.
+   chosen on 2008–18 only; 2019–26 is the out-of-sample check. All figures are monthly returns
+   after costs, each book at a 10% volatility target.
 
 | Book | 2008–18 Sharpe | 2019–26 Sharpe | Return / vol (all) | Max DD | Positive years | Worst year |
 |---|---|---|---|---|---|---|
-| **FX-A** — carry-to-risk crosses | 0.60 | 0.96 | 8.5% / 11.3% | −22.8% | 14/19 | −3.1% |
-| **CV-A** — curve calls with a SETUP / EARLY TURN verdict | 0.84 | 0.79 | 10.8% / 13.2% | −36.2% | 15/19 | −5.2% |
-| **Combined 50/50 risk** (correlation −0.01) | **1.07** | **1.27** | **9.7% / 8.4%** | **−15.2%** | **17/19** | **−1.5%** |
+| **FX-A** — carry-to-risk crosses | 0.68 | 1.01 | 8.9% / 10.8% | −17.7% | 14/19 | −3.7% |
+| **CV-R** — curve calls with a SETUP / EARLY TURN verdict, traded on **real 2s10s** | 0.42 | 0.28 | 4.8% / 13.8% | −44.3% | 14/19 | −5.1% |
+| **Reliable mix: 65% FX-A / 35% CV-R risk** (correlation −0.22) | **0.86** | **1.15** | **7.5% / 7.6%** | **−10.3%** | **17/19** | **−1.4%** |
+| *Earlier report: 50/50 with the curve calls scored on the model slope* | *1.07* | *1.27* | *9.7% / 8.4%* | *−15.2%* | *17/19* | *−1.5%* |
+
+   The earlier curve figures scored each call on the model's own slope (10y yield minus the policy
+   rate, monthly averages), which no market trades. On real government 2s10s the same calls earn
+   about a quarter of the model's gains and half of its losses (section 3). The reliable mix uses
+   the real result and gives it a smaller weight.
 
 3. **What the history says, in one line each:**
    - **What to use:** the **carry** engine drives the FX edge. The **cycle clock** is useless for
-     *picking currencies* but valuable for *timing curve trades*.
+     *picking currencies*; for curves its SETUP / EARLY TURN verdicts still help on real 2s10s, but
+     far less than the model slope suggested.
    - **How long to hold:** **months, not weeks.** Hold at least 3 months, and FX until the signal
      fades.
    - **Stops:** **tight stops destroy the edge.** Use only a wide catastrophe stop.
@@ -58,25 +66,30 @@ average hold about 5 months.
 | Catastrophe stop | 203 | −10.2% | 0% |
 | Still open (last edition 2026-09-13) | 39 | +6.7% | 82% |
 
-### CV-A: curve calls (each edition)
+### CV-R: curve calls on real 2s10s (each edition)
 
 1. **Take a curve call only when the slope's context verdict is SETUP or EARLY TURN** and the call
    is not neutral. All ★★★ calls fall in this set. Ignore every other ★/★★ call, and avoid
    **WATCH**, which loses in both periods.
-2. **Size:** each call = 1 ÷ (24-month vol of the monthly slope change), as a DV01-neutral 2s10s
-   trade. Book scaled to 10% vol.
-3. **Hold 6 months** from the edition month. Holding 12 months earns more but with deeper drawdowns;
-   exits on signal persistence are worse here.
-4. **Stop:** catastrophe stop at −75bp of slope. It triggered on only 21 of 800 calls, so it is free
-   insurance.
+2. **Only in the 13 markets the backtest could trade on official daily yields:** US, euro area,
+   Japan, UK, Canada, Australia, Switzerland, Sweden, Norway (from 2015), Hungary, Poland (from
+   2011), Mexico, Chile. Calls on Czechia, South Africa, Korea and New Zealand are untested (no
+   free daily 2y series) and are not traded.
+3. **Express** it as a DV01-neutral 2s10s steepener or flattener, entered the Monday after the
+   edition. **Size** each call to 1 ÷ the spread's monthly volatility (63-day, floor 10bp).
+4. **Hold 6 months.** **Stop** if the real spread moves 75bp against the call.
 
-Trade log (800 calls): +37bp (2008–18) / +51bp (2019–26) per call, 69% / 74% winners.
+Trade log on real 2s10s (598 calls): +14bp (2008–18) / +10bp (2019–26) per call, 55% / 59%
+winners, including carry, before costs of 1bp (G10) or 3bp (Hungary, Poland, Mexico, Chile) per
+side. By market: US +33bp (90% winners), Mexico +66bp, Hungary +30bp, Canada +26bp, UK +20bp;
+euro area +7bp, Switzerland and Sweden +4bp, Poland +3bp, Japan −3bp (39%).
 
 ### Combining
 
-- **Allocation:** 50% of the risk budget to each book. Their monthly returns are uncorrelated
-  (−0.01). FX loses in carry crashes, and curves often gain in exactly those (2008, 2011, 2022).
-- **Drawdowns:** each book's −23% to −36% drawdown becomes −15% combined.
+- **Allocation:** 65% of the risk budget to FX-A and 35% to CV-R, chosen on 2008–18 (Sharpe 0.85,
+  0.86, 0.85 at 60, 65, 70% FX; 0.81 at 50/50).
+- **Why it helps:** the two books move against each other (monthly correlation −0.22). FX loses in
+  carry crashes, and curve calls often gain then. Each book's −18% and −44% drawdowns become −10%.
 
 ## 3. The evidence behind each rule
 
@@ -153,6 +166,29 @@ None of these is a knife-edge choice.
 | ★★★ | +25bp, 65% (n=80) | +71bp, 71% (n=90) |
 | ★ / ★★ | +8 to +10bp, about 50% | −5 to +11bp, about 51% |
 
+These are gains on the model slope. **On real government 2s10s** (`python
+scripts/strategy_curves_real.py`; daily official yields from the US Treasury, ECB, Bank of Canada,
+Japan's Ministry of Finance, RBA, Bank of England, Riksbank, Norges Bank, SNB, ÁKK, Poland's
+Ministry of Finance, Banxico and the Central Bank of Chile), the same 598 selected calls in 13
+markets:
+
+| Same calls | Model slope | Real 2s10s (incl. carry, before costs) |
+|---|---|---|
+| Average call | +40bp, 67% winners | +11bp, 57% winners |
+| Calls the model scored as winners | +66bp | +17bp (about a quarter) |
+| Calls the model scored as losers | −24bp | −11bp (about half) |
+| Correlation of the two outcomes | | 0.37 |
+
+- **Why the gap:** the model scores "10y minus the policy rate", so a policy move counts as a slope
+  gain when it happens. A real 2-year yield prices that move months ahead, so the tradable spread
+  is not paid for it.
+- **A shorter front leg does not recover it.** On the US, euro area and Japan the average call earns
+  +5bp with a 2-year leg, +3bp with a 1-year and −15bp with a 3-month (euro area −33bp).
+- **Costs matter at this size.** Curve book Sharpe 0.43 / 0.38 / 0.28 at 0.5 / 1 / 2bp per side;
+  the rule uses 1bp in G10 and 3bp in Central Europe and Latin America (0.35).
+- **Japan never worked:** −2bp a call before yield-curve control and −3bp under it, and about zero
+  even on the model slope. It stays in, since dropping it would be hindsight.
+
 **Position management inside a trade** (`python scripts/strategy_sizing.py`): same FX-A trades,
 exits, stop, costs and 10% volatility target; only the size held inside each trade changes with
 its own price path. A step is a fraction of the cross's quarterly σ.
@@ -185,15 +221,15 @@ its own price path. A step is a fraction of the cross's quarterly σ.
 - trailing stops
 - the "skip chased crosses" entry filter (it helps single trades but not the portfolio)
 - tranche normalization of the curve book
+- a 1-year or 3-month front leg instead of the 2-year on curve trades
 - path-dependent position sizing: grids, scale-outs, averaging down, pyramids, trailing exits
 
 ## 4. Current book and today's signals (2026-11-27)
 
 The history is now gap-free through 2026-09-13. The 24 added editions (2025-10-12 … 2026-08-30)
-behaved like the rest on FX: 75 crosses, average +7.7%, 81% winners. Their curve calls did not:
-17 calls, −4bp on average, 29% winners. That was the turn from cuts to hikes in early 2026, which
-the 6-month curve book holds through. Treat the curve book with caution until the hiking cycle
-settles.
+behaved like the rest on FX: 75 crosses, average +7.7%, 81% winners. Their 17 curve calls were
+mostly in Korea (5) and New Zealand (8), which the real-spread test cannot cover; the four in
+tested markets (US 3, Switzerland 1) earned +9bp and −3bp on real 2s10s.
 
 **Open FX book** (tranches from the 2026 editions, marked to 24 Nov 2026). Tranches past their
 3-month minimum are tested against today's live ranking: the long leg must be in the top 6, the
@@ -212,10 +248,10 @@ short leg in the bottom 6.
 The 2026-09-13 tranche (IDR/PLN, INR/CHF, BRL/SEK, entered 14 Sep) reaches its 3-month minimum
 around 10 Dec 2026.
 
-**Open curve book:** KR 2s10s flattener (SETUP, 5 tranches, +31bp so far) and NZ 2s10s
-flattener (EARLY TURN, 8 tranches, −6bp so far), each held 6 months from entry. The Hungary
-steepener that the 2026-09-13 page showed as SETUP no longer qualifies once Hungary's June 2026
-policy rate is corrected (see the README).
+**Open curve book (CV-R): none.** The open SETUP / EARLY TURN calls are a Korea and a New Zealand
+flattener, outside the 13 tested markets, so CV-R does not trade them. The Hungary steepener that
+the 2026-09-13 page showed as SETUP no longer qualifies once Hungary's June 2026 policy rate is
+corrected (see the README).
 
 **New tranche from the live refresh** (`run_analysis.py --refresh`, model anchor 2026-10, FX to
 2026-11-24; `strategy_backtest.py --live`):
@@ -226,8 +262,8 @@ policy rate is corrected (see the README).
 | Long INR / short THB | 5.8% | 1.73× | −5.8% |
 | Long NZD / short HUF | 8.5% | 1.17× | −8.5% |
 
-- **New curve trade:** NZ 2s10s flattener (SETUP, slope +2.26pp, z +1.05): pay 2y, receive 10y,
-  DV01-neutral.
+- **Curve call:** NZ 2s10s flattener (SETUP, slope +2.26pp, z +1.05). New Zealand is not a tested
+  market, so CV-R does not trade it.
 - **Exit test for open crosses:** the long leg must stay in IDR, INR, NZD, ZAR, CAD, AUD; the short
   leg in MXN, SEK, PLN, HUF, THB, CHF.
 - **Concentration:** long Asian low-volatility carry (IDR, INR) against CHF appears in more than one
@@ -237,7 +273,7 @@ policy rate is corrected (see the README).
 - Open the new tranche.
 - Close crosses that are past 3 months and fail the exit test.
 - Check the stops.
-- Open the SETUP / EARLY TURN curve calls for 6 months.
+- Open the SETUP / EARLY TURN curve calls in the 13 tested markets for 6 months.
 
 ## 5. Caveats
 
@@ -245,12 +281,14 @@ policy rate is corrected (see the README).
   for NDF currencies (BRL, INR, IDR, CNY, KRW, COP, CLP).
 - **FX costs:** 3 / 6 / 10bp one-way (G10 / CEE / other EM) plus quarterly rolls. Prices are BIS
   daily fixings, not executable quotes.
-- **The curve P&L is the model slope, 10y minus policy.** On real US 2s10s the SETUP / EARLY TURN
-  calls kept their hit rate (93% on 29 calls) but captured about ⅔ of the move (+39bp vs +60bp
-  over 6 months). With 10y minus 3m interbank the curve book still had Sharpe ≈0.8 / ≈1.0. These
-  were side checks, not in the committed script. Expect roughly ⅔ of the CV-A returns in practice.
-- **The curve book** is a global-duration bet when many calls agree. Its −36% drawdown came in
-  2015–16, when 8 countries' steepeners met the Brexit-era bond rally together.
+- **Curve P&L** is scored on official daily government yields: fitted zero-coupon curves for the UK,
+  euro area, Norway, Switzerland and Hungary, benchmark bonds for the US, Canada, Japan, Australia,
+  Sweden (benchmark-roll days neutralised) and Chile, and yields interpolated from official prices
+  for Poland and Mexico. Roll-down is not included, and swap execution would differ slightly.
+  Coverage gaps: Norway before 2015, Poland before 2011, Chile sparse before 2023, Australia
+  May–September 2013.
+- **The curve book** is a global-duration bet when many calls agree, so on its own it has deep
+  drawdowns (−44%); only in the mix, at 35% of the risk, is it kept.
 - **Overfitting:** the selection used 2008–18 only, but I had seen the repository's 2019–24
   scorecard notes before designing. The rule families (carry-to-risk, signal-persistence exits, the
   verdict filter) are standard and few, and every neighbouring setting works.
@@ -263,6 +301,8 @@ python scripts/strategy_market.py       # BIS daily FX + policy, FRED 10y -> dat
 python scripts/strategy_backtest.py     # headline tables + data/strategy/backtest/{fx_trades,curve_trades,monthly_returns}.csv
 python scripts/strategy_backtest.py --diagnostics
 python scripts/strategy_backtest.py --live   # today's signals (after scripts/run_analysis.py --refresh)
+python scripts/strategy_curves_real.py  # curve calls on real 2s10s (data/strategy/yields/) and the reliable 65/35 mix
+python scripts/strategy_sizing.py       # position-management variants inside FX-A trades
 ```
 
 `strategy_extract.py` checks that every edition's re-run crosses match its published page

@@ -17,10 +17,17 @@ advice.*
 
 | Book | 2008–18 Sharpe | 2019–26 Sharpe | Return / vol (all) | Max DD | Positive years | Worst year |
 |---|---|---|---|---|---|---|
-| **FX-A** — carry-to-risk crosses | 0.68 | 1.01 | 8.9% / 10.8% | −17.7% | 14/19 | −3.7% |
+| **FX-A** — carry-to-risk crosses, with the **dollar filter** | 0.81 | 1.08 | 9.8% / 10.5% | −17.9% | 15/19 | −5.1% |
 | **CV-R** — curve calls with a SETUP / EARLY TURN verdict, traded on **real 2s10s** | 0.42 | 0.28 | 4.8% / 13.8% | −44.3% | 14/19 | −5.1% |
-| **Reliable mix: 65% FX-A / 35% CV-R risk** (correlation −0.22) | **0.86** | **1.15** | **7.5% / 7.6%** | **−10.3%** | **17/19** | **−1.4%** |
+| **Best mix: 65% FX-A (dollar filter) / 35% CV-R risk** (correlation −0.21) | **0.97** | **1.21** | **8.1% / 7.5%** | **−9.5%** | **18/19** | **−4.2%** |
+| *Same mix without the dollar filter* | *0.86* | *1.15* | *7.5% / 7.6%* | *−10.3%* | *17/19* | *−1.4%* |
+| *FX-A without the dollar filter* | *0.68* | *1.01* | *8.9% / 10.8%* | *−17.7%* | *14/19* | *−3.7%* |
 | *Earlier report: 50/50 with the curve calls scored on the model slope* | *1.07* | *1.27* | *9.7% / 8.4%* | *−15.2%* | *17/19* | *−1.5%* |
+
+   The **dollar filter** skips a new FX tranche when the dollar has risen more than 3% over the
+   last three months; it was the only one of 26 momentum and regime filters that improved both
+   periods and held up across thresholds (section 3). It trades a lower 2008–18 drawdown and one
+   more positive year for a worse worst year (2020, −4.2%).
 
    The earlier curve figures scored each call on the model's own slope (10y yield minus the policy
    rate, monthly averages), which no market trades. On real government 2s10s the same calls earn
@@ -39,6 +46,9 @@ advice.*
 
 ### FX-A: carry-to-risk crosses (each edition, i.e. every 2 weeks)
 
+0. **Dollar filter.** If the dollar has risen more than 3% over the last 63 business days against an
+   equal-weighted basket of the 23 currencies (spot), open no new tranche at this edition. Open
+   crosses are managed as usual.
 1. **Score each currency.** Take the edition's engines without the clock:
    `carry + valuation + momentum + penalty`, i.e. the page's *total minus cycle*. Divide by the
    currency's 63-day realized volatility vs USD, with a 4% floor. Keep the framework's credibility
@@ -56,14 +66,14 @@ advice.*
 5. **Stop:** **catastrophe stop only.** Close if the cross is down 2 quarterly sigmas
    (= 2 × vol × √¼, about −6% to −13%). Never use a tight or trailing stop.
 
-Trade log (1,467 trades): average +3.1% (2008–18) / +3.6% (2019–26) per trade, 68–70% winners,
-average hold about 5 months.
+Trade log with the dollar filter (1,101 trades; 366 skipped): average +3.6% (2008–18) / +4.0%
+(2019–26) per trade, 71% winners, average hold about 5 months.
 
 | Exit | Trades | Average | Winners |
 |---|---|---|---|
-| Signal faded | 848 | +4.3% | 76% |
-| 12-month maximum | 377 | +8.1% | 89% |
-| Catastrophe stop | 203 | −10.2% | 0% |
+| Signal faded | 625 | +4.7% | 79% |
+| 12-month maximum | 286 | +8.8% | 90% |
+| Catastrophe stop | 151 | −9.9% | 0% |
 | Still open (last edition 2026-09-13) | 39 | +6.7% | 82% |
 
 ### CV-R: curve calls on real 2s10s (each edition)
@@ -215,6 +225,35 @@ its own price path. A step is a fraction of the cross's quarterly σ.
   which removes that overlap, turns the pyramid worse than constant size (0.86 / 0.78 against
   0.92 / 0.87). So it is rejected too.
 
+**Momentum and regime filters** (`python scripts/strategy_filters.py`; 26 tested, all listed in
+`data/strategy/backtest/filters_tested.csv`). Entry filters skip trades; regime filters scale the
+whole FX book after its volatility targeting, so the leverage cannot undo them.
+
+| Filter | Sharpe 2008–18 / 2019–26 | Verdict |
+|---|---|---|
+| FX-A, none | 0.68 / 1.01 | |
+| **Skip new crosses when the dollar rose > 3% in 3 months** | **0.81 / 1.08** | **accepted** |
+| Same, other settings (1–6 months, 1–5%) | 0.70–0.84 / 0.98–1.15 | robust |
+| Book × 0.5 while the dollar is up > 3% | 0.81 / 0.98 | worse out of sample |
+| Cross momentum > 0 over 1, 3, 6 or 12 months (trend) | 0.58–0.68 / 0.88–1.05 | rejected |
+| Skip crosses that ran > 4% or > 8% in 3 months | 0.72 / 1.01, 0.68 / 0.97 | rejected |
+| Skip after a > 4% fall in a month | 0.72 / 0.99 | rejected |
+| FX volatility spike (entry or book × 0.5) | 0.65–0.69 / 0.96–0.98 | rejected |
+| FX-A's own 3- or 6-month P&L (equity-curve filter) | 0.52–0.65 / 0.91–1.03 | rejected |
+| Global cycle: > half the banks cutting, > 40% in Disinflation | 0.69 / 0.64, 0.64 / 1.13 | rejected |
+| CV-R, none | 0.42 / 0.28 | |
+| Real spread moved with the call over 1, 3, 6 months (momentum) | 0.00–0.33 / 0.22–0.41 | rejected |
+| Real spread moved against the call (reversal) | 0.30–0.52 / 0.11–0.35 | rejected: only 1 month helps, 3 and 6 hurt |
+| Skip when US 10y moved > 50bp in 3 months | 0.50 / 0.29 | rejected: other settings flip it |
+| Central bank direction must agree with the call | 0.41 / 0.33 | rejected |
+
+- **Why the dollar works:** a rising dollar is tightening global funding, when emerging-market
+  carry pays least. Crosses opened after such a rally earned +1.9% against +3.6% for the rest in
+  2008–18 and +1.7% against +4.0% in 2019–26. Using the median currency or leaving out the lira
+  gives the same result (0.78–0.80 / 1.06).
+- **Trend filters fail for the same reason the position-management rules did:** inside this book,
+  past moves of the cross carry no information about its rest.
+
 **Rejected because they did not hold in both periods:**
 - global-pack filters (share of banks hiking or cutting, share in Disinflation)
 - 12-month FX momentum
@@ -222,6 +261,7 @@ its own price path. A step is a fraction of the cross's quarterly σ.
 - the "skip chased crosses" entry filter (it helps single trades but not the portfolio)
 - tranche normalization of the curve book
 - a 1-year or 3-month front leg instead of the 2-year on curve trades
+- momentum filters on crosses or on curve spreads; volatility, equity-curve and global-cycle regimes
 - path-dependent position sizing: grids, scale-outs, averaging down, pyramids, trailing exits
 
 ## 4. Current book and today's signals (2026-11-27)
@@ -253,10 +293,12 @@ flattener, outside the 13 tested markets, so CV-R does not trade them. The Hunga
 the 2026-09-13 page showed as SETUP no longer qualifies once Hungary's June 2026 policy rate is
 corrected (see the README).
 
-**New tranche from the live refresh** (`run_analysis.py --refresh`, model anchor 2026-10, FX to
-2026-11-24; `strategy_backtest.py --live`):
+**No new FX tranche this fortnight: the dollar filter is on.** The dollar rose 5.6% over the three
+months to 24 Nov 2026 (median currency 6.0%), above the 3% limit. Open crosses keep their exit
+test and stops. The tranche the rules would otherwise open, from the live refresh
+(`run_analysis.py --refresh`, model anchor 2026-10, FX to 2026-11-24; `strategy_backtest.py --live`):
 
-| New cross | Cross vol | Notional per 10% risk | Catastrophe stop |
+| Cross (not opened) | Cross vol | Notional per 10% risk | Catastrophe stop |
 |---|---|---|---|
 | Long IDR / short CHF | 6.3% | 1.59× | −6.3% |
 | Long INR / short THB | 5.8% | 1.73× | −5.8% |
@@ -270,7 +312,8 @@ corrected (see the README).
   tranche. Keep the per-tranche sizes; do not add on top.
 
 **Each fortnight:** run the weekly job, then `python scripts/strategy_backtest.py --live`.
-- Open the new tranche.
+- Check the dollar filter it prints; open the new tranche only if the dollar rose 3% or less in 3
+  months.
 - Close crosses that are past 3 months and fail the exit test.
 - Check the stops.
 - Open the SETUP / EARLY TURN curve calls in the 13 tested markets for 6 months.
@@ -303,6 +346,7 @@ python scripts/strategy_backtest.py --diagnostics
 python scripts/strategy_backtest.py --live   # today's signals (after scripts/run_analysis.py --refresh)
 python scripts/strategy_curves_real.py  # curve calls on real 2s10s (data/strategy/yields/) and the reliable 65/35 mix
 python scripts/strategy_sizing.py       # position-management variants inside FX-A trades
+python scripts/strategy_filters.py      # momentum and regime filters on both books
 ```
 
 `strategy_extract.py` checks that every edition's re-run crosses match its published page

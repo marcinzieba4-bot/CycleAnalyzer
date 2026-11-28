@@ -63,6 +63,20 @@ FXT["vol"] = [_RV.values[E0[d], CI[c]] for d, c in zip(FXT.edition, FXT.ccy)]
 VOL_FLOOR = 0.04
 
 
+# Dollar filter (scripts/strategy_filters.py): no new FX-A cross is opened while the dollar has
+# risen more than USD_MAX against an equal-weighted basket of the 23 currencies over the last 63
+# business days (spot, data before the entry fixing). Crosses opened after such a rally earned about
+# half as much in both periods (+1.9% vs +3.6% a trade in 2008-18, +1.7% vs +4.0% in 2019-26).
+USD_MAX, USD_DAYS = 0.03, 63
+_SPOT = np.log(FXD).ffill().values
+_NONUSD = [i for c, i in CI.items() if c != "USD"]
+
+
+def usd_momentum(i0, days=USD_DAYS):
+    a = max(i0 - days, 0)
+    return -float(np.nanmean(_SPOT[i0, _NONUSD] - _SPOT[a, _NONUSD]))
+
+
 def xvol(lo, sh, i0, n=63):
     r = RET[max(i0 - n, 0):i0, CI[lo]] - RET[max(i0 - n, 0):i0, CI[sh]]
     return max(float(r.std() * np.sqrt(252)), VOL_FLOOR)
@@ -144,15 +158,19 @@ def fx_published(hold=63):
     return book(trades)
 
 
-def fx_final(persist=6, min_hold=63, max_hold=252, stop_sigma=2.0, n=3, score=score_final, log=False):
+def fx_final(persist=6, min_hold=63, max_hold=252, stop_sigma=2.0, n=3, score=score_final, log=False,
+             usd_max=None):
     """FX-A. Each edition opens a tranche of n crosses sized to equal risk; a cross is held at least
     min_hold days, then closed at the first edition where its long leg is out of the top `persist`
     or its short leg out of the bottom `persist`; never longer than max_hold; catastrophe stop at
-    -stop_sigma quarterly sigmas of the cross."""
+    -stop_sigma quarterly sigmas of the cross. With usd_max set, no tranche is opened while the
+    dollar has risen more than usd_max over the last USD_DAYS (the dollar filter)."""
     sel, rk = pick_crosses(score, n=n), ranked(score)
     trades, rows = [], []
     for k, e in enumerate(EDS):
         i0 = E0[e]
+        if usd_max is not None and usd_momentum(i0) > usd_max:
+            continue
         for lo, sh in sel[e]:
             i1, why = min(i0 + max_hold, LAST), "max hold"
             for e2 in EDS[k + 1:]:
@@ -353,6 +371,10 @@ def main_live():
     g["score"] = score_final(g)
     g = g.sort_values("score", ascending=False).reset_index(drop=True)
     print(f"model anchor {res.asof}; FX data through {FXD.index[-1].date()}")
+    um = usd_momentum(LAST)
+    print(f"dollar filter: the dollar moved {um:+.1%} over the last {USD_DAYS} business days "
+          f"(limit {USD_MAX:+.0%}) -> " + ("NO NEW FX TRANCHE this fortnight; open crosses are managed as usual"
+                                          if um > USD_MAX else "open the new tranche"))
     print(g.round(3).to_string())
     L, S = g.head(6), g.tail(6)[::-1]
     pairs = sorted(((a.score - b.score, a.ccy, b.ccy) for a in L.itertuples() for b in S.itertuples()), reverse=True)

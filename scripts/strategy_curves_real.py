@@ -164,11 +164,13 @@ def main():
     cc_set = set(T.cc)
     model_same = B.curve_book(lambda c: B.SEL_FINAL(c) & c.cc.isin(cc_set))
     fxm = B.monthly(B.fx_final()).loc["2008-02":"2026-10"]
+    fxm_f = B.monthly(B.fx_final(usd_max=B.USD_MAX)).loc["2008-02":"2026-10"]
     model_all = B.curve_book(B.SEL_FINAL).loc["2008-02":"2026-10"]
-    df = pd.DataFrame({"fx": fxm, "real_curves": rm, "model_curves_same": model_same.loc["2008-02":"2026-10"],
+    df = pd.DataFrame({"fx": fxm, "fx_dollar_filter": fxm_f, "real_curves": rm, "model_curves_same": model_same.loc["2008-02":"2026-10"],
                        "model_curves_all": model_all}).fillna(0.0)
     df["mix_real"] = 0.5 * df.fx + 0.5 * df.real_curves
     df["mix_reliable"] = FX_WEIGHT * df.fx + (1 - FX_WEIGHT) * df.real_curves
+    df["mix_best"] = FX_WEIGHT * df.fx_dollar_filter + (1 - FX_WEIGHT) * df.real_curves
     print("\nrisk split FX / real curves (Sharpe 2008-18 / 2019-26):", {f"{int(100*a)}/{int(100*(1-a))}":
           tuple(monthly_stats(a * df.fx + (1 - a) * df.real_curves)[e]["sharpe"] for e in ("design", "oos"))
           for a in (1.0, 0.8, 0.7, 0.6, 0.5, 0.4)})
@@ -180,7 +182,9 @@ def main():
                    ("real_curves", f"Curve book, REAL 2s10s, {len(cc_set)} countries"),
                    ("fx", "FX-A"), ("mix_model", "50/50 mix with the model-slope curve book (as reported)"),
                    ("mix_real", "50/50 mix with the REAL 2s10s curve book"),
-                   ("mix_reliable", f"RELIABLE MIX: {int(100*FX_WEIGHT)}% FX-A / {int(100*(1-FX_WEIGHT))}% real 2s10s curve book")]:
+                   ("mix_reliable", f"RELIABLE MIX: {int(100*FX_WEIGHT)}% FX-A / {int(100*(1-FX_WEIGHT))}% real 2s10s curve book"),
+                   ("fx_dollar_filter", "FX-A with the dollar filter (scripts/strategy_filters.py)"),
+                   ("mix_best", f"BEST MIX: {int(100*FX_WEIGHT)}% FX-A with dollar filter / {int(100*(1-FX_WEIGHT))}% real 2s10s curve book")]:
         st = monthly_stats(df[k])
         rows.append({"book": lab, **{f"{e}_{m}": v for e, d in st.items() for m, v in d.items()}})
     R = pd.DataFrame(rows).set_index("book")

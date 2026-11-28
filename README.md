@@ -215,7 +215,11 @@ this repository (different templates, no retained inputs); they were not replace
   one — Canada's new one-observation CPI code of April 2026, Australia's new monthly
   CPI — and the euro-area confidence proxy switches to EA20 only once that aggregate has
   a full history. Without these rules four editions would have lost a clock and three
-  would have used inputs 10–30 months stale.
+  would have used inputs 10–30 months stale. The predecessor fill applies from the
+  2025-10-12 edition (`BACKFILL_FROM`): the 2025-01-05 … 2025-09-28 editions have no
+  truncated, missing or stale model input (checked from their retained inputs) and keep
+  their original construction. A full rebuild of them under the fill could not be run on
+  2026-11-28 because the DBnomics GitLab commit-listing API did not answer.
 - **Neighbours.** A rebuilt 2025-09-28 has byte-identical model inputs. The rebuilt
   2026-09-13 differs in two inputs only: South Africa's July 2026 CPI (4.3%, Stats SA
   19 Aug 2026, before the cutoff; missing before) and Hungary's June 2026 rate (6.00%).

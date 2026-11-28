@@ -132,6 +132,10 @@ BACKFILL_SUFFIXES = (".M.N.CPI.PA._T.N.GY", ".M.HICP.CPI.PA._T.N.GY", ".Q.N.CPI.
                      ".M.BCICP.PB.C.Y._Z._Z.N", ".Q.BCICP.PB.C.Y._Z._Z.N")
 BACKFILL_AREAS = {c.iso3 for c in COUNTRIES.values()} | {"EA19", "EA20"}
 BACKFILL_DAYS = 62          # look back over predecessors committed within this window
+# Partial conversions were first met in the archives of the editions built from 2025-10-12;
+# the 2025-01-05 .. 2025-09-28 editions (built and audited earlier) have no truncated, missing
+# or stale model input and keep their original construction.
+BACKFILL_FROM = date(2025, 10, 12)
 BACKFILL_MAX_STEPS = 10
 
 
@@ -324,7 +328,8 @@ def build(ed: Edition, verbose: bool = True) -> tuple[dict[str, pd.DataFrame], E
             (S.OECD_PROJECT, KEI_PATH, kei, kei_e, "dbnomics-oecd-kei", "OECD Key Economic Indicators."),
             (S.OECD_PROJECT, BTS_PATH, bts, bts_e, "dbnomics-oecd-bts", "OECD business tendency surveys."),
             (S.OECD_PROJECT, PRICES_PATH, prices, pr_e, "dbnomics-oecd-prices", "OECD consumer prices.")):
-        _backfill_truncated(proj, path, ser, e, lid, nt, ev, cut)
+        if ed.date >= BACKFILL_FROM:
+            _backfill_truncated(proj, path, ser, e, lid, nt, ev, cut)
     bcpi = S.read_jsonl_series(bcpi_b)
     bpol = S.read_jsonl_series(bpol_b)
 

@@ -153,12 +153,39 @@ None of these is a knife-edge choice.
 | ★★★ | +25bp, 65% (n=80) | +71bp, 71% (n=90) |
 | ★ / ★★ | +8 to +10bp, about 50% | −5 to +11bp, about 51% |
 
+**Position management inside a trade** (`python scripts/strategy_sizing.py`): same FX-A trades,
+exits, stop, costs and 10% volatility target; only the size held inside each trade changes with
+its own price path. A step is a fraction of the cross's quarterly σ.
+
+| Rule (FX-A) | Sharpe 2008–18 / 2019–26 | Max DD | Turnover per year |
+|---|---|---|---|
+| **Constant size (the rule)** | **0.60 / 0.96** | **−22.8%** | **3×** |
+| Grid: start 10 units, −1 per step up, +1 per step down to the stop (0.25 / 0.5 / 1σ steps) | 0.39 / 0.82, 0.49 / 0.94, 0.55 / 0.96 | −27% to −23% | 12×, 7×, 5× |
+| Grid with 2-unit steps | 0.27 / 0.56 to 0.50 / 0.96 | −35% to −24% | up to 20× |
+| Take profit only (−1 unit per step up) | 0.44 / 0.87 to 0.56 / 0.96 | −26% to −23% | |
+| Average down only (+1 unit per step down) | 0.56 / 0.93 to 0.59 / 0.96 | −24% to −23% | |
+| Pyramid: start 1 unit, +1 per step up, max 3–5 | 0.25 / 0.52 to 0.50 / 0.70 | −29% to −21% | |
+| Pyramid with exit 1–2 steps off the best level | 0.00 / 0.23 to 0.56 / 0.78 | −37% to −20% | |
+
+- **Nothing beat constant size in both periods.** Of 24 variants, none.
+- **Why:** after a trade's first move of half a σ, the rest of the trade earns the same either way
+  (+2.5% after a move up, +2.5% after a move down), so the path carries no momentum or reversal to
+  harvest. Scaling out gives up the carry of the trades that keep paying (the 12-month holders
+  average +8%). Averaging down adds to trades that then reach the stop with more size. Pyramids and
+  trailing exits cut the winners short.
+- **Curve book:** a pyramid looked better (Sharpe +0.06 to +0.09, max DD −34% → −24%), but monthly
+  slope changes are built from monthly averages, and averaging alone makes consecutive months move
+  together (autocorrelation 0.28 here, about 0.25 from averaging alone). Acting one month late,
+  which removes that overlap, turns the pyramid worse than constant size (0.86 / 0.78 against
+  0.92 / 0.87). So it is rejected too.
+
 **Rejected because they did not hold in both periods:**
 - global-pack filters (share of banks hiking or cutting, share in Disinflation)
 - 12-month FX momentum
 - trailing stops
 - the "skip chased crosses" entry filter (it helps single trades but not the portfolio)
 - tranche normalization of the curve book
+- path-dependent position sizing: grids, scale-outs, averaging down, pyramids, trailing exits
 
 ## 4. Current book and today's signals (2026-11-27)
 

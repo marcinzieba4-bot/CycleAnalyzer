@@ -1,0 +1,49 @@
+{
+ "US": {
+  "source": "U.S. Treasury daily par yield curve rates",
+  "y2_series": "2 Yr",
+  "y10_series": "10 Yr",
+  "urls": [
+   "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/<year>/all?type=daily_treasury_yield_curve"
+  ],
+  "frequency": "daily"
+ },
+ "CA": {
+  "source": "Bank of Canada Valet, benchmark bond yields",
+  "y2_series": "BD.CDN.2YR.DQ.YLD",
+  "y10_series": "BD.CDN.10YR.DQ.YLD",
+  "urls": [
+   "https://www.bankofcanada.ca/valet/observations/BD.CDN.2YR.DQ.YLD,BD.CDN.10YR.DQ.YLD/csv"
+  ],
+  "frequency": "daily"
+ },
+ "XM": {
+  "source": "ECB euro-area yield curve, all central government bonds, spot rates",
+  "y2_series": "YC/B.U2.EUR.4F.G_N_C.SV_C_YM.SR_2Y",
+  "y10_series": "YC/B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y",
+  "urls": [
+   "https://data-api.ecb.europa.eu/service/data/YC/"
+  ],
+  "frequency": "daily"
+ },
+ "JP": {
+  "source": "Ministry of Finance Japan, JGB interest rates",
+  "y2_series": "2Y",
+  "y10_series": "10Y",
+  "urls": [
+   "https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/historical/jgbcme_all.csv",
+   "https://www.mof.go.jp/english/policy/jgbs/reference/interest_rate/jgbcme.csv"
+  ],
+  "frequency": "daily"
+ },
+ "AU": {
+  "source": "RBA statistical table F2, government bond yields (interpolated)",
+  "y2_series": "FCMYGBAG2D",
+  "y10_series": "FCMYGBAG10D",
+  "urls": [
+   "https://www.rba.gov.au/statistics/tables/xls-hist/f02dhist.xls",
+   "https://www.rba.gov.au/statistics/tables/csv/f2-data.csv"
+  ],
+  "frequency": "daily"
+ }
+}

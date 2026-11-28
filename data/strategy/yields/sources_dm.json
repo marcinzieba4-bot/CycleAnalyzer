@@ -1,0 +1,79 @@
+{
+  "GB": {
+    "source": "Bank of England, UK government liability curve (GLC) - nominal spot (zero-coupon) curve, daily, fitted (variable roughness penalty spline); yield curve archive + current-month file",
+    "y2_series": "GLC nominal spot curve, maturity 2.0 years (sheet '4. spot curve')",
+    "y10_series": "GLC nominal spot curve, maturity 10.0 years (sheet '4. spot curve'); equals IADB series IUDMNZC",
+    "urls": [
+      "https://www.bankofengland.co.uk/-/media/boe/files/statistics/yield-curves/glcnominalddata.zip",
+      "https://www.bankofengland.co.uk/-/media/boe/files/statistics/yield-curves/latest-yield-curve-data.zip",
+      "https://www.bankofengland.co.uk/statistics/yield-curves",
+      "https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Jun/2007&Dateto=now&SeriesCodes=IUDMNZC,IUDSNZC,IUDMNPY&CSVF=TN&UsingCodes=Y&VPD=Y&VFD=N"
+    ],
+    "frequency": "daily",
+    "first": "2007-06-01",
+    "last": "2026-11-26",
+    "rows": 4927,
+    "notes": "Both tenors read from the same fitted BoE nominal zero-coupon curve, so no benchmark rolls. Built from the archive files '2005 to 2015', '2016 to 2024', '2025 to present' (to 2026-10-30) plus 'current month' (2026-11-02..2026-11-26). The files did not overlap. IADB has no 2y nominal series (only 5/10/20y par and zero-coupon), which is why the curve archive is used. Checks: % p.a. units; no gaps over 5 calendar days; no weekend rows; 10y matches IADB IUDMNZC to within 0.0011 on 4915 of 4926 common days. The 11 mismatches (10 in Apr-Jun 2019, 1 on 2022-03-16) are days where IADB repeats an earlier value; the curve-archive values are in line with neighbouring days. Moves over 35bp are real events: 2009-03-05/06 (QE start), 2022-09-23/26/28 (mini-budget, BoE intervention). Values rounded to 4 dp. 'zero-coupon' here means spot yields, not par yields. IADB 10y par (IUDMNPY) is about 2-10bp different."
+  },
+  "SE": {
+    "source": "Sveriges Riksbank, SWEA API (interest rates & exchange rates), Swedish government bond benchmark yields; Riksbank metadata gives the source as Refinitiv",
+    "y2_series": "SEGVB2YC (SE GVB 2 Year - Swedish Government Bond, maturity 2 years)",
+    "y10_series": "SEGVB10YC (SE GVB 10 Year - Swedish Government Bond, maturity 10 years)",
+    "urls": [
+      "https://api.riksbank.se/swea/v1/Observations/SEGVB2YC/2007-06-01/2026-11-28",
+      "https://api.riksbank.se/swea/v1/Observations/SEGVB10YC/2007-06-01/2026-11-28",
+      "https://api.riksbank.se/swea/v1/Series"
+    ],
+    "frequency": "daily",
+    "first": "2007-06-01",
+    "last": "2026-11-26",
+    "rows": 4897,
+    "notes": "Anonymous API access works (no key needed at this volume). The 2y and 10y series have identical date sets. CAVEAT: these are BENCHMARK-BOND yields, not constant-maturity or fitted yields, so y2 jumps when the benchmark bond changes. Clear roll-type level shifts in y2 with a flat 10y: 2009-12-11 (+134bp; the old benchmark had rolled down close to the policy rate), 2011-06-01 (+35bp), 2017-12-15 (+39bp), 2023-12-21 (-56bp). Smaller candidates found by a heuristic (|dy2-dy10|>20bp that persists): 2008-06-09, 2008-09-01, 2014-01-02, 2016-03-16, 2022-10-10. Mask or adjust these days when computing carry/P&L. 2023-03-13 (-38bp 2y, -22bp 10y) is a genuine market move (SVB). Other checks: % p.a.; no weekend rows; the only gaps over 5 days are Christmas; some 2020-2022 values have 5 dp."
+  },
+  "NO": {
+    "source": "Norges Bank data API (SDMX), dataflow GOVT_ZEROCOUPON - Norwegian government securities zero-coupon yields (Nelson-Siegel-Svensson fit to T-bills and government bonds), business-daily",
+    "y2_series": "GOVT_ZEROCOUPON B.2Y",
+    "y10_series": "GOVT_ZEROCOUPON B.10Y",
+    "urls": [
+      "https://data.norges-bank.no/api/data/GOVT_ZEROCOUPON/?format=csv&startPeriod=1980-01-01&locale=en",
+      "https://www.norges-bank.no/en/topics/Statistics/norwegian-government-securities/zero-coupon-yields/",
+      "https://data.norges-bank.no/api/data/GOVT_GENERIC_RATES/?format=csv&startPeriod=1990-01-01&locale=en",
+      "https://www.norges-bank.no/contentassets/f851e16643634e72a63b13967e0e463e/government-bonds-synthetic-business-day.xlsx"
+    ],
+    "frequency": "daily",
+    "first": "2015-01-02",
+    "last": "2026-11-26",
+    "rows": 2988,
+    "notes": "COVERAGE SHORTFALL: the zero-coupon curve, the only Norges Bank series with a 2y point, starts 2015-01-02. Nothing from 2007-06 to 2014-12. Norges Bank's other daily government yields have no 2y tenor: GOVT_GENERIC_RATES (3M/6M/12M bills, 3/5/7/10y bonds) starts 2019-01-02, and the discontinued 'synthetic' yields (3/5/10y) run 1985/87 to 2021-06-30. As an option, NO_3y10y_supplement.csv (header date,y3,y10,series) gives a 3y/10y daily history 2007-06-01..2026-11-26. It is the synthetic series to 2018-12-31, then the generic series from 2019-01-02. On the 2019-01-02..2021-06-30 overlap, synthetic minus generic has mean +0.8bp (3y) / +0.1bp (10y), sd 2-3bp, max abs 7bp. The splice day 2019-01-02 adds about 4-6bp beyond the synthetic series' own move. Synthetic values have 2 dp. Checks on NO.csv: % p.a.; 2y and 10y on identical days; ZC 10y vs generic 10y (2019+) mean -1.6bp, sd 4.9bp, max abs 22bp; no moves over 35bp; gaps over 5 days are only Easter/Christmas.",
+    "supplementary_files": [
+      "NO_3y10y_supplement.csv"
+    ]
+  },
+  "CH": {
+    "source": "Swiss National Bank data portal, cube rendeiduebd - spot interest rates on Swiss Confederation bond issues (SNB-estimated zero-coupon curve), daily",
+    "y2_series": "rendeiduebd D0=CHF, D1=2J (2 years)",
+    "y10_series": "rendeiduebd D0=CHF, D1=10J (10 years)",
+    "urls": [
+      "https://data.snb.ch/api/cube/rendeiduebd/data/csv/en?dimSel=D0(CHF),D1(2J,10J)&fromDate=1980-01-01&toDate=2026-12-31",
+      "https://data.snb.ch/api/cube/rendeiduebd/dimensions/en",
+      "https://data.snb.ch/api/cube/rendoblid/data/csv/en"
+    ],
+    "frequency": "daily",
+    "first": "2007-06-01",
+    "last": "2026-10-30",
+    "rows": 4879,
+    "notes": "Ends 2026-10-30: the SNB updates this cube monthly (latest edition published 2026-11-02), so November 2026 is not out yet and should come in early December. The older cube rendoblid (series 2J/10J0) stopped at 2025-07-31 (last edition 2025-09-01). It is identical to rendeiduebd on all 7534 overlapping dates (max diff 0.000), so rendeiduebd is its continuation and there is no splice. Checks: % p.a. (negative 2015-2022 as expected); 2y and 10y on identical days; no weekend rows; the only gaps over 5 days are Christmas/New Year; the one move over 35bp, 2008-11-21 (-48bp 2y), follows the SNB's 100bp cut on 2008-11-20. Values have 3 dp."
+  },
+  "unresolved": {
+    "NZ": {
+      "target": "RBNZ B2 wholesale interest rates (daily secondary-market government bond yields, 2y and 10y; file hb2-daily.xlsx)",
+      "tried": [
+        "https://www.rbnz.govt.nz/-/media/project/sites/rbnz/files/statistics/series/b/b2/hb2-daily.xlsx -> HTTP 403, Cloudflare managed challenge (cf-mitigated: challenge); page says 'Your access to the Reserve Bank website has been restricted'",
+        "https://www.rbnz.govt.nz/statistics/series/exchange-and-interest-rates/wholesale-interest-rates -> same 403 challenge",
+        "Web search for an official alternative (Stats NZ Infoshare / Aotearoa Data Explorer, NZ Debt Management / treasury.govt.nz, OECD, BIS): found no official daily or monthly 2y NZ government bond series outside RBNZ. OECD/FRED IRLTLT01NZ* is 10y only, monthly, from RBNZ, so no 2s10s is possible from it",
+        "Did not try archived or mirrored copies of the RBNZ file (e.g. web.archive.org) or the RBNZ API portal: the session's permission check blocked that as getting around RBNZ's access restriction"
+      ],
+      "suggestion": "Someone with browser access downloads hb2-daily.xlsx (and the historical B2 daily file) from rbnz.govt.nz by hand into this folder, or asks RBNZ (statistics team) for API/bulk access. The RBNZ notes say the source moved to NZFMA indicative closing rates and the 2y/10y series are benchmark bonds (e.g. Nov 2026 roll to Apr-2029 / Apr-2037), so expect roll jumps."
+    }
+  }
+}

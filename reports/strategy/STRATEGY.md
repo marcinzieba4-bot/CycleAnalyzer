@@ -98,8 +98,21 @@ euro area +7bp, Switzerland and Sweden +4bp, Poland +3bp, Japan −3bp (39%).
 
 - **Allocation:** 65% of the risk budget to FX-A and 35% to CV-R, chosen on 2008–18 (Sharpe 0.85,
   0.86, 0.85 at 60, 65, 70% FX; 0.81 at 50/50).
-- **Why it helps:** the two books move against each other (monthly correlation −0.22). FX loses in
-  carry crashes, and curve calls often gain then. Each book's −18% and −44% drawdowns become −10%.
+- **Why it helps:** the two books move against each other (monthly correlation −0.14 in 2008–18,
+  −0.27 in 2019–26). FX loses in carry crashes, and curve calls often gain then. Each book's −18%
+  and −44% drawdowns become −10%.
+- **Is the curve book worth it?** On its own it is weak (Sharpe 0.42 / 0.28), but next to FX-A with
+  the dollar filter it adds in both periods: FX alone 0.81 / 1.08, max DD −17.9%, 15/19 positive
+  years; with 30–35% in curves 0.97 / 1.21–1.23, max DD about −10%, 18/19. At the same 10.5%
+  volatility as FX alone, the mix returns 11.3% a year against 9.8%, with a −13.4% drawdown against
+  −17.9%. In the six years FX made under 2% (2008, 2009, 2011, 2013, 2020, 2024) the curve book was
+  positive in five; in FX's worst month (March 2020, −10.2%) it made +25.6%. Any curve weight from
+  20% to 40% gives most of the benefit; 50% is already too much.
+- **No filter on the curve book.** The dollar filter does not carry over: curve calls opened after
+  a dollar rally earned more in 2008–18 (+22bp vs +10bp) and less in 2019–26 (+2bp vs +12bp), and
+  skipping them lowers the 2008–18 Sharpe of the mix from 0.97 to 0.82. The curve book is useful
+  precisely because it keeps trading in the risk-off spells when the FX book stands aside. None of
+  the curve-specific filters held up either (section 3).
 
 ## 3. The evidence behind each rule
 

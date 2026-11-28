@@ -1,23 +1,24 @@
 # Trading the Cycle Monitor — a rulebook tested on 2008–2026
 
-*Built 2026-11-27 from the 465 point-in-time editions (2008-01-06 … 2025-09-28 biweekly, plus
-2026-09-13) and the live refresh of 2026-11-27. Backtest: `scripts/strategy_backtest.py`.
-Model output, not investment advice.*
+*Built 2026-11-27 from all 489 point-in-time editions (every biweekly Sunday from 2008-01-06 to
+2026-09-13; the 24 editions 2025-10-12 … 2026-08-30 were added on 2026-11-28) and the live
+refresh of 2026-11-27. Backtest: `scripts/strategy_backtest.py`. Model output, not investment
+advice.*
 
 ## 1. Bottom line
 
 1. **The published trade ideas are only partly tradeable as printed.**
-   - **Top-3 FX crosses, held 3 months:** Sharpe 0.20, max drawdown −39%, 12/19 positive years.
-   - **Every ★★/★★★ curve call, held 3 months:** Sharpe 0.12.
+   - **Top-3 FX crosses, held 3 months:** Sharpe 0.30, max drawdown −39%, 13/19 positive years.
+   - **Every ★★/★★★ curve call, held 3 months:** Sharpe 0.07.
    - The edge is there, but it is diluted and badly sized.
 2. **Two changes turn them into a strategy that works in both halves of the history.** Rules were
    chosen on 2008–18 only; 2019–26 is the out-of-sample check.
 
 | Book | 2008–18 Sharpe | 2019–26 Sharpe | Return / vol (all) | Max DD | Positive years | Worst year |
 |---|---|---|---|---|---|---|
-| **FX-A** — carry-to-risk crosses | 0.60 | 0.99 | 8.5% / 11.0% | −22.8% | 14/19 | −3.1% |
-| **CV-A** — curve calls with a SETUP / EARLY TURN verdict | 0.84 | 0.80 | 10.8% / 13.2% | −36.2% | 16/19 | −5.2% |
-| **Combined 50/50 risk** (correlation −0.01) | **1.07** | **1.26** | **9.7% / 8.4%** | **−15.2%** | **17/19** | **−1.5%** |
+| **FX-A** — carry-to-risk crosses | 0.60 | 0.96 | 8.5% / 11.3% | −22.8% | 14/19 | −3.1% |
+| **CV-A** — curve calls with a SETUP / EARLY TURN verdict | 0.84 | 0.79 | 10.8% / 13.2% | −36.2% | 15/19 | −5.2% |
+| **Combined 50/50 risk** (correlation −0.01) | **1.07** | **1.27** | **9.7% / 8.4%** | **−15.2%** | **17/19** | **−1.5%** |
 
 3. **What the history says, in one line each:**
    - **What to use:** the **carry** engine drives the FX edge. The **cycle clock** is useless for
@@ -47,14 +48,15 @@ Model output, not investment advice.*
 5. **Stop:** **catastrophe stop only.** Close if the cross is down 2 quarterly sigmas
    (= 2 × vol × √¼, about −6% to −13%). Never use a tight or trailing stop.
 
-Trade log (1,395 trades): average +3.1% (2008–18) / +3.5% (2019–26) per trade, 68–69% winners,
+Trade log (1,467 trades): average +3.1% (2008–18) / +3.6% (2019–26) per trade, 68–70% winners,
 average hold about 5 months.
 
 | Exit | Trades | Average | Winners |
 |---|---|---|---|
-| Signal faded | 786 | +4.0% | 75% |
-| 12-month maximum | 406 | +8.6% | 90% |
-| Catastrophe stop | 200 | −10.2% | 0% |
+| Signal faded | 848 | +4.3% | 76% |
+| 12-month maximum | 377 | +8.1% | 89% |
+| Catastrophe stop | 203 | −10.2% | 0% |
+| Still open (last edition 2026-09-13) | 39 | +6.7% | 82% |
 
 ### CV-A: curve calls (each edition)
 
@@ -65,10 +67,10 @@ average hold about 5 months.
    trade. Book scaled to 10% vol.
 3. **Hold 6 months** from the edition month. Holding 12 months earns more but with deeper drawdowns;
    exits on signal persistence are worse here.
-4. **Stop:** catastrophe stop at −75bp of slope. It triggered on only 21 of 786 calls, so it is free
+4. **Stop:** catastrophe stop at −75bp of slope. It triggered on only 21 of 800 calls, so it is free
    insurance.
 
-Trade log (786 calls): +37bp (2008–18) / +52bp (2019–26) per call, 69% / 76% winners.
+Trade log (800 calls): +37bp (2008–18) / +51bp (2019–26) per call, 69% / 74% winners.
 
 ### Combining
 
@@ -85,17 +87,17 @@ return including carry, vs USD:
 
 | Engine | 21d 2008–18 | 21d 2019–26 | 63d 2008–18 | 63d 2019–26 | 126d 2008–18 | 126d 2019–26 |
 |---|---|---|---|---|---|---|
-| carry | +0.055 | +0.096 | +0.082 | +0.154 | +0.120 | +0.152 |
-| cycle (clock) | −0.012 | −0.012 | −0.029 | −0.077 | −0.028 | −0.121 |
-| valuation | 0.000 | −0.020 | +0.003 | −0.037 | +0.007 | −0.009 |
-| momentum (policy) | +0.002 | +0.020 | +0.007 | +0.020 | +0.026 | +0.048 |
-| total (published) | +0.051 | +0.083 | +0.065 | +0.099 | +0.094 | +0.088 |
+| carry | +0.055 | +0.115 | +0.082 | +0.181 | +0.120 | +0.185 |
+| cycle (clock) | −0.012 | −0.002 | −0.029 | −0.060 | −0.028 | −0.104 |
+| valuation | 0.000 | −0.024 | +0.003 | −0.032 | +0.007 | −0.006 |
+| momentum (policy) | +0.002 | +0.021 | +0.007 | +0.035 | +0.026 | +0.069 |
+| total (published) | +0.051 | +0.097 | +0.065 | +0.131 | +0.094 | +0.124 |
 
 - **Carry is the edge. The clock is slightly *contrarian* in both periods:** long legs in
   "Overheating" were the weakest.
-- **Removing the clock is worth a lot:** FX-A *with* the cycle engine drops to Sharpe 0.25 / 0.70.
-- **Why vol-scale.** Without vol-scaling the score, FX-A drops to 0.26 / 0.91. Raw carry
-  over-weights BRL, the most frequent published long (262 of 1,395), which *lost* on average in
+- **Removing the clock is worth a lot:** FX-A *with* the cycle engine drops to Sharpe 0.25 / 0.55.
+- **Why vol-scale.** Without vol-scaling the score, FX-A drops to 0.26 / 0.84. Raw carry
+  over-weights BRL, the most frequent published long (287 of 1,467), which *lost* on average in
   both periods. Low-volatility carry (CNY, INR, IDR) and good funders (GBP, EUR, SEK, CZK, THB) did
   best. CHF and CAD were poor funders.
 
@@ -103,37 +105,38 @@ return including carry, vs USD:
 
 | Rule | Sharpe |
 |---|---|
-| Hold 21 days | −0.10 / +0.01 |
-| Hold 63 days | +0.23 / +0.15 |
-| **Hold 126 days** | **+0.33 / +0.19** |
-| Hold 252 days | +0.23 / +0.41 |
-| Hold 126 days + fixed −3% stop | +0.14 / +0.21 |
-| Hold 126 days + fixed −5% stop | +0.14 / +0.18 |
-| Hold 126 days + fixed −8% stop | +0.19 / +0.18 |
-| Hold 126 days + 1.5σ-quarter stop | +0.24 / +0.21 |
-| Hold 126 days + 2σ-quarter stop | +0.28 / +0.17 |
-| Hold 126 days + 5% trailing stop | +0.09 / +0.23 |
+| Hold 21 days | −0.10 / +0.20 |
+| Hold 63 days | +0.23 / +0.41 |
+| **Hold 126 days** | **+0.33 / +0.42** |
+| Hold 252 days | +0.23 / +0.49 |
+| Hold 126 days + fixed −3% stop | +0.14 / +0.38 |
+| Hold 126 days + fixed −5% stop | +0.14 / +0.37 |
+| Hold 126 days + fixed −8% stop | +0.19 / +0.39 |
+| Hold 126 days + 1.5σ-quarter stop | +0.24 / +0.44 |
+| Hold 126 days + 2σ-quarter stop | +0.28 / +0.40 |
+| Hold 126 days + 5% trailing stop | +0.09 / +0.39 |
 
 - **Holding:** biweekly churn costs more than it earns, so hold for months.
-- **Stops:** every stop lowered the 2008–18 Sharpe. Carry crosses mean-revert after sell-offs,
-  so a stop sells the low. Supporting evidence:
+- **Stops:** every stop lowered the 2008–18 Sharpe, and all but one lowered the 2019–26 Sharpe.
+  Carry crosses mean-revert after sell-offs, so a stop sells the low. Supporting evidence (from the
+  exploration on the first 465 editions):
   - Crosses that already ran more than 4% in the prior 3 months earned +0.2% (2008–18) and −1.1%
     (2019–26) over the next quarter, vs +1.2% to +1.4% after a sell-off.
   - Entries in the top quartile of volatility earned about +2% per quarter in both periods.
 - **Inside FX-A** (which exits on signal persistence), the 2σ catastrophe stop *helps*: 0.53 → 0.60
-  and 0.92 → 0.99, and the worst year improves from −9% to −3%. That is why it is the only stop.
+  and 0.89 → 0.96, and the worst year improves from −9% to −3%. That is why it is the only stop.
 
 **FX-A robustness** (Sharpe 2008–18 / 2019–26):
 
 | Variant | Sharpe |
 |---|---|
-| Final rule | 0.60 / 0.99 |
-| Minimum hold 42 days | 0.57 / 1.03 |
-| Minimum hold 84 days | 0.61 / 0.98 |
-| Exit depth 5 | 0.58 / 1.00 |
-| Exit depth 7 | 0.55 / 0.99 |
-| 5 crosses instead of 3 | 0.47 / 1.00 |
-| No catastrophe stop | 0.53 / 0.92 |
+| Final rule | 0.60 / 0.96 |
+| Minimum hold 42 days | 0.57 / 0.97 |
+| Minimum hold 84 days | 0.61 / 0.95 |
+| Exit depth 5 | 0.58 / 0.96 |
+| Exit depth 7 | 0.55 / 0.94 |
+| 5 crosses instead of 3 | 0.47 / 0.94 |
+| No catastrophe stop | 0.53 / 0.89 |
 
 None of these is a knife-edge choice.
 
@@ -141,14 +144,14 @@ None of these is a knife-edge choice.
 
 | Verdict | 2008–18 | 2019–26 |
 |---|---|---|
-| **SETUP** | **+46bp, 74% hit (n=281)** | **+52bp, 81% (n=266)** |
-| **EARLY TURN** | +11bp, 52% (n=102) | +57bp, 66% (n=157) |
-| LATE | +42bp, 60% (n=75) | +35bp, 69% (n=150) |
-| none | +15bp, 51% (n=2,632) | −2bp, 54% (n=1,279) |
-| TREND INTACT | −16bp, 38% (n=521) | +23bp, 47% (n=187) |
-| **WATCH** | **−10bp, 40% (n=735)** | **−17bp, 40% (n=700)** |
+| **SETUP** | **+46bp, 74% hit (n=281)** | **+51bp, 79% (n=267)** |
+| **EARLY TURN** | +11bp, 52% (n=102) | +55bp, 64% (n=160) |
+| LATE | +42bp, 60% (n=75) | +32bp, 66% (n=164) |
+| none | +15bp, 51% (n=2,632) | −2bp, 50% (n=1,473) |
+| TREND INTACT | −16bp, 38% (n=521) | +23bp, 44% (n=188) |
+| **WATCH** | **−10bp, 40% (n=735)** | **−17bp, 40% (n=722)** |
 | ★★★ | +25bp, 65% (n=80) | +71bp, 71% (n=90) |
-| ★ / ★★ | +8 to +10bp, about 50% | −6 to +14bp, about 54% |
+| ★ / ★★ | +8 to +10bp, about 50% | −5 to +11bp, about 51% |
 
 **Rejected because they did not hold in both periods:**
 - global-pack filters (share of banks hiking or cutting, share in Disinflation)
@@ -159,22 +162,33 @@ None of these is a knife-edge choice.
 
 ## 4. Current book and today's signals (2026-11-27)
 
-The repository has no editions between 2025-09-28 and 2026-09-13. In the backtest, the 2025
-tranches therefore rode to their 12-month maximum, so treat the 2026 calendar-year figures (FX
-+22.7%) as indicative.
+The history is now gap-free through 2026-09-13. The 24 added editions (2025-10-12 … 2026-08-30)
+behaved like the rest on FX: 75 crosses, average +7.7%, 81% winners. Their curve calls did not:
+17 calls, −4bp on average, 29% winners. That was the turn from cuts to hikes in early 2026, which
+the 6-month curve book holds through. Treat the curve book with caution until the hiking cycle
+settles.
 
-**Open from the 2026-09-13 edition** (entered 14 Sep 2026; marked to 24 Nov 2026):
+**Open FX book** (tranches from the 2026 editions, marked to 24 Nov 2026). Tranches past their
+3-month minimum are tested against today's live ranking: the long leg must be in the top 6, the
+short leg in the bottom 6.
 
-| Cross | P&L | Catastrophe stop | Status |
+| Cross | Open tranches | Average P&L | Exit test |
 |---|---|---|---|
-| Long IDR / short PLN | +5.1% | −6.6% | Still qualifies |
-| Long INR / short CHF | +6.4% | −6.9% | Still qualifies |
-| Long BRL / short SEK | −5.9% | −8.6% | BRL has left the top 6 |
+| Long IDR / short PLN | 10 | +7.5% | keep |
+| Long INR / short CHF | 3 | +8.0% | keep |
+| Long INR / short THB | 3 | +6.0% | keep |
+| Long INR / short PLN | 2 | +10.4% | keep |
+| Long IDR / short SEK, long INR / short SEK | 1 each | +5.8%, +12.5% | keep |
+| Long BRL / short CHF, PLN, SEK, THB or CAD | 15 | +2.1% | **close** once past 3 months: BRL is no longer top 6 |
+| Long COP / short CHF, THB or PLN | 4 | +18.1% | **close**: COP is no longer top 6 |
 
-- **BRL / SEK:** exit at the first edition after its 3-month minimum (about 10 Dec 2026) unless BRL
-  re-qualifies.
-- **Curves held to about March 2027:** NZ flattener (EARLY TURN), KR flattener (SETUP),
-  HU steepener (SETUP).
+The 2026-09-13 tranche (IDR/PLN, INR/CHF, BRL/SEK, entered 14 Sep) reaches its 3-month minimum
+around 10 Dec 2026.
+
+**Open curve book:** KR 2s10s flattener (SETUP, 5 tranches, +31bp so far) and NZ 2s10s
+flattener (EARLY TURN, 8 tranches, −6bp so far), each held 6 months from entry. The Hungary
+steepener that the 2026-09-13 page showed as SETUP no longer qualifies once Hungary's June 2026
+policy rate is corrected (see the README).
 
 **New tranche from the live refresh** (`run_analysis.py --refresh`, model anchor 2026-10, FX to
 2026-11-24; `strategy_backtest.py --live`):
@@ -225,4 +239,4 @@ python scripts/strategy_backtest.py --live   # today's signals (after scripts/ru
 ```
 
 `strategy_extract.py` checks that every edition's re-run crosses match its published page
-(465 / 465 match).
+(489 / 489 match).

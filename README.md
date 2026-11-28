@@ -168,7 +168,7 @@ mid-2026 need a citation for every decision since July 2025.
 Biweekly grid: 2025-10-12, 10-26, 11-09, 11-23, 12-07, 12-21, 2026-01-04, 01-18,
 02-01, 02-15, 03-01, 03-15, 03-29, 04-12, 04-26, 05-10, 05-24, 06-07, 06-21,
 07-05, 07-19, 08-02, 08-16, 08-30 (`python scripts/retro_build.py 2025-10-12 …`),
-built 2026-11-27 with the archive-era method and audited (look-ahead audit
+built 2026-11-27/28 with the archive-era method and audited (look-ahead audit
 0 failed). The site archive already carried pages for these dates built outside
 this repository (different templates, no retained inputs); they were not replaced.
 
@@ -218,8 +218,13 @@ this repository (different templates, no retained inputs); they were not replace
   would have used inputs 10–30 months stale.
 - **Neighbours.** A rebuilt 2025-09-28 has byte-identical model inputs. The rebuilt
   2026-09-13 differs in two inputs only: South Africa's July 2026 CPI (4.3%, Stats SA
-  19 Aug 2026, before the cutoff; missing before) and Hungary's June 2026 rate (6.00%);
-  its crosses, curve calls and plays are unchanged.
+  19 Aug 2026, before the cutoff; missing before) and Hungary's June 2026 rate (6.00%).
+  Its crosses and plays are unchanged; Hungary's curve slope reads −0.74pp instead of
+  −0.99pp, so its steepener (★★) no longer carries the SETUP verdict. The site's published
+  2026-09-13 page predates these corrections and has not been replaced.
+- **Audit.** 25 editions (2025-10-12 … 2026-08-30 and 2026-09-13): 40,709 checks, 0 failed;
+  every edition has 23 clocks (Thailand has no growth input) and no input more than four
+  months old apart from quarterly surveys and Australia/New Zealand quarterly CPI.
 
 ### Pre-archive editions (Q1 2008): real-time vintages
 
